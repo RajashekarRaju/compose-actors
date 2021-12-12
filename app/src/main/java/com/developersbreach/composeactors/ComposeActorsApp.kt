@@ -6,7 +6,7 @@ import timber.log.Timber
 
 class ComposeActorsApp : Application() {
 
-    private lateinit var repository: ActorsRepository
+    lateinit var repository: ActorsRepository
 
     override fun onCreate() {
         super.onCreate()
