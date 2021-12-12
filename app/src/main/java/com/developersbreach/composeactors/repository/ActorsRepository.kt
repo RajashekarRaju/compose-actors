@@ -1,19 +1,16 @@
 package com.developersbreach.composeactors.repository
 
-import com.developersbreach.composeactors.ui.details.Actor
+import com.developersbreach.composeactors.model.Actor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class ActorsRepository {
 
-    val actorsData by lazy {
-        listOf(
-            Actor(1, "Robert Di Nero"),
-            Actor(2, "Al Pacino")
-        )
+    suspend fun getActorsData(): List<Actor> {
+        val listData: List<Actor>
+        withContext(Dispatchers.IO) {
+            listData = NetworkService().getActors()
+        }
+        return listData
     }
-
-    fun getActor(
-        actorId: Int
-    ): Actor = actorsData.find {
-        it.actorId == actorId
-    }!!
 }
