@@ -2,10 +2,11 @@ package com.developersbreach.composeactors.ui.actors
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.ComposeActorsApp
 import com.developersbreach.composeactors.model.Actor
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class ActorsViewModel(
@@ -14,27 +15,21 @@ class ActorsViewModel(
 
     private val repository = (application as ComposeActorsApp).repository
 
-    private var actors = listOf<Actor>()
-
-    private var _uiState = MutableStateFlow(ActorsViewState())
-    val uiState: StateFlow<ActorsViewState> = _uiState
+    private var _actorsViewState = MutableLiveData(ActorsViewState())
+    val actorsViewState: LiveData<ActorsViewState> = _actorsViewState
 
     init {
         viewModelScope.launch {
-            actors = repository.getActorsData()
-            _uiState.value.actorsList = repository.getActorsData()
-        }
-    }
-
-    fun getSelectedActor(
-        actorId: Int
-    ): Actor? {
-        return actors.find {
-            it.actorId == actorId
+            val popularActorsList = repository.getPopularActorsData()
+            val trendingActorsList = repository.getTrendingActorsData()
+            _actorsViewState.postValue(
+                ActorsViewState(popularActorsList, trendingActorsList)
+            )
         }
     }
 }
 
 data class ActorsViewState(
-    var actorsList: List<Actor> = emptyList()
+    var popularActorList: List<Actor> = emptyList(),
+    var trendingActorList: List<Actor> = emptyList()
 )
