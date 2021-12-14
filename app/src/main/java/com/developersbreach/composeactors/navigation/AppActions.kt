@@ -12,6 +12,10 @@ class AppActions(
         navController.navigate("${routes.ACTOR_DETAIL_ROUTE}/$actorId")
     }
 
+    val navigateToSearch = {
+        navController.navigate(routes.SEARCH_ROUTE)
+    }
+
     val navigateUp: () -> Unit = {
         navController.navigateUp()
     }
