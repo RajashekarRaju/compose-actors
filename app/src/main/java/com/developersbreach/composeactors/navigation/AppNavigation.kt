@@ -1,7 +1,9 @@
 package com.developersbreach.composeactors.navigation
 
+import android.app.Application
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -11,14 +13,15 @@ import androidx.navigation.navArgument
 import com.developersbreach.composeactors.ui.actors.ActorsScreen
 import com.developersbreach.composeactors.ui.actors.ActorsViewModel
 import com.developersbreach.composeactors.ui.details.DetailScreen
+import com.developersbreach.composeactors.ui.details.DetailsViewModel
 import com.developersbreach.composeactors.ui.search.SearchScreen
+import com.developersbreach.composeactors.ui.search.SearchViewModel
 
 
 @Composable
 fun AppNavigation(
     startDestination: String = AppDestinations.ACTORS_ROUTE,
-    routes: AppDestinations = AppDestinations,
-    actorsViewModel: ActorsViewModel = viewModel()
+    routes: AppDestinations = AppDestinations
 ) {
     val navController = rememberNavController()
     val actions = remember(navController) {
@@ -29,21 +32,26 @@ fun AppNavigation(
         navController = navController,
         startDestination = startDestination
     ) {
+
         composable(
             AppDestinations.ACTORS_ROUTE
         ) {
+            val actorsViewModel: ActorsViewModel = viewModel()
             ActorsScreen(
                 selectedActor = actions.selectedActor,
-                viewModel = actorsViewModel
+                navigateToSearch = actions.navigateToSearch,
+                viewModel = actorsViewModel,
             )
         }
 
         composable(
             AppDestinations.SEARCH_ROUTE
         ) {
+            val searchViewModel: SearchViewModel = viewModel()
             SearchScreen(
                 selectedActor = actions.selectedActor,
-                viewModel = actorsViewModel
+                viewModel = searchViewModel,
+                navigateUp = actions.navigateUp,
             )
         }
 
@@ -57,11 +65,18 @@ fun AppNavigation(
                 }
             )
         ) { backStackEntry ->
+
             val arguments = requireNotNull(backStackEntry.arguments)
+            val actorId = arguments.getInt(routes.ACTOR_DETAIL_ID_KEY)
+            val application = LocalContext.current.applicationContext
+
+            val detailsViewModel: DetailsViewModel = viewModel(
+                factory = DetailsViewModel.provideFactory(application as Application, actorId)
+            )
+
             DetailScreen(
-                actorId = arguments.getInt(routes.ACTOR_DETAIL_ID_KEY),
                 navigateUp = actions.navigateUp,
-                viewModel = actorsViewModel
+                viewModel = detailsViewModel
             )
         }
     }
