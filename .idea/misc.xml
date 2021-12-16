@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/rajas/AndroidStudioProjects/ComposeActors/app/src/main/res/drawable/animated_progress.xml" value="0.23692307692307693" />
+        <entry key="..\:/Users/rajas/AndroidStudioProjects/ComposeActors/app/src/main/res/drawable/ic_placeholder.xml" value="0.23692307692307693" />
+        <entry key="..\:/Users/rajas/AndroidStudioProjects/ComposeActors/app/src/main/res/drawable/ic_progress.xml" value="0.23692307692307693" />
         <entry key="..\:/Users/rajas/AndroidStudioProjects/ComposeActors/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.12604166666666666" />
       </map>
     </option>
