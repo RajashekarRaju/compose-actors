@@ -7,7 +7,7 @@ import com.developersbreach.composeactors.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ActorsRepository {
+class AppRepository {
 
     private val networkService = NetworkService()
 

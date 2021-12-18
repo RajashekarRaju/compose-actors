@@ -1,17 +1,17 @@
 package com.developersbreach.composeactors
 
 import android.app.Application
-import com.developersbreach.composeactors.repository.ActorsRepository
+import com.developersbreach.composeactors.repository.AppRepository
 import timber.log.Timber
 
 class ComposeActorsApp : Application() {
 
-    lateinit var repository: ActorsRepository
+    lateinit var repository: AppRepository
 
     override fun onCreate() {
         super.onCreate()
 
-        repository = ActorsRepository()
+        repository = AppRepository()
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
