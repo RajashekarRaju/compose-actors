@@ -77,9 +77,8 @@ fun Modifier.verticalGradientScrim(
     }
 }
 
-
 @Composable
-fun rememberDominantColorState(
+private fun rememberDominantColorState(
     context: Context = LocalContext.current,
     defaultColor: Color = MaterialTheme.colors.primary,
     defaultOnColor: Color = MaterialTheme.colors.onPrimary,
@@ -218,12 +217,10 @@ fun ActorDynamicTheme(
     }
 }
 
-fun Color.contrastAgainst(background: Color): Float {
+private fun Color.contrastAgainst(background: Color): Float {
     val fg = if (alpha < 1f) compositeOver(background) else this
-
     val fgLuminance = fg.luminance() + 0.05f
     val bgLuminance = background.luminance() + 0.05f
-
     return max(fgLuminance, bgLuminance) / min(fgLuminance, bgLuminance)
 }
 
@@ -232,4 +229,4 @@ fun Color.contrastAgainst(background: Color): Float {
  * surface color. These values are defined within the WCAG AA guidelines, and we use a value of
  * 3:1 which is the minimum for user-interface components.
  */
-const val MinContrastOfPrimaryVsBackground = 3f
+private const val MinContrastOfPrimaryVsBackground = 3f

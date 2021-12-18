@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.developersbreach.composeactors.ComposeActorsApp
 import com.developersbreach.composeactors.ui.actors.ActorsScreen
 import com.developersbreach.composeactors.ui.actors.ActorsViewModel
 import com.developersbreach.composeactors.ui.details.DetailScreen
@@ -28,6 +29,9 @@ fun AppNavigation(
         AppActions(navController, routes)
     }
 
+    val application = LocalContext.current.applicationContext as Application
+    val repository = (application as ComposeActorsApp).repository
+
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -36,22 +40,28 @@ fun AppNavigation(
         composable(
             AppDestinations.ACTORS_ROUTE
         ) {
-            val actorsViewModel: ActorsViewModel = viewModel()
             ActorsScreen(
                 selectedActor = actions.selectedActor,
                 navigateToSearch = actions.navigateToSearch,
-                viewModel = actorsViewModel,
+                viewModel = viewModel(
+                    factory = ActorsViewModel.provideFactory(
+                        application, repository
+                    )
+                )
             )
         }
 
         composable(
             AppDestinations.SEARCH_ROUTE
         ) {
-            val searchViewModel: SearchViewModel = viewModel()
             SearchScreen(
                 selectedActor = actions.selectedActor,
-                viewModel = searchViewModel,
                 navigateUp = actions.navigateUp,
+                viewModel = viewModel(
+                    factory = SearchViewModel.provideFactory(
+                        application, repository
+                    )
+                )
             )
         }
 
@@ -62,21 +72,17 @@ fun AppNavigation(
                     routes.ACTOR_DETAIL_ID_KEY
                 ) {
                     type = NavType.IntType
-                }
-            )
+                })
         ) { backStackEntry ->
-
             val arguments = requireNotNull(backStackEntry.arguments)
             val actorId = arguments.getInt(routes.ACTOR_DETAIL_ID_KEY)
-            val application = LocalContext.current.applicationContext
-
-            val detailsViewModel: DetailsViewModel = viewModel(
-                factory = DetailsViewModel.provideFactory(application as Application, actorId)
-            )
-
             DetailScreen(
                 navigateUp = actions.navigateUp,
-                viewModel = detailsViewModel
+                viewModel = viewModel(
+                    factory = DetailsViewModel.provideFactory(
+                        application, actorId, repository
+                    )
+                )
             )
         }
     }

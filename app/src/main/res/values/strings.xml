@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Compose Actors</string>
+
+    <string name="cd_search_icon">Search Icon</string>
+    <string name="cd_actor_image">Actor image</string>
+    <string name="cd_cast_icon">Icon for cast</string>
+    <string name="cd_biography_icon">Icon for biography</string>
+    <string name="cd_movie_poster">Movie poster</string>
+    <string name="cd_place_of_birth_icon">Place of birth icon</string>
+    <string name="cd_actor_banner">Actor banner</string>
+    <string name="cd_up_button">Go to previous screen</string>
+
+    <string name="search_app_bar_title">Search actors</string>
+    <string name="hint_search_query">Search actors</string>
+
+    <string name="category_actors_popular">Popular</string>
+    <string name="category_actors_trending">Trending</string>
+    <string name="cast_movie_title">Casted</string>
+    <string name="cast_biography_title">Biography</string>
+    <string name="actor_age_subtitle">Age</string>
+    <string name="actor_popularity_subtitle">Popularity</string>
+
+    <string name="offline_snackbar_message">You Are Offline!</string>
+
 </resources>
