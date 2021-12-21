@@ -1,6 +1,7 @@
 package com.developersbreach.composeactors.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -13,14 +14,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
-import com.developersbreach.composeactors.ui.details.DetailScreen
 import com.developersbreach.composeactors.ui.actors.ActorsScreen
+import com.developersbreach.composeactors.ui.details.DetailScreen
+import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
 /**
  * @param navigateUp navigates back to previous screen.
@@ -33,9 +35,7 @@ fun DetailAppBar(
     title: String
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 24.dp)
+        modifier = Modifier.fillMaxWidth()
     ) {
         IconButton(
             onClick = navigateUp,
@@ -64,17 +64,17 @@ fun DetailAppBar(
  * AppBar for [ActorsScreen]
  */
 @Composable
-fun SearchBar() {
+fun SearchBar(
+    navigateToSearch: () -> Unit
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp)
-            .padding(top = 8.dp, start = 4.dp, end = 16.dp)
-            .background(
-                color = MaterialTheme.colors.surface,
-                shape = MaterialTheme.shapes.medium
-            )
+            .height(48.dp)
+            .clip(shape = MaterialTheme.shapes.medium)
+            .clickable(onClick = navigateToSearch)
+            .background(color = MaterialTheme.colors.surface)
     ) {
         Spacer(modifier = Modifier.padding(horizontal = 8.dp))
 
@@ -100,6 +100,6 @@ fun SearchBar() {
 @Composable
 fun SearchBarPreview() {
     ComposeActorsTheme(darkTheme = true) {
-        SearchBar()
+        SearchBar { }
     }
 }

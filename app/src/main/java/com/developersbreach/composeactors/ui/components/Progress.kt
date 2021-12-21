@@ -12,6 +12,10 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.ui.search.AnimatedSearch
 import com.developersbreach.composeactors.utils.InfinitelyFlowingCircles
 
+/**
+ * @param isLoadingData if true circular progress bar will show.
+ * Same composable used in all screens.
+ */
 @Composable
 fun ShowProgressIndicator(
     isLoadingData: Boolean
@@ -28,6 +32,10 @@ fun ShowProgressIndicator(
     }
 }
 
+/**
+ * @param isLoadingData does not show a progress bar, instead draws circle on canvas.
+ * On screen opened infinite animation applied on search and circle shapes.
+ */
 @Composable
 fun ShowSearchProgress(
     isLoadingData: Boolean

@@ -11,7 +11,13 @@ import androidx.compose.ui.layout.ContentScale
 import coil.compose.rememberImagePainter
 import com.developersbreach.composeactors.R
 
-
+/**
+ * Reusable composable used in all screens to load image.
+ * Couldn't figure out shaping the size of placeholder and error images still.
+ *
+ * @param imageUrl url for loading image with coil.
+ * @param shape to clip shape of the image
+ */
 @Composable
 fun LoadNetworkImage(
     imageUrl: String,

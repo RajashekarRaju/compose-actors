@@ -12,23 +12,35 @@ import com.developersbreach.composeactors.utils.NetworkQueryUtils
  */
 class NetworkService {
 
-    private val jsonData by lazy { JsonRemoteData() }
-    private val queryUtils by lazy { NetworkQueryUtils() }
+    // Contains all url endpoints to json data
     private val urls by lazy { Urls }
 
-    // Returns new URL object from the given string URL.
+    // Returns all json responses
+    private val jsonData by lazy { JsonRemoteData(urls) }
+
+    // To make http request calls
+    private val queryUtils by lazy { NetworkQueryUtils() }
+
+    /** @return list of all popular actors. */
     fun getPopularActors(): List<Actor> {
         val requestUrl = urls.getPopularActorsUrl()
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchActorsJsonData(response)
     }
 
+    /** @return list of all trending actors. */
     fun getTrendingActors(): List<Actor> {
         val requestUrl = urls.getTrendingActorsUrl()
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchActorsJsonData(response)
     }
 
+    /** @return Details of user selected actor with */
+
+    /**
+     * @param actorId user selected actor.
+     * @return details of actor which needs to be fetched.
+     */
     fun getActorDetails(
         actorId: Int
     ): ActorDetail {
@@ -37,7 +49,10 @@ class NetworkService {
         return jsonData.fetchActorDetailsJsonData(response)
     }
 
-    //https://api.themoviedb.org/3/person/3223/movie_credits?api_key=
+    /**
+     * @param actorId user selected actor.
+     * @return list of movies which actor was casted with.
+     */
     fun getCastDetails(
         actorId: Int
     ): List<Movie> {
@@ -46,7 +61,10 @@ class NetworkService {
         return jsonData.fetchCastDetailsJsonData(response)
     }
 
-    // https://api.themoviedb.org/3/search/person?api_key=&query=
+    /**
+     * @param query user submitted query to search actors.
+     * @return list of actors with matching query.
+     */
     fun getSearchableActors(
         query: String
     ): List<Actor> {
