@@ -27,6 +27,11 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
 
+/**
+ * This file belongs to official jetpack samples repository made by google.
+ * Sample -> JetCaster.
+ */
+
 
 /**
  * Draws a vertical gradient scrim in the foreground.
@@ -142,7 +147,7 @@ private data class DominantColors(val color: Color, val onColor: Color)
  * color from an image.
  */
 @Composable
-fun DynamicThemePrimaryColorsFromImage(
+private fun DynamicThemePrimaryColorsFromImage(
     dominantColorState: DominantColorState = rememberDominantColorState(),
     content: @Composable () -> Unit
 ) {

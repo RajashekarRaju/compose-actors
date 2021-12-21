@@ -19,24 +19,40 @@ import com.developersbreach.composeactors.ui.search.SearchScreen
 import com.developersbreach.composeactors.ui.search.SearchViewModel
 
 
+/**
+ * @param startDestination default screen visible when user opens app.
+ * @param routes gives access to all destination routes in [AppDestinations] object.
+ *
+ * This is an entry point triggered once activity starts.
+ */
 @Composable
 fun AppNavigation(
     startDestination: String = AppDestinations.ACTORS_ROUTE,
     routes: AppDestinations = AppDestinations
 ) {
+    // Create a NavHostController to handle navigation.
     val navController = rememberNavController()
     val actions = remember(navController) {
         AppActions(navController, routes)
     }
 
+    // We need Application context and type cast to ComposeActorsApp so that we can access single
+    // instance for the AppRepository class.
     val application = LocalContext.current.applicationContext as Application
+    // Repository is then passed to all ViewModels with factories.
     val repository = (application as ComposeActorsApp).repository
 
+    // Composables declared in NavHost can be controlled within by NavController.
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
 
+        /**
+         * Start destination.
+         * Can later navigate to [DetailScreen] and [SearchScreen]
+         * Has it's own viewModel [ActorsViewModel] with factory & repository instance.
+         */
         composable(
             AppDestinations.ACTORS_ROUTE
         ) {
@@ -51,6 +67,11 @@ fun AppNavigation(
             )
         }
 
+        /**
+         * Can later navigate to [DetailScreen]
+         * Navigates back to previous screen with [AppActions.navigateUp]
+         * Has it's own viewModel [SearchViewModel] with factory & repository instance.
+         */
         composable(
             AppDestinations.SEARCH_ROUTE
         ) {
@@ -65,6 +86,13 @@ fun AppNavigation(
             )
         }
 
+        /**
+         * Two destinations ([ActorsScreen] [SearchScreen]) can navigate to this screen.
+         * Navigates back to previous screen with [AppActions.navigateUp]
+         * Has it's own viewModel [DetailsViewModel] with factory & repository instance.
+         *
+         * [AppDestinations.ACTOR_DETAIL_ID_KEY] contains id for the selected item in list.
+         */
         composable(
             route = "${AppDestinations.ACTOR_DETAIL_ROUTE}/{${routes.ACTOR_DETAIL_ID_KEY}}",
             arguments = listOf(

@@ -2,20 +2,26 @@ package com.developersbreach.composeactors.navigation
 
 import androidx.navigation.NavHostController
 
-
+/**
+ * @property navController helps us navigate by performing action.
+ * @property routes destinations to navigate once action is triggered.
+ */
 class AppActions(
-    navController: NavHostController,
-    routes: AppDestinations
+    private val navController: NavHostController,
+    private val routes: AppDestinations
 ) {
 
+    // Triggered when user tries to navigate to details of an actor from list with Id.
     val selectedActor: (Int) -> Unit = { actorId: Int ->
         navController.navigate("${routes.ACTOR_DETAIL_ROUTE}/$actorId")
     }
 
+    // Navigates to SearchScreen
     val navigateToSearch = {
         navController.navigate(routes.SEARCH_ROUTE)
     }
 
+    // Navigates to previous screen from current screen.
     val navigateUp: () -> Unit = {
         navController.navigateUp()
     }
