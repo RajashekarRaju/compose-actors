@@ -33,6 +33,7 @@ import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.search.SearchScreen
 import com.developersbreach.composeactors.utils.*
+import com.google.accompanist.insets.statusBarsHeight
 
 
 /**
@@ -113,6 +114,13 @@ private fun ContentDetail(
     uiState: DetailsViewState,
 ) {
     val actorData = uiState.actorData
+
+    // Match the height of the status bar
+    Spacer(
+        Modifier
+            .fillMaxWidth()
+            .statusBarsHeight()
+    )
 
     DetailAppBar(
         navigateUp = navigateUp,
@@ -234,9 +242,9 @@ private fun ActorBiography(
     Column(
         modifier = Modifier
             .verticalGradientScrim(
-                color = MaterialTheme.colors.surface.copy(alpha = 0.5f),
-                startYPercentage = 1f,
-                endYPercentage = 0f
+                color = MaterialTheme.colors.surface.copy(alpha = 0.75f),
+                startYPercentage = 0f,
+                endYPercentage = 1f
             )
             .padding(
                 bottom = 56.dp,
@@ -270,7 +278,7 @@ private fun ActorBiography(
                 style = TextStyle(
                     lineHeight = 20.sp,
                     color = MaterialTheme.colors.onSurface,
-                    fontWeight = FontWeight.Normal,
+                    fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
                     textAlign = TextAlign.Justify
                 )

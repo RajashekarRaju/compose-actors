@@ -23,7 +23,8 @@ import com.developersbreach.composeactors.model.Actor
 import com.developersbreach.composeactors.ui.components.*
 import com.developersbreach.composeactors.ui.details.DetailScreen
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
-import com.google.accompanist.insets.statusBarsPadding
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 
 /**
  * @param selectedActor navigates to user clicked actor from row.
@@ -146,7 +147,7 @@ private fun ItemActor(
                 modifier = Modifier
                     .size(120.dp)
                     .border(
-                        width = 2.dp,
+                        width = 1.dp,
                         color = MaterialTheme.colors.onSurface,
                         shape = CircleShape
                     )
@@ -160,7 +161,9 @@ private fun ItemActor(
                 textAlign = TextAlign.Center,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
             )
 
             Spacer(modifier = Modifier.padding(vertical = 12.dp))
@@ -178,12 +181,13 @@ private fun MainAppBar(
     navigateToSearch: () -> Unit
 ) {
     TopAppBar(
-        { SearchBar() },
+        content = { SearchBar(navigateToSearch) },
         backgroundColor = MaterialTheme.colors.background,
         elevation = 0.dp,
-        modifier = Modifier
-            .clickable(onClick = navigateToSearch)
-            .statusBarsPadding()
+        modifier = Modifier.padding(horizontal = 16.dp),
+        contentPadding = rememberInsetsPaddingValues(
+            LocalWindowInsets.current.statusBars,
+        )
     )
 }
 

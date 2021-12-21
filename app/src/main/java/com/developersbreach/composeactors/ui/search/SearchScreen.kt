@@ -23,11 +23,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.model.Actor
-import com.developersbreach.composeactors.ui.components.SearchBar
 import com.developersbreach.composeactors.ui.actors.ActorsScreen
 import com.developersbreach.composeactors.ui.components.AppDivider
+import com.developersbreach.composeactors.ui.components.SearchBar
 import com.developersbreach.composeactors.ui.components.ShowSearchProgress
 import com.developersbreach.composeactors.ui.details.DetailScreen
+import com.google.accompanist.insets.statusBarsHeight
 
 
 /**
@@ -74,7 +75,10 @@ private fun ItemActorList(
     actorsList: List<Actor>,
     selectedActor: (Int) -> Unit
 ) {
-    LazyColumn {
+    LazyColumn(
+        // This padding helps avoid content going behind the navigation bars.
+        modifier = Modifier.padding(bottom = 48.dp)
+    ) {
         items(actorsList) { actor ->
             ItemActor(actor, selectedActor)
         }
@@ -125,9 +129,15 @@ private fun SearchAppBar(
     var query: String by rememberSaveable { mutableStateOf("") }
 
     // This top padding avoids colliding content with app bar.
-    Column(
-        modifier = Modifier.padding(top = 24.dp)
-    ) {
+    Column {
+
+        // Match the height of the status bar
+        Spacer(
+            Modifier
+                .fillMaxWidth()
+                .statusBarsHeight()
+        )
+
         TextField(
             value = query,
             onValueChange = { onQueryChanged ->
