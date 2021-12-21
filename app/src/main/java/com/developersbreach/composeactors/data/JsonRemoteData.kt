@@ -5,11 +5,19 @@ import com.developersbreach.composeactors.model.ActorDetail
 import com.developersbreach.composeactors.model.Movie
 import org.json.JSONObject
 
+/**
+ * @property urls for low and high resolution images.
+ *
+ */
+class JsonRemoteData(
+    private val urls: Urls
+) {
 
-class JsonRemoteData {
-
-    private val urls by lazy { Urls }
-
+    /**
+     * @param response contains json response data to built a data upon.
+     * @return list of [Actor] objects that has been built up from parsing a JSON response.
+     */
+    @Throws(Exception::class)
     fun fetchActorsJsonData(
         response: String
     ): List<Actor> {
@@ -29,6 +37,11 @@ class JsonRemoteData {
         return actorsList
     }
 
+    /**
+     * @param response contains json response data to built a data upon.
+     * @return list of [ActorDetail] objects that has been built up from parsing a JSON response.
+     */
+    @Throws(Exception::class)
     fun fetchActorDetailsJsonData(
         response: String
     ): ActorDetail {
@@ -45,6 +58,11 @@ class JsonRemoteData {
         return ActorDetail(actorName, profilePath, biography, dateOfBirth, placeOfBirth, popularity)
     }
 
+    /**
+     * @param response contains json response data to built a data upon.
+     * @return [List] of [Movie] objects that has been built up from parsing a JSON response.
+     */
+    @Throws(Exception::class)
     fun fetchCastDetailsJsonData(
         response: String
     ): List<Movie> {

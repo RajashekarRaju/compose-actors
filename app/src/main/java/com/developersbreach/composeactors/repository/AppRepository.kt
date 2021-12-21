@@ -7,9 +7,12 @@ import com.developersbreach.composeactors.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+/**
+ * Single data source for app data.
+ */
 class AppRepository {
 
-    private val networkService = NetworkService()
+    private val networkService by lazy { NetworkService() }
 
     suspend fun getPopularActorsData(): List<Actor> {
         val listData: List<Actor>
