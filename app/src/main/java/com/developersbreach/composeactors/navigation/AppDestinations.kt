@@ -1,9 +1,15 @@
 package com.developersbreach.composeactors.navigation
 
-
+/**
+ * All routes in one place.
+ */
 object AppDestinations {
-    const val ACTORS_ROUTE = "actors"
+    // Default destination
+    const val ACTORS_ROUTE = "home"
+    // destination for searching actors
     const val SEARCH_ROUTE = "search"
-    const val ACTOR_DETAIL_ROUTE = "actor"
+    // list to details destination
+    const val ACTOR_DETAIL_ROUTE = "actor detail"
+    // list to selected actor detail destination
     const val ACTOR_DETAIL_ID_KEY = "actorId"
 }
