@@ -8,6 +8,8 @@ of cats, and a detail screen showing each cat's details.
 `Jetpack Compose` is Android’s modern toolkit for building native UI. It enables you to quickly
 bring your app to life with less code, powerful tools, and intuitive Kotlin APIs.
 
+![AppPreview](https://github.com/RajashekarRaju/compose-actors/blob/dev/assets/main.gif)
+
 ## :pencil: Blog
 
 <!-- 
