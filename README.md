@@ -1,29 +1,45 @@
-# Compose Actors
-
-## :scroll: Description
-
-Android app built with `Jetpack Compose`. This app contains an overview screen that displays a list
-of cats, and a detail screen showing each cat's details.
-
-`Jetpack Compose` is Android’s modern toolkit for building native UI. It enables you to quickly
-bring your app to life with less code, powerful tools, and intuitive Kotlin APIs.
+# Compose Actors :dancer:
 
 ![AppPreview](https://github.com/RajashekarRaju/compose-actors/blob/dev/assets/main.gif)
 
-## :pencil: Blog
+## :scroll: Description
 
-<!-- 
-Refer to this [Article](https://developersbreach.com/list-detail-navigation-compose/) for clear demonstration on implementing naviation flow with compose in android.
--->
+Android app built with `Jetpack Compose` shows actors information fetched from Tmdb Api.
+
+| Home Screen |
+|:--------------:|
+| &emsp;&emsp;&emsp; <img src="assets/img_home_dark.png" alt="Home Dark" width="200" />&emsp;&emsp;&emsp;<img src="assets/img_home_light.png" alt="Home Light" width="200" /> &emsp;&emsp;&emsp; |
+| Search Screen |
+| &emsp;&emsp;&emsp; <img src="assets/img_search_state_dark.png" alt="Search Dark" width="200" /> &emsp;&emsp;&emsp;<img src="assets/img_search_state_light.png" alt="Search Light" width="200" /> &emsp;&emsp;&emsp; |
+| Detail Screen |
+| &emsp;&emsp;&emsp; <img src="assets/img_detail_adele_dark.png" alt="Detail Dark" width="200" /> &emsp;&emsp;&emsp;<img src="assets/img_detail_adele_light.png" alt="Detail Light" width="200" /> &emsp;&emsp;&emsp; |
+| Offline State |
+| &emsp;&emsp;&emsp; <img src="assets/img_offline_dark.jpg" alt="Offline Dark" width="200" /> &emsp;&emsp;&emsp;<img src="assets/img_offline_light.jpg" alt="Offline Light" width="200" /> &emsp;&emsp;&emsp; |
+
+### :dango: App Overview
+
+| Screen | Preview |
+|:-----|---------|
+| Home | <img src="assets/home_dark_gif.gif" alt="Home screen preview" width="200" /> |
+| | |
+| Search | <img src="assets/search_dark_gif.gif" alt="Search screen preview" width="200" /> |
+| | |
+| Detail | <img src="assets/detail_dark.gif" alt="Detail screen preview" width="200" /> |
+| | |
+| Offline State | <img src="assets/offline_dark.gif" alt="Offline screen preview" width="200" /> |
+
+You may install and try to understand the code better, but make sure you provide your own Tmdb api
+key for data to show up.
+
+You should add your missing api key in directory `/utils/ApiKey.kt`. Obtain your own Tmdb Api Key
+from [here](https://www.themoviedb.org/settings/api)
+
+## :pencil: Blog
 
 ## :bulb: Motivation and Context
 
-`Jetpack Compose` will ease the implementing animations faster with less code. Check below previews.
-I have made use of `AnimatedVisibility` in many places in app.
-
-App navigation is built with `Compose` too which eliminates the previous way of using `Navigation`
-Component with `xml` graph. This made development faster also passing args and changing
-destinations.
+`Jetpack Compose` is Android’s modern toolkit for building native UI. It enables you to quickly
+bring your app to life with less code, powerful tools, and intuitive Kotlin APIs.
 
 Understanding to implement own `Theme` `Shape` `Typography` `Color` has became bit easier by
 referring to lot of official jetpack compose samples which are available in GitHub.
@@ -44,7 +60,6 @@ Best of all we got to do this in `Kotlin` way. Excited and long way to go from h
 
 <!-- Cat and images belongs to and taken from [Fandom](https://www.fandom.com/) . I do not own the
 images.  -->
-
 
 ## License
 
