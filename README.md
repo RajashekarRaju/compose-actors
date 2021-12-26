@@ -2,6 +2,19 @@
 
 ![AppBanner](https://github.com/RajashekarRaju/compose-actors/blob/dev/assets/banner.png)
 
+## :tokyo_tower: Architecture
+
+> ### Follows new architecture guide updated on [**14 December 2021**](https://android-developers.googleblog.com/2021/12/rebuilding-our-guide-to-app-architecture.html) from revamped guide to app architecture.
+> *Inspired from*
+> | [JetCaster](https://github.com/android/compose-samples/tree/main/Jetcaster) | [JetNews](https://github.com/android/compose-samples/tree/main/JetNews) | [JetSnack](https://github.com/android/compose-samples/tree/main/Jetsnack) |
+> | :-: | :-: | :-: |
+
+#### :musical_keyboard: Layer of this app.
+
+| Network |  | Repository |  | ViewModels |  | Screens |
+| :-:     | :-:     | :-:     | :-:    | :-:     | :-:     | :-:     |
+| `Data`<br> :gift::gift:<br> :gift::gift: | **--->** | `Source`<br> :gift: | **--->**<br>`Suspend` | `Coroutines`<br> :curly_loop::curly_loop: | **--->**<br>`State` | `Composables`<br>:iphone::iphone:<br>:iphone::iphone: |
+
 ## :dango: App Overview
 
 Android app built with `Jetpack Compose` shows actors information fetched from Tmdb Api.
@@ -132,12 +145,6 @@ if (!isOnline) {
     }
 }
 ```
-
-## :tokyo_tower: Architecture
-
-| Network |  | Repository |  | ViewModels |  | Screens |
-| :-:     | :-:     | :-:     | :-:    | :-:     | :-:     | :-:     |
-| `Data`<br> :gift::gift:<br> :gift::gift: | **--->** | `Source`<br> :gift: | **--->**<br>`Suspend` | `Coroutines`<br> :curly_loop::curly_loop: | **--->**<br>`State` | `Composables`<br>:iphone::iphone:<br>:iphone::iphone: |
 
 ### ViewModels
 
@@ -288,20 +295,6 @@ LoadNetworkImage(
 )
 ```
 
-## :pencil: Blog
-
-![AppPreview](https://github.com/RajashekarRaju/compose-actors/blob/dev/assets/main.gif)
-
-## :bulb: Motivation and Context
-
-`Jetpack Compose` is Android’s modern toolkit for building native UI. It enables you to quickly
-bring your app to life with less code, powerful tools, and intuitive Kotlin APIs.
-
-Understanding to implement own `Theme` `Shape` `Typography` `Color` has became bit easier by
-referring to lot of official jetpack compose samples which are available in GitHub.
-
-Best of all we got to do this in `Kotlin` way. Excited and long way to go from here.
-
 ## :art: App Theme
 
 ### :rainbow: Material Design 3.
@@ -355,6 +348,20 @@ val DarkColorPalette = darkColors(
 | Home | Search | Detail |
 | :--: | :----: | :----: |
 | <img src="assets/img_home_dark.png" alt="Home Dark" width="200" /> <br> <img src="assets/img_home_light.png" alt="Home Light" width="200" /> | <img src="assets/img_search_state_dark.png" alt="Search Dark" width="200" /> <br> <img src="assets/img_search_state_light.png" alt="Search Light" width="200" /> | <img src="assets/img_detail_adele_dark.png" alt="Detail Dark" width="200" /> <br> <img src="assets/img_detail_adele_light.png" alt="Detail Light" width="200" /> |
+
+## :pencil: Blog
+
+![AppPreview](https://github.com/RajashekarRaju/compose-actors/blob/dev/assets/main.gif)
+
+## :bulb: Motivation and Context
+
+`Jetpack Compose` is Android’s modern toolkit for building native UI. It enables you to quickly
+bring your app to life with less code, powerful tools, and intuitive Kotlin APIs.
+
+Understanding to implement own `Theme` `Shape` `Typography` `Color` has became bit easier by
+referring to lot of official jetpack compose samples which are available in GitHub.
+
+Best of all we got to do this in `Kotlin` way. Excited and long way to go from here.
 
 ## :trophy: Credits
 
