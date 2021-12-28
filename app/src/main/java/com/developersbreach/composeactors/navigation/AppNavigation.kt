@@ -11,8 +11,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.developersbreach.composeactors.ComposeActorsApp
-import com.developersbreach.composeactors.ui.actors.ActorsScreen
-import com.developersbreach.composeactors.ui.actors.ActorsViewModel
+import com.developersbreach.composeactors.ui.home.HomeScreen
+import com.developersbreach.composeactors.ui.home.HomeViewModel
 import com.developersbreach.composeactors.ui.details.DetailScreen
 import com.developersbreach.composeactors.ui.details.DetailsViewModel
 import com.developersbreach.composeactors.ui.search.SearchScreen
@@ -27,7 +27,7 @@ import com.developersbreach.composeactors.ui.search.SearchViewModel
  */
 @Composable
 fun AppNavigation(
-    startDestination: String = AppDestinations.ACTORS_ROUTE,
+    startDestination: String = AppDestinations.HOME_ROUTE,
     routes: AppDestinations = AppDestinations
 ) {
     // Create a NavHostController to handle navigation.
@@ -51,16 +51,16 @@ fun AppNavigation(
         /**
          * Start destination.
          * Can later navigate to [DetailScreen] and [SearchScreen]
-         * Has it's own viewModel [ActorsViewModel] with factory & repository instance.
+         * Has it's own viewModel [HomeViewModel] with factory & repository instance.
          */
         composable(
-            AppDestinations.ACTORS_ROUTE
+            AppDestinations.HOME_ROUTE
         ) {
-            ActorsScreen(
+            HomeScreen(
                 selectedActor = actions.selectedActor,
                 navigateToSearch = actions.navigateToSearch,
                 viewModel = viewModel(
-                    factory = ActorsViewModel.provideFactory(
+                    factory = HomeViewModel.provideFactory(
                         application, repository
                     )
                 )
@@ -87,7 +87,7 @@ fun AppNavigation(
         }
 
         /**
-         * Two destinations ([ActorsScreen] [SearchScreen]) can navigate to this screen.
+         * Two destinations ([HomeScreen] [SearchScreen]) can navigate to this screen.
          * Navigates back to previous screen with [AppActions.navigateUp]
          * Has it's own viewModel [DetailsViewModel] with factory & repository instance.
          *
