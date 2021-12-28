@@ -23,7 +23,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.model.Actor
-import com.developersbreach.composeactors.ui.actors.ActorsScreen
+import com.developersbreach.composeactors.ui.home.HomeScreen
 import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.SearchBar
 import com.developersbreach.composeactors.ui.components.ShowSearchProgress
@@ -36,7 +36,7 @@ import com.google.accompanist.insets.statusBarsHeight
  * @param viewModel to manage ui state of [SearchScreen]
  * @param navigateUp navigates user to previous screen.
  *
- * This destination can be accessed only from [ActorsScreen].
+ * This destination can be accessed only from [HomeScreen].
  * Shows searchable category list of actors in row.
  * Shows [SearchBar] search box looking ui in [TopAppBar]
  */
