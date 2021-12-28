@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.actors
+package com.developersbreach.composeactors.ui.home
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -29,7 +29,7 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 /**
  * @param selectedActor navigates to user clicked actor from row.
  * @param navigateToSearch navigates user to search screen.
- * @param viewModel to manage ui state of [ActorsScreen]
+ * @param viewModel to manage ui state of [HomeScreen]
  *
  * Default destination.
  * Shows category list of actors in row.
@@ -37,10 +37,10 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
  * If user is offline shows snackbar message.
  */
 @Composable
-fun ActorsScreen(
+fun HomeScreen(
     selectedActor: (Int) -> Unit,
     navigateToSearch: () -> Unit,
-    viewModel: ActorsViewModel
+    viewModel: HomeViewModel
 ) {
     val uiState = viewModel.uiState
     // Remember state of scaffold to manage snackbar
@@ -83,11 +83,11 @@ fun ActorsScreen(
 @Composable
 private fun ScreenContent(
     selectedActor: (Int) -> Unit,
-    viewState: ActorsViewState
+    viewState: HomeViewState
 ) {
     LazyColumn {
         item { Spacer(modifier = Modifier.padding(vertical = 16.dp)) }
-        // Show text for actors category list popular.
+        // Show text for home category list popular.
         item { CategoryTitle(stringResource(R.string.category_actors_popular)) }
         item { Spacer(modifier = Modifier.padding(vertical = 8.dp)) }
         // List row of all popular actors.
@@ -193,8 +193,8 @@ private fun MainAppBar(
 
 @Preview
 @Composable
-fun ActorsScreenPreview() {
+fun HomeScreenPreview() {
     ComposeActorsTheme(darkTheme = true) {
-        ScreenContent({ }, ActorsViewState())
+        ScreenContent({ }, HomeViewState())
     }
 }

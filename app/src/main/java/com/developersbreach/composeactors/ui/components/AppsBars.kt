@@ -20,8 +20,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.ui.actors.ActorsScreen
 import com.developersbreach.composeactors.ui.details.DetailScreen
+import com.developersbreach.composeactors.ui.home.HomeScreen
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
 /**
@@ -61,7 +61,7 @@ fun DetailAppBar(
 }
 
 /**
- * AppBar for [ActorsScreen]
+ * AppBar for [HomeScreen]
  */
 @Composable
 fun SearchBar(
