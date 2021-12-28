@@ -20,11 +20,6 @@ private val MontserratAlternates = FontFamily(
 // Material typography styles
 val Typography = Typography(
 
-    h3 = TextStyle(
-        fontFamily = MontserratAlternates,
-        fontWeight = FontWeight.W800,
-        fontSize = 32.sp
-    ),
     h4 = TextStyle(
         fontFamily = MontserratAlternates,
         fontWeight = FontWeight.W700,
@@ -53,5 +48,5 @@ val Typography = Typography(
     body2 = TextStyle(
         fontFamily = MontserratAlternates,
         fontSize = 14.sp
-    ),
+    )
 )
