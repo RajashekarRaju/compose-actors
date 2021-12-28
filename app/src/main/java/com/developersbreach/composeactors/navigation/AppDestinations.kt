@@ -5,7 +5,7 @@ package com.developersbreach.composeactors.navigation
  */
 object AppDestinations {
     // Default destination
-    const val ACTORS_ROUTE = "home"
+    const val HOME_ROUTE = "home"
     // destination for searching actors
     const val SEARCH_ROUTE = "search"
     // list to details destination

@@ -26,11 +26,11 @@ import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.model.ActorDetail
 import com.developersbreach.composeactors.model.Movie
-import com.developersbreach.composeactors.ui.actors.ActorsScreen
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.DetailAppBar
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
+import com.developersbreach.composeactors.ui.home.HomeScreen
 import com.developersbreach.composeactors.ui.search.SearchScreen
 import com.developersbreach.composeactors.utils.*
 import com.google.accompanist.insets.statusBarsHeight
@@ -42,7 +42,7 @@ import com.google.accompanist.insets.statusBarsHeight
  * @param viewModel to manage ui state of [DetailScreen]
  * @param navigateUp navigates user to previous screen.
  *
- * This destination can be accessed from [ActorsScreen] & [SearchScreen].
+ * This destination can be accessed from [HomeScreen] & [SearchScreen].
  */
 @Composable
 fun DetailScreen(

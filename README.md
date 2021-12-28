@@ -129,7 +129,7 @@ fun DrawCircleOnCanvas(
 
 | Dark | Light |
 | :--: | :---: |
-| <img src="assets/img_offline_dark.jpg" alt="Offline Dark" width="200" /> | <img src="assets/img_offline_light.jpg" alt="Offline Light" width="200" /> |
+| <img src="assets/offline_dark.gif" alt="Offline Dark" width="200" /> | <img src="assets/offline_light.gif" alt="Offline Light" width="200" /> |
 
 Show a Snackbar message with `SnackbarHostState`.
 
@@ -151,22 +151,22 @@ if (!isOnline) {
 All screens have their own ViewModels for managing the ui state.
 
 ```kotlin
-class ActorsViewModel(
+class HomeViewModel(
     application: Application,
     private val repository: AppRepository
 ) : AndroidViewModel(application) {
 
-    // Holds the state for values in ActorsViewState
-    var uiState by mutableStateOf(ActorsViewState())
+    // Holds the state for values in HomeViewState
+    var uiState by mutableStateOf(HomeViewState())
         private set
 
     init {
         // Update the values in uiState from all data sources.
         viewModelScope.launch {
-            uiState = ActorsViewState(isFetchingActors = true)
+            uiState = HomeViewState(isFetchingActors = true)
             val popularActorsList = repository.getPopularActorsData()
             val trendingActorsList = repository.getTrendingActorsData()
-            uiState = ActorsViewState(
+            uiState = HomeViewState(
                 popularActorList = popularActorsList,
                 trendingActorList = trendingActorsList,
                 isFetchingActors = false
@@ -179,7 +179,7 @@ class ActorsViewModel(
 Model for UI state of the screen.
 
 ```kotlin
-data class ActorsViewState(
+data class HomeViewState(
     var popularActorList: List<Actor> = emptyList(),
     var trendingActorList: List<Actor> = emptyList(),
     val isFetchingActors: Boolean = false,
@@ -190,8 +190,8 @@ ViewModel used in a screen-level composable.
 
 ```kotlin
 @Composable
-fun ActorsScreen(
-    viewModel: ActorsViewModel
+fun HomeScreen(
+    viewModel: HomeViewModel
 ) {
     val uiState = viewModel.uiState
     Box {
@@ -231,9 +231,9 @@ NavHost(
     composable(
         "Destination Route"
     ) {
-        ActorsScreen(
+        HomeScreen(
             viewModel = viewModel(
-                factory = ActorsViewModel.provideFactory(
+                factory = HomeViewModel.provideFactory(
                     application, repository
                 )
             )
@@ -248,13 +248,13 @@ NavHost(
 | :-|:-|:-|:- |
 | :page_facing_up: ActorsFetcher.kt<br> :page_facing_up: JsonRemoteData.kt<br> :page_facing_up: Urls.kt | :page_facing_up: AppActions.kt<br> :page_facing_up: AppDestinations.kt<br> :page_facing_up: AppNavigation.kt | :page_facing_up: AppRepository.kt | :page_facing_up: MainActivity.kt<br> :page_facing_up: Application.kt |
 | :file_folder: ui | :file_folder: utils | :file_folder: model |
-| :file_folder: actors<br> :file_folder: details<br> :file_folder: search<br> :file_folder: components<br> :file_folder: theme | :page_facing_up: InfiniteFlowingThings.kt<br> :page_facing_up: RevealEffect.kt<br> :page_facing_up: Utilities.kt<br> :page_facing_up: DynamicThemeGenerator.kt<br> :page_facing_up: NetworkManager.kt<br> :page_facing_up: NetworkQueryUtils.kt | :page_facing_up: Actor.kt<br> :page_facing_up: ActorDetail.kt<br> :page_facing_up: Movie.kt |
+| :file_folder: home<br> :file_folder: details<br> :file_folder: search<br> :file_folder: components<br> :file_folder: theme | :page_facing_up: InfiniteFlowingThings.kt<br> :page_facing_up: RevealEffect.kt<br> :page_facing_up: Utilities.kt<br> :page_facing_up: DynamicThemeGenerator.kt<br> :page_facing_up: NetworkManager.kt<br> :page_facing_up: NetworkQueryUtils.kt | :page_facing_up: Actor.kt<br> :page_facing_up: ActorDetail.kt<br> :page_facing_up: Movie.kt |
 
 ### :file_folder: Packages in ui
 
-| :file_folder: actors | :file_folder: details | :file_folder: search | :file_folder: components | :file_folder: theme |
+| :file_folder: home | :file_folder: details | :file_folder: search | :file_folder: components | :file_folder: theme |
 | :-|:-|:-|:-|:- |
-| :page_facing_up: ActorsScreen.kt<br> :page_facing_up: ActorsViewModel.kt<br> | :page_facing_up: DetailsScreen.kt<br> :page_facing_up: DetailsViewModel.kt | :page_facing_up: SearchScreen.kt<br> :page_facing_up: SearchViewModel.kt<br> :page_facing_up: AnimatedSearch.kt | :page_facing_up: AppBars.kt<br> :page_facing_up: Components.kt<br> :page_facing_up: NetworkImage.kt<br> :page_facing_up: Progress.kt | :page_facing_up: Color.kt<br> :page_facing_up: Shape.kt<br> :page_facing_up: Theme.kt<br> :page_facing_up: Type.kt |
+| :page_facing_up: HomeScreen.kt<br> :page_facing_up: HomeViewModel.kt<br> | :page_facing_up: DetailsScreen.kt<br> :page_facing_up: DetailsViewModel.kt | :page_facing_up: SearchScreen.kt<br> :page_facing_up: SearchViewModel.kt<br> :page_facing_up: AnimatedSearch.kt | :page_facing_up: AppBars.kt<br> :page_facing_up: Components.kt<br> :page_facing_up: NetworkImage.kt<br> :page_facing_up: Progress.kt | :page_facing_up: Color.kt<br> :page_facing_up: Shape.kt<br> :page_facing_up: Theme.kt<br> :page_facing_up: Type.kt |
 
 ## :cyclone: Image loading with Coil
 
