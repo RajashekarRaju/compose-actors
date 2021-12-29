@@ -1,6 +1,6 @@
 package com.developersbreach.composeactors.repository
 
-import com.developersbreach.composeactors.data.NetworkService
+import com.developersbreach.composeactors.data.NetworkDataSource
 import com.developersbreach.composeactors.model.Actor
 import com.developersbreach.composeactors.model.ActorDetail
 import com.developersbreach.composeactors.model.Movie
@@ -8,55 +8,62 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
- * Single data source for app data.
+ * Functions in this repository executes on an IO-optimized thread pool, makes main-safe.
+ * Repository class executes network calls from [NetworkDataSource] to return data.
+ * Data returned from this functions will be exposed to ViewModels.
  */
-class AppRepository {
+class AppRepository(
+    private val source: NetworkDataSource
+) {
 
-    private val networkService by lazy { NetworkService() }
-
+    // Suspend function executes network call.
     suspend fun getPopularActorsData(): List<Actor> {
-        val listData: List<Actor>
+        val popularActorsList: List<Actor>
         withContext(Dispatchers.IO) {
-            listData = networkService.getPopularActors()
+            popularActorsList = source.getPopularActors()
         }
-        return listData
+        return popularActorsList
     }
 
+    // Suspend function executes network call.
     suspend fun getTrendingActorsData(): List<Actor> {
-        val listData: List<Actor>
+        val trendingActorsList: List<Actor>
         withContext(Dispatchers.IO) {
-            listData = networkService.getTrendingActors()
+            trendingActorsList = source.getTrendingActors()
         }
-        return listData
+        return trendingActorsList
     }
 
+    // Suspend function executes network call.
     suspend fun getSelectedActorData(
         actorId: Int
     ): ActorDetail {
-        val selectedData: ActorDetail
+        val selectedActorDetails: ActorDetail
         withContext(Dispatchers.IO) {
-            selectedData = networkService.getActorDetails(actorId)
+            selectedActorDetails = source.getActorDetails(actorId)
         }
-        return selectedData
+        return selectedActorDetails
     }
 
+    // Suspend function executes network call.
     suspend fun getCastData(
         actorId: Int
     ): List<Movie> {
-        val listData: List<Movie>
+        val castListData: List<Movie>
         withContext(Dispatchers.IO) {
-            listData = networkService.getCastDetails(actorId)
+            castListData = source.getCastDetails(actorId)
         }
-        return listData
+        return castListData
     }
 
+    // Suspend function executes network call.
     suspend fun getSearchableActorsData(
         query: String
     ): List<Actor> {
-        val listData: List<Actor>
+        val searchableActorsList: List<Actor>
         withContext(Dispatchers.IO) {
-            listData = networkService.getSearchableActors(query)
+            searchableActorsList = source.getSearchableActors(query)
         }
-        return listData
+        return searchableActorsList
     }
 }
