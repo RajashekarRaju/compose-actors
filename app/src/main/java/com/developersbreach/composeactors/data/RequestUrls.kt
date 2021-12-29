@@ -6,7 +6,7 @@ import java.net.URL
 /**
  * Builds and returns URL used to fetch data from the server.
  */
-object Urls {
+object RequestUrls {
 
     private const val BASE_URL = "https://api.themoviedb.org/3/"
     private const val API_KEY = "api_key=${ApiKey.API_KEY}"

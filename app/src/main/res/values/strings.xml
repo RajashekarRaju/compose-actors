@@ -9,6 +9,7 @@
     <string name="cd_place_of_birth_icon">Place of birth icon</string>
     <string name="cd_actor_banner">Actor banner</string>
     <string name="cd_up_button">Go to previous screen</string>
+    <string name="cd_clear_icon">Clear search query</string>
 
     <string name="search_app_bar_title">Search actors</string>
     <string name="hint_search_query">Search actors</string>
@@ -21,5 +22,6 @@
     <string name="actor_popularity_subtitle">Popularity</string>
 
     <string name="offline_snackbar_message">You Are Offline!</string>
+    <string name="missing_api_key_snackbar_message">Tmdb Api Key Missing</string>
 
 </resources>

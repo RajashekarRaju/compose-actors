@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,11 +24,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.model.Actor
-import com.developersbreach.composeactors.ui.home.HomeScreen
 import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.SearchBar
 import com.developersbreach.composeactors.ui.components.ShowSearchProgress
 import com.developersbreach.composeactors.ui.details.DetailScreen
+import com.developersbreach.composeactors.ui.home.HomeScreen
 import com.google.accompanist.insets.statusBarsHeight
 
 
@@ -128,10 +129,20 @@ private fun SearchAppBar(
     // Immediately update and keep track of query from text field changes.
     var query: String by rememberSaveable { mutableStateOf("") }
 
-    // This top padding avoids colliding content with app bar.
+    // Handle clear icon state whether to show or hide based on query.
+    var showClearQueryIcon: Boolean by rememberSaveable { mutableStateOf(false) }
+    // Initially the icon state will be false and hidden since query will be empty.
+    if (query.isEmpty()) {
+        // If query is not empty show the icon
+        showClearQueryIcon = false
+    } else if (query.isNotEmpty()) {
+        // If query is empty hide the icon
+        showClearQueryIcon = true
+    }
+
     Column {
 
-        // Match the height of the status bar
+        // This Spacer avoids colliding content with app bar by matching the height of status bar.
         Spacer(
             Modifier
                 .fillMaxWidth()
@@ -158,21 +169,29 @@ private fun SearchAppBar(
                     )
                 }
             },
+            trailingIcon = {
+                if (showClearQueryIcon) {
+                    IconButton(onClick = { query = "" }) {
+                        Icon(
+                            imageVector = Icons.Rounded.Clear,
+                            tint = MaterialTheme.colors.onBackground,
+                            contentDescription = stringResource(id = R.string.cd_clear_icon)
+                        )
+                    }
+                }
+            },
             placeholder = { Text(text = stringResource(R.string.hint_search_query)) },
             textStyle = MaterialTheme.typography.subtitle1,
             singleLine = true,
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
+                keyboardType = KeyboardType.Text
             ),
             maxLines = 1,
             modifier = Modifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colors.background, RectangleShape),
             colors = TextFieldDefaults.textFieldColors(
-                focusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                backgroundColor = Color.Transparent,
+                backgroundColor = Color.Transparent
             )
         )
 

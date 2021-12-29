@@ -10,7 +10,7 @@ import org.json.JSONObject
  *
  */
 class JsonRemoteData(
-    private val urls: Urls
+    private val urls: RequestUrls
 ) {
 
     /**
