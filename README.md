@@ -1,13 +1,15 @@
 # Compose Actors :dancer:
 
+*Inspired from*
+| [JetCaster](https://github.com/android/compose-samples/tree/main/Jetcaster) | [JetNews](https://github.com/android/compose-samples/tree/main/JetNews) | [JetSnack](https://github.com/android/compose-samples/tree/main/Jetsnack) |
+| :-: | :-: | :-: |
+> [More compose content](https://developersbreach.com/compose/)
+
 ![AppBanner](https://github.com/RajashekarRaju/compose-actors/blob/dev/assets/banner.png)
 
 ## :tokyo_tower: Architecture
 
 > ### Follows new architecture guide updated on [**14 December 2021**](https://android-developers.googleblog.com/2021/12/rebuilding-our-guide-to-app-architecture.html) from revamped guide to app architecture.
-> *Inspired from*
-> | [JetCaster](https://github.com/android/compose-samples/tree/main/Jetcaster) | [JetNews](https://github.com/android/compose-samples/tree/main/JetNews) | [JetSnack](https://github.com/android/compose-samples/tree/main/Jetsnack) |
-> | :-: | :-: | :-: |
 
 #### :musical_keyboard: Layer of this app.
 
@@ -17,7 +19,7 @@
 
 ![ArchitectureLayer](/assets/architecture_layer.png)
 
-## :dango: App Overview
+## :dango: App Overview  [Compose Blog](https://developersbreach.com/compose/)
 
 Android app built with `Jetpack Compose` shows actors information fetched from Tmdb Api.
 You may install and try to understand the code better, but make sure you provide your own Tmdb api
@@ -353,7 +355,27 @@ val DarkColorPalette = darkColors(
 
 ## :pencil: Blog
 
-![AppPreview](https://github.com/RajashekarRaju/compose-actors/blob/dev/assets/main.gif)
+| <img src="/assets/reveal-effect-ani-blog-preview-image.png" alt="Article banner" width="600" /> |
+| :-: |
+| **Reveal effect animations in compose jetpack android** |
+| [*Read article*](https://developersbreach.com/reveal-effect-animations-compose-android/) |
+
+| <img src="/assets/banner.png" alt="Article banner" width="600" /> |
+| :-: |
+| **Compose and build android app with new architecture principles** |
+| [*Read article*](https://developersbreach.com/compose-android-app-architecture/) |
+
+| <img src="/assets/custom-animations-blog-preview-image.png" alt="Article banner" width="600" /> |
+| :-: |
+| **Custom shape animations pulsating circles on canvas in compose android** |
+| [*Read article*](https://developersbreach.com/custom-shape-animations-pulsating-circles-canvas-compose/) |
+
+| <img src="/assets/textfield-blog-preview-image.png" alt="Article banner" width="600" /> |
+| :-: |
+| **Search with TextField in list Compose Android Jetpack** |
+| [*Read article*](https://developersbreach.com/search-with-textfield-list-compose/) |
+
+![AppPreview](/assets/main.gif)
 
 ## :bulb: Motivation and Context
 
