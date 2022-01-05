@@ -5,7 +5,7 @@
 | :-: | :-: | :-: |
 > [More compose content](https://developersbreach.com/compose/)
 
-![AppBanner](https://github.com/RajashekarRaju/compose-actors/blob/dev/assets/banner.png)
+![AppBanner](/assets/banner.png)
 
 ## :tokyo_tower: Architecture
 
