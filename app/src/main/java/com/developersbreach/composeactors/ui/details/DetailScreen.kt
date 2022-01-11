@@ -2,6 +2,7 @@ package com.developersbreach.composeactors.ui.details
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -27,13 +28,13 @@ import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.model.ActorDetail
 import com.developersbreach.composeactors.model.Movie
 import com.developersbreach.composeactors.ui.components.CategoryTitle
-import com.developersbreach.composeactors.ui.components.DetailAppBar
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.home.HomeScreen
 import com.developersbreach.composeactors.ui.search.SearchScreen
 import com.developersbreach.composeactors.utils.*
 import com.google.accompanist.insets.statusBarsHeight
+import timber.log.Timber
 
 
 /**
@@ -46,6 +47,7 @@ import com.google.accompanist.insets.statusBarsHeight
  */
 @Composable
 fun DetailScreen(
+    selectedMovie: (Int) -> Unit,
     navigateUp: () -> Unit,
     viewModel: DetailsViewModel
 ) {
@@ -64,7 +66,7 @@ fun DetailScreen(
                     imageUrl = actorProfile
                 )
                 Column {
-                    ContentDetail(navigateUp, uiState)
+                    ContentDetail(navigateUp, uiState, selectedMovie)
                 }
                 ShowProgressIndicator(
                     isLoadingData = uiState.isFetchingDetails
@@ -112,6 +114,7 @@ private fun ActorBackgroundWithGradientForeground(
 private fun ContentDetail(
     navigateUp: () -> Unit,
     uiState: DetailsViewState,
+    selectedMovie: (Int) -> Unit,
 ) {
     val actorData = uiState.actorData
 
@@ -138,7 +141,7 @@ private fun ContentDetail(
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         item { ActorInfoHeader(actorData) }
-        item { ActorCastedMovies(uiState.castList) }
+        item { ActorCastedMovies(uiState.castList, selectedMovie) }
         item { ActorBiography(actorData?.biography) }
     }
     /** Scrollable actor details content */
@@ -196,7 +199,8 @@ private fun ActorInfoHeader(
  */
 @Composable
 private fun ActorCastedMovies(
-    cast: List<Movie>
+    cast: List<Movie>,
+    selectedMovie: (Int) -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically
@@ -224,7 +228,12 @@ private fun ActorCastedMovies(
             LoadNetworkImage(
                 imageUrl = movie.posterPathUrl,
                 contentDescription = stringResource(R.string.cd_movie_poster),
-                modifier = Modifier.size(100.dp, 150.dp),
+                modifier = Modifier
+                    .size(100.dp, 150.dp)
+                    .clickable {
+                        Timber.e("Id is ${movie.movieId}")
+                        selectedMovie(movie.movieId)
+                    },
                 shape = MaterialTheme.shapes.medium,
             )
         }
