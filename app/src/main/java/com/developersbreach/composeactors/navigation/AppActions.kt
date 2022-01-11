@@ -16,6 +16,11 @@ class AppActions(
         navController.navigate("${routes.ACTOR_DETAIL_ROUTE}/$actorId")
     }
 
+    // Triggered when user tries to navigate to details of an actor from list with Id.
+    val selectedMovie: (Int) -> Unit = { movieId: Int ->
+        navController.navigate("${routes.MOVIE_DETAILS_ROUTE}/$movieId")
+    }
+
     // Navigates to SearchScreen
     val navigateToSearch = {
         navController.navigate(routes.SEARCH_ROUTE)
