@@ -4,6 +4,7 @@ import com.developersbreach.composeactors.data.NetworkDataSource
 import com.developersbreach.composeactors.model.Actor
 import com.developersbreach.composeactors.model.ActorDetail
 import com.developersbreach.composeactors.model.Movie
+import com.developersbreach.composeactors.model.MovieDetail
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -65,5 +66,15 @@ class AppRepository(
             searchableActorsList = source.getSearchableActors(query)
         }
         return searchableActorsList
+    }
+
+    suspend fun getSelectedMovieData(
+        movieId: Int
+    ): MovieDetail {
+        val selectedMovieDetails: MovieDetail
+        withContext(Dispatchers.IO) {
+            selectedMovieDetails = source.getMovieDetailsById(movieId)
+        }
+        return selectedMovieDetails
     }
 }
