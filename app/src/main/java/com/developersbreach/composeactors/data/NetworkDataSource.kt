@@ -3,6 +3,7 @@ package com.developersbreach.composeactors.data
 import com.developersbreach.composeactors.model.Actor
 import com.developersbreach.composeactors.model.ActorDetail
 import com.developersbreach.composeactors.model.Movie
+import com.developersbreach.composeactors.model.MovieDetail
 import com.developersbreach.composeactors.utils.NetworkQueryUtils
 
 /**
@@ -70,5 +71,13 @@ class NetworkDataSource {
         val requestUrl = requestUrls.getSearchActorsUrl(query)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchActorsJsonData(response)
+    }
+
+    fun getMovieDetailsById(
+        movieId: Int
+    ): MovieDetail {
+        val requestUrl = requestUrls.getMovieDetailsUrl(movieId)
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        return jsonData.fetchMovieDetailsJsonData(response)
     }
 }
