@@ -37,4 +37,9 @@ object RequestUrls {
     fun getSearchActorsUrl(query: String): URL {
         return URL("${BASE_URL}search/person?$API_KEY&query=$query")
     }
+
+    // https://api.themoviedb.org/3/movie/{movie_id}?api_key=API_KEY
+    fun getMovieDetailsUrl(movieId: Int): URL {
+        return URL("${BASE_URL}movie/$movieId?$API_KEY")
+    }
 }

@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.model.Actor
 import com.developersbreach.composeactors.ui.components.AppDivider
-import com.developersbreach.composeactors.ui.components.SearchBar
 import com.developersbreach.composeactors.ui.components.ShowSearchProgress
 import com.developersbreach.composeactors.ui.details.DetailScreen
 import com.developersbreach.composeactors.ui.home.HomeScreen
@@ -39,7 +38,7 @@ import com.google.accompanist.insets.statusBarsHeight
  *
  * This destination can be accessed only from [HomeScreen].
  * Shows searchable category list of actors in row.
- * Shows [SearchBar] search box looking ui in [TopAppBar]
+ * Shows [SearchAppBar] search box looking ui in [TopAppBar]
  */
 @Composable
 fun SearchScreen(

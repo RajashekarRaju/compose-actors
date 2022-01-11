@@ -11,10 +11,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.developersbreach.composeactors.ComposeActorsApp
-import com.developersbreach.composeactors.ui.home.HomeScreen
-import com.developersbreach.composeactors.ui.home.HomeViewModel
 import com.developersbreach.composeactors.ui.details.DetailScreen
 import com.developersbreach.composeactors.ui.details.DetailsViewModel
+import com.developersbreach.composeactors.ui.home.HomeScreen
+import com.developersbreach.composeactors.ui.home.HomeViewModel
+import com.developersbreach.composeactors.ui.movieDetail.MovieDetailScreen
+import com.developersbreach.composeactors.ui.movieDetail.MovieDetailViewModel
 import com.developersbreach.composeactors.ui.search.SearchScreen
 import com.developersbreach.composeactors.ui.search.SearchViewModel
 
@@ -105,12 +107,35 @@ fun AppNavigation(
             val arguments = requireNotNull(backStackEntry.arguments)
             val actorId = arguments.getInt(routes.ACTOR_DETAIL_ID_KEY)
             DetailScreen(
+                selectedMovie = actions.selectedMovie,
                 navigateUp = actions.navigateUp,
                 viewModel = viewModel(
                     factory = DetailsViewModel.provideFactory(
                         application, actorId, repository
                     )
                 )
+            )
+        }
+
+        composable(
+            route = "${AppDestinations.MOVIE_DETAILS_ROUTE}/{${routes.MOVIE_DETAILS_ID_KEY}}",
+            arguments = listOf(
+                navArgument(
+                    routes.MOVIE_DETAILS_ID_KEY
+                ) {
+                    type = NavType.IntType
+                })
+        ) { backStackEntry ->
+            val arguments = requireNotNull(backStackEntry.arguments)
+            val movieId = arguments.getInt(routes.MOVIE_DETAILS_ID_KEY)
+            MovieDetailScreen(
+                navigateUp = actions.navigateUp,
+                viewModel = viewModel(
+                    factory = MovieDetailViewModel.provideFactory(
+                        application, movieId, repository
+                    )
+                ),
+                selectedMovie = actions.selectedMovie
             )
         }
     }

@@ -3,6 +3,7 @@ package com.developersbreach.composeactors.data
 import com.developersbreach.composeactors.model.Actor
 import com.developersbreach.composeactors.model.ActorDetail
 import com.developersbreach.composeactors.model.Movie
+import com.developersbreach.composeactors.model.MovieDetail
 import org.json.JSONObject
 
 /**
@@ -72,10 +73,70 @@ class JsonRemoteData(
 
         for (notI: Int in 0 until movieJsonArray.length()) {
             val jsonObject = movieJsonArray.getJSONObject(notI)
+            val movieId = jsonObject.getInt("id")
             val posterPathUrl = jsonObject.getString("poster_path")
             val posterPath = "${urls.LOW_RES_IMAGE}$posterPathUrl"
-            movieList.add(Movie(posterPath))
+            movieList.add(Movie(movieId, posterPath))
         }
         return movieList
+    }
+
+    @Throws(Exception::class)
+    fun fetchMovieDetailsJsonData(
+        response: String
+    ): MovieDetail {
+
+        val jsonObject = JSONObject(response)
+        val movieId = jsonObject.getInt("id")
+        val originalTitle = jsonObject.getString("original_title")
+        val bannerUrl = jsonObject.getString("backdrop_path")
+        val banner = "${urls.HIGH_RES_IMAGE}$bannerUrl"
+        val budget = jsonObject.getString("budget")
+        val originalLanguage = jsonObject.getString("original_language")
+        val overview = jsonObject.getString("overview")
+        val popularity = jsonObject.getDouble("popularity")
+        val posterUrl = jsonObject.getString("poster_path")
+        val poster = "${urls.HIGH_RES_IMAGE}$posterUrl"
+        val releaseData = jsonObject.getString("release_data")
+        val revenue = jsonObject.getLong("revenue")
+        val runtime = jsonObject.getInt("runtime")
+        val status = jsonObject.getString("status")
+        val tagline = jsonObject.getString("tagline")
+        val voteAverage = jsonObject.getDouble("vote_average")
+
+        var genres: List<String> = emptyList()
+        val genresArray = jsonObject.getJSONArray("genres")
+        for (notI: Int in 0 until genresArray.length()) {
+            val genresObject = genresArray.getJSONObject(notI)
+            val genreName = genresObject.getString("name")
+            genres = listOf(genreName)
+        }
+
+        var productionCompanies: List<String> = emptyList()
+        val productionCompaniesArray = jsonObject.getJSONArray("production_companies")
+        for (notI: Int in 0 until productionCompaniesArray.length()) {
+            val productionCompaniesObject = productionCompaniesArray.getJSONObject(notI)
+            val productionCompanyName = productionCompaniesObject.getString("name")
+            productionCompanies = listOf(productionCompanyName)
+        }
+
+        return MovieDetail(
+            movieId = movieId,
+            movieTitle = originalTitle,
+            banner = banner,
+            budget = budget,
+            genres = genres,
+            originalLanguage = originalLanguage,
+            overview = overview,
+            popularity = popularity,
+            poster = poster,
+            productionCompanies = productionCompanies,
+            releaseData = releaseData,
+            revenue = revenue,
+            runtime = runtime,
+            status = status,
+            tagline = tagline,
+            voteAverage = voteAverage
+        )
     }
 }

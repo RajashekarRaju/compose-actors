@@ -32,7 +32,7 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
  *
  * Default destination.
  * Shows category list of actors in row.
- * Shows [SearchBar] search box looking ui in [TopAppBar]
+ * Shows [HomeAppBar] search box looking ui in [TopAppBar]
  * If user is offline shows snackbar message.
  */
 @Composable
@@ -174,7 +174,7 @@ private fun ItemActor(
 }
 
 /**
- * Appbar contains [SearchBar] which does not perform search query directly.
+ * Appbar contains [HomeAppBar] which does not perform search query directly.
  * Instead navigates to search screen to submit query.
  * @param navigateToSearch navigates user to search screen.
  */
@@ -183,7 +183,7 @@ private fun MainAppBar(
     navigateToSearch: () -> Unit
 ) {
     TopAppBar(
-        content = { SearchBar(navigateToSearch) },
+        content = { HomeAppBar(navigateToSearch) },
         backgroundColor = MaterialTheme.colors.background,
         elevation = 0.dp,
         modifier = Modifier.padding(horizontal = 16.dp),
