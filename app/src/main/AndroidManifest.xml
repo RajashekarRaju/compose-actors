@@ -7,7 +7,6 @@
 
     <application
         android:name=".ComposeActorsApp"
-        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
@@ -16,7 +15,6 @@
         <activity
             android:name="com.developersbreach.composeactors.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.ComposeActors">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
