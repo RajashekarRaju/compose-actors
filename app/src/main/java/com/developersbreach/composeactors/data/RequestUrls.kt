@@ -42,4 +42,15 @@ object RequestUrls {
     fun getMovieDetailsUrl(movieId: Int): URL {
         return URL("${BASE_URL}movie/$movieId?$API_KEY")
     }
+
+    // 299536
+    // https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=API_KEY
+    fun getMovieTrailerUrl(movieId: Int): URL {
+        return URL("${BASE_URL}movie/$movieId/videos?$API_KEY")
+    }
+
+    // https://img.youtube.com/vi/SUXWAEX2jlg/sddefault.jpg
+    fun buildMovieTrailerThumbnail(trailerId: String): URL {
+        return URL("https://img.youtube.com/vi/$trailerId/sddefault.jpg")
+    }
 }
