@@ -8,13 +8,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
@@ -34,7 +35,7 @@ import com.developersbreach.composeactors.ui.home.HomeScreen
 import com.developersbreach.composeactors.ui.search.SearchScreen
 import com.developersbreach.composeactors.utils.*
 import com.google.accompanist.insets.statusBarsHeight
-import timber.log.Timber
+import kotlinx.coroutines.launch
 
 
 /**
@@ -45,6 +46,7 @@ import timber.log.Timber
  *
  * This destination can be accessed from [HomeScreen] & [SearchScreen].
  */
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DetailScreen(
     selectedMovie: (Int) -> Unit,
@@ -54,23 +56,36 @@ fun DetailScreen(
     val uiState = viewModel.uiState
     val actorProfile = "${uiState.actorData?.profileUrl}"
 
+    val modalSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true,
+    )
+
     Surface(
         color = MaterialTheme.colors.background
     ) {
-        ActorDynamicTheme(
-            podcastImageUrl = actorProfile
+        ModalBottomSheetLayout(
+            sheetContent = { SheetContent(viewModel, selectedMovie) },
+            sheetState = modalSheetState,
+            scrimColor = Color.Black.copy(alpha = 0.5f),
+            sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+            sheetBackgroundColor = MaterialTheme.colors.background
         ) {
-            Box {
-                // Draws gradient from image and overlays on it.
-                ActorBackgroundWithGradientForeground(
-                    imageUrl = actorProfile
-                )
-                Column {
-                    ContentDetail(navigateUp, uiState, selectedMovie)
+            ActorDynamicTheme(
+                podcastImageUrl = actorProfile
+            ) {
+                Box {
+                    // Draws gradient from image and overlays on it.
+                    ActorBackgroundWithGradientForeground(
+                        imageUrl = actorProfile
+                    )
+                    Column {
+                        ContentDetail(navigateUp, viewModel, modalSheetState)
+                    }
+                    ShowProgressIndicator(
+                        isLoadingData = uiState.isFetchingDetails
+                    )
                 }
-                ShowProgressIndicator(
-                    isLoadingData = uiState.isFetchingDetails
-                )
             }
         }
     }
@@ -110,13 +125,14 @@ private fun ActorBackgroundWithGradientForeground(
 }
 
 // Main content for this screen
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ContentDetail(
     navigateUp: () -> Unit,
-    uiState: DetailsViewState,
-    selectedMovie: (Int) -> Unit,
+    viewModel: DetailsViewModel,
+    modalSheetState: ModalBottomSheetState,
 ) {
-    val actorData = uiState.actorData
+    val actorData = viewModel.uiState.actorData
 
     // Match the height of the status bar
     Spacer(
@@ -141,7 +157,7 @@ private fun ContentDetail(
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         item { ActorInfoHeader(actorData) }
-        item { ActorCastedMovies(uiState.castList, selectedMovie) }
+        item { ActorCastedMovies(viewModel, modalSheetState) }
         item { ActorBiography(actorData?.biography) }
     }
     /** Scrollable actor details content */
@@ -194,14 +210,17 @@ private fun ActorInfoHeader(
 }
 
 /**
- * @param cast list with all movies which actor casted in.
  * Cast icon and title on top and list below.
  */
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ActorCastedMovies(
-    cast: List<Movie>,
-    selectedMovie: (Int) -> Unit
+    viewModel: DetailsViewModel,
+    modalSheetState: ModalBottomSheetState
 ) {
+    val cast: List<Movie> = viewModel.uiState.castList
+    val coroutineScope = rememberCoroutineScope()
+
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -228,13 +247,15 @@ private fun ActorCastedMovies(
             LoadNetworkImage(
                 imageUrl = movie.posterPathUrl,
                 contentDescription = stringResource(R.string.cd_movie_poster),
+                shape = MaterialTheme.shapes.medium,
                 modifier = Modifier
                     .size(100.dp, 150.dp)
                     .clickable {
-                        Timber.e("Id is ${movie.movieId}")
-                        selectedMovie(movie.movieId)
+                        viewModel.getSelectedMovieDetails(movie.movieId)
+                        coroutineScope.launch {
+                            modalSheetState.show()
+                        }
                     },
-                shape = MaterialTheme.shapes.medium,
             )
         }
     }

@@ -1,5 +1,8 @@
 package com.developersbreach.composeactors.model
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class MovieDetail(
     val movieId: Int,
     val movieTitle: String,
@@ -11,7 +14,7 @@ data class MovieDetail(
     val popularity: Double,
     val poster: String,
     val productionCompanies: List<String>,
-    val releaseData: String,
+    val releaseDate: String,
     val revenue: Long,
     val runtime: Int,
     val status: String,
