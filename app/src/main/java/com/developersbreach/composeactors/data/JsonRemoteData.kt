@@ -97,7 +97,7 @@ class JsonRemoteData(
         val popularity = jsonObject.getDouble("popularity")
         val posterUrl = jsonObject.getString("poster_path")
         val poster = "${urls.HIGH_RES_IMAGE}$posterUrl"
-        val releaseData = jsonObject.getString("release_data")
+        val releaseData = jsonObject.getString("release_date")
         val revenue = jsonObject.getLong("revenue")
         val runtime = jsonObject.getInt("runtime")
         val status = jsonObject.getString("status")
@@ -131,7 +131,7 @@ class JsonRemoteData(
             popularity = popularity,
             poster = poster,
             productionCompanies = productionCompanies,
-            releaseData = releaseData,
+            releaseDate = releaseData,
             revenue = revenue,
             runtime = runtime,
             status = status,
