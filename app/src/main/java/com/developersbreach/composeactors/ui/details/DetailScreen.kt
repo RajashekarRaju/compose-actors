@@ -34,7 +34,6 @@ import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.home.HomeScreen
 import com.developersbreach.composeactors.ui.search.SearchScreen
 import com.developersbreach.composeactors.utils.*
-import com.google.accompanist.insets.statusBarsHeight
 import kotlinx.coroutines.launch
 
 
@@ -138,7 +137,7 @@ private fun ContentDetail(
     Spacer(
         Modifier
             .fillMaxWidth()
-            .statusBarsHeight()
+            .statusBarsPadding()
     )
 
     DetailAppBar(

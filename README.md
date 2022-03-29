@@ -1,5 +1,13 @@
 # Compose Actors :dancer:
 
+### Working on v0.2.0 release
+
+* Modal bottom sheets & Bottom sheets.
+* Migrated to compose insets from accompanist.
+* Added new movie details screen, made changes to actors details screen.
+* Collapsable TopBars, BottomBars, Scroll effects, new animations.
+* OnBoarding screen with Pager.
+
 *Inspired from*
 | [JetCaster](https://github.com/android/compose-samples/tree/main/Jetcaster) | [JetNews](https://github.com/android/compose-samples/tree/main/JetNews) | [JetSnack](https://github.com/android/compose-samples/tree/main/Jetsnack) |
 | :-: | :-: | :-: |
