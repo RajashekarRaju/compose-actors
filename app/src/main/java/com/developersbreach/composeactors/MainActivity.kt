@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import com.developersbreach.composeactors.navigation.AppNavigation
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
-import com.google.accompanist.insets.ProvideWindowInsets
 
 class MainActivity : ComponentActivity() {
 
@@ -16,9 +15,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ComposeActorsTheme {
-                ProvideWindowInsets {
-                    AppNavigation()
-                }
+                AppNavigation()
             }
         }
     }

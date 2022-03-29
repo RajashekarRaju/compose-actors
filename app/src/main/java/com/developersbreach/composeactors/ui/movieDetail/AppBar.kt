@@ -2,6 +2,7 @@ package com.developersbreach.composeactors.ui.movieDetail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -26,7 +27,7 @@ fun MovieDetailAppBar(
     title: String?
 ) {
     Box(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().statusBarsPadding()
     ) {
         IconButton(
             onClick = navigateUp,

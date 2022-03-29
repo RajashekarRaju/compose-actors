@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.google.accompanist.insets.statusBarsHeight
 
 /**
  * Content inside modal sheet.
@@ -170,7 +169,7 @@ fun SheetContent(
         Spacer(
             Modifier
                 .fillMaxWidth()
-                .statusBarsHeight()
+                .statusBarsPadding()
         )
     }
 }

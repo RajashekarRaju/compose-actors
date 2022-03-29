@@ -28,7 +28,6 @@ import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.ShowSearchProgress
 import com.developersbreach.composeactors.ui.details.DetailScreen
 import com.developersbreach.composeactors.ui.home.HomeScreen
-import com.google.accompanist.insets.statusBarsHeight
 
 
 /**
@@ -145,7 +144,7 @@ private fun SearchAppBar(
         Spacer(
             Modifier
                 .fillMaxWidth()
-                .statusBarsHeight()
+                .statusBarsPadding()
         )
 
         TextField(

@@ -22,8 +22,6 @@ import com.developersbreach.composeactors.model.Actor
 import com.developersbreach.composeactors.ui.components.*
 import com.developersbreach.composeactors.ui.details.DetailScreen
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 
 /**
  * @param selectedActor navigates to user clicked actor from row.
@@ -186,10 +184,10 @@ private fun MainAppBar(
         content = { HomeAppBar(navigateToSearch) },
         backgroundColor = MaterialTheme.colors.background,
         elevation = 0.dp,
-        modifier = Modifier.padding(horizontal = 16.dp),
-        contentPadding = rememberInsetsPaddingValues(
-            LocalWindowInsets.current.statusBars,
-        )
+        modifier = Modifier.padding(top = 4.dp, start = 16.dp, end = 16.dp),
+        contentPadding = WindowInsets.statusBars
+            .only(WindowInsetsSides.Top)
+            .asPaddingValues()
     )
 }
 
