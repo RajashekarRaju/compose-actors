@@ -79,9 +79,6 @@ dependencies {
     // Coil for image loading
     implementation "io.coil-kt:coil-compose:1.4.0"
 
-    // Accompanist
-    implementation 'com.google.accompanist:accompanist-insets:0.22.1-rc'
-
     // Palette
     implementation "androidx.palette:palette-ktx:1.0.0"
 }
