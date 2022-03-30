@@ -8,6 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -88,14 +89,17 @@ fun AppDivider(
  */
 @Composable
 fun CategoryTitle(
-    title: String
+    title: String,
+    textColor: Color = MaterialTheme.colors.onBackground,
+    alpha: Float = 0.5f,
+    startPadding: Dp = 20.dp
 ) {
     Text(
         text = title,
         style = MaterialTheme.typography.h6,
-        color = MaterialTheme.colors.onBackground,
+        color = textColor,
         modifier = Modifier
-            .padding(start = 20.dp)
-            .alpha(0.5f)
+            .padding(start = startPadding)
+            .alpha(alpha)
     )
 }

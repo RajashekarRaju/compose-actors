@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
@@ -19,12 +20,30 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
+/**
+ * Appbar contains [HomeAppBar] which does not perform search query directly.
+ * Instead navigates to search screen to submit query.
+ * @param navigateToSearch navigates user to search screen.
+ */
+@Composable
+fun MainAppBar(
+    navigateToSearch: () -> Unit
+) {
+    TopAppBar(
+        content = { HomeAppBar(navigateToSearch) },
+        backgroundColor = MaterialTheme.colors.background,
+        elevation = 0.dp,
+        modifier = Modifier
+            .statusBarsPadding()
+            .padding(top = 4.dp, start = 16.dp, end = 16.dp)
+    )
+}
 
 /**
  * AppBar for [HomeScreen]
  */
 @Composable
-fun HomeAppBar(
+private fun HomeAppBar(
     navigateToSearch: () -> Unit
 ) {
     Row(
