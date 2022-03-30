@@ -19,8 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.model.Actor
+import com.developersbreach.composeactors.ui.actorDetails.DetailScreen
 import com.developersbreach.composeactors.ui.components.*
-import com.developersbreach.composeactors.ui.details.DetailScreen
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
 /**
@@ -85,21 +85,22 @@ private fun ScreenContent(
     selectedActor: (Int) -> Unit,
     viewState: HomeViewState
 ) {
-    LazyColumn {
-        item { Spacer(modifier = Modifier.padding(vertical = 16.dp)) }
+    LazyColumn(
+        contentPadding = PaddingValues(vertical = 16.dp)
+    ) {
         // Show text for home category list popular.
-        item { CategoryTitle(stringResource(R.string.category_actors_popular)) }
-        item { Spacer(modifier = Modifier.padding(vertical = 8.dp)) }
-        // List row of all popular actors.
-        item { ItemActorList(viewState.popularActorList, selectedActor) }
-        item { AppDivider(verticalPadding = 32.dp) }
-        // Show text for actors category list trending.
-        item { CategoryTitle(stringResource(R.string.category_actors_trending)) }
-        item { Spacer(modifier = Modifier.padding(vertical = 8.dp)) }
-        // List row of all trending actors.
-        item { ItemActorList(viewState.trendingActorList, selectedActor) }
-        // Extra spacing to avoid content collide with navigation bars.
-        item { Spacer(modifier = Modifier.padding(vertical = 32.dp)) }
+        item {
+            CategoryTitle(stringResource(R.string.category_actors_popular))
+            Spacer(modifier = Modifier.padding(vertical = 8.dp))
+            // List row of all popular actors.
+            ItemActorList(viewState.popularActorList, selectedActor)
+            AppDivider(verticalPadding = 32.dp)
+            // Show text for actors category list trending.
+            CategoryTitle(stringResource(R.string.category_actors_trending))
+            Spacer(modifier = Modifier.padding(vertical = 8.dp))
+            // List row of all trending actors.
+            ItemActorList(viewState.trendingActorList, selectedActor)
+        }
     }
 }
 
@@ -113,10 +114,16 @@ private fun ItemActorList(
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = Modifier.padding(start = 16.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
-        items(actorsList) { actor ->
-            ItemActor(actor = actor, selectedActor = selectedActor)
+        items(
+            items = actorsList,
+            key = { it.actorId }
+        ) { actor ->
+            ItemActor(
+                actor = actor,
+                selectedActor = selectedActor
+            )
         }
     }
 }
@@ -169,26 +176,6 @@ private fun ItemActor(
             Spacer(modifier = Modifier.padding(vertical = 12.dp))
         }
     }
-}
-
-/**
- * Appbar contains [HomeAppBar] which does not perform search query directly.
- * Instead navigates to search screen to submit query.
- * @param navigateToSearch navigates user to search screen.
- */
-@Composable
-private fun MainAppBar(
-    navigateToSearch: () -> Unit
-) {
-    TopAppBar(
-        content = { HomeAppBar(navigateToSearch) },
-        backgroundColor = MaterialTheme.colors.background,
-        elevation = 0.dp,
-        modifier = Modifier.padding(top = 4.dp, start = 16.dp, end = 16.dp),
-        contentPadding = WindowInsets.statusBars
-            .only(WindowInsetsSides.Top)
-            .asPaddingValues()
-    )
 }
 
 @Preview
