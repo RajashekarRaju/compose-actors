@@ -24,33 +24,61 @@ object RequestUrls {
     }
 
     // https://api.themoviedb.org/3/person/3233?api_key=API_KEY
-    fun getActorDetailsUrl(actorId: Int): URL {
+    fun getActorDetailsUrl(
+        actorId: Int
+    ): URL {
         return URL("${BASE_URL}person/${actorId}?$API_KEY")
     }
 
     // https://api.themoviedb.org/3/person/3233/movie_credits?api_key=API_KEY
-    fun getCastDetailsUrl(actorId: Int): URL {
+    fun getCastDetailsUrl(
+        actorId: Int
+    ): URL {
         return URL("${BASE_URL}person/${actorId}/movie_credits?$API_KEY")
     }
 
     // https://api.themoviedb.org/3/search/person?api_key=API_KEY&query=$pacino
-    fun getSearchActorsUrl(query: String): URL {
+    fun getSearchActorsUrl(
+        query: String
+    ): URL {
         return URL("${BASE_URL}search/person?$API_KEY&query=$query")
     }
 
     // https://api.themoviedb.org/3/movie/{movie_id}?api_key=API_KEY
-    fun getMovieDetailsUrl(movieId: Int): URL {
+    fun getMovieDetailsUrl(
+        movieId: Int
+    ): URL {
         return URL("${BASE_URL}movie/$movieId?$API_KEY")
+    }
+
+    // https://api.themoviedb.org/3/movie/{movie_id}/recommendations?api_key=API_KEY&page=1
+    fun getRecommendedMoviesUrl(
+        movieId: Int,
+        page: Int = 1
+    ): URL {
+        return URL("${BASE_URL}movie/$movieId/recommendations?$API_KEY&page=$page")
+    }
+
+    // https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key=API_KEY&page=1
+    fun getSimilarMoviesUrl(
+        movieId: Int,
+        page: Int = 1
+    ): URL {
+        return URL("${BASE_URL}movie/$movieId/similar?$API_KEY&page=$page")
     }
 
     // 299536
     // https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=API_KEY
-    fun getMovieTrailerUrl(movieId: Int): URL {
+    fun getMovieTrailerUrl(
+        movieId: Int
+    ): URL {
         return URL("${BASE_URL}movie/$movieId/videos?$API_KEY")
     }
 
     // https://img.youtube.com/vi/SUXWAEX2jlg/sddefault.jpg
-    fun buildMovieTrailerThumbnail(trailerId: String): URL {
+    fun buildMovieTrailerThumbnail(
+        trailerId: String
+    ): URL {
         return URL("https://img.youtube.com/vi/$trailerId/sddefault.jpg")
     }
 }

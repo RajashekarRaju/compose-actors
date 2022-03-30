@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.details
+package com.developersbreach.composeactors.ui.actorDetails
 
 import android.app.Application
 import androidx.compose.runtime.getValue

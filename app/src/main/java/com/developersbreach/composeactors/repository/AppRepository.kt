@@ -77,4 +77,24 @@ class AppRepository(
         }
         return selectedMovieDetails
     }
+
+    suspend fun getSimilarMoviesByIdData(
+        movieId: Int
+    ): List<Movie> {
+        val similarMovies: List<Movie>
+        withContext(Dispatchers.IO) {
+            similarMovies = source.getSimilarMoviesById(movieId)
+        }
+        return similarMovies
+    }
+
+    suspend fun getRecommendedMoviesByIdData(
+        movieId: Int
+    ): List<Movie> {
+        val recommendedMovies: List<Movie>
+        withContext(Dispatchers.IO) {
+            recommendedMovies = source.getRecommendedMoviesById(movieId)
+        }
+        return recommendedMovies
+    }
 }

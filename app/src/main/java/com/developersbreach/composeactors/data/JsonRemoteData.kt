@@ -139,4 +139,26 @@ class JsonRemoteData(
             voteAverage = voteAverage
         )
     }
+
+    /**
+     * @return similar & recommended movies data list.
+     */
+    @Throws(Exception::class)
+    fun fetchSimilarAndRecommendedMoviesJsonData(
+        response: String
+    ): List<Movie> {
+
+        val movieList: MutableList<Movie> = ArrayList()
+        val baseJsonArray = JSONObject(response)
+        val actorsJsonArray = baseJsonArray.getJSONArray("results")
+
+        for (notI: Int in 0 until actorsJsonArray.length()) {
+            val jsonObject = actorsJsonArray.getJSONObject(notI)
+            val movieId = jsonObject.getInt("id")
+            val posterPathUrl = jsonObject.getString("poster_path")
+            val posterPath = "${urls.LOW_RES_IMAGE}$posterPathUrl"
+            movieList.add(Movie(movieId, posterPath))
+        }
+        return movieList
+    }
 }

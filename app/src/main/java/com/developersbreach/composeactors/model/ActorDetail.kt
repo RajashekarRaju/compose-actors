@@ -1,5 +1,8 @@
 package com.developersbreach.composeactors.model
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class ActorDetail(
     val actorName: String,
     val profileUrl: String,

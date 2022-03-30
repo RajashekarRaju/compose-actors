@@ -1,5 +1,6 @@
-package com.developersbreach.composeactors.ui.details
+package com.developersbreach.composeactors.ui.actorDetails
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -11,7 +12,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -23,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
@@ -60,31 +65,23 @@ fun DetailScreen(
         skipHalfExpanded = true,
     )
 
-    Surface(
-        color = MaterialTheme.colors.background
+    ModalBottomSheetLayout(
+        sheetContent = { SheetContent(viewModel, selectedMovie) },
+        sheetState = modalSheetState,
+        scrimColor = Color.Black.copy(alpha = 0.5f),
+        sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+        sheetBackgroundColor = MaterialTheme.colors.background
     ) {
-        ModalBottomSheetLayout(
-            sheetContent = { SheetContent(viewModel, selectedMovie) },
-            sheetState = modalSheetState,
-            scrimColor = Color.Black.copy(alpha = 0.5f),
-            sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-            sheetBackgroundColor = MaterialTheme.colors.background
+        ActorDynamicTheme(
+            podcastImageUrl = actorProfile
         ) {
-            ActorDynamicTheme(
-                podcastImageUrl = actorProfile
-            ) {
-                Box {
-                    // Draws gradient from image and overlays on it.
-                    ActorBackgroundWithGradientForeground(
-                        imageUrl = actorProfile
-                    )
-                    Column {
-                        ContentDetail(navigateUp, viewModel, modalSheetState)
-                    }
-                    ShowProgressIndicator(
-                        isLoadingData = uiState.isFetchingDetails
-                    )
-                }
+            Box {
+                // Draws gradient from image and overlays on it.
+                ActorBackgroundWithGradientForeground(imageUrl = actorProfile)
+                // Main details content
+                ContentDetail(navigateUp, viewModel, modalSheetState)
+                // Progress bar
+                ShowProgressIndicator(isLoadingData = uiState.isFetchingDetails)
             }
         }
     }
@@ -106,6 +103,7 @@ private fun ActorBackgroundWithGradientForeground(
             imageUrl = imageUrl,
             contentDescription = stringResource(R.string.cd_actor_banner),
             shape = RectangleShape,
+            showAnimProgress = false,
             modifier = modifier
                 .fillMaxSize()
                 .alpha(0.5f)
@@ -133,33 +131,39 @@ private fun ContentDetail(
 ) {
     val actorData = viewModel.uiState.actorData
 
-    // Match the height of the status bar
-    Spacer(
-        Modifier
-            .fillMaxWidth()
-            .statusBarsPadding()
-    )
+    Column {
 
-    DetailAppBar(
-        navigateUp = navigateUp,
-        title = "${actorData?.actorName}"
-    )
+        DetailAppBar(
+            navigateUp = navigateUp,
+            title = "${actorData?.actorName}"
+        )
 
-    /** Sticky actor details content */
-    Spacer(modifier = Modifier.padding(top = 16.dp))
-    ActorRoundProfile("${actorData?.profileUrl}")
-    Spacer(modifier = Modifier.padding(vertical = 8.dp))
-    /** Sticky actor details content */
+        /** Sticky actor details content */
+        Spacer(modifier = Modifier.padding(top = 16.dp))
 
-    /** Scrollable actor details content */
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(20.dp)
-    ) {
-        item { ActorInfoHeader(actorData) }
-        item { ActorCastedMovies(viewModel, modalSheetState) }
-        item { ActorBiography(actorData?.biography) }
+        val minimizedProfile = rememberSaveable { mutableStateOf(true) }
+
+        // TODO - Instead of CrossFade, implement shared transition between small -> big profile.
+        Crossfade(
+            targetState = minimizedProfile,
+        ) { minimized ->
+            when (minimized.value) {
+                true -> ActorRoundProfile("${actorData?.profileUrl}", minimizedProfile)
+                false -> ActorRoundProfile("${actorData?.profileUrl}", minimizedProfile, 200.dp)
+            }
+        }
+
+        Spacer(modifier = Modifier.padding(vertical = 8.dp))
+
+        /** Scrollable actor details content */
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            item { ActorInfoHeader(actorData) }
+            item { ActorCastedMovies(viewModel, modalSheetState) }
+            item { ActorBiography(actorData?.biography) }
+        }
     }
-    /** Scrollable actor details content */
 }
 
 /**
@@ -167,7 +171,9 @@ private fun ContentDetail(
  */
 @Composable
 private fun ActorRoundProfile(
-    profileUrl: String
+    profileUrl: String,
+    minimizedProfile: MutableState<Boolean>,
+    size: Dp = 120.dp
 ) {
     Box(
         modifier = Modifier.fillMaxWidth(),
@@ -178,12 +184,15 @@ private fun ActorRoundProfile(
             contentDescription = stringResource(id = R.string.cd_actor_image),
             shape = CircleShape,
             modifier = Modifier
-                .size(120.dp)
+                .size(size)
                 .border(
                     width = 4.dp,
                     color = MaterialTheme.colors.surface,
                     shape = CircleShape
                 )
+                .clickable {
+                    minimizedProfile.value = !minimizedProfile.value
+                }
         )
     }
 }
@@ -240,9 +249,12 @@ private fun ActorCastedMovies(
 
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = Modifier.padding(16.dp)
+        contentPadding = PaddingValues(16.dp)
     ) {
-        items(cast) { movie ->
+        items(
+            items = cast,
+            key = { it.movieId }
+        ) { movie ->
             LoadNetworkImage(
                 imageUrl = movie.posterPathUrl,
                 contentDescription = stringResource(R.string.cd_movie_poster),
@@ -277,7 +289,6 @@ private fun ActorBiography(
             )
             .padding(
                 bottom = 56.dp,
-                top = 16.dp,
                 start = 16.dp,
                 end = 16.dp
             )

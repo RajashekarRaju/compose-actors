@@ -1,7 +1,8 @@
 package com.developersbreach.composeactors.ui.movieDetail
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -13,7 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 
 /**
@@ -26,12 +28,15 @@ fun MovieDetailAppBar(
     navigateUp: () -> Unit,
     title: String?
 ) {
-    Box(
-        modifier = Modifier.fillMaxWidth().statusBarsPadding()
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
     ) {
         IconButton(
             onClick = navigateUp,
-            modifier = Modifier.align(alignment = Alignment.CenterStart)
+            modifier = Modifier.padding(start = 4.dp)
         ) {
             Icon(
                 imageVector = Icons.Rounded.ArrowBack,
@@ -44,10 +49,11 @@ fun MovieDetailAppBar(
             text = "$title",
             color = MaterialTheme.colors.onBackground,
             style = MaterialTheme.typography.h6,
-            textAlign = TextAlign.Center,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .fillMaxWidth()
-                .align(alignment = Alignment.Center)
+                .padding(start = 16.dp, end = 8.dp)
         )
     }
 }

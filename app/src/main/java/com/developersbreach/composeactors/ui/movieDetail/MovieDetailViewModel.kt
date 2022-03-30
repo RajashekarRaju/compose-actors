@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.developersbreach.composeactors.model.Movie
 import com.developersbreach.composeactors.model.MovieDetail
 import com.developersbreach.composeactors.repository.AppRepository
 import kotlinx.coroutines.launch
@@ -21,7 +22,7 @@ class MovieDetailViewModel(
 ) : AndroidViewModel(application) {
 
     // Holds the state for values in DetailsViewState
-    var uiState by mutableStateOf(MovieDetailViewState(movieData = null))
+    var uiState by mutableStateOf(MovieDetailUiState(movieData = null))
         private set
 
     init {
@@ -36,9 +37,12 @@ class MovieDetailViewModel(
 
     // Update the values in uiState from all data sources.
     private suspend fun startFetchingDetails() {
-        val movieData = repository.getSelectedMovieData(movieId)
-        uiState = MovieDetailViewState(
-            movieData = movieData
+        uiState = MovieDetailUiState(isFetchingDetails = true, movieData = null)
+        uiState = MovieDetailUiState(
+            movieData = repository.getSelectedMovieData(movieId),
+            similarMovies = repository.getSimilarMoviesByIdData(movieId),
+            recommendedMovies = repository.getRecommendedMoviesByIdData(movieId),
+            isFetchingDetails = false
         )
     }
 
@@ -68,6 +72,9 @@ class MovieDetailViewModel(
 /**
  * Models the UI state for the [MovieDetailScreen] screen.
  */
-data class MovieDetailViewState(
-    val movieData: MovieDetail?
+data class MovieDetailUiState(
+    val movieData: MovieDetail?,
+    val similarMovies: List<Movie> = emptyList(),
+    val recommendedMovies: List<Movie> = emptyList(),
+    val isFetchingDetails: Boolean = false,
 )
