@@ -11,8 +11,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.developersbreach.composeactors.ComposeActorsApp
-import com.developersbreach.composeactors.ui.details.DetailScreen
-import com.developersbreach.composeactors.ui.details.DetailsViewModel
+import com.developersbreach.composeactors.ui.actorDetails.DetailScreen
+import com.developersbreach.composeactors.ui.actorDetails.DetailsViewModel
 import com.developersbreach.composeactors.ui.home.HomeScreen
 import com.developersbreach.composeactors.ui.home.HomeViewModel
 import com.developersbreach.composeactors.ui.movieDetail.MovieDetailScreen

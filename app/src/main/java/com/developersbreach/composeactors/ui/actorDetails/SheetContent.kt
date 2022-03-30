@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.details
+package com.developersbreach.composeactors.ui.actorDetails
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
