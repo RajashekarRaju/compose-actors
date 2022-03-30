@@ -1,10 +1,11 @@
 package com.developersbreach.composeactors.model
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 
 @Immutable
 data class MovieDetail(
-    val movieId: Int,
+    @Stable val movieId: Int,
     val movieTitle: String,
     val banner: String,
     val budget: String,
