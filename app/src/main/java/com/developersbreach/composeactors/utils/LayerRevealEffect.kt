@@ -2,69 +2,63 @@ package com.developersbreach.composeactors.utils
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 
 /**
- * Not used anywhere in app right now.
- * Made only to use as an example in article.
+ * Used in MovieDetailsScreen as background image overlay with reveal effect.
  */
 @Composable
-fun LayerRevealImage() {
-    ComposeActorsTheme(
-        darkTheme = true
+fun LayerRevealImage(
+    poster: String?,
+    isLayerRevealAnimationEnded: MutableState<Boolean>
+) {
+
+    // To animate the canvas which has two rectangles.
+    val animateShape = remember { Animatable(1f) }.also {
+        LaunchAnimation(it)
+    }
+
+    if (!animateShape.isRunning && animateShape.targetValue == 0f) {
+        isLayerRevealAnimationEnded.value = true
+    }
+
+    val drawLayerColor = MaterialTheme.colors.background
+    val imageLayerAlpha = if (isLayerRevealAnimationEnded.value) 0.35f else 1f
+
+    LoadNetworkImage(
+        imageUrl = poster.toString(),
+        contentDescription = "",
+        shape = RectangleShape,
+        showAnimProgress = false,
+        modifier = Modifier
+            .fillMaxSize()
+            .alpha(imageLayerAlpha)
+    )
+
+    Canvas(
+        modifier = Modifier.fillMaxSize()
     ) {
-        Surface(
-            color = MaterialTheme.colors.background,
-        ) {
-            // Since I'm using insets, including these padding will adjust image bounds.
-            Spacer(
-                Modifier
-                    .fillMaxWidth()
-                    .statusBarsPadding()
-                    .navigationBarsPadding()
-            )
+        // Draws a rectangle in canvas filling top half of the screen
+        drawRevealingRectangle(this, animateShape, drawLayerColor)
 
-            Image(
-                painterResource(id = R.drawable.adele),
-                contentDescription = "",
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-
-            // To animate the canvas which had two rectangles.
-            val animateShape = remember { Animatable(1f) }.also {
-                LaunchAnimation(it)
-            }
-
-            Canvas(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                // Draws a rectangle in canvas filling top half of the screen
-                drawRevealingRectangle(this, animateShape)
-
-                // Draws a rectangle in canvas filling bottom half of the screen
-                // Rotate to 180 degrees so that desired reveal effect happens.
-                this.rotate(180f) {
-                    drawRevealingRectangle(this, animateShape)
-                }
-            }
+        // Draws a rectangle in canvas filling bottom half of the screen
+        // Rotate to 180 degrees so that desired reveal effect happens.
+        this.rotate(180f) {
+            drawRevealingRectangle(this, animateShape, drawLayerColor)
         }
     }
 }
@@ -73,20 +67,21 @@ fun LayerRevealImage() {
  * @param canvasScope to determine the size occupied in canvas.
  * @param animateShape shape which will be animated in canvas
  */
-fun DrawScope.drawRevealingRectangle(
+private fun DrawScope.drawRevealingRectangle(
     canvasScope: DrawScope,
-    animateShape: Animatable<Float, AnimationVector1D>
+    animateShape: Animatable<Float, AnimationVector1D>,
+    drawLayerColor: Color,
 ) {
     drawRect(
-        color = Color.LightGray,
+        color = drawLayerColor,
         topLeft = Offset(0f, 0f),
         size = Size(
             width = canvasScope.size.width,
             height = canvasScope.size.height / 2 * animateShape.value
         ),
         alpha = 1f,
-        // Color, Luminosity, Overlay, Hue, ColorBurn
-        blendMode = BlendMode.Hue
+        // Color, Luminosity, Overlay, Hue, ColorBurn (better fit)
+        // blendMode = BlendMode.Hue
     )
 }
 
@@ -94,7 +89,7 @@ fun DrawScope.drawRevealingRectangle(
  * Launches a coroutine in composable to start animation with initial value.
  */
 @Composable
-fun LaunchAnimation(
+private fun LaunchAnimation(
     animateShape: Animatable<Float, AnimationVector1D>
 ) {
     LaunchedEffect(animateShape) {
@@ -102,8 +97,8 @@ fun LaunchAnimation(
             targetValue = 0f,
             animationSpec = repeatable(
                 animation = tween(
-                    durationMillis = 1500,
-                    easing = FastOutSlowInEasing,
+                    durationMillis = 1200,
+                    easing = LinearEasing,
                     delayMillis = 100
                 ),
                 repeatMode = RepeatMode.Restart,
