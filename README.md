@@ -5,6 +5,8 @@
 * Modal bottom sheets & Bottom sheets.
 * Migrated to compose insets from accompanist.
 * Added new movie details screen, made changes to actors details screen.
+* Improved search functionality, added voice search, handled keyboard changes.
+* New feature to add Movie, Actor to favorites. Will add new database repository layer.
 * Collapsable TopBars, BottomBars, Scroll effects, new animations.
 * OnBoarding screen with Pager.
 
