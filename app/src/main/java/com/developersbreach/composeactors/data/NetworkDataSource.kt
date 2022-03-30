@@ -80,4 +80,28 @@ class NetworkDataSource {
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchMovieDetailsJsonData(response)
     }
+
+    /**
+     * @param movieId for finding similar movies.
+     * @return the result of list of movies which are based on current movie id.
+     */
+    fun getSimilarMoviesById(
+        movieId: Int
+    ): List<Movie> {
+        val requestUrl = requestUrls.getSimilarMoviesUrl(movieId)
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        return jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
+    }
+
+    /**
+     * @param movieId for finding recommended movies.
+     * @return the result of list of movies which are based on current movie id.
+     */
+    fun getRecommendedMoviesById(
+        movieId: Int
+    ): List<Movie> {
+        val requestUrl = requestUrls.getRecommendedMoviesUrl(movieId)
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        return jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
+    }
 }
