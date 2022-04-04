@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.developersbreach.composeactors.model.Cast
 import com.developersbreach.composeactors.model.Movie
 import com.developersbreach.composeactors.model.MovieDetail
 import com.developersbreach.composeactors.repository.AppRepository
@@ -42,6 +43,7 @@ class MovieDetailViewModel(
             movieData = repository.getSelectedMovieData(movieId),
             similarMovies = repository.getSimilarMoviesByIdData(movieId),
             recommendedMovies = repository.getRecommendedMoviesByIdData(movieId),
+            movieCast = repository.getMovieCastByIdData(movieId),
             isFetchingDetails = false
         )
     }
@@ -76,5 +78,6 @@ data class MovieDetailUiState(
     val movieData: MovieDetail?,
     val similarMovies: List<Movie> = emptyList(),
     val recommendedMovies: List<Movie> = emptyList(),
+    val movieCast: List<Cast> = emptyList(),
     val isFetchingDetails: Boolean = false,
 )
