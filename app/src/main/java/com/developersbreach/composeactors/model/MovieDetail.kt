@@ -9,7 +9,7 @@ data class MovieDetail(
     val movieTitle: String,
     val banner: String,
     val budget: String,
-    val genres: List<String>,
+    val genres: List<Genre>,
     val originalLanguage: String,
     val overview: String,
     val popularity: Double,
