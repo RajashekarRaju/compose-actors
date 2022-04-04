@@ -1,9 +1,6 @@
 package com.developersbreach.composeactors.data
 
-import com.developersbreach.composeactors.model.Actor
-import com.developersbreach.composeactors.model.ActorDetail
-import com.developersbreach.composeactors.model.Movie
-import com.developersbreach.composeactors.model.MovieDetail
+import com.developersbreach.composeactors.model.*
 import com.developersbreach.composeactors.utils.NetworkQueryUtils
 
 /**
@@ -103,5 +100,17 @@ class NetworkDataSource {
         val requestUrl = requestUrls.getRecommendedMoviesUrl(movieId)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
+    }
+
+    /**
+     * @param movieId for finding cast & crew.
+     * @return the result of list of cast which are based on current movie id.
+     */
+    fun getMovieCastById(
+        movieId: Int
+    ): List<Cast> {
+        val requestUrl = requestUrls.getMovieCastUrl(movieId)
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        return jsonData.fetchMovieCastByIdJsonData(response)
     }
 }

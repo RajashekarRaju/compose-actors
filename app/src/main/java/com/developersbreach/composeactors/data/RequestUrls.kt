@@ -68,6 +68,14 @@ object RequestUrls {
     }
 
     // 299536
+    // https://api.themoviedb.org/3/movie/{movie_id}/credits?api_key=API_KEY
+    fun getMovieCastUrl(
+        movieId: Int
+    ): URL {
+        return URL("${BASE_URL}movie/$movieId/credits?$API_KEY")
+    }
+
+    // 299536
     // https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=API_KEY
     fun getMovieTrailerUrl(
         movieId: Int

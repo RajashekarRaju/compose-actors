@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.ui.movieDetail
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,11 +28,18 @@ import com.developersbreach.composeactors.R
 @Composable
 fun MovieDetailAppBar(
     navigateUp: () -> Unit,
-    title: String?
+    title: String?,
+    showTopBarBackground: MutableState<Boolean>
 ) {
+    val modifier = if (showTopBarBackground.value) {
+        Modifier.background(color = MaterialTheme.colors.background)
+    } else {
+        Modifier
+    }
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .statusBarsPadding()
     ) {

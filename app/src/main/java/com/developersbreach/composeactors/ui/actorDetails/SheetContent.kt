@@ -3,8 +3,6 @@ package com.developersbreach.composeactors.ui.actorDetails
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -20,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
+import com.developersbreach.composeactors.ui.movieDetail.MovieGenre
 
 /**
  * Content inside modal sheet.
@@ -88,26 +87,15 @@ fun SheetContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        MovieGenre(genres = movie?.genres)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Row(
-            Modifier.padding(horizontal = 20.dp),
+            Modifier.padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            LazyColumn(
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.Start
-            ) {
-                if (movie != null) {
-                    items(movie.genres) { genre ->
-                        Text(
-                            text = genre,
-                            color = MaterialTheme.colors.onSurface.copy(0.7f),
-                            style = MaterialTheme.typography.subtitle1,
-                            maxLines = 1,
-                        )
-                    }
-                }
-            }
 
             CircularSeparator()
 

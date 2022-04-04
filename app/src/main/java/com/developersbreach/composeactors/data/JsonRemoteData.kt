@@ -1,9 +1,6 @@
 package com.developersbreach.composeactors.data
 
-import com.developersbreach.composeactors.model.Actor
-import com.developersbreach.composeactors.model.ActorDetail
-import com.developersbreach.composeactors.model.Movie
-import com.developersbreach.composeactors.model.MovieDetail
+import com.developersbreach.composeactors.model.*
 import org.json.JSONObject
 
 /**
@@ -104,12 +101,13 @@ class JsonRemoteData(
         val tagline = jsonObject.getString("tagline")
         val voteAverage = jsonObject.getDouble("vote_average")
 
-        var genres: List<String> = emptyList()
+        val genres: MutableList<Genre> = ArrayList()
         val genresArray = jsonObject.getJSONArray("genres")
         for (notI: Int in 0 until genresArray.length()) {
             val genresObject = genresArray.getJSONObject(notI)
+            val genreId = genresObject.getInt("id")
             val genreName = genresObject.getString("name")
-            genres = listOf(genreName)
+            genres.add(Genre(genreId, genreName))
         }
 
         var productionCompanies: List<String> = emptyList()
@@ -160,5 +158,29 @@ class JsonRemoteData(
             movieList.add(Movie(movieId, posterPath))
         }
         return movieList
+    }
+
+    /**
+     * @param response contains json response data to built a data upon.
+     * @return list of [Actor] objects that has been built up from parsing a JSON response.
+     */
+    @Throws(Exception::class)
+    fun fetchMovieCastByIdJsonData(
+        response: String
+    ): List<Cast> {
+
+        val castList: MutableList<Cast> = ArrayList()
+        val baseJsonArray = JSONObject(response)
+        val castJsonArray = baseJsonArray.getJSONArray("cast")
+
+        for (notI: Int in 0 until castJsonArray.length()) {
+            val jsonObject = castJsonArray.getJSONObject(notI)
+            val actorId = jsonObject.getInt("id")
+            val castName = jsonObject.getString("name")
+            val profilePathUrl = jsonObject.getString("profile_path")
+            val profilePath = "${urls.LOW_RES_IMAGE}$profilePathUrl"
+            castList.add(Cast(actorId, castName, profilePath))
+        }
+        return castList
     }
 }
