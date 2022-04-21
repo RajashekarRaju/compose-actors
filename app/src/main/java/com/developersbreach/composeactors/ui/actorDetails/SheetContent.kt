@@ -31,7 +31,7 @@ import com.developersbreach.composeactors.ui.movieDetail.MovieGenre
  */
 @Composable
 fun SheetContent(
-    viewModel: DetailsViewModel,
+    viewModel: ActorDetailsViewModel,
     selectedMovie: (Int) -> Unit
 ) {
     val movie = viewModel.sheetUiState.selectedMovieDetails

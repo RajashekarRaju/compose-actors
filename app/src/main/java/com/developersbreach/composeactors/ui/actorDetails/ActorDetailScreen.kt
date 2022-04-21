@@ -55,7 +55,7 @@ import kotlinx.coroutines.launch
 fun DetailScreen(
     selectedMovie: (Int) -> Unit,
     navigateUp: () -> Unit,
-    viewModel: DetailsViewModel
+    viewModel: ActorDetailsViewModel
 ) {
     val uiState = viewModel.uiState
     val actorProfile = "${uiState.actorData?.profileUrl}"
@@ -126,7 +126,7 @@ private fun ActorBackgroundWithGradientForeground(
 @Composable
 private fun ContentDetail(
     navigateUp: () -> Unit,
-    viewModel: DetailsViewModel,
+    viewModel: ActorDetailsViewModel,
     modalSheetState: ModalBottomSheetState,
 ) {
     val actorData = viewModel.uiState.actorData
@@ -223,7 +223,7 @@ private fun ActorInfoHeader(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ActorCastedMovies(
-    viewModel: DetailsViewModel,
+    viewModel: ActorDetailsViewModel,
     modalSheetState: ModalBottomSheetState
 ) {
     val cast: List<Movie> = viewModel.uiState.castList
