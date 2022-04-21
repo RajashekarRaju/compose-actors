@@ -66,8 +66,10 @@ fun SearchScreen(
             topBar = {
                 SearchAppBar(navigateUp, viewModel, closeKeyboard)
             }
-        ) {
-            Box {
+        ) { paddingValues ->
+            Box(
+                modifier = Modifier.padding(paddingValues)
+            ) {
                 // Show progress while search is happening
                 val isLoadingData = !uiState.isSearchingResults && uiState.actorList.isEmpty()
                 ShowSearchProgress(isLoadingData)
