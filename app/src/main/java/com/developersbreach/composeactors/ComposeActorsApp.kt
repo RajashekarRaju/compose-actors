@@ -1,9 +1,14 @@
+@file:Suppress("unused")
+
 package com.developersbreach.composeactors
 
 import android.app.Application
-import com.developersbreach.composeactors.data.NetworkDataSource
+import com.developersbreach.composeactors.diKoin.networkDataSourceModule
+import com.developersbreach.composeactors.diKoin.repositoryModule
+import com.developersbreach.composeactors.diKoin.viewModelModule
 import com.developersbreach.composeactors.navigation.AppNavigation
-import com.developersbreach.composeactors.repository.AppRepository
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 import timber.log.Timber
 
 /**
@@ -12,18 +17,24 @@ import timber.log.Timber
  */
 class ComposeActorsApp : Application() {
 
-    // Only place where the repository has been initialized and passed across all viewModels
-    lateinit var repository: AppRepository
-
     override fun onCreate() {
         super.onCreate()
 
-        // This is the only data source for whole app.
-        val networkDataSource = NetworkDataSource()
-        repository = AppRepository(networkDataSource)
+        initKoin()
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+        }
+    }
+
+    private fun initKoin() {
+        startKoin {
+            androidContext(this@ComposeActorsApp)
+            modules(
+                networkDataSourceModule,
+                repositoryModule,
+                viewModelModule
+            )
         }
     }
 }

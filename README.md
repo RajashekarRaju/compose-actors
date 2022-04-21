@@ -2,13 +2,13 @@
 
 ### Working on v0.2.0 release
 
-* Modal bottom sheets & Bottom sheets.
-* Migrated to compose insets from accompanist.
-* Added new movie details screen, made changes to actors details screen.
-* Improved search functionality, added voice search, handled keyboard changes.
-* New feature to add Movie, Actor to favorites. Will add new database repository layer.
-* Collapsable TopBars, BottomBars, Scroll effects, new animations.
-* OnBoarding screen with Pager.
+- [x] Add DI with Koin.
+- [x] Modal bottom sheets & Bottom sheets.
+- [x] Migrate to compose insets from accompanist.
+- [ ] Add new movie details screen, made changes to actors details screen.
+- [x] Improved search functionality, added voice search, handled keyboard changes.
+- [ ] New feature to add Movie, Actor to favorites. Will add new database repository layer.
+- [ ] Collapsable TopBars, BottomBars, Scroll effects, new animations.
 
 *Inspired from*
 | [JetCaster](https://github.com/android/compose-samples/tree/main/Jetcaster) | [JetNews](https://github.com/android/compose-samples/tree/main/JetNews) | [JetSnack](https://github.com/android/compose-samples/tree/main/Jetsnack) |

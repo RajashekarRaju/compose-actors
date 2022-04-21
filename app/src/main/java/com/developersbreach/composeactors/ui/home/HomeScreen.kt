@@ -61,8 +61,10 @@ fun HomeScreen(
                     )
                 }
             }
-        ) {
-            Box {
+        ) { paddingValues ->
+            Box(
+                modifier = Modifier.padding(paddingValues)
+            ) {
                 // Show progress while data is loading
                 ShowProgressIndicator(isLoadingData = uiState.isFetchingActors)
 

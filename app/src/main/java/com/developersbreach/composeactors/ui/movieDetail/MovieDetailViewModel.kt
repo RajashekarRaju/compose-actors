@@ -1,12 +1,9 @@
 package com.developersbreach.composeactors.ui.movieDetail
 
-import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.model.Cast
 import com.developersbreach.composeactors.model.Movie
@@ -17,10 +14,9 @@ import timber.log.Timber
 import java.io.IOException
 
 class MovieDetailViewModel(
-    application: Application,
     private val movieId: Int,
     private val repository: AppRepository
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     // Holds the state for values in DetailsViewState
     var uiState by mutableStateOf(MovieDetailUiState(movieData = null))
@@ -46,28 +42,6 @@ class MovieDetailViewModel(
             movieCast = repository.getMovieCastByIdData(movieId),
             isFetchingDetails = false
         )
-    }
-
-    companion object {
-
-        /**
-         * Factory for [MovieDetailViewModel] to provide with [AppRepository]
-         */
-        fun provideFactory(
-            application: Application,
-            movieId: Int,
-            repository: AppRepository
-        ): ViewModelProvider.AndroidViewModelFactory {
-            return object : ViewModelProvider.AndroidViewModelFactory(application) {
-                @Suppress("unchecked_cast")
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    if (modelClass.isAssignableFrom(MovieDetailViewModel::class.java)) {
-                        return MovieDetailViewModel(application, movieId, repository) as T
-                    }
-                    throw IllegalArgumentException("Cannot create Instance for MovieDetailViewModel class")
-                }
-            }
-        }
     }
 }
 
