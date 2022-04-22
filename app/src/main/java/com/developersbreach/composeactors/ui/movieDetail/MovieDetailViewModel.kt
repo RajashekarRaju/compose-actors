@@ -8,14 +8,14 @@ import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.model.Cast
 import com.developersbreach.composeactors.model.Movie
 import com.developersbreach.composeactors.model.MovieDetail
-import com.developersbreach.composeactors.repository.AppRepository
+import com.developersbreach.composeactors.repository.network.NetworkRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
 
 class MovieDetailViewModel(
     private val movieId: Int,
-    private val repository: AppRepository
+    private val repository: NetworkRepository
 ) : ViewModel() {
 
     // Holds the state for values in DetailsViewState
