@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.data
+package com.developersbreach.composeactors.repository.network
 
 import com.developersbreach.composeactors.model.*
 import com.developersbreach.composeactors.utils.NetworkQueryUtils
@@ -22,14 +22,14 @@ class NetworkDataSource {
      * @return the result of latest list of all popular actors fetched from the network.
      */
     fun getPopularActors(): List<Actor> {
-        val requestUrl = requestUrls.getPopularActorsUrl()
+        val requestUrl = RequestUrls.getPopularActorsUrl()
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchActorsJsonData(response)
     }
 
     /** @return the result of latest list of all trending actors fetched from the network. */
     fun getTrendingActors(): List<Actor> {
-        val requestUrl = requestUrls.getTrendingActorsUrl()
+        val requestUrl = RequestUrls.getTrendingActorsUrl()
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchActorsJsonData(response)
     }
@@ -41,7 +41,7 @@ class NetworkDataSource {
     fun getActorDetails(
         actorId: Int
     ): ActorDetail {
-        val requestUrl = requestUrls.getActorDetailsUrl(actorId)
+        val requestUrl = RequestUrls.getActorDetailsUrl(actorId)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchActorDetailsJsonData(response)
     }
@@ -53,7 +53,7 @@ class NetworkDataSource {
     fun getCastDetails(
         actorId: Int
     ): List<Movie> {
-        val requestUrl = requestUrls.getCastDetailsUrl(actorId)
+        val requestUrl = RequestUrls.getCastDetailsUrl(actorId)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchCastDetailsJsonData(response)
     }
@@ -65,7 +65,7 @@ class NetworkDataSource {
     fun getSearchableActors(
         query: String
     ): List<Actor> {
-        val requestUrl = requestUrls.getSearchActorsUrl(query)
+        val requestUrl = RequestUrls.getSearchActorsUrl(query)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchActorsJsonData(response)
     }
@@ -73,7 +73,7 @@ class NetworkDataSource {
     fun getMovieDetailsById(
         movieId: Int
     ): MovieDetail {
-        val requestUrl = requestUrls.getMovieDetailsUrl(movieId)
+        val requestUrl = RequestUrls.getMovieDetailsUrl(movieId)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchMovieDetailsJsonData(response)
     }
@@ -85,7 +85,7 @@ class NetworkDataSource {
     fun getSimilarMoviesById(
         movieId: Int
     ): List<Movie> {
-        val requestUrl = requestUrls.getSimilarMoviesUrl(movieId)
+        val requestUrl = RequestUrls.getSimilarMoviesUrl(movieId)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
     }
@@ -97,7 +97,7 @@ class NetworkDataSource {
     fun getRecommendedMoviesById(
         movieId: Int
     ): List<Movie> {
-        val requestUrl = requestUrls.getRecommendedMoviesUrl(movieId)
+        val requestUrl = RequestUrls.getRecommendedMoviesUrl(movieId)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
     }
@@ -109,7 +109,7 @@ class NetworkDataSource {
     fun getMovieCastById(
         movieId: Int
     ): List<Cast> {
-        val requestUrl = requestUrls.getMovieCastUrl(movieId)
+        val requestUrl = RequestUrls.getMovieCastUrl(movieId)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchMovieCastByIdJsonData(response)
     }

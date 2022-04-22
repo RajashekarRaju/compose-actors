@@ -3,6 +3,7 @@
 package com.developersbreach.composeactors
 
 import android.app.Application
+import com.developersbreach.composeactors.diKoin.databaseModule
 import com.developersbreach.composeactors.diKoin.networkDataSourceModule
 import com.developersbreach.composeactors.diKoin.repositoryModule
 import com.developersbreach.composeactors.diKoin.viewModelModule
@@ -32,6 +33,7 @@ class ComposeActorsApp : Application() {
             androidContext(this@ComposeActorsApp)
             modules(
                 networkDataSourceModule,
+                databaseModule,
                 repositoryModule,
                 viewModelModule
             )

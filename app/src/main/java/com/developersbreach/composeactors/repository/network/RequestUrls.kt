@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.data
+package com.developersbreach.composeactors.repository.network
 
 import com.developersbreach.composeactors.utils.ApiKey
 import java.net.URL
