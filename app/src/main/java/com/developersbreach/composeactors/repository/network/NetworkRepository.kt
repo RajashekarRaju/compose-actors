@@ -1,6 +1,5 @@
-package com.developersbreach.composeactors.repository
+package com.developersbreach.composeactors.repository.network
 
-import com.developersbreach.composeactors.data.NetworkDataSource
 import com.developersbreach.composeactors.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -10,7 +9,7 @@ import kotlinx.coroutines.withContext
  * Repository class executes network calls from [NetworkDataSource] to return data.
  * Data returned from this functions will be exposed to ViewModels.
  */
-class AppRepository(
+class NetworkRepository(
     private val source: NetworkDataSource
 ) {
 
