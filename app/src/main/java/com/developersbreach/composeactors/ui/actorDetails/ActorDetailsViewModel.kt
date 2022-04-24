@@ -82,7 +82,7 @@ data class DetailsUiState(
 )
 
 /**
- * Models the UI state for the [SheetContent] modal sheet.
+ * Models the UI state for the SheetContentMovieDetails modal sheet.
  */
 data class SheetUiState(
     val selectedMovieDetails: MovieDetail? = null
