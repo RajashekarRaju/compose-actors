@@ -18,4 +18,7 @@ interface FavoriteActorsDao {
 
     @Delete
     fun deleteSelectedFavoriteActor(favoriteActorsEntity: FavoriteActorsEntity)
+
+    @Query("SELECT column_actor_id FROM favorite_actors_table WHERE column_actor_id = :actorId")
+    fun checkIfActorIsFavorite(actorId: Int): LiveData<Int>
 }
