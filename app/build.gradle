@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -86,4 +87,9 @@ dependencies {
 
     // Koin - Jetpack Compose
     implementation "io.insert-koin:koin-androidx-compose:3.2.0-beta-1"
+
+    // Room
+    implementation "androidx.room:room-runtime:2.4.2"
+    implementation "androidx.room:room-ktx:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
 }

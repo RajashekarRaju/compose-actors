@@ -89,4 +89,18 @@ object RequestUrls {
     ): URL {
         return URL("https://img.youtube.com/vi/$trailerId/sddefault.jpg")
     }
+
+    // https://api.themoviedb.org/3/movie/upcoming?api_key=API_KEY&page=1
+    fun getUpcomingMoviesUrl(
+        page: Int = 1
+    ): URL {
+        return URL("${BASE_URL}movie/upcoming?$API_KEY&page=$page")
+    }
+
+    // https://api.themoviedb.org/3/movie/now_playing?api_key=API_KEY&page=1
+    fun getNowPlayingMoviesUrl(
+        page: Int = 1
+    ): URL {
+        return URL("${BASE_URL}movie/now_playing?$API_KEY&page=$page")
+    }
 }
