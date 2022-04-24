@@ -183,4 +183,42 @@ class JsonRemoteData(
         }
         return castList
     }
+
+    @Throws(Exception::class)
+    fun fetchUpcomingMoviesJsonData(
+        response: String
+    ): List<Movie> {
+
+        val movieList: MutableList<Movie> = ArrayList()
+        val baseJsonArray = JSONObject(response)
+        val moviesJsonArray = baseJsonArray.getJSONArray("results")
+
+        for (notI: Int in 0 until 5) {
+            val jsonObject = moviesJsonArray.getJSONObject(notI)
+            val movieId = jsonObject.getInt("id")
+            val backdropPathUrl = jsonObject.getString("backdrop_path")
+            val backdropPath = "${RequestUrls.HIGH_RES_IMAGE}$backdropPathUrl"
+            movieList.add(Movie(movieId, backdropPath))
+        }
+        return movieList
+    }
+
+    @Throws(Exception::class)
+    fun fetchNowPlayingMoviesJsonData(
+        response: String
+    ): List<Movie> {
+
+        val movieList: MutableList<Movie> = ArrayList()
+        val baseJsonArray = JSONObject(response)
+        val moviesJsonArray = baseJsonArray.getJSONArray("results")
+
+        for (notI: Int in 0 until moviesJsonArray.length()) {
+            val jsonObject = moviesJsonArray.getJSONObject(notI)
+            val movieId = jsonObject.getInt("id")
+            val posterPathUrl = jsonObject.getString("poster_path")
+            val posterPath = "${RequestUrls.LOW_RES_IMAGE}$posterPathUrl"
+            movieList.add(Movie(movieId, posterPath))
+        }
+        return movieList
+    }
 }

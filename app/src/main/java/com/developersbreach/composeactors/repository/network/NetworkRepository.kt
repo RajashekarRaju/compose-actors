@@ -103,4 +103,22 @@ class NetworkRepository(
         }
         return castList
     }
+
+    // Suspend function executes network call.
+    suspend fun getUpcomingMoviesData(): List<Movie> {
+        val upcomingMoviesList: List<Movie>
+        withContext(Dispatchers.IO) {
+            upcomingMoviesList = source.getUpcomingMovies()
+        }
+        return upcomingMoviesList
+    }
+
+    // Suspend function executes network call.
+    suspend fun getNowPlayingMoviesData(): List<Movie> {
+        val nowPlayingMoviesList: List<Movie>
+        withContext(Dispatchers.IO) {
+            nowPlayingMoviesList = source.getNowPlayingMovies()
+        }
+        return nowPlayingMoviesList
+    }
 }

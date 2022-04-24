@@ -113,4 +113,16 @@ class NetworkDataSource {
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchMovieCastByIdJsonData(response)
     }
+
+    fun getUpcomingMovies(): List<Movie> {
+        val requestUrl = RequestUrls.getUpcomingMoviesUrl()
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        return jsonData.fetchUpcomingMoviesJsonData(response)
+    }
+
+    fun getNowPlayingMovies(): List<Movie> {
+        val requestUrl = RequestUrls.getNowPlayingMoviesUrl()
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        return jsonData.fetchNowPlayingMoviesJsonData(response)
+    }
 }
