@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.actorDetails
+package com.developersbreach.composeactors.ui.modalSheet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.model.MovieDetail
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.movieDetail.MovieGenre
 
@@ -30,12 +31,10 @@ import com.developersbreach.composeactors.ui.movieDetail.MovieGenre
  * navigating to detail screen.
  */
 @Composable
-fun SheetContent(
-    viewModel: ActorDetailsViewModel,
+fun SheetContentMovieDetails(
+    movie: MovieDetail?,
     selectedMovie: (Int) -> Unit
 ) {
-    val movie = viewModel.sheetUiState.selectedMovieDetails
-
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
