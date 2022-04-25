@@ -3,11 +3,13 @@ package com.developersbreach.composeactors.ui.movieDetail
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.model.Cast
 import com.developersbreach.composeactors.model.Movie
 import com.developersbreach.composeactors.model.MovieDetail
+import com.developersbreach.composeactors.repository.database.DatabaseRepository
 import com.developersbreach.composeactors.repository.network.NetworkRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -15,12 +17,16 @@ import java.io.IOException
 
 class MovieDetailViewModel(
     private val movieId: Int,
-    private val repository: NetworkRepository
+    private val networkRepository: NetworkRepository,
+    private val databaseRepository: DatabaseRepository
 ) : ViewModel() {
 
     // Holds the state for values in DetailsViewState
     var uiState by mutableStateOf(MovieDetailUiState(movieData = null))
         private set
+
+    val isFavoriteMovie: LiveData<Int>
+        get() = databaseRepository.checkIfMovieIsFavorite(movieId)
 
     init {
         viewModelScope.launch {
@@ -36,12 +42,40 @@ class MovieDetailViewModel(
     private suspend fun startFetchingDetails() {
         uiState = MovieDetailUiState(isFetchingDetails = true, movieData = null)
         uiState = MovieDetailUiState(
-            movieData = repository.getSelectedMovieData(movieId),
-            similarMovies = repository.getSimilarMoviesByIdData(movieId),
-            recommendedMovies = repository.getRecommendedMoviesByIdData(movieId),
-            movieCast = repository.getMovieCastByIdData(movieId),
+            movieData = networkRepository.getSelectedMovieData(movieId),
+            similarMovies = networkRepository.getSimilarMoviesByIdData(movieId),
+            recommendedMovies = networkRepository.getRecommendedMoviesByIdData(movieId),
+            movieCast = networkRepository.getMovieCastByIdData(movieId),
             isFetchingDetails = false
         )
+    }
+
+    fun addMovieToFavorites() {
+        viewModelScope.launch {
+            val movie: MovieDetail? = uiState.movieData
+            if (movie != null) {
+                databaseRepository.addMovieToFavorites(
+                    Movie(
+                        movieId = movie.movieId,
+                        posterPathUrl = movie.poster
+                    )
+                )
+            }
+        }
+    }
+
+    fun removeMovieFromFavorites() {
+        viewModelScope.launch {
+            val movie: MovieDetail? = uiState.movieData
+            if (movie != null) {
+                databaseRepository.deleteSelectedFavoriteMovie(
+                    Movie(
+                        movieId = movie.movieId,
+                        posterPathUrl = movie.poster
+                    )
+                )
+            }
+        }
     }
 }
 

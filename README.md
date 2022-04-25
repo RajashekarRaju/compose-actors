@@ -5,10 +5,12 @@
 - [x] Add DI with Koin.
 - [x] Modal bottom sheets & Bottom sheets.
 - [x] Migrate to compose insets from accompanist.
-- [ ] Add new movie details screen, made changes to actors details screen.
+- [x] Add new movie details screen, made changes to actors details screen.
 - [x] Improved search functionality, added voice search, handled keyboard changes.
-- [ ] New feature to add Movie, Actor to favorites. Will add new database repository layer.
+- [x] New feature to add Movie to favorites.
+- [x] Add new database repository layer for favorites.
 - [ ] Collapsable TopBars, BottomBars, Scroll effects, new animations.
+- [x] Add tabs in Home screen with actors/movies/favorites categories.
 
 *Inspired from*
 | [JetCaster](https://github.com/android/compose-samples/tree/main/Jetcaster) | [JetNews](https://github.com/android/compose-samples/tree/main/JetNews) | [JetSnack](https://github.com/android/compose-samples/tree/main/Jetsnack) |

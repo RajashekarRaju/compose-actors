@@ -36,7 +36,7 @@ val repositoryModule = module {
 
 val viewModelModule = module {
     viewModel {
-        HomeViewModel(get())
+        HomeViewModel(get(), get())
     }
     viewModel {
         SearchViewModel(get())
@@ -45,6 +45,6 @@ val viewModelModule = module {
         ActorDetailsViewModel(get(), get())
     }
     viewModel {
-        MovieDetailViewModel(get(), get())
+        MovieDetailViewModel(get(), get(), get())
     }
 }
