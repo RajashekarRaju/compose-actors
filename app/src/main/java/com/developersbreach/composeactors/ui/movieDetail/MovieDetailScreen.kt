@@ -60,7 +60,7 @@ fun MovieDetailScreen(
         // placement since it is on to of reveal animation.
         // ShowProgressIndicator(isLoadingData = uiState.isFetchingDetails)
         if (showFab.value) {
-            FloatingDialPadButton { }
+            FloatingAddFavoritesButton(viewModel)
         }
     }
 }

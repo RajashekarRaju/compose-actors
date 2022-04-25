@@ -37,6 +37,7 @@ import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.home.HomeScreen
+import com.developersbreach.composeactors.ui.modalSheet.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.search.SearchScreen
 import com.developersbreach.composeactors.utils.*
 import kotlinx.coroutines.launch
@@ -58,6 +59,7 @@ fun DetailScreen(
     viewModel: ActorDetailsViewModel
 ) {
     val uiState = viewModel.uiState
+    val sheetUiState = viewModel.sheetUiState
     val actorProfile = "${uiState.actorData?.profileUrl}"
 
     val modalSheetState = rememberModalBottomSheetState(
@@ -66,11 +68,16 @@ fun DetailScreen(
     )
 
     ModalBottomSheetLayout(
-        sheetContent = { SheetContent(viewModel, selectedMovie) },
         sheetState = modalSheetState,
         scrimColor = Color.Black.copy(alpha = 0.5f),
         sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-        sheetBackgroundColor = MaterialTheme.colors.background
+        sheetBackgroundColor = MaterialTheme.colors.background,
+        sheetContent = {
+            SheetContentMovieDetails(
+                movie = sheetUiState.selectedMovieDetails,
+                selectedMovie = selectedMovie
+            )
+        },
     ) {
         ActorDynamicTheme(
             podcastImageUrl = actorProfile

@@ -2,37 +2,38 @@ package com.developersbreach.composeactors.ui.movieDetail
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.R
 
 /**
- * TODO implement add movie to favorites feature.
- *
- * @param showSnackBarMessage
+ * TODO: showSnackBarMessage when added, removed from favorites
  */
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun FloatingDialPadButton(
-    showSnackBarMessage: () -> Unit,
+fun FloatingAddFavoritesButton(
+    viewModel: MovieDetailViewModel,
 ) {
-    val state = remember {
+    val movieId by viewModel.isFavoriteMovie.observeAsState()
+    val isFavoriteMovie = movieId != 0 && movieId != null
+
+    val fabState = remember {
         MutableTransitionState(false).apply {
             // Start the animation immediately.
             targetState = true
@@ -43,26 +44,45 @@ fun FloatingDialPadButton(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        contentAlignment = Alignment.BottomEnd
+        contentAlignment = Alignment.BottomCenter
     ) {
-        AnimatedVisibility(
-            visibleState = state,
-            enter = scaleIn(animationSpec = tween(250, 0, LinearEasing)),
-            exit = scaleOut(animationSpec = tween(250, 0, LinearEasing))
-        ) {
-            FloatingActionButton(
-                backgroundColor = MaterialTheme.colors.primary,
-                onClick = { showSnackBarMessage() },
-                modifier = Modifier
-                    .navigationBarsPadding()
-                    .align(Alignment.BottomEnd),
-            ) {
+        ExtendedFloatingActionButton(
+            backgroundColor = MaterialTheme.colors.primary,
+            modifier = Modifier.navigationBarsPadding(),
+            onClick = { getFavoriteState(isFavoriteMovie, viewModel) },
+            icon = {
                 Icon(
-                    painterResource(id = R.drawable.ic_favorite),
                     contentDescription = "",
-                    tint = MaterialTheme.colors.onPrimary
+                    tint = MaterialTheme.colors.onPrimary,
+                    imageVector = if (isFavoriteMovie) {
+                        Icons.Filled.Favorite
+                    } else {
+                        Icons.Outlined.FavoriteBorder
+                    }
                 )
+            },
+            text = {
+                AnimatedVisibility(
+                    visibleState = fabState
+                ) {
+                    Text(
+                        text = if (!isFavoriteMovie) "Add to favorites" else "Remove favorite",
+                        color = MaterialTheme.colors.onPrimary,
+                        style = MaterialTheme.typography.subtitle2
+                    )
+                }
             }
-        }
+        )
+    }
+}
+
+private fun getFavoriteState(
+    isFavoriteMovie: Boolean,
+    viewModel: MovieDetailViewModel
+) {
+    if (!isFavoriteMovie) {
+        viewModel.addMovieToFavorites()
+    } else {
+        viewModel.removeMovieFromFavorites()
     }
 }
