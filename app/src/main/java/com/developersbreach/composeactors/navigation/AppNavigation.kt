@@ -53,6 +53,7 @@ fun AppNavigation(
             HomeScreen(
                 selectedActor = actions.selectedActor,
                 navigateToSearch = actions.navigateToSearch,
+                selectedMovie = actions.selectedMovie,
                 viewModel = viewModel
             )
         }
