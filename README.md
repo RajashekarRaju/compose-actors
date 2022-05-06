@@ -9,8 +9,13 @@
 - [x] Improved search functionality, added voice search, handled keyboard changes.
 - [x] New feature to add Movie to favorites.
 - [x] Add new database repository layer for favorites.
-- [ ] Collapsable TopBars, BottomBars, Scroll effects, new animations.
 - [x] Add tabs in Home screen with actors/movies/favorites categories.
+
+### Roadmap v0.3.0
+
+- [ ] Let users search for movies directly just like searching for actors.
+- [ ] Collapsable TopBars, BottomBars, Scroll effects, new animations.
+- [ ] Add feature for adding actors to favorites like movies.
 
 *Inspired from*
 | [JetCaster](https://github.com/android/compose-samples/tree/main/Jetcaster) | [JetNews](https://github.com/android/compose-samples/tree/main/JetNews) | [JetSnack](https://github.com/android/compose-samples/tree/main/Jetsnack) |

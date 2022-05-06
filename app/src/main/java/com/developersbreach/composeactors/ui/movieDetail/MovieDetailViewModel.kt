@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.developersbreach.composeactors.model.ActorDetail
 import com.developersbreach.composeactors.model.Cast
 import com.developersbreach.composeactors.model.Movie
 import com.developersbreach.composeactors.model.MovieDetail
@@ -23,6 +24,10 @@ class MovieDetailViewModel(
 
     // Holds the state for values in DetailsViewState
     var uiState by mutableStateOf(MovieDetailUiState(movieData = null))
+        private set
+
+    // Holds the state for values in ActorDetailsViewState
+    var sheetUiState by mutableStateOf(ActorsSheetUiState(selectedActorDetails = null))
         private set
 
     val isFavoriteMovie: LiveData<Int>
@@ -77,6 +82,26 @@ class MovieDetailViewModel(
             }
         }
     }
+
+    /**
+     * @param actorId for querying selected actor details.
+     * This function will be triggered only when user clicks any actor items.
+     * Updates the data values to show in modal sheet.
+     */
+    fun getSelectedActorDetails(
+        actorId: Int?
+    ) {
+        viewModelScope.launch {
+            try {
+                if (actorId != null) {
+                    val actorsData = networkRepository.getSelectedActorData(actorId)
+                    sheetUiState = ActorsSheetUiState(selectedActorDetails = actorsData)
+                }
+            } catch (e: IOException) {
+                Timber.e("$e")
+            }
+        }
+    }
 }
 
 /**
@@ -88,4 +113,11 @@ data class MovieDetailUiState(
     val recommendedMovies: List<Movie> = emptyList(),
     val movieCast: List<Cast> = emptyList(),
     val isFetchingDetails: Boolean = false,
+)
+
+/**
+ * Models the UI state for the SheetContentActorDetails modal sheet.
+ */
+data class ActorsSheetUiState(
+    val selectedActorDetails: ActorDetail? = null
 )
