@@ -15,14 +15,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -35,8 +34,13 @@ import com.developersbreach.composeactors.model.Genre
 import com.developersbreach.composeactors.model.Movie
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
+import com.developersbreach.composeactors.ui.modalSheet.SheetContentActorDetails
 import com.developersbreach.composeactors.utils.LayerRevealImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
+
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieDetailScreen(
     selectedMovie: (Int) -> Unit,
@@ -44,32 +48,53 @@ fun MovieDetailScreen(
     navigateUp: () -> Unit
 ) {
     val uiState = viewModel.uiState
+    val sheetUiState = viewModel.sheetUiState
     val isLayerRevealAnimationEnded = rememberSaveable { mutableStateOf(false) }
     val showFab = rememberSaveable { mutableStateOf(true) }
 
-    Box(
-        modifier = Modifier.fillMaxSize()
+    val modalSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true,
+    )
+
+    ModalBottomSheetLayout(
+        sheetState = modalSheetState,
+        scrimColor = Color.Black.copy(alpha = 0.5f),
+        sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+        sheetBackgroundColor = MaterialTheme.colors.background,
+        sheetContent = {
+            SheetContentActorDetails(
+                actor = sheetUiState.selectedActorDetails,
+            )
+        },
     ) {
-        // Background poster with layer reveal effect
-        LayerRevealImage(uiState.movieData?.poster, isLayerRevealAnimationEnded)
-        // Fade enter animation detail screen once layer reveal completes
-        if (isLayerRevealAnimationEnded.value) {
-            AnimateDetailScreenContent(uiState, navigateUp, showFab)
-        }
-        // Progress bar- Hidden temporarily, although it works fine cannot have it in current screen
-        // placement since it is on to of reveal animation.
-        // ShowProgressIndicator(isLoadingData = uiState.isFetchingDetails)
-        if (showFab.value) {
-            FloatingAddFavoritesButton(viewModel)
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            // Background poster with layer reveal effect
+            LayerRevealImage(uiState.movieData?.poster, isLayerRevealAnimationEnded)
+            // Fade enter animation detail screen once layer reveal completes
+            if (isLayerRevealAnimationEnded.value) {
+                AnimateDetailScreenContent(uiState, navigateUp, showFab, viewModel, modalSheetState)
+            }
+            // Progress bar- Hidden temporarily, although it works fine cannot have it in current screen
+            // placement since it is on to of reveal animation.
+            // ShowProgressIndicator(isLoadingData = uiState.isFetchingDetails)
+            if (showFab.value) {
+                FloatingAddFavoritesButton(viewModel)
+            }
         }
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun AnimateDetailScreenContent(
     uiState: MovieDetailUiState,
     navigateUp: () -> Unit,
-    showFab: MutableState<Boolean>
+    showFab: MutableState<Boolean>,
+    viewModel: MovieDetailViewModel,
+    modalSheetState: ModalBottomSheetState
 ) {
     val state = remember {
         MutableTransitionState(false).apply {
@@ -83,16 +108,18 @@ private fun AnimateDetailScreenContent(
         enter = fadeIn()
     ) {
         // Main details content
-        MovieDetailsContent(uiState, navigateUp, showFab)
+        MovieDetailsContent(uiState, navigateUp, showFab, viewModel, modalSheetState)
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
 private fun MovieDetailsContent(
     uiState: MovieDetailUiState,
     navigateUp: () -> Unit,
-    showFab: MutableState<Boolean>
+    showFab: MutableState<Boolean>,
+    viewModel: MovieDetailViewModel,
+    modalSheetState: ModalBottomSheetState
 ) {
     val movieData = uiState.movieData
     val listState = rememberLazyListState()
@@ -127,7 +154,7 @@ private fun MovieDetailsContent(
             Spacer(modifier = Modifier.height(16.dp))
             CategoryTitle(title = "Cast", alpha = 1f)
             Spacer(modifier = Modifier.height(16.dp))
-            GetMovieCast(uiState.movieCast)
+            GetMovieCast(uiState.movieCast, viewModel, modalSheetState)
             Spacer(modifier = Modifier.height(24.dp))
             CategoryTitle(title = "Similar", alpha = 1f)
             GetRelatedMovies(movieList = uiState.similarMovies)
@@ -166,9 +193,12 @@ fun MovieGenre(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun GetMovieCast(
-    movieCast: List<Cast>
+    movieCast: List<Cast>,
+    viewModel: MovieDetailViewModel,
+    modalSheetState: ModalBottomSheetState
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -178,18 +208,33 @@ private fun GetMovieCast(
             items = movieCast,
             key = { it.actorId }
         ) { cast ->
-            ItemCast(cast = cast)
+            ItemCast(
+                cast = cast,
+                viewModel = viewModel,
+                modalSheetState = modalSheetState
+            )
         }
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ItemCast(
-    cast: Cast
+    cast: Cast,
+    viewModel: MovieDetailViewModel,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    modalSheetState: ModalBottomSheetState
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.width(120.dp)
+        modifier = Modifier
+            .width(120.dp)
+            .clickable {
+                viewModel.getSelectedActorDetails(cast.actorId)
+                coroutineScope.launch {
+                    modalSheetState.show()
+                }
+            },
     ) {
         LoadNetworkImage(
             imageUrl = cast.castProfilePath,
