@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.actorDetails
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -12,10 +11,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -148,17 +144,7 @@ private fun ContentDetail(
         /** Sticky actor details content */
         Spacer(modifier = Modifier.padding(top = 16.dp))
 
-        val minimizedProfile = rememberSaveable { mutableStateOf(true) }
-
-        // TODO - Instead of CrossFade, implement shared transition between small -> big profile.
-        Crossfade(
-            targetState = minimizedProfile,
-        ) { minimized ->
-            when (minimized.value) {
-                true -> ActorRoundProfile("${actorData?.profileUrl}", minimizedProfile)
-                false -> ActorRoundProfile("${actorData?.profileUrl}", minimizedProfile, 200.dp)
-            }
-        }
+        ActorRoundProfile("${actorData?.profileUrl}")
 
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
 
@@ -179,7 +165,6 @@ private fun ContentDetail(
 @Composable
 private fun ActorRoundProfile(
     profileUrl: String,
-    minimizedProfile: MutableState<Boolean>,
     size: Dp = 120.dp
 ) {
     Box(
@@ -197,9 +182,6 @@ private fun ActorRoundProfile(
                     color = MaterialTheme.colors.surface,
                     shape = CircleShape
                 )
-                .clickable {
-                    minimizedProfile.value = !minimizedProfile.value
-                }
         )
     }
 }

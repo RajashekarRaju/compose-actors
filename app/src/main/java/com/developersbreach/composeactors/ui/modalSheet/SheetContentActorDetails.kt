@@ -14,7 +14,6 @@ import com.developersbreach.composeactors.model.ActorDetail
 @Composable
 fun SheetContentActorDetails(
     actor: ActorDetail?,
-    selectedActor: (Int) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
