@@ -193,7 +193,7 @@ private fun ActorRoundProfile(
  * 3. Place of birth
  */
 @Composable
-private fun ActorInfoHeader(
+fun ActorInfoHeader(
     actorData: ActorDetail?
 ) {
     LazyRow(
