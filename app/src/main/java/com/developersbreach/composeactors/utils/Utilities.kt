@@ -10,10 +10,14 @@ fun calculateAge(
     dateOfBirth: String?
 ): Int {
     var age = 0
-    val grabYear: Int? = dateOfBirth?.dropLast(6)?.toInt()
-    val currentYear: Int = Calendar.getInstance().get(Calendar.YEAR)
-    if (grabYear != null) {
-        age = currentYear - grabYear
+    // Since we receive the json data for data of birth with null safe as string,
+    // Compare with null string to know whether actual date is available.
+    if (dateOfBirth != "null") {
+        val grabYear: Int? = dateOfBirth?.dropLast(6)?.toInt()
+        val currentYear: Int = Calendar.getInstance().get(Calendar.YEAR)
+        if (grabYear != null) {
+            age = currentYear - grabYear
+        }
     }
 
     return age
