@@ -36,58 +36,16 @@ fun SheetContentMovieDetails(
     selectedMovie: (Int) -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .navigationBarsPadding()
     ) {
-
         Spacer(modifier = Modifier.height(4.dp))
-
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp)
-        ) {
-            Text(
-                text = "${movie?.movieTitle}",
-                color = MaterialTheme.colors.onSurface,
-                style = MaterialTheme.typography.h6,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier
-                    .weight(8f)
-                    .align(alignment = Alignment.CenterVertically)
-            )
-
-            // On clicking this icon triggers detail screen navigation with movie Id.
-            IconButton(
-                onClick = {
-                    if (movie != null) {
-                        selectedMovie(movie.movieId)
-                    }
-                },
-                modifier = Modifier
-                    .weight(2f)
-                    .align(alignment = Alignment.CenterVertically)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_chevron_right),
-                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.75f),
-                    contentDescription = ""
-                )
-            }
-        }
-
+        HeaderModalSheet(movie, selectedMovie)
         Spacer(modifier = Modifier.height(4.dp))
-
-        Divider(
-            modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colors.onSurface.copy(alpha = 0.50f),
-            thickness = 0.50.dp
-        )
-
+        SeparatorSheetTitleHeader()
         Spacer(modifier = Modifier.height(16.dp))
-
         MovieGenre(genres = movie?.genres)
-
         Spacer(modifier = Modifier.height(16.dp))
 
         Row(
@@ -95,24 +53,10 @@ fun SheetContentMovieDetails(
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             CircularSeparator()
-
-            Text(
-                text = "${movie?.releaseDate?.take(4)}",
-                color = MaterialTheme.colors.onSurface.copy(0.7f),
-                style = MaterialTheme.typography.subtitle1,
-                maxLines = 1,
-            )
-
+            MovieReleaseDateText(movie?.releaseDate)
             CircularSeparator()
-
-            Text(
-                text = getRuntimeFormatted(movie?.runtime),
-                color = MaterialTheme.colors.onSurface.copy(0.7f),
-                style = MaterialTheme.typography.subtitle1,
-                maxLines = 1,
-            )
+            MovieDurationText(movie?.runtime)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -122,43 +66,125 @@ fun SheetContentMovieDetails(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         ) {
-            LoadNetworkImage(
-                imageUrl = "${movie?.poster}",
-                contentDescription = "",
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier
-                    .size(100.dp, 150.dp)
-                    .clickable {
-                        if (movie != null) {
-                            selectedMovie(movie.movieId)
-                        }
-                    }
-            )
-
-            Text(
-                text = "${movie?.overview}",
-                maxLines = 7,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp),
-                style = TextStyle(
-                    lineHeight = 20.sp,
-                    color = MaterialTheme.colors.onSurface.copy(0.8f),
-                    textAlign = TextAlign.Justify,
-                    fontSize = 16.sp
-                )
-            )
+            MoviePosterImage(movie, selectedMovie)
+            MovieOverviewText(movie?.overview.toString())
         }
 
-        Spacer(modifier = Modifier.height(40.dp))
-
-        Spacer(
-            Modifier
-                .fillMaxWidth()
-                .statusBarsPadding()
-        )
+        Spacer(modifier = Modifier.height(16.dp))
     }
+}
+
+@Composable
+private fun HeaderModalSheet(
+    movie: MovieDetail?,
+    selectedMovie: (Int) -> Unit
+) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(start = 20.dp)
+    ) {
+        Text(
+            text = "${movie?.movieTitle}",
+            color = MaterialTheme.colors.onSurface,
+            style = MaterialTheme.typography.h6,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier
+                .weight(8f)
+                .align(alignment = Alignment.CenterVertically)
+        )
+
+        // On clicking this icon triggers detail screen navigation with movie Id.
+        IconButton(
+            onClick = {
+                if (movie != null) {
+                    selectedMovie(movie.movieId)
+                }
+            },
+            modifier = Modifier
+                .weight(2f)
+                .align(alignment = Alignment.CenterVertically)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_chevron_right),
+                tint = MaterialTheme.colors.onSurface.copy(alpha = 0.75f),
+                contentDescription = ""
+            )
+        }
+    }
+}
+
+@Composable
+private fun SeparatorSheetTitleHeader() {
+    Divider(
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colors.onSurface.copy(alpha = 0.50f),
+        thickness = 0.50.dp
+    )
+}
+
+@Composable
+private fun MovieReleaseDateText(
+    releaseDate: String?
+) {
+    Text(
+        text = "${releaseDate?.take(4)}",
+        color = MaterialTheme.colors.onSurface.copy(0.7f),
+        style = MaterialTheme.typography.subtitle1,
+        maxLines = 1,
+    )
+}
+
+@Composable
+private fun MovieDurationText(
+    runtime: Int?
+) {
+    Text(
+        text = getRuntimeFormatted(runtime),
+        color = MaterialTheme.colors.onSurface.copy(0.7f),
+        style = MaterialTheme.typography.subtitle1,
+        maxLines = 1,
+    )
+}
+
+@Composable
+private fun MoviePosterImage(
+    movie: MovieDetail?,
+    selectedMovie: (Int) -> Unit
+) {
+    LoadNetworkImage(
+        imageUrl = "${movie?.poster}",
+        contentDescription = "",
+        shape = MaterialTheme.shapes.medium,
+        modifier = Modifier
+            .size(100.dp, 150.dp)
+            .clickable {
+                if (movie != null) {
+                    selectedMovie(movie.movieId)
+                }
+            }
+    )
+}
+
+@Composable
+private fun MovieOverviewText(
+    overview: String
+) {
+    Text(
+        text = overview,
+        maxLines = 7,
+        overflow = TextOverflow.Ellipsis,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp),
+        style = TextStyle(
+            lineHeight = 20.sp,
+            color = MaterialTheme.colors.onSurface.copy(0.8f),
+            textAlign = TextAlign.Justify,
+            fontSize = 16.sp
+        )
+    )
 }
 
 @Composable
