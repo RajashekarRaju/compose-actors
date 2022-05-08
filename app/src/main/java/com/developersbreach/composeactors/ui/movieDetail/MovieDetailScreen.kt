@@ -2,9 +2,8 @@ package com.developersbreach.composeactors.ui.movieDetail
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.expandVertically
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -34,12 +33,18 @@ import com.developersbreach.composeactors.model.Genre
 import com.developersbreach.composeactors.model.Movie
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
+import com.developersbreach.composeactors.ui.home.HomeScreen
 import com.developersbreach.composeactors.ui.modalSheet.SheetContentActorDetails
+import com.developersbreach.composeactors.ui.actorDetails.ActorDetailScreen
 import com.developersbreach.composeactors.utils.LayerRevealImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
+/**
+ * Screen shows details for the selected movie.
+ * This destination can be accessed from [HomeScreen] & [ActorDetailScreen].
+ */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieDetailScreen(
@@ -49,14 +54,18 @@ fun MovieDetailScreen(
 ) {
     val uiState = viewModel.uiState
     val sheetUiState = viewModel.sheetUiState
+    // This helps us reveal screen content with fadeIn anim once reveal effect is completed.
     val isLayerRevealAnimationEnded = rememberSaveable { mutableStateOf(false) }
+    // Change button state with respect to scroll changes.
     val showFab = rememberSaveable { mutableStateOf(true) }
 
     val modalSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true,
+        animationSpec = tween(durationMillis = 300, delayMillis = 50)
     )
 
+    // Sheet content contains details for the selected movie from list.
     ModalBottomSheetLayout(
         sheetState = modalSheetState,
         scrimColor = Color.Black.copy(alpha = 0.5f),
@@ -77,8 +86,8 @@ fun MovieDetailScreen(
             if (isLayerRevealAnimationEnded.value) {
                 AnimateDetailScreenContent(uiState, navigateUp, showFab, viewModel, modalSheetState)
             }
-            // Progress bar- Hidden temporarily, although it works fine cannot have it in current screen
-            // placement since it is on to of reveal animation.
+            // Progress bar - Hidden temporarily, although it works fine cannot have it in current
+            // screen placement since it is on to of reveal animation.
             // ShowProgressIndicator(isLoadingData = uiState.isFetchingDetails)
             if (showFab.value) {
                 FloatingAddFavoritesButton(viewModel)
@@ -269,29 +278,23 @@ fun ItemCast(
 private fun MovieOverviewText(
     overview: String?
 ) {
-    var expanded by remember { mutableStateOf(true) }
+    var expanded by remember { mutableStateOf(false) }
 
-    AnimatedVisibility(
-        visible = expanded,
-        enter = expandVertically(),
-        exit = shrinkVertically()
-    ) {
-        Text(
-            text = overview.toString(),
-            maxLines = if (expanded) 12 else 4,
-            overflow = if (!expanded) TextOverflow.Ellipsis else TextOverflow.Clip,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-                .clickable { expanded = !expanded },
-            style = TextStyle(
-                lineHeight = 20.sp,
-                color = MaterialTheme.colors.onBackground,
-                textAlign = TextAlign.Justify,
-                fontSize = 16.sp
-            )
+    Text(
+        text = overview.toString(),
+        maxLines = if (expanded) Int.MAX_VALUE else 4,
+        overflow = if (expanded) TextOverflow.Visible else TextOverflow.Ellipsis,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp)
+            .clickable { expanded = !expanded },
+        style = TextStyle(
+            lineHeight = 20.sp,
+            color = MaterialTheme.colors.onBackground,
+            textAlign = TextAlign.Justify,
+            fontSize = 16.sp
         )
-    }
+    )
 }
 
 @Composable

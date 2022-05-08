@@ -42,14 +42,14 @@ import kotlinx.coroutines.launch
 /**
  * Shows details of user selected actor.
  *
- * @param viewModel to manage ui state of [DetailScreen]
+ * @param viewModel to manage ui state of [ActorDetailScreen]
  * @param navigateUp navigates user to previous screen.
  *
  * This destination can be accessed from [HomeScreen] & [SearchScreen].
  */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DetailScreen(
+fun ActorDetailScreen(
     selectedMovie: (Int) -> Unit,
     navigateUp: () -> Unit,
     viewModel: ActorDetailsViewModel
@@ -193,7 +193,7 @@ private fun ActorRoundProfile(
  * 3. Place of birth
  */
 @Composable
-private fun ActorInfoHeader(
+fun ActorInfoHeader(
     actorData: ActorDetail?
 ) {
     LazyRow(

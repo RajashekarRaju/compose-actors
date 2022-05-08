@@ -21,7 +21,7 @@ import com.developersbreach.composeactors.R
 /**
  * @param navigateUp navigates back to previous screen.
  * @param title actor name in center of app bar.
- * AppBar for [DetailScreen]
+ * AppBar for [ActorDetailScreen]
  */
 @Composable
 fun DetailAppBar(
