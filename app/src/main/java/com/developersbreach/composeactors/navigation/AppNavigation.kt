@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.developersbreach.composeactors.ui.actorDetails.ActorDetailsViewModel
-import com.developersbreach.composeactors.ui.actorDetails.DetailScreen
+import com.developersbreach.composeactors.ui.actorDetails.ActorDetailScreen
 import com.developersbreach.composeactors.ui.home.HomeScreen
 import com.developersbreach.composeactors.ui.home.HomeViewModel
 import com.developersbreach.composeactors.ui.movieDetail.MovieDetailScreen
@@ -43,7 +43,7 @@ fun AppNavigation(
 
         /**
          * Start destination.
-         * Can later navigate to [DetailScreen] and [SearchScreen]
+         * Can later navigate to [ActorDetailScreen] and [SearchScreen]
          * Has it's own viewModel [HomeViewModel] with factory & repository instance.
          */
         composable(
@@ -59,7 +59,7 @@ fun AppNavigation(
         }
 
         /**
-         * Can later navigate to [DetailScreen]
+         * Can later navigate to [ActorDetailScreen]
          * Navigates back to previous screen with [AppActions.navigateUp]
          * Has it's own viewModel [SearchViewModel] with factory & repository instance.
          */
@@ -95,13 +95,20 @@ fun AppNavigation(
             val viewModel = getViewModel<ActorDetailsViewModel>(
                 parameters = { parametersOf(actorId) }
             )
-            DetailScreen(
+            ActorDetailScreen(
                 selectedMovie = actions.selectedMovie,
                 navigateUp = actions.navigateUp,
                 viewModel = viewModel
             )
         }
 
+        /**
+         * Two destinations ([HomeScreen] [ActorDetailScreen]) can navigate to this screen.
+         * Navigates back to previous screen with [AppActions.navigateUp]
+         * Has it's own viewModel [MovieDetailViewModel] with factory & repository instance.
+         *
+         * [AppDestinations.MOVIE_DETAILS_ID_KEY] contains id for the selected item in list.
+         */
         composable(
             route = "${AppDestinations.MOVIE_DETAILS_ROUTE}/{${routes.MOVIE_DETAILS_ID_KEY}}",
             arguments = listOf(

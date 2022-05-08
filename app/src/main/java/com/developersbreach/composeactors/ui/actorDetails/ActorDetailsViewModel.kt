@@ -14,7 +14,7 @@ import timber.log.Timber
 import java.io.IOException
 
 /**
- * To manage ui state and data for screen [DetailScreen].
+ * To manage ui state and data for screen [ActorDetailScreen].
  */
 class ActorDetailsViewModel(
     private val actorId: Int,
@@ -73,7 +73,7 @@ class ActorDetailsViewModel(
 }
 
 /**
- * Models the UI state for the [DetailScreen] screen.
+ * Models the UI state for the [ActorDetailScreen] screen.
  */
 data class DetailsUiState(
     val castList: List<Movie> = listOf(),
