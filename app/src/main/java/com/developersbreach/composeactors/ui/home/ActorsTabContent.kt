@@ -24,6 +24,7 @@ import com.developersbreach.composeactors.ui.actorDetails.ActorDetailScreen
 import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
+import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 
 
 @Composable
@@ -32,6 +33,10 @@ fun ActorsTabContent(
     selectedActor: (Int) -> Unit
 ) {
     val uiState = viewModel.uiState
+
+    // Show progress while data is loading
+    ShowProgressIndicator(isLoadingData = uiState.isFetchingActors)
+
     LazyColumn(
         contentPadding = PaddingValues(vertical = 16.dp),
         modifier = Modifier.fillMaxSize()

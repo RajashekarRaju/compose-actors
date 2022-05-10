@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.ui.search.AnimatedSearch
+import com.developersbreach.composeactors.utils.ApiKey
 import com.developersbreach.composeactors.utils.InfinitelyFlowingCircles
 
 /**
@@ -20,7 +21,7 @@ import com.developersbreach.composeactors.utils.InfinitelyFlowingCircles
 fun ShowProgressIndicator(
     isLoadingData: Boolean
 ) {
-    if (isLoadingData) {
+    if (isLoadingData && ApiKey.API_KEY.isNotEmpty()) {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
