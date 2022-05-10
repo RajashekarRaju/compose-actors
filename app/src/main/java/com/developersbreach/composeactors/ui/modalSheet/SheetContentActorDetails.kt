@@ -1,6 +1,7 @@
 package com.developersbreach.composeactors.ui.modalSheet
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -39,15 +40,24 @@ fun SheetContentActorDetails(
             .navigationBarsPadding(),
     ) {
         stickyHeader {
-            Spacer(modifier = Modifier.height(16.dp))
-            SheetSeparator()
-            Spacer(modifier = Modifier.height(24.dp))
-            ActorProfileImage(actor?.profileUrl)
-            Spacer(modifier = Modifier.height(16.dp))
-            ActorNameText(actor?.actorName.toString())
-            Spacer(modifier = Modifier.height(16.dp))
-            ActorInfoHeader(actorData = actor)
-            Spacer(modifier = Modifier.height(8.dp))
+            // Extra parent column added because, the sticky header needs background for
+            // movie overview paragraph to be visible.
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = MaterialTheme.colors.background)
+            ) {
+                Spacer(modifier = Modifier.height(16.dp))
+                SheetSeparator()
+                Spacer(modifier = Modifier.height(24.dp))
+                ActorProfileImage(actor?.profileUrl)
+                Spacer(modifier = Modifier.height(16.dp))
+                ActorNameText(actor?.actorName.toString())
+                Spacer(modifier = Modifier.height(16.dp))
+                ActorInfoHeader(actorData = actor)
+                Spacer(modifier = Modifier.height(8.dp))
+            }
         }
         item {
             Spacer(modifier = Modifier.height(8.dp))
