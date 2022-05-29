@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.ui.modalSheet.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
-import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.components.TransparentRippleTheme
 
 /**
@@ -35,7 +34,6 @@ fun HomeScreen(
     selectedMovie: (Int) -> Unit,
     viewModel: HomeViewModel
 ) {
-    val uiState = viewModel.uiState
     // Remember state of scaffold to manage snackbar
     val scaffoldState = rememberScaffoldState()
 
@@ -78,9 +76,6 @@ fun HomeScreen(
                 Box(
                     modifier = Modifier.padding(paddingValues)
                 ) {
-                    // Show progress while data is loading
-                    ShowProgressIndicator(isLoadingData = uiState.isFetchingActors)
-
                     // Main content for this screen
                     ScreenContent(selectedActor, viewModel, selectedMovie, modalSheetState)
 

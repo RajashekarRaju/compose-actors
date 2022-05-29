@@ -1,7 +1,6 @@
 package com.developersbreach.composeactors.ui.movieDetail
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,9 +19,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.R
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun FloatingAddFavoritesButton(
     viewModel: MovieDetailViewModel,
@@ -63,13 +63,24 @@ fun FloatingAddFavoritesButton(
                     visibleState = fabState
                 ) {
                     Text(
-                        text = if (!isFavoriteMovie) "Add to favorites" else "Remove favorite",
+                        text = getFavoriteText(isFavoriteMovie),
                         color = MaterialTheme.colors.onPrimary,
                         style = MaterialTheme.typography.subtitle2
                     )
                 }
             }
         )
+    }
+}
+
+@Composable
+private fun getFavoriteText(
+    isFavoriteMovie: Boolean
+): String {
+    return if (!isFavoriteMovie) {
+        stringResource(R.string.add_to_favorites_text)
+    } else {
+        stringResource(R.string.remove_from_favorites_text)
     }
 }
 

@@ -24,4 +24,8 @@
     <string name="offline_snackbar_message">You Are Offline!</string>
     <string name="missing_api_key_snackbar_message">Tmdb Api Key Missing</string>
 
+    <string name="no_favorites_found_message">You Have No Favorite Movies.</string>
+    <string name="add_to_favorites_text">Add to favorites</string>
+    <string name="remove_from_favorites_text">Remove favorite</string>
+
 </resources>
