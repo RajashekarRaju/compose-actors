@@ -29,9 +29,9 @@
 
 ### Movie details & Add to favorites
 
-| Add to favorites | Details |
-| :---: | :---: |
-| <img src="/assets/img_movie_detail_screen_1.png" width="200"/> | <img src="/assets/img_movie_detail_screen_2.png" width="200" /> |
+| Add to favorites | Favorites | Details |
+| :--------------: | :-------: | :-----: |
+| <img src="/assets/img_movie_detail_screen_1.png" width="200"/> | <img src="/assets/img_home_tab_favorites.png" width="200" /> | <img src="/assets/img_movie_detail_screen_2.png" width="200" /> |
 
 ### Voice search actors
 
