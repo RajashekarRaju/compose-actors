@@ -1,10 +1,11 @@
 package com.developersbreach.composeactors.ui.movieDetail
 
+import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.model.ActorDetail
 import com.developersbreach.composeactors.model.Cast
@@ -17,10 +18,11 @@ import timber.log.Timber
 import java.io.IOException
 
 class MovieDetailViewModel(
+    application: Application,
     private val movieId: Int,
     private val networkRepository: NetworkRepository,
     private val databaseRepository: DatabaseRepository
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     // Holds the state for values in DetailsViewState
     var uiState by mutableStateOf(MovieDetailUiState(movieData = null))

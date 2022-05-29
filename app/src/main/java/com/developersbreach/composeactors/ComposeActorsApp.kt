@@ -1,42 +1,32 @@
-@file:Suppress("unused")
-
 package com.developersbreach.composeactors
 
 import android.app.Application
-import com.developersbreach.composeactors.diKoin.databaseModule
-import com.developersbreach.composeactors.diKoin.networkDataSourceModule
-import com.developersbreach.composeactors.diKoin.repositoryModule
-import com.developersbreach.composeactors.diKoin.viewModelModule
-import com.developersbreach.composeactors.navigation.AppNavigation
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
+import com.developersbreach.composeactors.repository.AppRepository
+import com.developersbreach.composeactors.repository.database.DatabaseRepository
+import com.developersbreach.composeactors.repository.database.getDatabaseInstance
+import com.developersbreach.composeactors.repository.network.NetworkDataSource
+import com.developersbreach.composeactors.repository.network.NetworkRepository
 import timber.log.Timber
 
-/**
- * Only place where the repository has been initialized and passed across all viewModels.
- * This instance property is used in [AppNavigation] class for all ViewModels to access app data.
- */
 class ComposeActorsApp : Application() {
+
+    lateinit var repository: AppRepository
 
     override fun onCreate() {
         super.onCreate()
 
-        initKoin()
+        initializeRepository()
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
     }
 
-    private fun initKoin() {
-        startKoin {
-            androidContext(this@ComposeActorsApp)
-            modules(
-                networkDataSourceModule,
-                databaseModule,
-                repositoryModule,
-                viewModelModule
-            )
-        }
+    private fun initializeRepository() {
+        val networkDataSource = NetworkDataSource()
+        val databaseDataSource = getDatabaseInstance(applicationContext)
+        val networkRepository = NetworkRepository(networkDataSource)
+        val databaseRepository = DatabaseRepository(databaseDataSource)
+        repository = AppRepository(networkRepository, databaseRepository)
     }
 }

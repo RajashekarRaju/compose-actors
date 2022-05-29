@@ -1,9 +1,10 @@
 package com.developersbreach.composeactors.ui.actorDetails
 
+import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.model.ActorDetail
 import com.developersbreach.composeactors.model.Movie
@@ -17,9 +18,10 @@ import java.io.IOException
  * To manage ui state and data for screen [ActorDetailScreen].
  */
 class ActorDetailsViewModel(
+    application: Application,
     private val actorId: Int,
     private val repository: NetworkRepository
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     // Holds the state for values in DetailsViewState
     var uiState by mutableStateOf(DetailsUiState(actorData = null))

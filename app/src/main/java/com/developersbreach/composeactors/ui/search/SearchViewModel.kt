@@ -1,9 +1,10 @@
 package com.developersbreach.composeactors.ui.search
 
+import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.model.Actor
 import com.developersbreach.composeactors.repository.network.NetworkRepository
@@ -13,8 +14,9 @@ import kotlinx.coroutines.launch
  * To manage ui state and data for screen [SearchScreen].
  */
 class SearchViewModel(
+    application: Application,
     private val repository: NetworkRepository
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     // Holds the state for values in SearchViewState
     var uiState by mutableStateOf(SearchViewState())
