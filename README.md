@@ -1,6 +1,8 @@
 # Compose Actors :dancer:
 
-### Working on v0.2.0 release
+![AppBanner](/assets/banner.png)
+
+### New release - v0.2.0
 
 - [x] Add DI with Koin.
 - [x] Modal bottom sheets & Bottom sheets.
@@ -11,18 +13,36 @@
 - [x] Add new database repository layer for favorites.
 - [x] Add tabs in Home screen with actors/movies/favorites categories.
 
-### Roadmap v0.3.0
+## V2 Previews
 
-- [ ] Let users search for movies directly just like searching for actors.
-- [ ] Collapsable TopBars, BottomBars, Scroll effects, new animations.
-- [ ] Add feature for adding actors to favorites like movies.
+### Home Tabs
+
+| Actors | Movies | Favorites |
+| :----: | :----: | :-------: |
+| <img src="/assets/img_home_tab_actors.png" width="200"/> | <img src="/assets/img_home_tab_movie.png" width="200" /> | <img src="/assets/img_home_tab_favorites_empty.png" width="200" /> |
+
+### Modal bottom sheets
+
+| Actor | Movie |
+| :---: | :---: |
+| <img src="/assets/img_actor_overview_sheet.png" width="200"/> | <img src="/assets/img_movie_overview_sheet.png" width="200" /> |
+
+### Movie details & Add to favorites
+
+| Add to favorites | Favorites | Details |
+| :--------------: | :-------: | :-----: |
+| <img src="/assets/img_movie_detail_screen_1.png" width="200"/> | <img src="/assets/img_home_tab_favorites.png" width="200" /> | <img src="/assets/img_movie_detail_screen_2.png" width="200" /> |
+
+### Voice search actors
+
+| Search capabilities |
+| :---: |
+| <img src="/assets/img_search_with_voice.png" width="200"/> |
 
 *Inspired from*
 | [JetCaster](https://github.com/android/compose-samples/tree/main/Jetcaster) | [JetNews](https://github.com/android/compose-samples/tree/main/JetNews) | [JetSnack](https://github.com/android/compose-samples/tree/main/Jetsnack) |
 | :-: | :-: | :-: |
 > [More compose content](https://developersbreach.com/compose/)
-
-![AppBanner](/assets/banner.png)
 
 ## :tokyo_tower: Architecture
 
@@ -41,6 +61,8 @@
 Android app built with `Jetpack Compose` shows actors information fetched from Tmdb Api.
 You may install and try to understand the code better, but make sure you provide your own Tmdb api
 key for data to show up in directory `/utils/ApiKey.kt`.
+
+### Release - v0.1.0
 
 | Screen | Preview |
 | :----- | :------:|
