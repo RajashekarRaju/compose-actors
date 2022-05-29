@@ -3,17 +3,12 @@ package com.developersbreach.composeactors.repository.network
 import com.developersbreach.composeactors.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-/**
- * Functions in this repository executes on an IO-optimized thread pool, makes main-safe.
- * Repository class executes network calls from [NetworkDataSource] to return data.
- * Data returned from this functions will be exposed to ViewModels.
- */
-class NetworkRepository(
-    private val source: NetworkDataSource
+class NetworkRepository @Inject constructor(
+    private val source: NetworkDataSource,
 ) {
 
-    // Suspend function executes network call.
     suspend fun getPopularActorsData(): List<Actor> {
         val popularActorsList: List<Actor>
         withContext(Dispatchers.IO) {
@@ -22,7 +17,6 @@ class NetworkRepository(
         return popularActorsList
     }
 
-    // Suspend function executes network call.
     suspend fun getTrendingActorsData(): List<Actor> {
         val trendingActorsList: List<Actor>
         withContext(Dispatchers.IO) {
@@ -31,7 +25,6 @@ class NetworkRepository(
         return trendingActorsList
     }
 
-    // Suspend function executes network call.
     suspend fun getSelectedActorData(
         actorId: Int
     ): ActorDetail {
@@ -42,7 +35,6 @@ class NetworkRepository(
         return selectedActorDetails
     }
 
-    // Suspend function executes network call.
     suspend fun getCastData(
         actorId: Int
     ): List<Movie> {
@@ -53,7 +45,6 @@ class NetworkRepository(
         return castListData
     }
 
-    // Suspend function executes network call.
     suspend fun getSearchableActorsData(
         query: String
     ): List<Actor> {
@@ -104,7 +95,6 @@ class NetworkRepository(
         return castList
     }
 
-    // Suspend function executes network call.
     suspend fun getUpcomingMoviesData(): List<Movie> {
         val upcomingMoviesList: List<Movie>
         withContext(Dispatchers.IO) {
@@ -113,7 +103,6 @@ class NetworkRepository(
         return upcomingMoviesList
     }
 
-    // Suspend function executes network call.
     suspend fun getNowPlayingMoviesData(): List<Movie> {
         val nowPlayingMoviesList: List<Movie>
         withContext(Dispatchers.IO) {

@@ -6,9 +6,10 @@ import com.developersbreach.composeactors.model.Actor
 import com.developersbreach.composeactors.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 
-class DatabaseRepository(
+class DatabaseRepository @Inject constructor(
     private val database: FavoritesDatabase
 ) {
 

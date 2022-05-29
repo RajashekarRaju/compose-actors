@@ -2,11 +2,13 @@ package com.developersbreach.composeactors.repository.network
 
 import com.developersbreach.composeactors.model.*
 import com.developersbreach.composeactors.utils.NetworkQueryUtils
+import javax.inject.Singleton
 
 /**
  * Class contains functions which can fetch data from network.
  * This is the only data source for whole app.
  */
+@Singleton
 class NetworkDataSource {
 
     // Contains all url endpoints to json data
