@@ -1,27 +1,31 @@
 package com.developersbreach.composeactors.ui.actorDetails
 
-import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.model.ActorDetail
 import com.developersbreach.composeactors.model.Movie
 import com.developersbreach.composeactors.model.MovieDetail
+import com.developersbreach.composeactors.navigation.AppDestinations
 import com.developersbreach.composeactors.repository.network.NetworkRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
+import javax.inject.Inject
 
-/**
- * To manage ui state and data for screen [ActorDetailScreen].
- */
-class ActorDetailsViewModel(
-    application: Application,
-    private val actorId: Int,
+
+@HiltViewModel
+class ActorDetailsViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     private val repository: NetworkRepository
-) : AndroidViewModel(application) {
+) : ViewModel() {
+
+    private val actorId: Int
+        get() = checkNotNull(savedStateHandle[AppDestinations.ACTOR_DETAIL_ID_KEY])
 
     // Holds the state for values in DetailsViewState
     var uiState by mutableStateOf(DetailsUiState(actorData = null))

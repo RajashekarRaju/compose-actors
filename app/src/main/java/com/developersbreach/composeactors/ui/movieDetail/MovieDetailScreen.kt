@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.model.Cast
 import com.developersbreach.composeactors.model.Genre
@@ -49,8 +50,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun MovieDetailScreen(
     selectedMovie: (Int) -> Unit,
-    viewModel: MovieDetailViewModel,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
+    viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.uiState
     val sheetUiState = viewModel.sheetUiState

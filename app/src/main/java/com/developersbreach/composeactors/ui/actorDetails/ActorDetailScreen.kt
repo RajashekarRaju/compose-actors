@@ -26,6 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.model.ActorDetail
 import com.developersbreach.composeactors.model.Movie
@@ -52,7 +53,7 @@ import kotlinx.coroutines.launch
 fun ActorDetailScreen(
     selectedMovie: (Int) -> Unit,
     navigateUp: () -> Unit,
-    viewModel: ActorDetailsViewModel
+    viewModel: ActorDetailsViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.uiState
     val sheetUiState = viewModel.sheetUiState

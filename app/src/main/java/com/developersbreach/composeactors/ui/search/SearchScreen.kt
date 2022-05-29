@@ -29,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.model.Actor
 import com.developersbreach.composeactors.ui.actorDetails.ActorDetailScreen
@@ -50,8 +51,8 @@ import com.developersbreach.composeactors.ui.home.HomeScreen
 @Composable
 fun SearchScreen(
     selectedActor: (Int) -> Unit,
-    viewModel: SearchViewModel,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
+    viewModel: SearchViewModel = hiltViewModel(),
 ) {
     val uiState = viewModel.uiState
     val keyboardController = LocalSoftwareKeyboardController.current

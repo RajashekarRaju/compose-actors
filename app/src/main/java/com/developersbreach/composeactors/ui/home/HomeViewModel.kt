@@ -1,11 +1,10 @@
 package com.developersbreach.composeactors.ui.home
 
-import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.model.Actor
 import com.developersbreach.composeactors.model.Movie
@@ -13,18 +12,18 @@ import com.developersbreach.composeactors.model.MovieDetail
 import com.developersbreach.composeactors.repository.database.DatabaseRepository
 import com.developersbreach.composeactors.repository.network.NetworkRepository
 import com.developersbreach.composeactors.ui.modalSheet.SheetContentMovieDetails
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
+import javax.inject.Inject
 
-/**
- * To manage ui state and data for screen [HomeScreen].
- */
-class HomeViewModel(
-    application: Application,
+
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val networkRepository: NetworkRepository,
     private val databaseRepository: DatabaseRepository
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     // Holds the state for values in HomeViewState
     var uiState by mutableStateOf(HomeUiState())

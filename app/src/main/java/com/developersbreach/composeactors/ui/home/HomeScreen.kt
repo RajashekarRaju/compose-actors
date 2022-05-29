@@ -11,6 +11,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.developersbreach.composeactors.ui.modalSheet.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
@@ -32,7 +33,7 @@ fun HomeScreen(
     selectedActor: (Int) -> Unit,
     navigateToSearch: () -> Unit,
     selectedMovie: (Int) -> Unit,
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     // Remember state of scaffold to manage snackbar
     val scaffoldState = rememberScaffoldState()
