@@ -1,5 +1,11 @@
 # Compose Actors :dancer:
 
+## Roadmap v0.3.0
+
+- [ ] Let users search for movies directly just like searching for actors.
+- [ ] Collapsable TopBars, BottomBars, Scroll effects, new animations.
+- [ ] Add feature for adding actors to favorites like movies.
+
 ![AppBanner](/assets/banner.png)
 
 ### New release - v0.2.0
