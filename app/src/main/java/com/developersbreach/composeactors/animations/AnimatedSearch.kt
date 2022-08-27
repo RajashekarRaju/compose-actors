@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.search
+package com.developersbreach.composeactors.animations
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas

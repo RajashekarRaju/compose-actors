@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.utils
+package com.developersbreach.composeactors.animations
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
