@@ -1,6 +1,6 @@
-package com.developersbreach.composeactors.repository.network
+package com.developersbreach.composeactors.data.network
 
-import com.developersbreach.composeactors.model.*
+import com.developersbreach.composeactors.data.model.*
 import org.json.JSONObject
 
 /**
@@ -29,7 +29,7 @@ class JsonRemoteData(
             val actorId = jsonObject.getInt("id")
             val actorName = jsonObject.getString("name")
             val profilePathUrl = jsonObject.getString("profile_path")
-            val profilePath = "${RequestUrls.LOW_RES_IMAGE}$profilePathUrl"
+            val profilePath = "${urls.LOW_RES_IMAGE}$profilePathUrl"
             actorsList.add(Actor(actorId, actorName, profilePath))
         }
         return actorsList
@@ -51,7 +51,7 @@ class JsonRemoteData(
         val placeOfBirth = jsonObject.getString("place_of_birth")
         val popularity = jsonObject.getDouble("popularity")
         val profilePathUrl = jsonObject.getString("profile_path")
-        val profilePath = "${RequestUrls.HIGH_RES_IMAGE}$profilePathUrl"
+        val profilePath = "${urls.HIGH_RES_IMAGE}$profilePathUrl"
 
         return ActorDetail(actorName, profilePath, biography, dateOfBirth, placeOfBirth, popularity)
     }
@@ -72,7 +72,7 @@ class JsonRemoteData(
             val jsonObject = movieJsonArray.getJSONObject(notI)
             val movieId = jsonObject.getInt("id")
             val posterPathUrl = jsonObject.getString("poster_path")
-            val posterPath = "${RequestUrls.LOW_RES_IMAGE}$posterPathUrl"
+            val posterPath = "${urls.LOW_RES_IMAGE}$posterPathUrl"
             movieList.add(Movie(movieId, posterPath))
         }
         return movieList
@@ -87,13 +87,13 @@ class JsonRemoteData(
         val movieId = jsonObject.getInt("id")
         val originalTitle = jsonObject.getString("original_title")
         val bannerUrl = jsonObject.getString("backdrop_path")
-        val banner = "${RequestUrls.HIGH_RES_IMAGE}$bannerUrl"
+        val banner = "${urls.HIGH_RES_IMAGE}$bannerUrl"
         val budget = jsonObject.getString("budget")
         val originalLanguage = jsonObject.getString("original_language")
         val overview = jsonObject.getString("overview")
         val popularity = jsonObject.getDouble("popularity")
         val posterUrl = jsonObject.getString("poster_path")
-        val poster = "${RequestUrls.HIGH_RES_IMAGE}$posterUrl"
+        val poster = "${urls.HIGH_RES_IMAGE}$posterUrl"
         val releaseData = jsonObject.getString("release_date")
         val revenue = jsonObject.getLong("revenue")
         val runtime = jsonObject.getInt("runtime")
@@ -154,7 +154,7 @@ class JsonRemoteData(
             val jsonObject = actorsJsonArray.getJSONObject(notI)
             val movieId = jsonObject.getInt("id")
             val posterPathUrl = jsonObject.getString("poster_path")
-            val posterPath = "${RequestUrls.LOW_RES_IMAGE}$posterPathUrl"
+            val posterPath = "${urls.LOW_RES_IMAGE}$posterPathUrl"
             movieList.add(Movie(movieId, posterPath))
         }
         return movieList
@@ -178,7 +178,7 @@ class JsonRemoteData(
             val actorId = jsonObject.getInt("id")
             val castName = jsonObject.getString("name")
             val profilePathUrl = jsonObject.getString("profile_path")
-            val profilePath = "${RequestUrls.LOW_RES_IMAGE}$profilePathUrl"
+            val profilePath = "${urls.LOW_RES_IMAGE}$profilePathUrl"
             castList.add(Cast(actorId, castName, profilePath))
         }
         return castList
@@ -197,7 +197,7 @@ class JsonRemoteData(
             val jsonObject = moviesJsonArray.getJSONObject(notI)
             val movieId = jsonObject.getInt("id")
             val backdropPathUrl = jsonObject.getString("backdrop_path")
-            val backdropPath = "${RequestUrls.HIGH_RES_IMAGE}$backdropPathUrl"
+            val backdropPath = "${urls.HIGH_RES_IMAGE}$backdropPathUrl"
             movieList.add(Movie(movieId, backdropPath))
         }
         return movieList
@@ -216,7 +216,7 @@ class JsonRemoteData(
             val jsonObject = moviesJsonArray.getJSONObject(notI)
             val movieId = jsonObject.getInt("id")
             val posterPathUrl = jsonObject.getString("poster_path")
-            val posterPath = "${RequestUrls.LOW_RES_IMAGE}$posterPathUrl"
+            val posterPath = "${urls.LOW_RES_IMAGE}$posterPathUrl"
             movieList.add(Movie(movieId, posterPath))
         }
         return movieList

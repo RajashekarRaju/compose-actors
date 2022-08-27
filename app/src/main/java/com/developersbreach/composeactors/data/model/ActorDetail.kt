@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.model
+package com.developersbreach.composeactors.data.model
 
 import androidx.compose.runtime.Immutable
 

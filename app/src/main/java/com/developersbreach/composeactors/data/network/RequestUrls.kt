@@ -1,6 +1,6 @@
-package com.developersbreach.composeactors.repository.network
+package com.developersbreach.composeactors.data.network
 
-import com.developersbreach.composeactors.utils.ApiKey
+import com.developersbreach.composeactors.utils.TmdbApiKey
 import java.net.URL
 
 /**
@@ -9,7 +9,7 @@ import java.net.URL
 object RequestUrls {
 
     private const val BASE_URL = "https://api.themoviedb.org/3/"
-    private const val API_KEY = "api_key=${ApiKey.API_KEY}"
+    private const val API_KEY = "api_key=${TmdbApiKey.TMDB_API_KEY}"
     const val LOW_RES_IMAGE = "https://image.tmdb.org/t/p/w200"
     const val HIGH_RES_IMAGE = "https://image.tmdb.org/t/p/w500"
 

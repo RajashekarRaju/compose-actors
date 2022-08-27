@@ -1,9 +1,9 @@
-package com.developersbreach.composeactors.repository.database
+package com.developersbreach.composeactors.data.convertor
 
-import com.developersbreach.composeactors.model.Actor
-import com.developersbreach.composeactors.model.Movie
-import com.developersbreach.composeactors.repository.database.entity.FavoriteActorsEntity
-import com.developersbreach.composeactors.repository.database.entity.FavoriteMoviesEntity
+import com.developersbreach.composeactors.data.model.Actor
+import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.database.entity.FavoriteActorsEntity
+import com.developersbreach.composeactors.data.database.entity.FavoriteMoviesEntity
 
 
 fun Actor.actorAsDatabaseModel(): FavoriteActorsEntity {
