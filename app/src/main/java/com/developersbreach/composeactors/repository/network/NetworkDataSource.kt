@@ -22,14 +22,14 @@ class NetworkDataSource {
      * @return the result of latest list of all popular actors fetched from the network.
      */
     fun getPopularActors(): List<Actor> {
-        val requestUrl = RequestUrls.getPopularActorsUrl()
+        val requestUrl = requestUrls.getPopularActorsUrl()
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchActorsJsonData(response)
     }
 
     /** @return the result of latest list of all trending actors fetched from the network. */
     fun getTrendingActors(): List<Actor> {
-        val requestUrl = RequestUrls.getTrendingActorsUrl()
+        val requestUrl = requestUrls.getTrendingActorsUrl()
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchActorsJsonData(response)
     }
@@ -41,7 +41,7 @@ class NetworkDataSource {
     fun getActorDetails(
         actorId: Int
     ): ActorDetail {
-        val requestUrl = RequestUrls.getActorDetailsUrl(actorId)
+        val requestUrl = requestUrls.getActorDetailsUrl(actorId)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchActorDetailsJsonData(response)
     }
@@ -53,7 +53,7 @@ class NetworkDataSource {
     fun getCastDetails(
         actorId: Int
     ): List<Movie> {
-        val requestUrl = RequestUrls.getCastDetailsUrl(actorId)
+        val requestUrl = requestUrls.getCastDetailsUrl(actorId)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchCastDetailsJsonData(response)
     }
@@ -65,7 +65,7 @@ class NetworkDataSource {
     fun getSearchableActors(
         query: String
     ): List<Actor> {
-        val requestUrl = RequestUrls.getSearchActorsUrl(query)
+        val requestUrl = requestUrls.getSearchActorsUrl(query)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchActorsJsonData(response)
     }
@@ -73,7 +73,7 @@ class NetworkDataSource {
     fun getMovieDetailsById(
         movieId: Int
     ): MovieDetail {
-        val requestUrl = RequestUrls.getMovieDetailsUrl(movieId)
+        val requestUrl = requestUrls.getMovieDetailsUrl(movieId)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchMovieDetailsJsonData(response)
     }
@@ -85,7 +85,7 @@ class NetworkDataSource {
     fun getSimilarMoviesById(
         movieId: Int
     ): List<Movie> {
-        val requestUrl = RequestUrls.getSimilarMoviesUrl(movieId)
+        val requestUrl = requestUrls.getSimilarMoviesUrl(movieId)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
     }
@@ -97,7 +97,7 @@ class NetworkDataSource {
     fun getRecommendedMoviesById(
         movieId: Int
     ): List<Movie> {
-        val requestUrl = RequestUrls.getRecommendedMoviesUrl(movieId)
+        val requestUrl = requestUrls.getRecommendedMoviesUrl(movieId)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
     }
@@ -109,19 +109,19 @@ class NetworkDataSource {
     fun getMovieCastById(
         movieId: Int
     ): List<Cast> {
-        val requestUrl = RequestUrls.getMovieCastUrl(movieId)
+        val requestUrl = requestUrls.getMovieCastUrl(movieId)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchMovieCastByIdJsonData(response)
     }
 
     fun getUpcomingMovies(): List<Movie> {
-        val requestUrl = RequestUrls.getUpcomingMoviesUrl()
+        val requestUrl = requestUrls.getUpcomingMoviesUrl()
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchUpcomingMoviesJsonData(response)
     }
 
     fun getNowPlayingMovies(): List<Movie> {
-        val requestUrl = RequestUrls.getNowPlayingMoviesUrl()
+        val requestUrl = requestUrls.getNowPlayingMoviesUrl()
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         return jsonData.fetchNowPlayingMoviesJsonData(response)
     }
