@@ -5,6 +5,6 @@ package com.developersbreach.composeactors.utils
  *
  * You can get your own Api Key from here [https://www.themoviedb.org/settings/api]
  */
-object ApiKey {
-    const val API_KEY = ""
+object TmdbApiKey {
+    const val TMDB_API_KEY = ""
 }

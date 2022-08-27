@@ -27,11 +27,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.model.ActorDetail
-import com.developersbreach.composeactors.model.Movie
-import com.developersbreach.composeactors.ui.components.CategoryTitle
-import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
+import com.developersbreach.composeactors.animations.borderRevealAnimation
+import com.developersbreach.composeactors.data.model.ActorDetail
+import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.ui.components.*
 import com.developersbreach.composeactors.ui.home.HomeScreen
 import com.developersbreach.composeactors.ui.modalSheet.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.search.SearchScreen
@@ -75,7 +74,7 @@ fun ActorDetailScreen(
             )
         },
     ) {
-        ActorDynamicTheme(
+        ImageBackgroundThemeGenerator(
             podcastImageUrl = actorProfile
         ) {
             Box {

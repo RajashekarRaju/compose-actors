@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.model.Actor
-import com.developersbreach.composeactors.repository.network.NetworkRepository
+import com.developersbreach.composeactors.data.model.Actor
+import com.developersbreach.composeactors.repository.NetworkRepository
 import kotlinx.coroutines.launch
 
 /**

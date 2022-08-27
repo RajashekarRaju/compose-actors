@@ -6,11 +6,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.model.Actor
-import com.developersbreach.composeactors.model.Movie
-import com.developersbreach.composeactors.model.MovieDetail
-import com.developersbreach.composeactors.repository.database.DatabaseRepository
-import com.developersbreach.composeactors.repository.network.NetworkRepository
+import com.developersbreach.composeactors.data.model.Actor
+import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.model.MovieDetail
+import com.developersbreach.composeactors.repository.DatabaseRepository
+import com.developersbreach.composeactors.repository.NetworkRepository
 import com.developersbreach.composeactors.ui.modalSheet.SheetContentMovieDetails
 import kotlinx.coroutines.launch
 import timber.log.Timber

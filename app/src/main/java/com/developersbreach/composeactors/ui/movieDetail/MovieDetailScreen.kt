@@ -28,15 +28,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.model.Cast
-import com.developersbreach.composeactors.model.Genre
-import com.developersbreach.composeactors.model.Movie
+import com.developersbreach.composeactors.data.model.Cast
+import com.developersbreach.composeactors.data.model.Genre
+import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.home.HomeScreen
 import com.developersbreach.composeactors.ui.modalSheet.SheetContentActorDetails
 import com.developersbreach.composeactors.ui.actorDetails.ActorDetailScreen
-import com.developersbreach.composeactors.utils.LayerRevealImage
+import com.developersbreach.composeactors.animations.LayerRevealImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

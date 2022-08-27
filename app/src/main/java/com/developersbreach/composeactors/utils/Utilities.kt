@@ -12,6 +12,7 @@ fun calculateAge(
     var age = 0
     // Since we receive the json data for data of birth with null safe as string,
     // Compare with null string to know whether actual date is available.
+    // TODO - avoid check with null string
     if (dateOfBirth != "null") {
         val grabYear: Int? = dateOfBirth?.dropLast(6)?.toInt()
         val currentYear: Int = Calendar.getInstance().get(Calendar.YEAR)
