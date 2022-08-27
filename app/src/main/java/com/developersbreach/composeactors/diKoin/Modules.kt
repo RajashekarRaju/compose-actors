@@ -1,9 +1,10 @@
 package com.developersbreach.composeactors.diKoin
 
-import com.developersbreach.composeactors.repository.database.DatabaseRepository
-import com.developersbreach.composeactors.repository.database.getDatabaseInstance
-import com.developersbreach.composeactors.repository.network.NetworkDataSource
-import com.developersbreach.composeactors.repository.network.NetworkRepository
+import com.developersbreach.composeactors.datasource.DatabaseDataSource
+import com.developersbreach.composeactors.repository.DatabaseRepository
+import com.developersbreach.composeactors.data.database.getDatabaseInstance
+import com.developersbreach.composeactors.datasource.NetworkDataSource
+import com.developersbreach.composeactors.repository.NetworkRepository
 import com.developersbreach.composeactors.ui.actorDetails.ActorDetailsViewModel
 import com.developersbreach.composeactors.ui.home.HomeViewModel
 import com.developersbreach.composeactors.ui.movieDetail.MovieDetailViewModel
@@ -20,6 +21,10 @@ val networkDataSourceModule = module {
 val databaseModule = module {
     single {
         getDatabaseInstance(get())
+    }
+
+    single {
+        DatabaseDataSource(get())
     }
 }
 

@@ -1,6 +1,7 @@
-package com.developersbreach.composeactors.repository.network
+package com.developersbreach.composeactors.repository
 
-import com.developersbreach.composeactors.model.*
+import com.developersbreach.composeactors.data.model.*
+import com.developersbreach.composeactors.datasource.NetworkDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
