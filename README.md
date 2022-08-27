@@ -3,8 +3,18 @@
 ## Roadmap v0.3.0
 
 - [ ] Let users search for movies directly just like searching for actors.
-- [ ] Collapsable TopBars, BottomBars, Scroll effects, new animations.
+- [ ] Hilt will be replaced by removing Koin.
+- [x] Restructure packages and files by introducing new source files.
 - [ ] Add feature for adding actors to favorites like movies.
+
+## Roadmap v0.4.0
+### Rename app from Compose actors -> Compose Entertainer.
+
+- [ ] Add new feature seasons or series information to app.
+- [ ] Include seasons in home tabs navigation.
+- [ ] Enabled adding seasons to favorites.
+- [ ] Move favorites section from home tab to new place (Restructure all screen flows).
+- [ ] Collapsable TopBars, BottomBars, Scroll effects, new animations.
 
 ![AppBanner](/assets/banner.png)
 
