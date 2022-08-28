@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.actorDetails
+package com.developersbreach.composeactors.ui.screens.actorDetails
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,7 +24,7 @@ import com.developersbreach.composeactors.R
  * AppBar for [ActorDetailScreen]
  */
 @Composable
-fun DetailAppBar(
+fun ActorDetailsTopAppBar(
     navigateUp: () -> Unit,
     title: String
 ) {

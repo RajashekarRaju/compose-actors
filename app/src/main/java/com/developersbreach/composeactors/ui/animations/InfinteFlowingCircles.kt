@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.animations
+package com.developersbreach.composeactors.ui.animations
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import com.developersbreach.composeactors.ui.search.SearchScreen
+import com.developersbreach.composeactors.ui.screens.search.SearchScreen
 
 /**
  * Appears in [SearchScreen]

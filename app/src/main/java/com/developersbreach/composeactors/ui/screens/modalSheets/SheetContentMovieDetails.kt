@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.modalSheet
+package com.developersbreach.composeactors.ui.screens.modalSheets
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.model.MovieDetail
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.movieDetail.MovieGenre
+import com.developersbreach.composeactors.ui.screens.movieDetail.MovieGenre
 
 /**
  * Content inside modal sheet.

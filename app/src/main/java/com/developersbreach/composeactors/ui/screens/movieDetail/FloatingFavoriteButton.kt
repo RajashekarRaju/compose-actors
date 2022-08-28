@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.movieDetail
+package com.developersbreach.composeactors.ui.screens.movieDetail
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState

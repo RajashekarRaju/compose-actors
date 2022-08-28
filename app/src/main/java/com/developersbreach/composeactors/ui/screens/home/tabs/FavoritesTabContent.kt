@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.home
+package com.developersbreach.composeactors.ui.screens.home.tabs
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -6,14 +6,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -22,21 +19,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import com.developersbreach.composeactors.ui.screens.home.HomeViewModel
+import kotlinx.coroutines.Job
 
 
 /**
  * Content shown for home tab Favorites.
  * If user did not add any movies to favorites, a message will be shown.
  */
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FavoritesTabContent(
     viewModel: HomeViewModel,
     selectedMovie: (Int) -> Unit,
-    modalSheetState: ModalBottomSheetState,
-    coroutineScope: CoroutineScope = rememberCoroutineScope()
+    openHomeBottomSheet: () -> Job
 ) {
     val favoritesList by viewModel.favoriteMovies.observeAsState(emptyList())
     if (favoritesList.isEmpty()) {
@@ -62,9 +57,7 @@ fun FavoritesTabContent(
                     .size(120.dp, 180.dp)
                     .clickable {
                         viewModel.getSelectedMovieDetails(movieItem.movieId)
-                        coroutineScope.launch {
-                            modalSheetState.show()
-                        }
+                        openHomeBottomSheet()
                     }
             )
         }

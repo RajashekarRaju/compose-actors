@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.navigation
+package com.developersbreach.composeactors.ui.navigation
 
 /**
  * All routes in one place.

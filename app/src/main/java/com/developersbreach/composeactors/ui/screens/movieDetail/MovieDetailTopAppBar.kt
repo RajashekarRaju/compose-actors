@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.movieDetail
+package com.developersbreach.composeactors.ui.screens.movieDetail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -26,7 +26,7 @@ import com.developersbreach.composeactors.R
  * AppBar for [MovieDetailScreen]
  */
 @Composable
-fun MovieDetailAppBar(
+fun MovieDetailTopAppBar(
     navigateUp: () -> Unit,
     title: String?,
     showTopBarBackground: MutableState<Boolean>

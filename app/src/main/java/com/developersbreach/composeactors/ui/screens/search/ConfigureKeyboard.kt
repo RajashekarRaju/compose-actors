@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.search
+package com.developersbreach.composeactors.ui.screens.search
 
 import android.graphics.Rect
 import android.view.ViewTreeObserver

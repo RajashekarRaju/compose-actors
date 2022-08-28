@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.home
+package com.developersbreach.composeactors.ui.screens.home.tabs
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -20,11 +20,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.model.Actor
-import com.developersbreach.composeactors.ui.actorDetails.ActorDetailScreen
+import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailScreen
 import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
+import com.developersbreach.composeactors.ui.screens.home.HomeViewModel
 
 
 @Composable

@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.home
+package com.developersbreach.composeactors.ui.screens.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,16 +21,16 @@ import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
 /**
- * Appbar contains [HomeAppBar] which does not perform search query directly.
+ * Appbar contains [HomeTopAppBarContent] which does not perform search query directly.
  * Instead navigates to search screen to submit query.
  * @param navigateToSearch navigates user to search screen.
  */
 @Composable
-fun MainAppBar(
+fun HomeTopAppBar(
     navigateToSearch: () -> Unit
 ) {
     TopAppBar(
-        content = { HomeAppBar(navigateToSearch) },
+        content = { HomeTopAppBarContent(navigateToSearch) },
         backgroundColor = MaterialTheme.colors.background,
         elevation = 0.dp,
         modifier = Modifier
@@ -43,7 +43,7 @@ fun MainAppBar(
  * AppBar for [HomeScreen]
  */
 @Composable
-private fun HomeAppBar(
+private fun HomeTopAppBarContent(
     navigateToSearch: () -> Unit
 ) {
     Row(
@@ -79,6 +79,6 @@ private fun HomeAppBar(
 @Composable
 fun SearchBarPreview() {
     ComposeActorsTheme(darkTheme = true) {
-        HomeAppBar { }
+        HomeTopAppBarContent { }
     }
 }

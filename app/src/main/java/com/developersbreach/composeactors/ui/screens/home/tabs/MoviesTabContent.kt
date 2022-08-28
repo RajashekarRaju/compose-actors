@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.home
+package com.developersbreach.composeactors.ui.screens.home.tabs
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -8,27 +8,23 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import com.developersbreach.composeactors.ui.screens.home.HomeViewModel
+import kotlinx.coroutines.Job
 
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MoviesTabContent(
     viewModel: HomeViewModel,
     selectedMovie: (Int) -> Unit,
-    modalSheetState: ModalBottomSheetState
+    openHomeBottomSheet: () -> Job
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
@@ -37,22 +33,20 @@ fun MoviesTabContent(
             Spacer(modifier = Modifier.height(8.dp))
             CategoryTitle(title = "Upcoming", alpha = 0.5f)
             Spacer(modifier = Modifier.height(16.dp))
-            UpcomingMovies(viewModel, modalSheetState)
+            UpcomingMovies(viewModel, openHomeBottomSheet)
             Spacer(modifier = Modifier.height(28.dp))
             CategoryTitle(title = "Now Playing", alpha = 0.5f)
             Spacer(modifier = Modifier.height(8.dp))
-            NowPlayingMovies(viewModel, selectedMovie, modalSheetState)
+            NowPlayingMovies(viewModel, selectedMovie, openHomeBottomSheet)
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun UpcomingMovies(
     viewModel: HomeViewModel,
-    modalSheetState: ModalBottomSheetState,
-    coroutineScope: CoroutineScope = rememberCoroutineScope()
+    openHomeBottomSheet: () -> Job
 ) {
     LazyRow(
         contentPadding = PaddingValues(horizontal = 16.dp),
@@ -74,22 +68,18 @@ private fun UpcomingMovies(
                     .fillParentMaxSize()
                     .clickable {
                         viewModel.getSelectedMovieDetails(movieItem.movieId)
-                        coroutineScope.launch {
-                            modalSheetState.show()
-                        }
+                        openHomeBottomSheet()
                     }
             )
         }
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun NowPlayingMovies(
     viewModel: HomeViewModel,
     selectedMovie: (Int) -> Unit,
-    modalSheetState: ModalBottomSheetState,
-    coroutineScope: CoroutineScope = rememberCoroutineScope()
+    closeHomeBottomSheet: () -> Job
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -112,9 +102,7 @@ private fun NowPlayingMovies(
                     .size(120.dp, 180.dp)
                     .clickable {
                         viewModel.getSelectedMovieDetails(movieItem.movieId)
-                        coroutineScope.launch {
-                            modalSheetState.show()
-                        }
+                        closeHomeBottomSheet()
                     }
             )
         }

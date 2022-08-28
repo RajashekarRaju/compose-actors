@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.navigation
+package com.developersbreach.composeactors.ui.navigation
 
 import androidx.navigation.NavHostController
 

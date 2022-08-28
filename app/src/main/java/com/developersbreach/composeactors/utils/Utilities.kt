@@ -1,6 +1,6 @@
 package com.developersbreach.composeactors.utils
 
-import java.util.*
+import java.util.Calendar
 
 /**
  * @param dateOfBirth received in "dd-mm-yyyy" format. Gets rid of day and month to read year.
