@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.search
+package com.developersbreach.composeactors.ui.screens.search
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.model.Actor
-import com.developersbreach.composeactors.repository.NetworkRepository
+import com.developersbreach.composeactors.data.repository.NetworkRepository
 import kotlinx.coroutines.launch
 
 /**

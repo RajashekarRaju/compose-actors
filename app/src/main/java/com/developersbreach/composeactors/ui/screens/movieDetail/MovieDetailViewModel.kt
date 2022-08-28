@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.movieDetail
+package com.developersbreach.composeactors.ui.screens.movieDetail
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,8 +10,8 @@ import com.developersbreach.composeactors.data.model.ActorDetail
 import com.developersbreach.composeactors.data.model.Cast
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.MovieDetail
-import com.developersbreach.composeactors.repository.DatabaseRepository
-import com.developersbreach.composeactors.repository.NetworkRepository
+import com.developersbreach.composeactors.data.repository.DatabaseRepository
+import com.developersbreach.composeactors.data.repository.NetworkRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException

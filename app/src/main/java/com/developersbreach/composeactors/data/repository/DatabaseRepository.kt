@@ -1,16 +1,14 @@
-package com.developersbreach.composeactors.datasource
+package com.developersbreach.composeactors.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.developersbreach.composeactors.data.convertor.actorAsDatabaseModel
-import com.developersbreach.composeactors.data.convertor.actorAsDomainModel
-import com.developersbreach.composeactors.data.convertor.movieAsDatabaseModel
-import com.developersbreach.composeactors.data.convertor.movieAsDomainModel
-import com.developersbreach.composeactors.data.database.*
-import com.developersbreach.composeactors.data.model.Actor
-import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.database.AppDatabase
+import com.developersbreach.composeactors.data.model.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class DatabaseDataSource(
+
+class DatabaseRepository(
     private val database: AppDatabase
 ) {
 
@@ -32,43 +30,39 @@ class DatabaseDataSource(
 
     fun checkIfMovieIsFavorite(
         movieId: Int
-    ): LiveData<Int> {
-        return database.favoriteMoviesDao.checkIfMovieIsFavorite(movieId)
-    }
+    ) = database.favoriteMoviesDao.checkIfMovieIsFavorite(movieId)
 
     fun checkIfActorIsFavorite(
         actorId: Int
-    ): LiveData<Int> {
-        return database.favoriteActorsDao.checkIfActorIsFavorite(actorId)
-    }
+    ) = database.favoriteActorsDao.checkIfActorIsFavorite(actorId)
 
-    fun addMovieToFavorites(
+    suspend fun addMovieToFavorites(
         movie: Movie
-    ) {
+    ) = withContext(Dispatchers.IO) {
         with(movie.movieAsDatabaseModel()) {
             database.favoriteMoviesDao.addMovieToFavorites(favoriteMoviesEntity = this)
         }
     }
 
-    fun addActorToFavorites(
+    suspend fun addActorToFavorites(
         actor: Actor
-    ) {
+    ) = withContext(Dispatchers.IO) {
         with(actor.actorAsDatabaseModel()) {
             database.favoriteActorsDao.addActorToFavorites(favoriteActorsEntity = this)
         }
     }
 
-    fun deleteSelectedFavoriteMovie(
+    suspend fun deleteSelectedFavoriteMovie(
         movie: Movie
-    ) {
+    ) = withContext(Dispatchers.IO) {
         with(movie.movieAsDatabaseModel()) {
             database.favoriteMoviesDao.deleteSelectedFavoriteMovie(favoriteMoviesEntity = this)
         }
     }
 
-    fun deleteSelectedFavoriteActor(
+    suspend fun deleteSelectedFavoriteActor(
         actor: Actor
-    ) {
+    ) = withContext(Dispatchers.IO) {
         with(actor.actorAsDatabaseModel()) {
             database.favoriteActorsDao.deleteSelectedFavoriteActor(favoriteActorsEntity = this)
         }
