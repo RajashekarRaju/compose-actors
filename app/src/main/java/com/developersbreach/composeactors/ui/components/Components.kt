@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.utils.TmdbApiKey
 import com.developersbreach.composeactors.utils.NetworkManager
+import com.developersbreach.composeactors.utils.isTmdbApiKeyNotValid
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -66,7 +67,7 @@ fun ApiKeyMissingShowSnackbar(
     scaffoldState: ScaffoldState,
     context: Context = LocalContext.current
 ) {
-    if (TmdbApiKey.TMDB_API_KEY.isEmpty()) {
+    if (isTmdbApiKeyNotValid()) {
         LaunchSnackBar(
             scaffoldState,
             context.getString(R.string.missing_api_key_snackbar_message)
