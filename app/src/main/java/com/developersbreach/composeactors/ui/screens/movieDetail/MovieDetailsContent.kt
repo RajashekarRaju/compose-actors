@@ -1,9 +1,5 @@
-package com.developersbreach.composeactors.ui.movieDetail
+package com.developersbreach.composeactors.ui.screens.movieDetail
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -14,13 +10,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -33,102 +30,16 @@ import com.developersbreach.composeactors.data.model.Genre
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.home.HomeScreen
-import com.developersbreach.composeactors.ui.modalSheet.SheetContentActorDetails
-import com.developersbreach.composeactors.ui.actorDetails.ActorDetailScreen
-import com.developersbreach.composeactors.animations.LayerRevealImage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Job
 
-
-/**
- * Screen shows details for the selected movie.
- * This destination can be accessed from [HomeScreen] & [ActorDetailScreen].
- */
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MovieDetailScreen(
-    selectedMovie: (Int) -> Unit,
-    viewModel: MovieDetailViewModel,
-    navigateUp: () -> Unit
-) {
-    val uiState = viewModel.uiState
-    val sheetUiState = viewModel.sheetUiState
-    // This helps us reveal screen content with fadeIn anim once reveal effect is completed.
-    val isLayerRevealAnimationEnded = rememberSaveable { mutableStateOf(false) }
-    // Change button state with respect to scroll changes.
-    val showFab = rememberSaveable { mutableStateOf(true) }
-
-    val modalSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true,
-        animationSpec = tween(durationMillis = 300, delayMillis = 50)
-    )
-
-    // Sheet content contains details for the selected movie from list.
-    ModalBottomSheetLayout(
-        sheetState = modalSheetState,
-        scrimColor = Color.Black.copy(alpha = 0.5f),
-        sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-        sheetBackgroundColor = MaterialTheme.colors.background,
-        sheetContent = {
-            SheetContentActorDetails(
-                actor = sheetUiState.selectedActorDetails,
-            )
-        },
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            // Background poster with layer reveal effect
-            LayerRevealImage(uiState.movieData?.poster, isLayerRevealAnimationEnded)
-            // Fade enter animation detail screen once layer reveal completes
-            if (isLayerRevealAnimationEnded.value) {
-                AnimateDetailScreenContent(uiState, navigateUp, showFab, viewModel, modalSheetState)
-            }
-            // Progress bar - Hidden temporarily, although it works fine cannot have it in current
-            // screen placement since it is on to of reveal animation.
-            // ShowProgressIndicator(isLoadingData = uiState.isFetchingDetails)
-            if (showFab.value) {
-                FloatingAddFavoritesButton(viewModel)
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-private fun AnimateDetailScreenContent(
+fun MovieDetailsContent(
     uiState: MovieDetailUiState,
     navigateUp: () -> Unit,
     showFab: MutableState<Boolean>,
     viewModel: MovieDetailViewModel,
-    modalSheetState: ModalBottomSheetState
-) {
-    val state = remember {
-        MutableTransitionState(false).apply {
-            // Start the animation immediately.
-            targetState = true
-        }
-    }
-
-    AnimatedVisibility(
-        visibleState = state,
-        enter = fadeIn()
-    ) {
-        // Main details content
-        MovieDetailsContent(uiState, navigateUp, showFab, viewModel, modalSheetState)
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
-@Composable
-private fun MovieDetailsContent(
-    uiState: MovieDetailUiState,
-    navigateUp: () -> Unit,
-    showFab: MutableState<Boolean>,
-    viewModel: MovieDetailViewModel,
-    modalSheetState: ModalBottomSheetState
+    openMovieDetailsBottomSheet: () -> Job
 ) {
     val movieData = uiState.movieData
     val listState = rememberLazyListState()
@@ -146,7 +57,7 @@ private fun MovieDetailsContent(
     ) {
 
         stickyHeader {
-            MovieDetailAppBar(
+            MovieDetailTopAppBar(
                 navigateUp = navigateUp,
                 title = movieData?.movieTitle,
                 showTopBarBackground = showTopBarBackground
@@ -163,7 +74,7 @@ private fun MovieDetailsContent(
             Spacer(modifier = Modifier.height(16.dp))
             CategoryTitle(title = "Cast", alpha = 1f)
             Spacer(modifier = Modifier.height(16.dp))
-            GetMovieCast(uiState.movieCast, viewModel, modalSheetState)
+            GetMovieCast(uiState.movieCast, viewModel, openMovieDetailsBottomSheet)
             Spacer(modifier = Modifier.height(24.dp))
             CategoryTitle(title = "Similar", alpha = 1f)
             GetRelatedMovies(movieList = uiState.similarMovies)
@@ -202,12 +113,11 @@ fun MovieGenre(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun GetMovieCast(
     movieCast: List<Cast>,
     viewModel: MovieDetailViewModel,
-    modalSheetState: ModalBottomSheetState
+    openMovieDetailsBottomSheet: () -> Job
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -220,19 +130,17 @@ private fun GetMovieCast(
             ItemCast(
                 cast = cast,
                 viewModel = viewModel,
-                modalSheetState = modalSheetState
+                openMovieDetailsBottomSheet = openMovieDetailsBottomSheet
             )
         }
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ItemCast(
+private fun ItemCast(
     cast: Cast,
     viewModel: MovieDetailViewModel,
-    coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    modalSheetState: ModalBottomSheetState
+    openMovieDetailsBottomSheet: () -> Job
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -240,10 +148,8 @@ fun ItemCast(
             .width(120.dp)
             .clickable {
                 viewModel.getSelectedActorDetails(cast.actorId)
-                coroutineScope.launch {
-                    modalSheetState.show()
-                }
-            },
+                openMovieDetailsBottomSheet()
+            }
     ) {
         LoadNetworkImage(
             imageUrl = cast.castProfilePath,

@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.actorDetails
+package com.developersbreach.composeactors.ui.screens.actorDetails
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -8,16 +8,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -27,115 +23,29 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.animations.borderRevealAnimation
 import com.developersbreach.composeactors.data.model.ActorDetail
 import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.ui.components.*
-import com.developersbreach.composeactors.ui.home.HomeScreen
-import com.developersbreach.composeactors.ui.modalSheet.SheetContentMovieDetails
-import com.developersbreach.composeactors.ui.search.SearchScreen
-import com.developersbreach.composeactors.utils.*
-import kotlinx.coroutines.launch
-
-
-/**
- * Shows details of user selected actor.
- *
- * @param viewModel to manage ui state of [ActorDetailScreen]
- * @param navigateUp navigates user to previous screen.
- *
- * This destination can be accessed from [HomeScreen] & [SearchScreen].
- */
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun ActorDetailScreen(
-    selectedMovie: (Int) -> Unit,
-    navigateUp: () -> Unit,
-    viewModel: ActorDetailsViewModel
-) {
-    val uiState = viewModel.uiState
-    val sheetUiState = viewModel.sheetUiState
-    val actorProfile = "${uiState.actorData?.profileUrl}"
-
-    val modalSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true,
-    )
-
-    ModalBottomSheetLayout(
-        sheetState = modalSheetState,
-        scrimColor = Color.Black.copy(alpha = 0.5f),
-        sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-        sheetBackgroundColor = MaterialTheme.colors.background,
-        sheetContent = {
-            SheetContentMovieDetails(
-                movie = sheetUiState.selectedMovieDetails,
-                selectedMovie = selectedMovie
-            )
-        },
-    ) {
-        ImageBackgroundThemeGenerator(
-            podcastImageUrl = actorProfile
-        ) {
-            Box {
-                // Draws gradient from image and overlays on it.
-                ActorBackgroundWithGradientForeground(imageUrl = actorProfile)
-                // Main details content
-                ContentDetail(navigateUp, viewModel, modalSheetState)
-                // Progress bar
-                ShowProgressIndicator(isLoadingData = uiState.isFetchingDetails)
-            }
-        }
-    }
-}
-
-/**
- * This image takes up whole space in screen as a background with reduced opacity.
- * On foreground draw vertical gradient so that top elements will be visible.
- *
- * @param imageUrl url to load image with coil.
- */
-@Composable
-private fun ActorBackgroundWithGradientForeground(
-    imageUrl: String,
-    modifier: Modifier = Modifier
-) {
-    Box {
-        LoadNetworkImage(
-            imageUrl = imageUrl,
-            contentDescription = stringResource(R.string.cd_actor_banner),
-            shape = RectangleShape,
-            showAnimProgress = false,
-            modifier = modifier
-                .fillMaxSize()
-                .alpha(0.5f)
-        )
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalGradientScrim(
-                    color = MaterialTheme.colors.primary.copy(alpha = 0.50f),
-                    startYPercentage = 1f,
-                    endYPercentage = 0f
-                )
-        )
-    }
-}
+import com.developersbreach.composeactors.ui.animations.borderRevealAnimation
+import com.developersbreach.composeactors.ui.components.CategoryTitle
+import com.developersbreach.composeactors.ui.components.LoadNetworkImage
+import com.developersbreach.composeactors.ui.components.verticalGradientScrim
+import com.developersbreach.composeactors.utils.calculateAge
+import com.developersbreach.composeactors.utils.getPlaceOfBirth
+import com.developersbreach.composeactors.utils.getPopularity
+import kotlinx.coroutines.Job
 
 // Main content for this screen
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun ContentDetail(
+fun ActorDetailsContent(
     navigateUp: () -> Unit,
     viewModel: ActorDetailsViewModel,
-    modalSheetState: ModalBottomSheetState,
+    openActorDetailsBottomSheet: () -> Job
 ) {
     val actorData = viewModel.uiState.actorData
 
     Column {
 
-        DetailAppBar(
+        ActorDetailsTopAppBar(
             navigateUp = navigateUp,
             title = "${actorData?.actorName}"
         )
@@ -152,7 +62,7 @@ private fun ContentDetail(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             item { ActorInfoHeader(actorData) }
-            item { ActorCastedMovies(viewModel, modalSheetState) }
+            item { ActorCastedMovies(viewModel, openActorDetailsBottomSheet) }
             item { ActorBiography(actorData?.biography) }
         }
     }
@@ -208,14 +118,12 @@ fun ActorInfoHeader(
 /**
  * Cast icon and title on top and list below.
  */
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ActorCastedMovies(
     viewModel: ActorDetailsViewModel,
-    modalSheetState: ModalBottomSheetState
+    openActorDetailsBottomSheet: () -> Job
 ) {
     val cast: List<Movie> = viewModel.uiState.castList
-    val coroutineScope = rememberCoroutineScope()
 
     Row(
         verticalAlignment = Alignment.CenterVertically
@@ -251,10 +159,8 @@ private fun ActorCastedMovies(
                     .size(100.dp, 150.dp)
                     .clickable {
                         viewModel.getSelectedMovieDetails(movie.movieId)
-                        coroutineScope.launch {
-                            modalSheetState.show()
-                        }
-                    },
+                        openActorDetailsBottomSheet()
+                    }
             )
         }
     }
