@@ -1,6 +1,6 @@
 package com.developersbreach.composeactors.utils
 
-import java.util.*
+import java.util.Calendar
 
 /**
  * @param dateOfBirth received in "dd-mm-yyyy" format. Gets rid of day and month to read year.
@@ -12,6 +12,7 @@ fun calculateAge(
     var age = 0
     // Since we receive the json data for data of birth with null safe as string,
     // Compare with null string to know whether actual date is available.
+    // TODO - avoid check with null string
     if (dateOfBirth != "null") {
         val grabYear: Int? = dateOfBirth?.dropLast(6)?.toInt()
         val currentYear: Int = Calendar.getInstance().get(Calendar.YEAR)

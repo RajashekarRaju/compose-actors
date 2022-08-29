@@ -1,13 +1,10 @@
-@file:Suppress("unused")
-
 package com.developersbreach.composeactors
 
 import android.app.Application
-import com.developersbreach.composeactors.diKoin.databaseModule
-import com.developersbreach.composeactors.diKoin.networkDataSourceModule
-import com.developersbreach.composeactors.diKoin.repositoryModule
-import com.developersbreach.composeactors.diKoin.viewModelModule
-import com.developersbreach.composeactors.navigation.AppNavigation
+import com.developersbreach.composeactors.di.databaseModule
+import com.developersbreach.composeactors.di.repositoryModule
+import com.developersbreach.composeactors.di.viewModelModule
+import com.developersbreach.composeactors.ui.navigation.AppNavigation
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -32,7 +29,6 @@ class ComposeActorsApp : Application() {
         startKoin {
             androidContext(this@ComposeActorsApp)
             modules(
-                networkDataSourceModule,
                 databaseModule,
                 repositoryModule,
                 viewModelModule

@@ -15,8 +15,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.utils.ApiKey
+import com.developersbreach.composeactors.utils.TmdbApiKey
 import com.developersbreach.composeactors.utils.NetworkManager
+import com.developersbreach.composeactors.utils.isTmdbApiKeyNotValid
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -59,14 +60,14 @@ fun IfOfflineShowSnackbar(
 }
 
 /**
- * Show snackbar if tmdb api key is missing from [ApiKey.API_KEY].
+ * Show snackbar if tmdb api key is missing from [TmdbApiKey.TMDB_API_KEY].
  */
 @Composable
 fun ApiKeyMissingShowSnackbar(
     scaffoldState: ScaffoldState,
     context: Context = LocalContext.current
 ) {
-    if (ApiKey.API_KEY.isEmpty()) {
+    if (isTmdbApiKeyNotValid()) {
         LaunchSnackBar(
             scaffoldState,
             context.getString(R.string.missing_api_key_snackbar_message)

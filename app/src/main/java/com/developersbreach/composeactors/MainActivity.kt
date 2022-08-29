@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
-import com.developersbreach.composeactors.navigation.AppNavigation
+import com.developersbreach.composeactors.ui.navigation.AppNavigation
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
 class MainActivity : ComponentActivity() {

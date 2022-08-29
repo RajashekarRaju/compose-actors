@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.rememberImagePainter
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.ui.actorDetails.ActorDetailScreen
+import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailScreen
 
 /**
  * Reusable composable used in all screens to load image.
