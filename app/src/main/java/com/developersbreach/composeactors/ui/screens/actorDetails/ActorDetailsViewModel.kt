@@ -5,10 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.model.ActorDetail
-import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.data.model.MovieDetail
 import com.developersbreach.composeactors.data.repository.NetworkRepository
+import com.developersbreach.composeactors.ui.screens.actorDetails.data.model.DetailsUiState
+import com.developersbreach.composeactors.ui.screens.actorDetails.data.model.SheetUiState
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
@@ -71,19 +70,3 @@ class ActorDetailsViewModel(
         }
     }
 }
-
-/**
- * Models the UI state for the [ActorDetailScreen] screen.
- */
-data class DetailsUiState(
-    val castList: List<Movie> = listOf(),
-    val actorData: ActorDetail? = null,
-    val isFetchingDetails: Boolean = false,
-)
-
-/**
- * Models the UI state for the SheetContentMovieDetails modal sheet.
- */
-data class SheetUiState(
-    val selectedMovieDetails: MovieDetail? = null
-)

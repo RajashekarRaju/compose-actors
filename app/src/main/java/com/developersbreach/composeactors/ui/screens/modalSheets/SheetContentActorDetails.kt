@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.model.ActorDetail
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.screens.actorDetails.ActorInfoHeader
+import com.developersbreach.composeactors.ui.screens.actorDetails.composable.ActorInfoHeader
 
 /**
  * Complete modal sheet content for showing actor details instead of navigating to

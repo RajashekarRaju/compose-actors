@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.screens.actorDetails
+package com.developersbreach.composeactors.ui.screens.actorDetails.composable
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
