@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.repository.NetworkRepository
-import com.developersbreach.composeactors.ui.screens.actorDetails.data.model.DetailsUiState
-import com.developersbreach.composeactors.ui.screens.actorDetails.data.model.SheetUiState
+import com.developersbreach.composeactors.ui.screens.actorDetails.data.model.DetailsUIState
+import com.developersbreach.composeactors.ui.screens.actorDetails.data.model.SheetUIState
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
@@ -21,11 +21,11 @@ class ActorDetailsViewModel(
 ) : ViewModel() {
 
     // Holds the state for values in DetailsViewState
-    var uiState by mutableStateOf(DetailsUiState(actorData = null))
+    var detailUIState by mutableStateOf(DetailsUIState(actorData = null))
         private set
 
     // Holds the state for values in SheetUiState, this state is valid only for modal sheet.
-    var sheetUiState by mutableStateOf(SheetUiState())
+    var sheetUIState by mutableStateOf(SheetUIState())
         private set
 
     init {
@@ -40,10 +40,10 @@ class ActorDetailsViewModel(
 
     // Update the values in uiState from all data sources.
     private suspend fun startFetchingDetails() {
-        uiState = DetailsUiState(isFetchingDetails = true, actorData = null)
+        detailUIState = DetailsUIState(isFetchingDetails = true, actorData = null)
         val actorData = repository.getSelectedActorData(actorId)
         val castData = repository.getCastData(actorId)
-        uiState = DetailsUiState(
+        detailUIState = DetailsUIState(
             castList = castData,
             actorData = actorData,
             isFetchingDetails = false
@@ -62,7 +62,7 @@ class ActorDetailsViewModel(
             try {
                 if (movieId != null) {
                     val movieData = repository.getSelectedMovieData(movieId)
-                    sheetUiState = SheetUiState(selectedMovieDetails = movieData)
+                    sheetUIState = SheetUIState(selectedMovieDetails = movieData)
                 }
             } catch (e: IOException) {
                 Timber.e("$e")

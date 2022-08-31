@@ -5,6 +5,6 @@ import com.developersbreach.composeactors.data.model.MovieDetail
 /**
  * Models the UI state for the SheetContentMovieDetails modal sheet.
  */
-data class SheetUiState(
+data class SheetUIState(
     val selectedMovieDetails: MovieDetail? = null
 )
