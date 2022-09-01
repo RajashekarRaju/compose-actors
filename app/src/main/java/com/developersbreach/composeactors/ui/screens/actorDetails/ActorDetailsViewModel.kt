@@ -5,10 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.model.ActorDetail
-import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.data.model.MovieDetail
 import com.developersbreach.composeactors.data.repository.NetworkRepository
+import com.developersbreach.composeactors.ui.screens.actorDetails.data.model.DetailsUIState
+import com.developersbreach.composeactors.ui.screens.actorDetails.data.model.SheetUIState
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
@@ -22,11 +21,11 @@ class ActorDetailsViewModel(
 ) : ViewModel() {
 
     // Holds the state for values in DetailsViewState
-    var uiState by mutableStateOf(DetailsUiState(actorData = null))
+    var detailUIState by mutableStateOf(DetailsUIState(actorData = null))
         private set
 
     // Holds the state for values in SheetUiState, this state is valid only for modal sheet.
-    var sheetUiState by mutableStateOf(SheetUiState())
+    var sheetUIState by mutableStateOf(SheetUIState())
         private set
 
     init {
@@ -41,10 +40,10 @@ class ActorDetailsViewModel(
 
     // Update the values in uiState from all data sources.
     private suspend fun startFetchingDetails() {
-        uiState = DetailsUiState(isFetchingDetails = true, actorData = null)
+        detailUIState = DetailsUIState(isFetchingDetails = true, actorData = null)
         val actorData = repository.getSelectedActorData(actorId)
         val castData = repository.getCastData(actorId)
-        uiState = DetailsUiState(
+        detailUIState = DetailsUIState(
             castList = castData,
             actorData = actorData,
             isFetchingDetails = false
@@ -63,7 +62,7 @@ class ActorDetailsViewModel(
             try {
                 if (movieId != null) {
                     val movieData = repository.getSelectedMovieData(movieId)
-                    sheetUiState = SheetUiState(selectedMovieDetails = movieData)
+                    sheetUIState = SheetUIState(selectedMovieDetails = movieData)
                 }
             } catch (e: IOException) {
                 Timber.e("$e")
@@ -71,19 +70,3 @@ class ActorDetailsViewModel(
         }
     }
 }
-
-/**
- * Models the UI state for the [ActorDetailScreen] screen.
- */
-data class DetailsUiState(
-    val castList: List<Movie> = listOf(),
-    val actorData: ActorDetail? = null,
-    val isFetchingDetails: Boolean = false,
-)
-
-/**
- * Models the UI state for the SheetContentMovieDetails modal sheet.
- */
-data class SheetUiState(
-    val selectedMovieDetails: MovieDetail? = null
-)
