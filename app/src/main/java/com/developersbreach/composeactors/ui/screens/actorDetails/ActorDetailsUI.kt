@@ -66,7 +66,6 @@ internal fun ActorDetailsUI(
                         getSelectedMovieDetails = getSelectedMovieDetails
                     )
                 }
-
                 // Progress bar
                 ShowProgressIndicator(isLoadingData = detailUIState.isFetchingDetails)
             }
