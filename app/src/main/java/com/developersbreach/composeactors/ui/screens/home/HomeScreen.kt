@@ -55,8 +55,8 @@ fun HomeScreen(
             sheetBackgroundColor = MaterialTheme.colors.background,
             sheetContent = {
                 SheetContentMovieDetails(
-                    viewModel.sheetUiState.selectedMovieDetails,
-                    selectedMovie
+                    movie = viewModel.sheetUiState.selectedMovieDetails,
+                    selectedMovie = selectedMovie
                 )
             },
         ) {
@@ -67,18 +67,20 @@ fun HomeScreen(
                 topBar = { HomeTopAppBar(navigateToSearch) },
                 // Host for custom snackbar
                 snackbarHost = { HomeSnackbar(it) }
-            ) {
+            ) { paddingValues ->
                 Box(
-                    modifier = Modifier.padding()
+                    modifier = Modifier.padding(paddingValues = paddingValues)
                 ) {
                     // Main content for this screen
                     HomeScreenUI(
                         selectedActor = selectedActor,
-                        selectedMovie = selectedMovie,
                         openHomeBottomSheet = openHomeBottomSheet,
                         homeUIState = viewModel.uiState,
                         homeSheetUIState = viewModel.sheetUiState,
-                        favoriteMovies = favoriteMovies
+                        favoriteMovies = favoriteMovies,
+                        selectedMovie = { movieId ->
+                            viewModel.getSelectedMovieDetails(movieId)
+                        }
                     )
 
                     // Perform network check and show snackbar if offline
