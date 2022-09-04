@@ -17,26 +17,26 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.model.Actor
-import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailScreen
 import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
-import com.developersbreach.composeactors.ui.screens.home.HomeViewModel
+import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
+import com.developersbreach.composeactors.ui.screens.home.HomeUIState
+import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
 
 @Composable
 fun ActorsTabContent(
-    viewModel: HomeViewModel,
-    selectedActor: (Int) -> Unit
+    homeUIState: HomeUIState,
+    getSelectedActorDetails: (Int) -> Unit
 ) {
-    val uiState = viewModel.uiState
-
     // Show progress while data is loading
-    ShowProgressIndicator(isLoadingData = uiState.isFetchingActors)
+    ShowProgressIndicator(isLoadingData = homeUIState.isFetchingActors)
 
     LazyColumn(
         contentPadding = PaddingValues(vertical = 16.dp),
@@ -47,13 +47,13 @@ fun ActorsTabContent(
             CategoryTitle(stringResource(R.string.category_actors_popular))
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
             // List row of all popular actors.
-            ItemActorList(uiState.popularActorList, selectedActor)
+            ItemActorList(homeUIState.popularActorList, getSelectedActorDetails)
             AppDivider(verticalPadding = 32.dp)
             // Show text for actors category list trending.
             CategoryTitle(stringResource(R.string.category_actors_trending))
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
             // List row of all trending actors.
-            ItemActorList(uiState.trendingActorList, selectedActor)
+            ItemActorList(homeUIState.trendingActorList, getSelectedActorDetails)
         }
     }
 }
@@ -83,7 +83,7 @@ private fun ItemActorList(
 }
 
 /**
- * @param selectedActor navigate to actor [ActorDetailScreen] from user selected actor.
+ * @param selectedActor navigate to actor [ActorDetailsScreen] from user selected actor.
  */
 @Composable
 private fun ItemActor(
@@ -129,5 +129,22 @@ private fun ItemActor(
 
             Spacer(modifier = Modifier.padding(vertical = 12.dp))
         }
+    }
+}
+
+@Preview
+@Composable
+private fun ActorsTabContentPreview() {
+    ComposeActorsTheme {
+        ActorsTabContent(
+            homeUIState = HomeUIState(
+                popularActorList = listOf(),
+                trendingActorList = listOf(),
+                isFetchingActors = false,
+                upcomingMoviesList = listOf(),
+                nowPlayingMoviesList = listOf()
+            ),
+            getSelectedActorDetails = {}
+        )
     }
 }

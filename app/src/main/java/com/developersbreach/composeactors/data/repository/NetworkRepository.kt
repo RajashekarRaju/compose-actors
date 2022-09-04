@@ -1,8 +1,8 @@
 package com.developersbreach.composeactors.data.repository
 
 import com.developersbreach.composeactors.data.model.*
-import com.developersbreach.composeactors.data.network.JsonRemoteData
-import com.developersbreach.composeactors.data.network.RequestUrls
+import com.developersbreach.composeactors.data.datasource.network.JsonRemoteData
+import com.developersbreach.composeactors.data.datasource.network.RequestUrls
 import com.developersbreach.composeactors.utils.NetworkQueryUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

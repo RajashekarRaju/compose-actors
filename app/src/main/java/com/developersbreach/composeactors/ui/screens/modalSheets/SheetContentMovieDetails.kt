@@ -1,25 +1,23 @@
 package com.developersbreach.composeactors.ui.screens.modalSheets
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.model.MovieDetail
+import com.developersbreach.composeactors.ui.components.CircularSeparator
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.screens.movieDetail.MovieGenre
+import com.developersbreach.composeactors.ui.screens.movieDetail.composables.MovieGenre
+import com.developersbreach.composeactors.utils.getMovieRuntimeFormatted
 
 /**
  * Content inside modal sheet.
@@ -141,7 +139,7 @@ private fun MovieDurationText(
     runtime: Int?
 ) {
     Text(
-        text = getRuntimeFormatted(runtime),
+        text = getMovieRuntimeFormatted(runtime),
         color = MaterialTheme.colors.onSurface.copy(0.7f),
         style = MaterialTheme.typography.subtitle1,
         maxLines = 1,
@@ -184,30 +182,5 @@ private fun MovieOverviewText(
             textAlign = TextAlign.Justify,
             fontSize = 16.sp
         )
-    )
-}
-
-@Composable
-private fun getRuntimeFormatted(
-    runtime: Int?
-): String {
-    val hours: Int? = runtime?.div(60)
-    val minutes: Int? = runtime?.rem(60)
-    return "${hours}h:${minutes}m"
-}
-
-@Composable
-private fun CircularSeparator(
-    horPadding: Dp = 12.dp,
-) {
-    Box(
-        modifier = Modifier
-            .padding(horizontal = horPadding)
-            .size(6.dp)
-            .clip(CircleShape)
-            .background(
-                color = MaterialTheme.colors.onBackground.copy(alpha = 0.25f),
-                shape = CircleShape
-            )
     )
 }

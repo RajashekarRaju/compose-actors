@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.model.Actor
 import com.developersbreach.composeactors.data.repository.NetworkRepository
 import kotlinx.coroutines.launch
 
@@ -16,8 +15,8 @@ class SearchViewModel(
     private val repository: NetworkRepository
 ) : ViewModel() {
 
-    // Holds the state for values in SearchViewState
-    var uiState by mutableStateOf(SearchViewState())
+    // Holds the state for values in SearchUIState
+    var uiState by mutableStateOf(SearchUIState())
         private set
 
     /**
@@ -29,7 +28,7 @@ class SearchViewModel(
     ) {
         viewModelScope.launch {
             // Update the values in uiState from all data sources.
-            uiState = SearchViewState(isSearchingResults = true)
+            uiState = SearchUIState(isSearchingResults = true)
             val searchData = repository.getSearchableActorsData(query)
             uiState = uiState.copy(
                 actorList = searchData,
@@ -38,11 +37,3 @@ class SearchViewModel(
         }
     }
 }
-
-/**
- * Models the UI state for the [SearchScreen] screen.
- */
-data class SearchViewState(
-    val actorList: List<Actor> = listOf(),
-    val isSearchingResults: Boolean = false,
-)

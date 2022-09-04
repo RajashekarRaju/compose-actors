@@ -12,18 +12,19 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.screens.home.HomeViewModel
+import com.developersbreach.composeactors.ui.screens.home.HomeUIState
+import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.Job
-
 
 @Composable
 fun MoviesTabContent(
-    viewModel: HomeViewModel,
-    selectedMovie: (Int) -> Unit,
+    homeUIState: HomeUIState,
+    getSelectedMovieDetails: (Int) -> Unit,
     openHomeBottomSheet: () -> Job
 ) {
     LazyColumn(
@@ -33,11 +34,11 @@ fun MoviesTabContent(
             Spacer(modifier = Modifier.height(8.dp))
             CategoryTitle(title = "Upcoming", alpha = 0.5f)
             Spacer(modifier = Modifier.height(16.dp))
-            UpcomingMovies(viewModel, openHomeBottomSheet)
+            UpcomingMovies(homeUIState, getSelectedMovieDetails, openHomeBottomSheet)
             Spacer(modifier = Modifier.height(28.dp))
             CategoryTitle(title = "Now Playing", alpha = 0.5f)
             Spacer(modifier = Modifier.height(8.dp))
-            NowPlayingMovies(viewModel, selectedMovie, openHomeBottomSheet)
+            NowPlayingMovies(homeUIState, getSelectedMovieDetails, openHomeBottomSheet)
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
@@ -45,7 +46,8 @@ fun MoviesTabContent(
 
 @Composable
 private fun UpcomingMovies(
-    viewModel: HomeViewModel,
+    homeUIState: HomeUIState,
+    getSelectedMovieDetails: (Int) -> Unit,
     openHomeBottomSheet: () -> Job
 ) {
     LazyRow(
@@ -56,7 +58,7 @@ private fun UpcomingMovies(
             .height(200.dp),
     ) {
         items(
-            items = viewModel.uiState.upcomingMoviesList,
+            items = homeUIState.upcomingMoviesList,
             key = { it.movieId }
         ) { movieItem ->
             LoadNetworkImage(
@@ -67,7 +69,7 @@ private fun UpcomingMovies(
                 modifier = Modifier
                     .fillParentMaxSize()
                     .clickable {
-                        viewModel.getSelectedMovieDetails(movieItem.movieId)
+                        getSelectedMovieDetails(movieItem.movieId)
                         openHomeBottomSheet()
                     }
             )
@@ -77,8 +79,8 @@ private fun UpcomingMovies(
 
 @Composable
 private fun NowPlayingMovies(
-    viewModel: HomeViewModel,
-    selectedMovie: (Int) -> Unit,
+    homeUIState: HomeUIState,
+    getSelectedMovieDetails: (Int) -> Unit,
     closeHomeBottomSheet: () -> Job
 ) {
     LazyVerticalGrid(
@@ -91,7 +93,7 @@ private fun NowPlayingMovies(
         contentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp)
     ) {
         items(
-            items = viewModel.uiState.nowPlayingMoviesList,
+            items = homeUIState.nowPlayingMoviesList,
             key = { it.movieId }
         ) { movieItem ->
             LoadNetworkImage(
@@ -101,10 +103,28 @@ private fun NowPlayingMovies(
                 modifier = Modifier
                     .size(120.dp, 180.dp)
                     .clickable {
-                        viewModel.getSelectedMovieDetails(movieItem.movieId)
+                        getSelectedMovieDetails(movieItem.movieId)
                         closeHomeBottomSheet()
                     }
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun MoviesTabContentPreview() {
+    ComposeActorsTheme {
+        MoviesTabContent(
+            homeUIState = HomeUIState(
+                popularActorList = listOf(),
+                trendingActorList = listOf(),
+                isFetchingActors = false,
+                upcomingMoviesList = listOf(),
+                nowPlayingMoviesList = listOf()
+            ),
+            getSelectedMovieDetails = {},
+            openHomeBottomSheet = { Job() }
+        )
     }
 }

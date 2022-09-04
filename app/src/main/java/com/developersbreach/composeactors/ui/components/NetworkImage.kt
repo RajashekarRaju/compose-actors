@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.rememberImagePainter
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailScreen
+import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 
 /**
  * Reusable composable used in all screens to load image.
@@ -19,7 +19,7 @@ import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailScr
  * @param imageUrl url for loading image with coil.
  * @param shape to clip shape of the image
  * @param showAnimProgress remove the background loading progress bar of image if not necessary,
- * by default is visible for all images which uses this composable. False in actors [ActorDetailScreen].
+ * by default is visible for all images which uses this composable. False in actors [ActorDetailsScreen].
  */
 @Composable
 fun LoadNetworkImage(
