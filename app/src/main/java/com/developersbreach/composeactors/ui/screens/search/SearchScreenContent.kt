@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.data.model.Actor
-import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailScreen
+import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 
 /**
  * @param actorsList searchable results row list elements of [Actor]
@@ -35,7 +35,7 @@ fun SearchScreenContent(
 }
 
 /**
- * @param selectedActor navigate to actor [ActorDetailScreen] from user selected actor.
+ * @param selectedActor navigate to actor [ActorDetailsScreen] from user selected actor.
  */
 @Composable
 private fun ItemSearchActor(

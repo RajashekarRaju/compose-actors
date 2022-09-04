@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.data.database.entity
+package com.developersbreach.composeactors.data.datasource.database.entity
 
 import androidx.compose.runtime.Stable
 import androidx.room.ColumnInfo

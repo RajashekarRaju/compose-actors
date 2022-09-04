@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.model.Actor
-import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailScreen
+import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
@@ -83,7 +83,7 @@ private fun ItemActorList(
 }
 
 /**
- * @param selectedActor navigate to actor [ActorDetailScreen] from user selected actor.
+ * @param selectedActor navigate to actor [ActorDetailsScreen] from user selected actor.
  */
 @Composable
 private fun ItemActor(

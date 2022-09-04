@@ -13,16 +13,14 @@ import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGene
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.screens.actorDetails.composable.ActorBackgroundWithGradientForeground
 import com.developersbreach.composeactors.ui.screens.actorDetails.composable.ActorDetailsContent
-import com.developersbreach.composeactors.ui.screens.actorDetails.data.model.DetailsUIState
-import com.developersbreach.composeactors.ui.screens.actorDetails.data.model.SheetUIState
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import kotlinx.coroutines.Job
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ActorDetailUI(
-    detailUIState: DetailsUIState,
-    sheetUIState: SheetUIState,
+fun ActorDetailsUI(
+    detailUIState: ActorDetailsUIState,
+    sheetUIState: ActorDetailsSheetUIState,
     actorProfileUrl: String,
     modalSheetState: ModalBottomSheetState,
     selectedMovie: (Int) -> Unit,
@@ -51,10 +49,10 @@ fun ActorDetailUI(
                 ActorBackgroundWithGradientForeground(imageUrl = actorProfileUrl)
                 // Main details content
                 ActorDetailsContent(
-                    navigateUp,
-                    detailUIState,
-                    openActorDetailsBottomSheet,
-                    getSelectedMovieDetails
+                    navigateUp = navigateUp,
+                    detailUIState = detailUIState,
+                    openActorDetailsBottomSheet = openActorDetailsBottomSheet,
+                    getSelectedMovieDetails = getSelectedMovieDetails
                 )
                 // Progress bar
                 ShowProgressIndicator(isLoadingData = detailUIState.isFetchingDetails)

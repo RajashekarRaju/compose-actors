@@ -2,7 +2,7 @@ package com.developersbreach.composeactors.data.model
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
-import com.developersbreach.composeactors.data.database.entity.FavoriteActorsEntity
+import com.developersbreach.composeactors.data.datasource.database.entity.FavoriteActorsEntity
 
 @Immutable
 data class Actor(

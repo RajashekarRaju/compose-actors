@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.data.network
+package com.developersbreach.composeactors.data.datasource.network
 
 import com.developersbreach.composeactors.data.model.*
 import org.json.JSONObject

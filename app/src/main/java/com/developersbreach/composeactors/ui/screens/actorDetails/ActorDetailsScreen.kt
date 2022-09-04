@@ -11,14 +11,14 @@ import com.developersbreach.composeactors.ui.screens.search.SearchScreen
 /**
  * Shows details of user selected actor.
  *
- * @param viewModel to manage ui state of [ActorDetailScreen]
+ * @param viewModel to manage ui state of [ActorDetailsScreen]
  * @param navigateUp navigates user to previous screen.
  *
  * This destination can be accessed from [HomeScreen] & [SearchScreen].
  */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ActorDetailScreen(
+fun ActorDetailsScreen(
     selectedMovie: (Int) -> Unit,
     navigateUp: () -> Unit,
     viewModel: ActorDetailsViewModel
@@ -32,15 +32,16 @@ fun ActorDetailScreen(
         modalSheetState = modalSheetState
     )
 
-    ActorDetailUI(
-        detailUIState,
-        sheetUIState,
-        actorProfileUrl,
-        modalSheetState,
-        selectedMovie,
-        navigateUp,
-        openActorDetailsBottomSheet
-    ) {
-        viewModel.getSelectedMovieDetails(it)
-    }
+    ActorDetailsUI(
+        detailUIState = detailUIState,
+        sheetUIState = sheetUIState,
+        actorProfileUrl = actorProfileUrl,
+        modalSheetState = modalSheetState,
+        selectedMovie = selectedMovie,
+        navigateUp = navigateUp,
+        openActorDetailsBottomSheet = openActorDetailsBottomSheet,
+        getSelectedMovieDetails = { movieId ->
+            viewModel.getSelectedMovieDetails(movieId)
+        }
+    )
 }

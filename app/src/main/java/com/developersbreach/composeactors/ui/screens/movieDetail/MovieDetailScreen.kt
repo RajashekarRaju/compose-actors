@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.ui.animations.LayerRevealImage
-import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailScreen
+import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentActorDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
@@ -24,7 +24,7 @@ import kotlinx.coroutines.Job
 
 /**
  * Screen shows details for the selected movie.
- * This destination can be accessed from [HomeScreen] & [ActorDetailScreen].
+ * This destination can be accessed from [HomeScreen] & [ActorDetailsScreen].
  */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
