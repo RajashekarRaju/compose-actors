@@ -10,10 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
+import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
 /**
  * Load circular network image of actor at the top of screen.
@@ -21,7 +23,8 @@ import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 @Composable
 internal fun ActorRoundProfile(
     profileUrl: String,
-    size: Dp = 120.dp
+    size: Dp = 120.dp,
+    profilePreview: Int = R.drawable.adele
 ) {
     Box(
         modifier = Modifier.fillMaxWidth(),
@@ -40,4 +43,10 @@ internal fun ActorRoundProfile(
                 )
         )
     }
+}
+
+@Preview
+@Composable
+fun ActorRoundProfilePreview() = ComposeActorsTheme {
+    
 }
