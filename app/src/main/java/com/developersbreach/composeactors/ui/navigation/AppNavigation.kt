@@ -2,6 +2,7 @@ package com.developersbreach.composeactors.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,8 +16,6 @@ import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailScre
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailViewModel
 import com.developersbreach.composeactors.ui.screens.search.SearchScreen
 import com.developersbreach.composeactors.ui.screens.search.SearchViewModel
-import org.koin.androidx.compose.getViewModel
-import org.koin.core.parameter.parametersOf
 
 
 /**
@@ -49,7 +48,7 @@ fun AppNavigation(
         composable(
             AppDestinations.HOME_ROUTE
         ) {
-            val viewModel = getViewModel<HomeViewModel>()
+            val viewModel = hiltViewModel<HomeViewModel>()
             HomeScreen(
                 selectedActor = actions.selectedActor,
                 navigateToSearch = actions.navigateToSearch,
@@ -66,7 +65,7 @@ fun AppNavigation(
         composable(
             AppDestinations.SEARCH_ROUTE
         ) {
-            val viewModel = getViewModel<SearchViewModel>()
+            val viewModel = hiltViewModel<SearchViewModel>()
             SearchScreen(
                 selectedActor = actions.selectedActor,
                 navigateUp = actions.navigateUp,
@@ -84,17 +83,10 @@ fun AppNavigation(
         composable(
             route = "${AppDestinations.ACTOR_DETAIL_ROUTE}/{${routes.ACTOR_DETAIL_ID_KEY}}",
             arguments = listOf(
-                navArgument(
-                    routes.ACTOR_DETAIL_ID_KEY
-                ) {
-                    type = NavType.IntType
-                })
-        ) { backStackEntry ->
-            val arguments = requireNotNull(backStackEntry.arguments)
-            val actorId = arguments.getInt(routes.ACTOR_DETAIL_ID_KEY)
-            val viewModel = getViewModel<ActorDetailsViewModel>(
-                parameters = { parametersOf(actorId) }
+                navArgument(routes.ACTOR_DETAIL_ID_KEY) { type = NavType.IntType }
             )
+        ) {
+            val viewModel = hiltViewModel<ActorDetailsViewModel>()
             ActorDetailsScreen(
                 selectedMovie = actions.selectedMovie,
                 navigateUp = actions.navigateUp,
@@ -112,17 +104,10 @@ fun AppNavigation(
         composable(
             route = "${AppDestinations.MOVIE_DETAILS_ROUTE}/{${routes.MOVIE_DETAILS_ID_KEY}}",
             arguments = listOf(
-                navArgument(
-                    routes.MOVIE_DETAILS_ID_KEY
-                ) {
-                    type = NavType.IntType
-                })
-        ) { backStackEntry ->
-            val arguments = requireNotNull(backStackEntry.arguments)
-            val movieId = arguments.getInt(routes.MOVIE_DETAILS_ID_KEY)
-            val viewModel = getViewModel<MovieDetailViewModel>(
-                parameters = { parametersOf(movieId) }
+                navArgument(routes.MOVIE_DETAILS_ID_KEY) { type = NavType.IntType }
             )
+        ) {
+            val viewModel = hiltViewModel<MovieDetailViewModel>()
             MovieDetailScreen(
                 navigateUp = actions.navigateUp,
                 viewModel = viewModel,

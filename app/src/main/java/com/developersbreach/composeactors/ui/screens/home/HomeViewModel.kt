@@ -9,14 +9,17 @@ import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.repository.DatabaseRepository
 import com.developersbreach.composeactors.data.repository.NetworkRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
+import javax.inject.Inject
 
 /**
  * To manage ui state and data for screen [HomeScreen].
  */
-class HomeViewModel(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val networkRepository: NetworkRepository,
     private val databaseRepository: DatabaseRepository
 ) : ViewModel() {

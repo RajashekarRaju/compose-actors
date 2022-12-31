@@ -4,21 +4,28 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.MovieDetail
 import com.developersbreach.composeactors.data.repository.DatabaseRepository
 import com.developersbreach.composeactors.data.repository.NetworkRepository
+import com.developersbreach.composeactors.ui.navigation.AppDestinations.MOVIE_DETAILS_ID_KEY
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
+import javax.inject.Inject
 
-class MovieDetailViewModel(
-    private val movieId: Int,
+@HiltViewModel
+class MovieDetailViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val networkRepository: NetworkRepository,
     private val databaseRepository: DatabaseRepository
 ) : ViewModel() {
+
+    private val movieId: Int = checkNotNull(savedStateHandle[MOVIE_DETAILS_ID_KEY])
 
     // Holds the state for values in DetailsViewState
     var uiState by mutableStateOf(MovieDetailsUIState(movieData = null))
