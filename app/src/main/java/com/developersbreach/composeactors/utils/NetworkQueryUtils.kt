@@ -5,8 +5,11 @@ import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NetworkQueryUtils {
+@Singleton
+class NetworkQueryUtils @Inject constructor() {
 
     /**
      * This method returns the entire result from the HTTP response.

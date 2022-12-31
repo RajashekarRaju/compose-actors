@@ -6,6 +6,8 @@ import com.developersbreach.composeactors.data.datasource.network.RequestUrls
 import com.developersbreach.composeactors.utils.NetworkQueryUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Functions in this repository executes on an IO-optimized thread pool, makes main-safe.
@@ -15,16 +17,12 @@ import kotlinx.coroutines.withContext
  * Class contains functions which can fetch data from network.
  * This is the only network data source for whole app.
  */
-class NetworkRepository {
-
-    // Contains all url endpoints to json data
-    private val requestUrls: RequestUrls by lazy { RequestUrls }
-
-    // Returns all json responses
-    private val queryUtils: NetworkQueryUtils by lazy { NetworkQueryUtils() }
-
-    // To make http request calls
-    private val jsonData: JsonRemoteData by lazy { JsonRemoteData(requestUrls) }
+@Singleton
+class NetworkRepository @Inject constructor(
+    private val requestUrls: RequestUrls,
+    private val jsonData: JsonRemoteData,
+    private val queryUtils: NetworkQueryUtils
+) {
 
     /*** @return the result of latest list of all popular actors fetched from the network.*/
     suspend fun getPopularActorsData(): List<Actor> {
