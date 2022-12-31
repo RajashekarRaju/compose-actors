@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsViewModel
-import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailScreen
+import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeViewModel
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailScreen
@@ -43,7 +43,7 @@ fun AppNavigation(
 
         /**
          * Start destination.
-         * Can later navigate to [ActorDetailScreen] and [SearchScreen]
+         * Can later navigate to [ActorDetailsScreen] and [SearchScreen]
          * Has it's own viewModel [HomeViewModel] with factory & repository instance.
          */
         composable(
@@ -59,7 +59,7 @@ fun AppNavigation(
         }
 
         /**
-         * Can later navigate to [ActorDetailScreen]
+         * Can later navigate to [ActorDetailsScreen]
          * Navigates back to previous screen with [AppActions.navigateUp]
          * Has it's own viewModel [SearchViewModel] with factory & repository instance.
          */
@@ -95,7 +95,7 @@ fun AppNavigation(
             val viewModel = getViewModel<ActorDetailsViewModel>(
                 parameters = { parametersOf(actorId) }
             )
-            ActorDetailScreen(
+            ActorDetailsScreen(
                 selectedMovie = actions.selectedMovie,
                 navigateUp = actions.navigateUp,
                 viewModel = viewModel
@@ -103,7 +103,7 @@ fun AppNavigation(
         }
 
         /**
-         * Two destinations ([HomeScreen] [ActorDetailScreen]) can navigate to this screen.
+         * Two destinations ([HomeScreen] [ActorDetailsScreen]) can navigate to this screen.
          * Navigates back to previous screen with [AppActions.navigateUp]
          * Has it's own viewModel [MovieDetailViewModel] with factory & repository instance.
          *

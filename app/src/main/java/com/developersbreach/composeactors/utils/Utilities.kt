@@ -1,6 +1,6 @@
 package com.developersbreach.composeactors.utils
 
-import java.util.Calendar
+import java.util.*
 
 /**
  * @param dateOfBirth received in "dd-mm-yyyy" format. Gets rid of day and month to read year.
@@ -51,4 +51,12 @@ fun getPlaceOfBirth(
     return cityStateCountry?.let {
         findKnownLocation[it].trim()
     }
+}
+
+fun getMovieRuntimeFormatted(
+    runtime: Int?
+): String {
+    val hours: Int? = runtime?.div(60)
+    val minutes: Int? = runtime?.rem(60)
+    return "${hours}h:${minutes}m"
 }

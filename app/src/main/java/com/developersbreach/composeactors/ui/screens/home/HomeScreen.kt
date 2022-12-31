@@ -5,11 +5,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
+import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackbar
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
@@ -40,6 +43,8 @@ fun HomeScreen(
         modalSheetState = modalSheetState
     )
 
+    val favoriteMovies by viewModel.favoriteMovies.observeAsState(emptyList())
+
     Surface(
         color = MaterialTheme.colors.background,
     ) {
@@ -50,8 +55,8 @@ fun HomeScreen(
             sheetBackgroundColor = MaterialTheme.colors.background,
             sheetContent = {
                 SheetContentMovieDetails(
-                    viewModel.sheetUiState.selectedMovieDetails,
-                    selectedMovie
+                    movie = viewModel.sheetUiState.selectedMovieDetails,
+                    selectedMovie = selectedMovie
                 )
             },
         ) {
@@ -61,21 +66,22 @@ fun HomeScreen(
                 // Custom AppBar contains fake search bar.
                 topBar = { HomeTopAppBar(navigateToSearch) },
                 // Host for custom snackbar
-                snackbarHost = { hostState ->
-                    SnackbarHost(hostState) { data ->
-                        Snackbar(
-                            snackbarData = data,
-                            // To avoid colliding with navigation bar.
-                            modifier = Modifier.padding(bottom = 48.dp)
-                        )
-                    }
-                }
+                snackbarHost = { HomeSnackbar(it) }
             ) { paddingValues ->
                 Box(
-                    modifier = Modifier.padding(paddingValues)
+                    modifier = Modifier.padding(paddingValues = paddingValues)
                 ) {
                     // Main content for this screen
-                    HomeScreenContent(selectedActor, viewModel, selectedMovie, openHomeBottomSheet)
+                    HomeScreenUI(
+                        selectedActor = selectedActor,
+                        openHomeBottomSheet = openHomeBottomSheet,
+                        homeUIState = viewModel.uiState,
+                        homeSheetUIState = viewModel.sheetUiState,
+                        favoriteMovies = favoriteMovies,
+                        selectedMovie = { movieId ->
+                            viewModel.getSelectedMovieDetails(movieId)
+                        }
+                    )
 
                     // Perform network check and show snackbar if offline
                     IfOfflineShowSnackbar(scaffoldState)

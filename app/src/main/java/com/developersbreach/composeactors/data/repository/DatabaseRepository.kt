@@ -2,7 +2,7 @@ package com.developersbreach.composeactors.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.developersbreach.composeactors.data.database.AppDatabase
+import com.developersbreach.composeactors.data.datasource.database.AppDatabase
 import com.developersbreach.composeactors.data.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

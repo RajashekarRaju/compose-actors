@@ -6,12 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.model.Actor
 import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.data.model.MovieDetail
 import com.developersbreach.composeactors.data.repository.DatabaseRepository
 import com.developersbreach.composeactors.data.repository.NetworkRepository
-import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
@@ -25,11 +22,11 @@ class HomeViewModel(
 ) : ViewModel() {
 
     // Holds the state for values in HomeViewState
-    var uiState by mutableStateOf(HomeUiState())
+    var uiState by mutableStateOf(HomeUIState())
         private set
 
     // Holds the state for values in HomeViewState
-    var sheetUiState by mutableStateOf(HomeSheetUiState())
+    var sheetUiState by mutableStateOf(HomeSheetUIState())
         private set
 
     val favoriteMovies: LiveData<List<Movie>>
@@ -47,8 +44,8 @@ class HomeViewModel(
 
     // Update the values in uiState from all data sources.
     private suspend fun startFetchingActors() {
-        uiState = HomeUiState(isFetchingActors = true)
-        uiState = HomeUiState(
+        uiState = HomeUIState(isFetchingActors = true)
+        uiState = HomeUIState(
             popularActorList = networkRepository.getPopularActorsData(),
             trendingActorList = networkRepository.getTrendingActorsData(),
             isFetchingActors = false,
@@ -69,7 +66,7 @@ class HomeViewModel(
             try {
                 if (movieId != null) {
                     val movieData = networkRepository.getSelectedMovieData(movieId)
-                    sheetUiState = HomeSheetUiState(selectedMovieDetails = movieData)
+                    sheetUiState = HomeSheetUIState(selectedMovieDetails = movieData)
                 }
             } catch (e: IOException) {
                 Timber.e("$e")
@@ -77,21 +74,3 @@ class HomeViewModel(
         }
     }
 }
-
-/**
- * Models the UI state for the [HomeScreen] screen.
- */
-data class HomeUiState(
-    var popularActorList: List<Actor> = emptyList(),
-    var trendingActorList: List<Actor> = emptyList(),
-    val isFetchingActors: Boolean = false,
-    var upcomingMoviesList: List<Movie> = emptyList(),
-    var nowPlayingMoviesList: List<Movie> = emptyList(),
-)
-
-/**
- * Models the UI state for the [SheetContentMovieDetails] modal sheet.
- */
-data class HomeSheetUiState(
-    var selectedMovieDetails: MovieDetail? = null
-)

@@ -1,7 +1,7 @@
 package com.developersbreach.composeactors.di
 
 import com.developersbreach.composeactors.data.repository.DatabaseRepository
-import com.developersbreach.composeactors.data.database.getDatabaseInstance
+import com.developersbreach.composeactors.data.datasource.database.getDatabaseInstance
 import com.developersbreach.composeactors.data.repository.NetworkRepository
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsViewModel
 import com.developersbreach.composeactors.ui.screens.home.HomeViewModel

@@ -77,7 +77,7 @@ private fun HomeTopAppBarContent(
 
 @Preview
 @Composable
-fun SearchBarPreview() {
+private fun SearchBarPreview() {
     ComposeActorsTheme(darkTheme = true) {
         HomeTopAppBarContent { }
     }

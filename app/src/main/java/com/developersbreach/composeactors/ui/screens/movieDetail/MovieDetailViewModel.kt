@@ -6,8 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.model.ActorDetail
-import com.developersbreach.composeactors.data.model.Cast
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.MovieDetail
 import com.developersbreach.composeactors.data.repository.DatabaseRepository
@@ -23,11 +21,11 @@ class MovieDetailViewModel(
 ) : ViewModel() {
 
     // Holds the state for values in DetailsViewState
-    var uiState by mutableStateOf(MovieDetailUiState(movieData = null))
+    var uiState by mutableStateOf(MovieDetailsUIState(movieData = null))
         private set
 
     // Holds the state for values in ActorDetailsViewState
-    var sheetUiState by mutableStateOf(ActorsSheetUiState(selectedActorDetails = null))
+    var sheetUiState by mutableStateOf(ActorsSheetUIState(selectedActorDetails = null))
         private set
 
     val isFavoriteMovie: LiveData<Int>
@@ -45,8 +43,8 @@ class MovieDetailViewModel(
 
     // Update the values in uiState from all data sources.
     private suspend fun startFetchingDetails() {
-        uiState = MovieDetailUiState(isFetchingDetails = true, movieData = null)
-        uiState = MovieDetailUiState(
+        uiState = MovieDetailsUIState(isFetchingDetails = true, movieData = null)
+        uiState = MovieDetailsUIState(
             movieData = networkRepository.getSelectedMovieData(movieId),
             similarMovies = networkRepository.getSimilarMoviesByIdData(movieId),
             recommendedMovies = networkRepository.getRecommendedMoviesByIdData(movieId),
@@ -95,7 +93,7 @@ class MovieDetailViewModel(
             try {
                 if (actorId != null) {
                     val actorsData = networkRepository.getSelectedActorData(actorId)
-                    sheetUiState = ActorsSheetUiState(selectedActorDetails = actorsData)
+                    sheetUiState = ActorsSheetUIState(selectedActorDetails = actorsData)
                 }
             } catch (e: IOException) {
                 Timber.e("$e")
@@ -103,21 +101,3 @@ class MovieDetailViewModel(
         }
     }
 }
-
-/**
- * Models the UI state for the [MovieDetailScreen] screen.
- */
-data class MovieDetailUiState(
-    val movieData: MovieDetail?,
-    val similarMovies: List<Movie> = emptyList(),
-    val recommendedMovies: List<Movie> = emptyList(),
-    val movieCast: List<Cast> = emptyList(),
-    val isFetchingDetails: Boolean = false,
-)
-
-/**
- * Models the UI state for the SheetContentActorDetails modal sheet.
- */
-data class ActorsSheetUiState(
-    val selectedActorDetails: ActorDetail? = null
-)

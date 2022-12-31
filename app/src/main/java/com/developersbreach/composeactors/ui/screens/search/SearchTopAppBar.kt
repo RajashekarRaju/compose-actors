@@ -26,6 +26,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.AppDivider
+import com.developersbreach.composeactors.ui.components.KeyboardState
+import com.developersbreach.composeactors.ui.components.closeKeyboardAndNavigateUp
+import com.developersbreach.composeactors.ui.components.getCurrentKeyboardState
 
 /**
  * @param navigateUp Navigates to previous screen.

@@ -9,17 +9,18 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.screens.home.HomeViewModel
+import com.developersbreach.composeactors.ui.screens.home.HomeUIState
+import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.Job
 
 
@@ -29,12 +30,12 @@ import kotlinx.coroutines.Job
  */
 @Composable
 fun FavoritesTabContent(
-    viewModel: HomeViewModel,
-    selectedMovie: (Int) -> Unit,
-    openHomeBottomSheet: () -> Job
+    homeUIState: HomeUIState,
+    getSelectedMovieDetails: (Int) -> Unit,
+    openHomeBottomSheet: () -> Job,
+    favoriteMovies: List<Movie>
 ) {
-    val favoritesList by viewModel.favoriteMovies.observeAsState(emptyList())
-    if (favoritesList.isEmpty()) {
+    if (favoriteMovies.isEmpty()) {
         ShowNoFavoritesFound()
     }
 
@@ -46,7 +47,7 @@ fun FavoritesTabContent(
         contentPadding = PaddingValues(vertical = 2.dp, horizontal = 16.dp)
     ) {
         items(
-            items = favoritesList,
+            items = favoriteMovies,
             key = { it.movieId }
         ) { movieItem ->
             LoadNetworkImage(
@@ -56,7 +57,7 @@ fun FavoritesTabContent(
                 modifier = Modifier
                     .size(120.dp, 180.dp)
                     .clickable {
-                        viewModel.getSelectedMovieDetails(movieItem.movieId)
+                        getSelectedMovieDetails(movieItem.movieId)
                         openHomeBottomSheet()
                     }
             )
@@ -87,5 +88,24 @@ private fun ShowNoFavoritesFound() {
                 textAlign = TextAlign.Center
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun FavoritesTabContentPreview() {
+    ComposeActorsTheme {
+        FavoritesTabContent(
+            homeUIState = HomeUIState(
+                popularActorList = listOf(),
+                trendingActorList = listOf(),
+                isFetchingActors = false,
+                upcomingMoviesList = listOf(),
+                nowPlayingMoviesList = listOf()
+            ),
+            getSelectedMovieDetails = {},
+            openHomeBottomSheet = { Job() },
+            favoriteMovies = listOf()
+        )
     }
 }
