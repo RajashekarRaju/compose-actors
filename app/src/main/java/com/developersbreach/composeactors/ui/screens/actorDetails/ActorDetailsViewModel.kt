@@ -6,7 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.repository.NetworkRepository
+import com.developersbreach.composeactors.data.repository.actor.ActorRepository
+import com.developersbreach.composeactors.data.repository.movie.MovieRepository
 import com.developersbreach.composeactors.ui.navigation.AppDestinations.ACTOR_DETAIL_ID_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,21 +16,20 @@ import java.io.IOException
 import javax.inject.Inject
 
 /**
- * To manage ui state and data for screen [ActorDetailsScreen].
+ * To manage ui state and data for screen ActorDetailsScreen.
  */
 @HiltViewModel
 class ActorDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val repository: NetworkRepository
+    private val movieRepository: MovieRepository,
+    private val actorRepository: ActorRepository
 ) : ViewModel() {
 
     private val actorId: Int = checkNotNull(savedStateHandle[ACTOR_DETAIL_ID_KEY])
 
-    // Holds the state for values in DetailsViewState
     var detailUIState by mutableStateOf(ActorDetailsUIState(actorData = null))
         private set
 
-    // Holds the state for values in SheetUiState, this state is valid only for modal sheet.
     var sheetUIState by mutableStateOf(ActorDetailsSheetUIState())
         private set
 
@@ -43,11 +43,10 @@ class ActorDetailsViewModel @Inject constructor(
         }
     }
 
-    // Update the values in uiState from all data sources.
     private suspend fun startFetchingDetails() {
         detailUIState = ActorDetailsUIState(isFetchingDetails = true, actorData = null)
-        val actorData = repository.getSelectedActorData(actorId)
-        val castData = repository.getCastData(actorId)
+        val actorData = actorRepository.getSelectedActorData(actorId)
+        val castData = actorRepository.getCastData(actorId)
         detailUIState = ActorDetailsUIState(
             castList = castData,
             actorData = actorData,
@@ -66,7 +65,7 @@ class ActorDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 movieId?.let { id ->
-                    val movieData = repository.getSelectedMovieData(id)
+                    val movieData = movieRepository.getSelectedMovieData(id)
                     sheetUIState = ActorDetailsSheetUIState(selectedMovieDetails = movieData)
                 }
             } catch (e: IOException) {

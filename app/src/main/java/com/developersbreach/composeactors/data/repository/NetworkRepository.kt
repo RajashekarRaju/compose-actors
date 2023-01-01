@@ -25,25 +25,17 @@ class NetworkRepository @Inject constructor(
 ) {
 
     /*** @return the result of latest list of all popular actors fetched from the network.*/
-    suspend fun getPopularActorsData(): List<Actor> {
-        val popularActorsList: List<Actor>
-        withContext(Dispatchers.IO) {
-            val requestUrl = requestUrls.getPopularActorsUrl()
-            val response: String = queryUtils.getResponseFromHttpUrl(requestUrl)
-            popularActorsList = jsonData.fetchActorsJsonData(response)
-        }
-        return popularActorsList
+    suspend fun getPopularActorsData(): List<Actor> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getPopularActorsUrl()
+        val response: String = queryUtils.getResponseFromHttpUrl(requestUrl)
+        jsonData.fetchActorsJsonData(response)
     }
 
     /** @return the result of latest list of all trending actors fetched from the network. */
-    suspend fun getTrendingActorsData(): List<Actor> {
-        val trendingActorsList: List<Actor>
-        withContext(Dispatchers.IO) {
-            val requestUrl = requestUrls.getTrendingActorsUrl()
-            val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-            trendingActorsList = jsonData.fetchActorsJsonData(response)
-        }
-        return trendingActorsList
+    suspend fun getTrendingActorsData(): List<Actor> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getTrendingActorsUrl()
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        jsonData.fetchActorsJsonData(response)
     }
 
     /**
@@ -52,14 +44,10 @@ class NetworkRepository @Inject constructor(
      */
     suspend fun getSelectedActorData(
         actorId: Int
-    ): ActorDetail {
-        val selectedActorDetails: ActorDetail
-        withContext(Dispatchers.IO) {
-            val requestUrl = requestUrls.getActorDetailsUrl(actorId)
-            val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-            selectedActorDetails = jsonData.fetchActorDetailsJsonData(response)
-        }
-        return selectedActorDetails
+    ): ActorDetail = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getActorDetailsUrl(actorId)
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        jsonData.fetchActorDetailsJsonData(response)
     }
 
     /**
@@ -68,42 +56,18 @@ class NetworkRepository @Inject constructor(
      */
     suspend fun getCastData(
         actorId: Int
-    ): List<Movie> {
-        val castListData: List<Movie>
-        withContext(Dispatchers.IO) {
-            val requestUrl = requestUrls.getCastDetailsUrl(actorId)
-            val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-            castListData = jsonData.fetchCastDetailsJsonData(response)
-        }
-        return castListData
-    }
-
-    /**
-     * @param query user submitted query to search actors.
-     * @return the result of list of actors with matching query fetched from the network.
-     */
-    suspend fun getSearchableActorsData(
-        query: String
-    ): List<Actor> {
-        val searchableActorsList: List<Actor>
-        withContext(Dispatchers.IO) {
-            val requestUrl = requestUrls.getSearchActorsUrl(query)
-            val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-            searchableActorsList = jsonData.fetchActorsJsonData(response)
-        }
-        return searchableActorsList
+    ): List<Movie> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getCastDetailsUrl(actorId)
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        jsonData.fetchCastDetailsJsonData(response)
     }
 
     suspend fun getSelectedMovieData(
         movieId: Int
-    ): MovieDetail {
-        val selectedMovieDetails: MovieDetail
-        withContext(Dispatchers.IO) {
-            val requestUrl = requestUrls.getMovieDetailsUrl(movieId)
-            val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-            selectedMovieDetails = jsonData.fetchMovieDetailsJsonData(response)
-        }
-        return selectedMovieDetails
+    ): MovieDetail = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getMovieDetailsUrl(movieId)
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        jsonData.fetchMovieDetailsJsonData(response)
     }
 
     /**
@@ -112,14 +76,10 @@ class NetworkRepository @Inject constructor(
      */
     suspend fun getSimilarMoviesByIdData(
         movieId: Int
-    ): List<Movie> {
-        val similarMovies: List<Movie>
-        withContext(Dispatchers.IO) {
-            val requestUrl = requestUrls.getSimilarMoviesUrl(movieId)
-            val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-            similarMovies = jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
-        }
-        return similarMovies
+    ): List<Movie> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getSimilarMoviesUrl(movieId)
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
     }
 
     /**
@@ -128,14 +88,10 @@ class NetworkRepository @Inject constructor(
      */
     suspend fun getRecommendedMoviesByIdData(
         movieId: Int
-    ): List<Movie> {
-        val recommendedMovies: List<Movie>
-        withContext(Dispatchers.IO) {
-            val requestUrl = requestUrls.getRecommendedMoviesUrl(movieId)
-            val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-            recommendedMovies = jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
-        }
-        return recommendedMovies
+    ): List<Movie> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getRecommendedMoviesUrl(movieId)
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
     }
 
     /**
@@ -144,33 +100,21 @@ class NetworkRepository @Inject constructor(
      */
     suspend fun getMovieCastByIdData(
         movieId: Int
-    ): List<Cast> {
-        val castList: List<Cast>
-        withContext(Dispatchers.IO) {
-            val requestUrl = requestUrls.getMovieCastUrl(movieId)
-            val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-            castList = jsonData.fetchMovieCastByIdJsonData(response)
-        }
-        return castList
+    ): List<Cast> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getMovieCastUrl(movieId)
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        jsonData.fetchMovieCastByIdJsonData(response)
     }
 
-    suspend fun getUpcomingMoviesData(): List<Movie> {
-        val upcomingMoviesList: List<Movie>
-        withContext(Dispatchers.IO) {
-            val requestUrl = requestUrls.getUpcomingMoviesUrl()
-            val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-            upcomingMoviesList = jsonData.fetchUpcomingMoviesJsonData(response)
-        }
-        return upcomingMoviesList
+    suspend fun getUpcomingMoviesData(): List<Movie> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getUpcomingMoviesUrl()
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        jsonData.fetchUpcomingMoviesJsonData(response)
     }
 
-    suspend fun getNowPlayingMoviesData(): List<Movie> {
-        val nowPlayingMoviesList: List<Movie>
-        withContext(Dispatchers.IO) {
-            val requestUrl = requestUrls.getNowPlayingMoviesUrl()
-            val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-            nowPlayingMoviesList = jsonData.fetchNowPlayingMoviesJsonData(response)
-        }
-        return nowPlayingMoviesList
+    suspend fun getNowPlayingMoviesData(): List<Movie> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getNowPlayingMoviesUrl()
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        jsonData.fetchNowPlayingMoviesJsonData(response)
     }
 }

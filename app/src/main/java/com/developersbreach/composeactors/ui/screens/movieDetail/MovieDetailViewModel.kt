@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.MovieDetail
-import com.developersbreach.composeactors.data.repository.DatabaseRepository
-import com.developersbreach.composeactors.data.repository.NetworkRepository
+import com.developersbreach.composeactors.data.repository.actor.ActorRepository
+import com.developersbreach.composeactors.data.repository.movie.MovieRepository
 import com.developersbreach.composeactors.ui.navigation.AppDestinations.MOVIE_DETAILS_ID_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,22 +21,19 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val networkRepository: NetworkRepository,
-    private val databaseRepository: DatabaseRepository
+    private val movieRepository: MovieRepository,
+    private val actorRepository: ActorRepository
 ) : ViewModel() {
 
     private val movieId: Int = checkNotNull(savedStateHandle[MOVIE_DETAILS_ID_KEY])
 
-    // Holds the state for values in DetailsViewState
     var uiState by mutableStateOf(MovieDetailsUIState(movieData = null))
         private set
 
-    // Holds the state for values in ActorDetailsViewState
     var sheetUiState by mutableStateOf(ActorsSheetUIState(selectedActorDetails = null))
         private set
 
-    val isFavoriteMovie: LiveData<Int>
-        get() = databaseRepository.checkIfMovieIsFavorite(movieId)
+    val isFavoriteMovie: LiveData<Int> = movieRepository.isFavoriteMovie(movieId)
 
     init {
         viewModelScope.launch {
@@ -48,14 +45,13 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
-    // Update the values in uiState from all data sources.
     private suspend fun startFetchingDetails() {
         uiState = MovieDetailsUIState(isFetchingDetails = true, movieData = null)
         uiState = MovieDetailsUIState(
-            movieData = networkRepository.getSelectedMovieData(movieId),
-            similarMovies = networkRepository.getSimilarMoviesByIdData(movieId),
-            recommendedMovies = networkRepository.getRecommendedMoviesByIdData(movieId),
-            movieCast = networkRepository.getMovieCastByIdData(movieId),
+            movieData = movieRepository.getSelectedMovieData(movieId),
+            similarMovies = movieRepository.getSimilarMoviesByIdData(movieId),
+            recommendedMovies = movieRepository.getRecommendedMoviesByIdData(movieId),
+            movieCast = movieRepository.getMovieCastByIdData(movieId),
             isFetchingDetails = false
         )
     }
@@ -64,7 +60,7 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             val movie: MovieDetail? = uiState.movieData
             if (movie != null) {
-                databaseRepository.addMovieToFavorites(
+                movieRepository.addMovieToFavorites(
                     Movie(
                         movieId = movie.movieId,
                         posterPathUrl = movie.poster
@@ -78,7 +74,7 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             val movie: MovieDetail? = uiState.movieData
             if (movie != null) {
-                databaseRepository.deleteSelectedFavoriteMovie(
+                movieRepository.deleteSelectedFavoriteMovie(
                     Movie(
                         movieId = movie.movieId,
                         posterPathUrl = movie.poster
@@ -99,7 +95,7 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 if (actorId != null) {
-                    val actorsData = networkRepository.getSelectedActorData(actorId)
+                    val actorsData = actorRepository.getSelectedActorData(actorId)
                     sheetUiState = ActorsSheetUIState(selectedActorDetails = actorsData)
                 }
             } catch (e: IOException) {
