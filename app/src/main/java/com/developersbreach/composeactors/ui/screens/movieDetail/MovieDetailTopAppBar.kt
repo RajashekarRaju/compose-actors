@@ -12,7 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,7 +29,7 @@ import com.developersbreach.composeactors.R
 fun MovieDetailTopAppBar(
     navigateUp: () -> Unit,
     title: String?,
-    showTopBarBackground: MutableState<Boolean>
+    showTopBarBackground: State<Boolean>
 ) {
     val modifier = if (showTopBarBackground.value) {
         Modifier.background(color = MaterialTheme.colors.background)
