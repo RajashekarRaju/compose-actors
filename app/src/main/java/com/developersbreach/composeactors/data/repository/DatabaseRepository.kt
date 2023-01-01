@@ -6,9 +6,12 @@ import com.developersbreach.composeactors.data.datasource.database.AppDatabase
 import com.developersbreach.composeactors.data.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
 
-class DatabaseRepository(
+@Singleton
+class DatabaseRepository @Inject constructor(
     private val database: AppDatabase
 ) {
 
