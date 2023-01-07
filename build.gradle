@@ -26,6 +26,8 @@ plugins {
 }
 
 spotless {
+    // optional: limit format enforcement to just the files changed by this feature branch
+    //ratchetFrom 'origin/master'
 
     kotlin {
         // spotless:off and spotless:on
