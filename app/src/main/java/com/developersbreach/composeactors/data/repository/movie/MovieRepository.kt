@@ -5,45 +5,45 @@ import com.developersbreach.composeactors.data.model.Cast
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.MovieDetail
 import javax.inject.Singleton
-import com.developersbreach.composeactors.data.repository.DatabaseRepository
-import com.developersbreach.composeactors.data.repository.NetworkRepository
+import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
+import com.developersbreach.composeactors.data.datasource.network.NetworkDataSource
 import javax.inject.Inject
 
 @Singleton
 class MovieRepository @Inject constructor(
-    private val networkRepository: NetworkRepository,
-    private val databaseRepository: DatabaseRepository
+    private val networkDataSource: NetworkDataSource,
+    private val databaseDataSource: DatabaseDataSource
 ) {
 
     suspend fun getSelectedMovieData(movieId: Int): MovieDetail {
-        return networkRepository.getSelectedMovieData(movieId)
+        return networkDataSource.getSelectedMovieData(movieId)
     }
 
     suspend fun getSimilarMoviesByIdData(movieId: Int): List<Movie> {
-        return networkRepository.getSimilarMoviesByIdData(movieId)
+        return networkDataSource.getSimilarMoviesByIdData(movieId)
     }
 
     suspend fun getRecommendedMoviesByIdData(movieId: Int): List<Movie> {
-        return networkRepository.getRecommendedMoviesByIdData(movieId)
+        return networkDataSource.getRecommendedMoviesByIdData(movieId)
     }
 
     suspend fun getMovieCastByIdData(movieId: Int): List<Cast> {
-        return networkRepository.getMovieCastByIdData(movieId)
+        return networkDataSource.getMovieCastByIdData(movieId)
     }
 
     fun getAllFavoriteMovies(): LiveData<List<Movie>> {
-        return databaseRepository.getAllFavoriteMovies()
+        return databaseDataSource.getAllFavoriteMovies()
     }
 
     fun isFavoriteMovie(movieId: Int): LiveData<Int> {
-        return databaseRepository.checkIfMovieIsFavorite(movieId)
+        return databaseDataSource.checkIfMovieIsFavorite(movieId)
     }
 
     suspend fun addMovieToFavorites(movie: Movie) {
-        return databaseRepository.addMovieToFavorites(movie)
+        return databaseDataSource.addMovieToFavorites(movie)
     }
 
     suspend fun deleteSelectedFavoriteMovie(movie: Movie) {
-        return databaseRepository.deleteSelectedFavoriteMovie(movie)
+        return databaseDataSource.deleteSelectedFavoriteMovie(movie)
     }
 }

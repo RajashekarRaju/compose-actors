@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.repository.actor.ActorRepository
+import com.developersbreach.composeactors.data.repository.search.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,7 +15,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val actorRepository: ActorRepository
+    private val searchRepository: SearchRepository
 ) : ViewModel() {
 
     var uiState by mutableStateOf(SearchUIState())
@@ -31,7 +31,7 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             // Update the values in uiState from all data sources.
             uiState = SearchUIState(isSearchingResults = true)
-            val searchData = actorRepository.getSearchableActorsData(searchQuery)
+            val searchData = searchRepository.getSearchableActorsData(searchQuery)
             uiState = uiState.copy(
                 actorList = searchData,
                 isSearchingResults = false
