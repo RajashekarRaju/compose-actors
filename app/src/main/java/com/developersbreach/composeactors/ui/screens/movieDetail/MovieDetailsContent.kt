@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.ui.components.CategoryTitle
@@ -29,8 +26,9 @@ fun MovieDetailsContent(
     val listState = rememberLazyListState()
 
     // Change top bar background color on user scrolls, to make foreground details visible.
-    val showTopBarBackground = rememberSaveable { mutableStateOf(false) }
-    showTopBarBackground.value = listState.firstVisibleItemScrollOffset > 0
+    val showTopBarBackground = remember {
+        derivedStateOf { listState.firstVisibleItemScrollOffset > 0 }
+    }
 
     // Hide fab with animation when user scrolls the lazy list
     showFab.value = !listState.isScrollInProgress

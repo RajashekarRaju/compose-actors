@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 
 /**
  * @param navigateUp navigates back to previous screen.

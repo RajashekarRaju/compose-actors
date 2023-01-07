@@ -1,14 +1,16 @@
-package com.developersbreach.composeactors.data.repository
+package com.developersbreach.composeactors.data.datasource.database
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.developersbreach.composeactors.data.datasource.database.AppDatabase
 import com.developersbreach.composeactors.data.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
 
-class DatabaseRepository(
+@Singleton
+class DatabaseDataSource @Inject constructor(
     private val database: AppDatabase
 ) {
 

@@ -2,16 +2,14 @@ package com.developersbreach.composeactors.data.datasource.network
 
 import com.developersbreach.composeactors.utils.TmdbApiKey
 import java.net.URL
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Builds and returns URL used to fetch data from the server.
  */
-object RequestUrls {
-
-    private const val BASE_URL = "https://api.themoviedb.org/3/"
-    private const val API_KEY = "api_key=${TmdbApiKey.TMDB_API_KEY}"
-    const val LOW_RES_IMAGE = "https://image.tmdb.org/t/p/w200"
-    const val HIGH_RES_IMAGE = "https://image.tmdb.org/t/p/w500"
+@Singleton
+class RequestUrls @Inject constructor() {
 
     // https://api.themoviedb.org/3/person/popular?api_key=API_KEY
     fun getPopularActorsUrl(): URL {
@@ -102,5 +100,10 @@ object RequestUrls {
         page: Int = 1
     ): URL {
         return URL("${BASE_URL}movie/now_playing?$API_KEY&page=$page")
+    }
+
+    companion object {
+        private const val BASE_URL = "https://api.themoviedb.org/3/"
+        private const val API_KEY = "api_key=${TmdbApiKey.TMDB_API_KEY}"
     }
 }

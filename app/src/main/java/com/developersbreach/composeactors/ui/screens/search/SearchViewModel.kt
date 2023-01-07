@@ -5,31 +5,34 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.repository.NetworkRepository
+import com.developersbreach.composeactors.data.repository.movie.MovieRepository
+import com.developersbreach.composeactors.data.repository.search.SearchRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
- * To manage ui state and data for screen [SearchScreen].
+ * To manage ui state and data for screen SearchScreen.
  */
-class SearchViewModel(
-    private val repository: NetworkRepository
+@HiltViewModel
+class SearchViewModel @Inject constructor(
+    private val searchRepository: SearchRepository
 ) : ViewModel() {
 
-    // Holds the state for values in SearchUIState
     var uiState by mutableStateOf(SearchUIState())
         private set
 
     /**
-     * @param query user entered query in text field.
+     * @param searchQuery user entered query in text field.
      * This function triggers everytime user makes query change.
      */
     fun performQuery(
-        query: String
+        searchQuery: String
     ) {
         viewModelScope.launch {
             // Update the values in uiState from all data sources.
             uiState = SearchUIState(isSearchingResults = true)
-            val searchData = repository.getSearchableActorsData(query)
+            val searchData = searchRepository.getSearchableActorsData(searchQuery)
             uiState = uiState.copy(
                 actorList = searchData,
                 isSearchingResults = false

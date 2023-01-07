@@ -7,30 +7,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.data.repository.DatabaseRepository
-import com.developersbreach.composeactors.data.repository.NetworkRepository
+import com.developersbreach.composeactors.data.repository.actor.ActorRepository
+import com.developersbreach.composeactors.data.repository.movie.MovieRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
+import javax.inject.Inject
 
 /**
- * To manage ui state and data for screen [HomeScreen].
+ * To manage ui state and data for screen HomeScreen.
  */
-class HomeViewModel(
-    private val networkRepository: NetworkRepository,
-    private val databaseRepository: DatabaseRepository
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val movieRepository: MovieRepository,
+    private val actorRepository: ActorRepository
 ) : ViewModel() {
 
-    // Holds the state for values in HomeViewState
     var uiState by mutableStateOf(HomeUIState())
         private set
 
-    // Holds the state for values in HomeViewState
     var sheetUiState by mutableStateOf(HomeSheetUIState())
         private set
 
-    val favoriteMovies: LiveData<List<Movie>>
-        get() = databaseRepository.getAllFavoriteMovies()
+    val favoriteMovies: LiveData<List<Movie>> = movieRepository.getAllFavoriteMovies()
 
     init {
         viewModelScope.launch {
@@ -42,15 +42,14 @@ class HomeViewModel(
         }
     }
 
-    // Update the values in uiState from all data sources.
     private suspend fun startFetchingActors() {
         uiState = HomeUIState(isFetchingActors = true)
         uiState = HomeUIState(
-            popularActorList = networkRepository.getPopularActorsData(),
-            trendingActorList = networkRepository.getTrendingActorsData(),
+            popularActorList = actorRepository.getPopularActorsData(),
+            trendingActorList = actorRepository.getTrendingActorsData(),
             isFetchingActors = false,
-            upcomingMoviesList = networkRepository.getUpcomingMoviesData(),
-            nowPlayingMoviesList = networkRepository.getNowPlayingMoviesData()
+            upcomingMoviesList = actorRepository.getUpcomingMoviesData(),
+            nowPlayingMoviesList = actorRepository.getNowPlayingMoviesData()
         )
     }
 
@@ -65,7 +64,7 @@ class HomeViewModel(
         viewModelScope.launch {
             try {
                 if (movieId != null) {
-                    val movieData = networkRepository.getSelectedMovieData(movieId)
+                    val movieData = movieRepository.getSelectedMovieData(movieId)
                     sheetUiState = HomeSheetUIState(selectedMovieDetails = movieData)
                 }
             } catch (e: IOException) {
