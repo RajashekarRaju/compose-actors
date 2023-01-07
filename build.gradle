@@ -21,6 +21,25 @@ buildscript {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+plugins {
+    id("com.diffplug.spotless") version "6.12.1"
+}
+
+spotless {
+    // optional: limit format enforcement to just the files changed by this feature branch
+    //ratchetFrom 'origin/master'
+
+    kotlin {
+        // spotless:off and spotless:on
+        // toggleOffOn()
+
+        target '**/*.kt'
+        targetExclude("$buildDir/**/*.kt")
+        targetExclude('bin/**/*.kt')
+        ktlint("0.48.1")
+        ktfmt()
+    }
+
+    // Disabling warnings and error messages
+    // enforceCheck false
 }
