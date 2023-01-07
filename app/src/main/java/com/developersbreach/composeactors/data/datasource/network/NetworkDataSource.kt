@@ -1,8 +1,6 @@
-package com.developersbreach.composeactors.data.repository
+package com.developersbreach.composeactors.data.datasource.network
 
 import com.developersbreach.composeactors.data.model.*
-import com.developersbreach.composeactors.data.datasource.network.JsonRemoteData
-import com.developersbreach.composeactors.data.datasource.network.RequestUrls
 import com.developersbreach.composeactors.utils.NetworkQueryUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -18,7 +16,7 @@ import javax.inject.Singleton
  * This is the only network data source for whole app.
  */
 @Singleton
-class NetworkRepository @Inject constructor(
+class NetworkDataSource @Inject constructor(
     private val requestUrls: RequestUrls,
     private val jsonData: JsonRemoteData,
     private val queryUtils: NetworkQueryUtils
@@ -116,5 +114,41 @@ class NetworkRepository @Inject constructor(
         val requestUrl = requestUrls.getNowPlayingMoviesUrl()
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchNowPlayingMoviesJsonData(response)
+    }
+
+    /**
+     * @param query user submitted query to search actors.
+     * @return the result of list of actors with matching query fetched from the network.
+     */
+    suspend fun getSearchableActorsData(
+        query: String
+    ): List<Actor> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getSearchActorsUrl(query)
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        jsonData.fetchActorsJsonData(response)
+    }
+
+    suspend fun getMovieTrailerUrl(
+        movieId: Int
+    ) {
+        withContext(Dispatchers.IO) {
+            val requestUrl = requestUrls.getMovieTrailerUrl(movieId)
+            val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+
+            // Watching trailer for movies needs to implemented
+            // Planned for v0.5.0
+        }
+    }
+
+    suspend fun getMovieTrailerThumbnail(
+        trailerId: String
+    ) {
+        withContext(Dispatchers.IO) {
+            val requestUrl = requestUrls.buildMovieTrailerThumbnail(trailerId)
+            val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+
+            // Watching trailer for movies needs to implemented
+            // Planned for v0.5.0
+        }
     }
 }

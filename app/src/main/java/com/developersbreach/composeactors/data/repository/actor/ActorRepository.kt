@@ -3,41 +3,35 @@ package com.developersbreach.composeactors.data.repository.actor
 import com.developersbreach.composeactors.data.model.Actor
 import com.developersbreach.composeactors.data.model.ActorDetail
 import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.data.repository.NetworkRepository
-import com.developersbreach.composeactors.data.repository.search.SearchRepository
+import com.developersbreach.composeactors.data.datasource.network.NetworkDataSource
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ActorRepository @Inject constructor(
-    private val networkRepository: NetworkRepository,
-    private val searchRepository: SearchRepository
+    private val networkDataSource: NetworkDataSource
 ) {
     suspend fun getPopularActorsData(): List<Actor> {
-        return networkRepository.getPopularActorsData()
+        return networkDataSource.getPopularActorsData()
     }
 
     suspend fun getTrendingActorsData(): List<Actor> {
-        return networkRepository.getTrendingActorsData()
+        return networkDataSource.getTrendingActorsData()
     }
 
     suspend fun getUpcomingMoviesData(): List<Movie> {
-        return networkRepository.getUpcomingMoviesData()
+        return networkDataSource.getUpcomingMoviesData()
     }
 
     suspend fun getNowPlayingMoviesData(): List<Movie> {
-        return networkRepository.getNowPlayingMoviesData()
+        return networkDataSource.getNowPlayingMoviesData()
     }
 
     suspend fun getSelectedActorData(actorInt: Int): ActorDetail {
-        return networkRepository.getSelectedActorData(actorInt)
+        return networkDataSource.getSelectedActorData(actorInt)
     }
 
     suspend fun getCastData(actorInt: Int): List<Movie> {
-        return networkRepository.getCastData(actorInt)
-    }
-
-    suspend fun getSearchableActorsData(searchQuery: String): List<Actor> {
-        return searchRepository.getSearchableActorsData(searchQuery)
+        return networkDataSource.getCastData(actorInt)
     }
 }
