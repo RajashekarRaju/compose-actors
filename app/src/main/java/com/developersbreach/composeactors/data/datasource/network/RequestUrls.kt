@@ -97,7 +97,7 @@ class RequestUrls @Inject constructor() {
 
     // https://api.themoviedb.org/3/movie/now_playing?api_key=API_KEY&page=1
     fun getNowPlayingMoviesUrl(
-        page: Int = 1
+        page: Int
     ): URL {
         return URL("${BASE_URL}movie/now_playing?$API_KEY&page=$page")
     }

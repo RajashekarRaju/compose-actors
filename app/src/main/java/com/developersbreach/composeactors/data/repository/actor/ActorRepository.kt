@@ -23,8 +23,8 @@ class ActorRepository @Inject constructor(
         return networkDataSource.getUpcomingMoviesData()
     }
 
-    suspend fun getNowPlayingMoviesData(): List<Movie> {
-        return networkDataSource.getNowPlayingMoviesData()
+    suspend fun getNowPlayingMoviesData(page: Int): List<Movie> {
+        return networkDataSource.getNowPlayingMoviesData(page)
     }
 
     suspend fun getSelectedActorData(actorInt: Int): ActorDetail {

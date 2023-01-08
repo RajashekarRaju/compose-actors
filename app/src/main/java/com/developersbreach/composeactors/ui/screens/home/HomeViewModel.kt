@@ -6,6 +6,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.repository.actor.ActorRepository
 import com.developersbreach.composeactors.data.repository.movie.MovieRepository
@@ -14,6 +18,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
 /**
  * To manage ui state and data for screen HomeScreen.
@@ -21,7 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
-    private val actorRepository: ActorRepository
+    private val actorRepository: ActorRepository,
 ) : ViewModel() {
 
     var uiState by mutableStateOf(HomeUIState())
@@ -42,6 +47,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private val source: Flow<PagingData<Movie>> = Pager(
+        config = PagingConfig(pageSize = 11),
+        initialKey = 1,
+        pagingSourceFactory = { NowPlayingMoviesPagingSource(actorRepository) }
+    ).flow.cachedIn(viewModelScope)
+
     private suspend fun startFetchingActors() {
         uiState = HomeUIState(isFetchingActors = true)
         uiState = HomeUIState(
@@ -49,7 +60,7 @@ class HomeViewModel @Inject constructor(
             trendingActorList = actorRepository.getTrendingActorsData(),
             isFetchingActors = false,
             upcomingMoviesList = actorRepository.getUpcomingMoviesData(),
-            nowPlayingMoviesList = actorRepository.getNowPlayingMoviesData()
+            nowPlayingMoviesList = source
         )
     }
 

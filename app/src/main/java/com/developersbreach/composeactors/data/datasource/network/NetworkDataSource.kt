@@ -110,8 +110,10 @@ class NetworkDataSource @Inject constructor(
         jsonData.fetchUpcomingMoviesJsonData(response)
     }
 
-    suspend fun getNowPlayingMoviesData(): List<Movie> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getNowPlayingMoviesUrl()
+    suspend fun getNowPlayingMoviesData(
+        page: Int
+    ): List<Movie> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getNowPlayingMoviesUrl(page)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchNowPlayingMoviesJsonData(response)
     }
