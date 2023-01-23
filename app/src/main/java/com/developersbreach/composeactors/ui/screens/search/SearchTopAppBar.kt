@@ -13,22 +13,32 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.data.datasource.network.JsonRemoteData
+import com.developersbreach.composeactors.data.datasource.network.NetworkDataSource
+import com.developersbreach.composeactors.data.datasource.network.RequestUrls
+import com.developersbreach.composeactors.data.repository.search.SearchRepository
 import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.KeyboardState
 import com.developersbreach.composeactors.ui.components.closeKeyboardAndNavigateUp
 import com.developersbreach.composeactors.ui.components.getCurrentKeyboardState
+import com.developersbreach.composeactors.utils.NetworkQueryUtils
+import com.developersbreach.composeactors.utils.SearchType
 
 /**
  * @param navigateUp Navigates to previous screen.
@@ -78,6 +88,8 @@ fun SearchAppBar(
             viewModel.performQuery(query)
         }
     }
+
+    val focusRequester = FocusRequester()
 
     Column {
 
@@ -142,7 +154,12 @@ fun SearchAppBar(
                     }
                 }
             },
-            placeholder = { Text(text = stringResource(R.string.hint_search_query)) },
+            placeholder = {
+            if(viewModel.searchType == SearchType.Actors)
+                Text(text = stringResource(R.string.hint_search_query_actors))
+                else
+                Text(text = stringResource(R.string.hint_search_query_movies))
+            },
             textStyle = MaterialTheme.typography.subtitle1,
             singleLine = true,
             keyboardOptions = KeyboardOptions(
@@ -151,14 +168,29 @@ fun SearchAppBar(
             maxLines = 1,
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colors.background, RectangleShape),
+                .background(MaterialTheme.colors.background, RectangleShape)
+                .focusRequester(focusRequester),
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = Color.Transparent
             )
-        )
+            )
+
+        //TextField automatically focused when the screen appears
+        LaunchedEffect(Unit) {
+            focusRequester.requestFocus()
+        }
 
         // Divides content and search bar with line.
         AppDivider(verticalPadding = 0.dp)
+    }
+}
+@Preview
+@Composable
+fun searchAppBarPreview() {
+    SearchAppBar(navigateUp = {}, viewModel = SearchViewModel(
+        SearchRepository(NetworkDataSource(RequestUrls(), JsonRemoteData(RequestUrls()), NetworkQueryUtils()))
+    )) {
+        
     }
 }
 

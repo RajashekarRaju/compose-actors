@@ -16,6 +16,7 @@ import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailScre
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailViewModel
 import com.developersbreach.composeactors.ui.screens.search.SearchScreen
 import com.developersbreach.composeactors.ui.screens.search.SearchViewModel
+import com.developersbreach.composeactors.utils.SearchType
 
 
 /**
@@ -35,6 +36,7 @@ fun AppNavigation(
         AppActions(navController, routes)
     }
 
+    val searchViewModel = hiltViewModel<SearchViewModel>()
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -48,12 +50,13 @@ fun AppNavigation(
         composable(
             AppDestinations.HOME_ROUTE
         ) {
-            val viewModel = hiltViewModel<HomeViewModel>()
+            val homeViewModel = hiltViewModel<HomeViewModel>()
             HomeScreen(
                 selectedActor = actions.selectedActor,
                 navigateToSearch = actions.navigateToSearch,
                 selectedMovie = actions.selectedMovie,
-                viewModel = viewModel
+                homeViewModel = homeViewModel,
+                searchViewModel = searchViewModel
             )
         }
 
@@ -65,11 +68,15 @@ fun AppNavigation(
         composable(
             AppDestinations.SEARCH_ROUTE
         ) {
-            val viewModel = hiltViewModel<SearchViewModel>()
+            val selectedId = if(searchViewModel.searchType == SearchType.Actors) {
+                actions.selectedActor
+            } else {
+                actions.selectedMovie
+            }
             SearchScreen(
-                selectedActor = actions.selectedActor,
+                selectedId = selectedId,
                 navigateUp = actions.navigateUp,
-                viewModel = viewModel
+                viewModel = searchViewModel
             )
         }
 
@@ -86,11 +93,11 @@ fun AppNavigation(
                 navArgument(routes.ACTOR_DETAIL_ID_KEY) { type = NavType.IntType }
             )
         ) {
-            val viewModel = hiltViewModel<ActorDetailsViewModel>()
+            val actorDetailsViewModel = hiltViewModel<ActorDetailsViewModel>()
             ActorDetailsScreen(
                 selectedMovie = actions.selectedMovie,
                 navigateUp = actions.navigateUp,
-                viewModel = viewModel
+                viewModel = actorDetailsViewModel
             )
         }
 

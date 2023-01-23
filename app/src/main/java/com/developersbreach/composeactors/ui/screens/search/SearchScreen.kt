@@ -15,7 +15,7 @@ import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 
 
 /**
- * @param selectedActor navigates to user clicked actor from row.
+ * @param selectedId navigates to user clicked actor from row.
  * @param viewModel to manage ui state of [SearchScreen]
  * @param navigateUp navigates user to previous screen.
  *
@@ -26,7 +26,7 @@ import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchScreen(
-    selectedActor: (Int) -> Unit,
+    selectedId: (Int) -> Unit,
     viewModel: SearchViewModel,
     navigateUp: () -> Unit
 ) {
@@ -51,7 +51,7 @@ fun SearchScreen(
                 val isLoadingData = !uiState.isSearchingResults && uiState.actorList.isEmpty()
                 ShowSearchProgress(isLoadingData)
                 // Main content for this screen
-                SearchUI(uiState.actorList, selectedActor, closeKeyboard)
+                SearchUI(uiState.actorList, selectedId, closeKeyboard)
             }
         }
     }

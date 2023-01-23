@@ -16,11 +16,12 @@ import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackb
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
+import com.developersbreach.composeactors.ui.screens.search.SearchViewModel
 
 /**
  * @param selectedActor navigates to user clicked actor from row.
  * @param navigateToSearch navigates user to search screen.
- * @param viewModel to manage ui state of [HomeScreen]
+ * @param homeViewModel to manage ui state of [HomeScreen]
  *
  * Default destination.
  * Shows category list of actors in row.
@@ -33,7 +34,8 @@ fun HomeScreen(
     selectedActor: (Int) -> Unit,
     navigateToSearch: () -> Unit,
     selectedMovie: (Int) -> Unit,
-    viewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
+    searchViewModel: SearchViewModel
 ) {
     // Remember state of scaffold to manage snackbar
     val scaffoldState = rememberScaffoldState()
@@ -43,7 +45,7 @@ fun HomeScreen(
         modalSheetState = modalSheetState
     )
 
-    val favoriteMovies by viewModel.favoriteMovies.observeAsState(emptyList())
+    val favoriteMovies by homeViewModel.favoriteMovies.observeAsState(emptyList())
 
     Surface(
         color = MaterialTheme.colors.background,
@@ -55,7 +57,7 @@ fun HomeScreen(
             sheetBackgroundColor = MaterialTheme.colors.background,
             sheetContent = {
                 SheetContentMovieDetails(
-                    movie = viewModel.sheetUiState.selectedMovieDetails,
+                    movie = homeViewModel.sheetUiState.selectedMovieDetails,
                     selectedMovie = selectedMovie
                 )
             },
@@ -75,12 +77,13 @@ fun HomeScreen(
                     HomeScreenUI(
                         selectedActor = selectedActor,
                         openHomeBottomSheet = openHomeBottomSheet,
-                        homeUIState = viewModel.uiState,
-                        homeSheetUIState = viewModel.sheetUiState,
+                        homeUIState = homeViewModel.uiState,
+                        homeSheetUIState = homeViewModel.sheetUiState,
                         favoriteMovies = favoriteMovies,
                         selectedMovie = { movieId ->
-                            viewModel.getSelectedMovieDetails(movieId)
-                        }
+                            homeViewModel.getSelectedMovieDetails(movieId)
+                        },
+                        searchViewModel = searchViewModel
                     )
 
                     // Perform network check and show snackbar if offline

@@ -11,8 +11,10 @@
     <string name="cd_up_button">Go to previous screen</string>
     <string name="cd_clear_icon">Clear search query</string>
 
-    <string name="search_app_bar_title">Search actors</string>
-    <string name="hint_search_query">Search actors</string>
+    <string name="search_app_bar_title">Search actors or movies</string>
+    <string name="hint_search_query_actors">Search actors</string>
+
+    <string name="hint_search_query_movies">Search movies</string>
 
     <string name="category_actors_popular">Popular</string>
     <string name="category_actors_trending">Trending</string>

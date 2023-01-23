@@ -37,6 +37,26 @@ class JsonRemoteData @Inject constructor(
         return actorsList
     }
 
+    @Throws(Exception::class)
+    fun fetchMoviesJsonData(
+        response: String
+    ): List<Actor> {
+
+        val actorsList: MutableList<Actor> = ArrayList()
+        val baseJsonArray = JSONObject(response)
+        val actorsJsonArray = baseJsonArray.getJSONArray("results")
+
+        for (notI: Int in 0 until actorsJsonArray.length()) {
+            val jsonObject = actorsJsonArray.getJSONObject(notI)
+            val actorId = jsonObject.getInt("id")
+            val actorName = jsonObject.getString("title")
+            val profilePathUrl = jsonObject.getString("poster_path")
+            val profilePath = "${LOW_RES_IMAGE}$profilePathUrl"
+            actorsList.add(Actor(actorId, actorName, profilePath))
+        }
+        return actorsList
+    }
+
     /**
      * @param response contains json response data to built a data upon.
      * @return list of [ActorDetail] objects that has been built up from parsing a JSON response.

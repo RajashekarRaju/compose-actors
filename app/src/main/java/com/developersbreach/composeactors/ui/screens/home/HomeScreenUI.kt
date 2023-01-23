@@ -1,8 +1,15 @@
 package com.developersbreach.composeactors.ui.screens.home
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
+import com.developersbreach.composeactors.data.datasource.network.JsonRemoteData
+import com.developersbreach.composeactors.data.datasource.network.NetworkDataSource
+import com.developersbreach.composeactors.data.datasource.network.RequestUrls
 import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.repository.search.SearchRepository
+import com.developersbreach.composeactors.ui.screens.search.SearchViewModel
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.composeactors.utils.NetworkQueryUtils
 import kotlinx.coroutines.Job
 
 @Composable
@@ -13,6 +20,7 @@ fun HomeScreenUI(
     homeUIState: HomeUIState,
     homeSheetUIState: HomeSheetUIState,
     favoriteMovies: List<Movie>,
+    searchViewModel: SearchViewModel
 ) {
     HomeScreenContent(
         selectedActor = selectedActor,
@@ -20,10 +28,12 @@ fun HomeScreenUI(
         openHomeBottomSheet = openHomeBottomSheet,
         homeUIState = homeUIState,
         homeSheetUIState = homeSheetUIState,
-        favoriteMovies = favoriteMovies
+        favoriteMovies = favoriteMovies,
+        searchViewModel = searchViewModel
     )
 }
 
+@Preview
 @Composable
 private fun HomeScreenUIPreview() {
     ComposeActorsTheme {
@@ -41,7 +51,10 @@ private fun HomeScreenUIPreview() {
             homeSheetUIState = HomeSheetUIState(
                 selectedMovieDetails = null
             ),
-            favoriteMovies = emptyList()
+            favoriteMovies = emptyList(),
+            SearchViewModel(
+                SearchRepository(NetworkDataSource(RequestUrls(), JsonRemoteData(RequestUrls()), NetworkQueryUtils()))
+            )
         )
     }
 }

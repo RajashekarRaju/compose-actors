@@ -13,4 +13,8 @@ class SearchRepository @Inject constructor(
     suspend fun getSearchableActorsData(query: String): List<Actor> {
         return networkDataSource.getSearchableActorsData(query)
     }
+
+    suspend fun getSearchableMoviesData(query: String): List<Actor> {
+        return networkDataSource.getSearchableMoviesData(query)
+    }
 }

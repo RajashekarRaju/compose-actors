@@ -8,6 +8,6 @@ import com.developersbreach.composeactors.data.model.Actor
  * Models the UI state for the [SearchScreen] screen.
  */
 data class SearchUIState(
-    val actorList: List<Actor> = listOf(),
+    val actorList: ArrayList<Actor> = arrayListOf(),
     val isSearchingResults: Boolean = false,
 )
