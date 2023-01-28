@@ -16,7 +16,7 @@ import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailScre
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailViewModel
 import com.developersbreach.composeactors.ui.screens.search.SearchScreen
 import com.developersbreach.composeactors.ui.screens.search.SearchViewModel
-import com.developersbreach.composeactors.utils.SearchType
+import com.developersbreach.composeactors.ui.screens.search.SearchType
 
 
 /**
@@ -36,7 +36,6 @@ fun AppNavigation(
         AppActions(navController, routes)
     }
 
-    val searchViewModel = hiltViewModel<SearchViewModel>()
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -55,8 +54,7 @@ fun AppNavigation(
                 selectedActor = actions.selectedActor,
                 navigateToSearch = actions.navigateToSearch,
                 selectedMovie = actions.selectedMovie,
-                homeViewModel = homeViewModel,
-                searchViewModel = searchViewModel
+                homeViewModel = homeViewModel
             )
         }
 
@@ -66,15 +64,18 @@ fun AppNavigation(
          * Has it's own viewModel [SearchViewModel] with factory & repository instance.
          */
         composable(
-            AppDestinations.SEARCH_ROUTE
+            route = "${AppDestinations.SEARCH_ROUTE}/{${routes.SEARCH_TYPE}}",
+            arguments = listOf(
+                navArgument(routes.SEARCH_TYPE) { type = NavType.EnumType(SearchType::class.java) }
+            )
         ) {
-            val selectedId = if(searchViewModel.searchType == SearchType.Actors) {
-                actions.selectedActor
-            } else {
-                actions.selectedMovie
+            val searchViewModel = hiltViewModel<SearchViewModel>()
+            val selectedIdSearchType = when (searchViewModel.searchType) {
+                SearchType.Actors -> actions.selectedActor
+                SearchType.Movies -> actions.selectedMovie
             }
             SearchScreen(
-                selectedId = selectedId,
+                selectedIdSearchType = selectedIdSearchType,
                 navigateUp = actions.navigateUp,
                 viewModel = searchViewModel
             )
