@@ -16,7 +16,7 @@ import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackb
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
-import com.developersbreach.composeactors.ui.screens.search.SearchViewModel
+import com.developersbreach.composeactors.ui.screens.search.SearchType
 
 /**
  * @param selectedActor navigates to user clicked actor from row.
@@ -32,10 +32,9 @@ import com.developersbreach.composeactors.ui.screens.search.SearchViewModel
 @Composable
 fun HomeScreen(
     selectedActor: (Int) -> Unit,
-    navigateToSearch: () -> Unit,
+    navigateToSearch: (SearchType) -> Unit,
     selectedMovie: (Int) -> Unit,
-    homeViewModel: HomeViewModel,
-    searchViewModel: SearchViewModel
+    homeViewModel: HomeViewModel
 ) {
     // Remember state of scaffold to manage snackbar
     val scaffoldState = rememberScaffoldState()
@@ -46,6 +45,7 @@ fun HomeScreen(
     )
 
     val favoriteMovies by homeViewModel.favoriteMovies.observeAsState(emptyList())
+    val navigateToSearchBySearchType by homeViewModel.updateHomeSearchType.observeAsState(SearchType.Actors)
 
     Surface(
         color = MaterialTheme.colors.background,
@@ -66,7 +66,12 @@ fun HomeScreen(
                 // attach snackbar host state to the scaffold
                 scaffoldState = scaffoldState,
                 // Custom AppBar contains fake search bar.
-                topBar = { HomeTopAppBar(navigateToSearch) },
+                topBar = {
+                    HomeTopAppBar(
+                        navigateToSearch = navigateToSearch,
+                        searchType = navigateToSearchBySearchType
+                    )
+                },
                 // Host for custom snackbar
                 snackbarHost = { HomeSnackbar(it) }
             ) { paddingValues ->
@@ -83,7 +88,9 @@ fun HomeScreen(
                         selectedMovie = { movieId ->
                             homeViewModel.getSelectedMovieDetails(movieId)
                         },
-                        searchViewModel = searchViewModel
+                        updateSearchType = { searchType: SearchType ->
+                            homeViewModel.updateHomeSearchType(searchType)
+                        }
                     )
 
                     // Perform network check and show snackbar if offline
