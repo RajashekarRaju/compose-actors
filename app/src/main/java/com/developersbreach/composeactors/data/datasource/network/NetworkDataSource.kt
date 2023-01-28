@@ -130,7 +130,7 @@ class NetworkDataSource @Inject constructor(
 
     suspend fun getSearchableMoviesData(
         query: String
-    ): List<Actor> = withContext(Dispatchers.IO) {
+    ): List<Movie> = withContext(Dispatchers.IO) {
         val requestUrl = requestUrls.getSearchMoviesUrl(query)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchMoviesJsonData(response)
