@@ -1,13 +1,20 @@
 package com.developersbreach.composeactors.ui.screens.search
 
 import com.developersbreach.composeactors.data.model.Actor
-
-// TODO - create a sealed class to contains the different states
+import com.developersbreach.composeactors.data.model.Movie
 
 /**
- * Models the UI state for the [SearchScreen] screen.
+ * UI state for the [SearchScreen] screen.
  */
-data class SearchUIState(
-    val actorList: ArrayList<Actor> = arrayListOf(),
-    val isSearchingResults: Boolean = false,
-)
+sealed class SearchUIState {
+
+    data class MovieSearch(
+        val movieList: List<Movie> = listOf(),
+        val isSearchingResults: Boolean = false,
+    ): SearchUIState()
+
+    data class ActorSearch(
+        val actorList: List<Actor> = listOf(),
+        val isSearchingResults: Boolean = false,
+    ): SearchUIState()
+}
