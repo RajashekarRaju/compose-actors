@@ -1,6 +1,7 @@
 package com.developersbreach.composeactors.ui.navigation
 
 import androidx.navigation.NavHostController
+import com.developersbreach.composeactors.ui.screens.search.SearchType
 
 /**
  * @property navController helps us navigate by performing action.
@@ -22,8 +23,8 @@ class AppActions(
     }
 
     // Navigates to SearchScreen
-    val navigateToSearch = {
-        navController.navigate(routes.SEARCH_ROUTE)
+    val navigateToSearch: (SearchType) -> Unit = { searchType: SearchType ->
+        navController.navigate("${routes.SEARCH_ROUTE}/$searchType")
     }
 
     // Navigates to previous screen from current screen.

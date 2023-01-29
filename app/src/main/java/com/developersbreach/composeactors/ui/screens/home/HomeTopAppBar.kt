@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
 /**
@@ -27,10 +28,11 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
  */
 @Composable
 fun HomeTopAppBar(
-    navigateToSearch: () -> Unit
+    navigateToSearch: (SearchType) -> Unit,
+    searchType: SearchType
 ) {
     TopAppBar(
-        content = { HomeTopAppBarContent(navigateToSearch) },
+        content = { HomeTopAppBarContent(navigateToSearch, searchType) },
         backgroundColor = MaterialTheme.colors.background,
         elevation = 0.dp,
         modifier = Modifier
@@ -44,7 +46,8 @@ fun HomeTopAppBar(
  */
 @Composable
 private fun HomeTopAppBarContent(
-    navigateToSearch: () -> Unit
+    navigateToSearch: (SearchType) -> Unit,
+    searchType: SearchType
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -52,7 +55,7 @@ private fun HomeTopAppBarContent(
             .fillMaxWidth()
             .height(48.dp)
             .clip(shape = MaterialTheme.shapes.medium)
-            .clickable(onClick = navigateToSearch)
+            .clickable { navigateToSearch(searchType) }
             .background(color = MaterialTheme.colors.surface)
     ) {
         Spacer(modifier = Modifier.padding(horizontal = 8.dp))
@@ -79,6 +82,9 @@ private fun HomeTopAppBarContent(
 @Composable
 private fun SearchBarPreview() {
     ComposeActorsTheme(darkTheme = true) {
-        HomeTopAppBarContent { }
+        HomeTopAppBarContent(
+            navigateToSearch = { },
+            searchType = SearchType.Actors
+        )
     }
 }
