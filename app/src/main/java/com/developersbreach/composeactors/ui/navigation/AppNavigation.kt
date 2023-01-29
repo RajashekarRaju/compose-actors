@@ -16,6 +16,7 @@ import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailScre
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailViewModel
 import com.developersbreach.composeactors.ui.screens.search.SearchScreen
 import com.developersbreach.composeactors.ui.screens.search.SearchViewModel
+import com.developersbreach.composeactors.ui.screens.search.SearchType
 
 
 /**
@@ -48,12 +49,12 @@ fun AppNavigation(
         composable(
             AppDestinations.HOME_ROUTE
         ) {
-            val viewModel = hiltViewModel<HomeViewModel>()
+            val homeViewModel = hiltViewModel<HomeViewModel>()
             HomeScreen(
                 selectedActor = actions.selectedActor,
                 navigateToSearch = actions.navigateToSearch,
                 selectedMovie = actions.selectedMovie,
-                viewModel = viewModel
+                homeViewModel = homeViewModel
             )
         }
 
@@ -63,13 +64,20 @@ fun AppNavigation(
          * Has it's own viewModel [SearchViewModel] with factory & repository instance.
          */
         composable(
-            AppDestinations.SEARCH_ROUTE
+            route = "${AppDestinations.SEARCH_ROUTE}/{${routes.SEARCH_TYPE}}",
+            arguments = listOf(
+                navArgument(routes.SEARCH_TYPE) { type = NavType.EnumType(SearchType::class.java) }
+            )
         ) {
-            val viewModel = hiltViewModel<SearchViewModel>()
+            val searchViewModel = hiltViewModel<SearchViewModel>()
+            val selectedIdSearchType = when (searchViewModel.searchType) {
+                SearchType.Actors -> actions.selectedActor
+                SearchType.Movies -> actions.selectedMovie
+            }
             SearchScreen(
-                selectedActor = actions.selectedActor,
+                selectedIdSearchType = selectedIdSearchType,
                 navigateUp = actions.navigateUp,
-                viewModel = viewModel
+                viewModel = searchViewModel
             )
         }
 
@@ -86,11 +94,11 @@ fun AppNavigation(
                 navArgument(routes.ACTOR_DETAIL_ID_KEY) { type = NavType.IntType }
             )
         ) {
-            val viewModel = hiltViewModel<ActorDetailsViewModel>()
+            val actorDetailsViewModel = hiltViewModel<ActorDetailsViewModel>()
             ActorDetailsScreen(
                 selectedMovie = actions.selectedMovie,
                 navigateUp = actions.navigateUp,
-                viewModel = viewModel
+                viewModel = actorDetailsViewModel
             )
         }
 

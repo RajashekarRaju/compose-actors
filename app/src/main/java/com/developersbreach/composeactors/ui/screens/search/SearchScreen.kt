@@ -15,7 +15,7 @@ import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 
 
 /**
- * @param selectedActor navigates to user clicked actor from row.
+ * @param selectedIdSearchType navigates to user clicked actor from row.
  * @param viewModel to manage ui state of [SearchScreen]
  * @param navigateUp navigates user to previous screen.
  *
@@ -26,7 +26,7 @@ import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchScreen(
-    selectedActor: (Int) -> Unit,
+    selectedIdSearchType: (Int) -> Unit,
     viewModel: SearchViewModel,
     navigateUp: () -> Unit
 ) {
@@ -47,11 +47,30 @@ fun SearchScreen(
             Box(
                 modifier = Modifier.padding(paddingValues)
             ) {
-                // Show progress while search is happening
-                val isLoadingData = !uiState.isSearchingResults && uiState.actorList.isEmpty()
-                ShowSearchProgress(isLoadingData)
-                // Main content for this screen
-                SearchUI(uiState.actorList, selectedActor, closeKeyboard)
+                when (uiState) {
+                    is SearchUIState.ActorSearch -> {
+                        // Show progress while search is happening
+                        val isLoadingData = !uiState.isSearchingResults && uiState.actorList.isEmpty()
+                        ShowSearchProgress(isLoadingData)
+                        // Main content for this screen
+                        ActorSearchUI(
+                            actorsList = uiState.actorList,
+                            selectedActor = selectedIdSearchType,
+                            closeKeyboard = closeKeyboard
+                        )
+                    }
+                    is SearchUIState.MovieSearch -> {
+                        // Show progress while search is happening
+                        val isLoadingData = !uiState.isSearchingResults && uiState.movieList.isEmpty()
+                        ShowSearchProgress(isLoadingData)
+                        // Main content for this screen
+                        MovieSearchUI(
+                            movieList = uiState.movieList,
+                            selectedMovie = selectedIdSearchType,
+                            closeKeyboard = closeKeyboard
+                        )
+                    }
+                }
             }
         }
     }

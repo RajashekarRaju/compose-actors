@@ -16,11 +16,12 @@ import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackb
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
+import com.developersbreach.composeactors.ui.screens.search.SearchType
 
 /**
  * @param selectedActor navigates to user clicked actor from row.
  * @param navigateToSearch navigates user to search screen.
- * @param viewModel to manage ui state of [HomeScreen]
+ * @param homeViewModel to manage ui state of [HomeScreen]
  *
  * Default destination.
  * Shows category list of actors in row.
@@ -31,9 +32,9 @@ import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomShee
 @Composable
 fun HomeScreen(
     selectedActor: (Int) -> Unit,
-    navigateToSearch: () -> Unit,
+    navigateToSearch: (SearchType) -> Unit,
     selectedMovie: (Int) -> Unit,
-    viewModel: HomeViewModel
+    homeViewModel: HomeViewModel
 ) {
     // Remember state of scaffold to manage snackbar
     val scaffoldState = rememberScaffoldState()
@@ -43,7 +44,8 @@ fun HomeScreen(
         modalSheetState = modalSheetState
     )
 
-    val favoriteMovies by viewModel.favoriteMovies.observeAsState(emptyList())
+    val favoriteMovies by homeViewModel.favoriteMovies.observeAsState(emptyList())
+    val navigateToSearchBySearchType by homeViewModel.updateHomeSearchType.observeAsState(SearchType.Actors)
 
     Surface(
         color = MaterialTheme.colors.background,
@@ -55,7 +57,7 @@ fun HomeScreen(
             sheetBackgroundColor = MaterialTheme.colors.background,
             sheetContent = {
                 SheetContentMovieDetails(
-                    movie = viewModel.sheetUiState.selectedMovieDetails,
+                    movie = homeViewModel.sheetUiState.selectedMovieDetails,
                     selectedMovie = selectedMovie
                 )
             },
@@ -64,7 +66,12 @@ fun HomeScreen(
                 // attach snackbar host state to the scaffold
                 scaffoldState = scaffoldState,
                 // Custom AppBar contains fake search bar.
-                topBar = { HomeTopAppBar(navigateToSearch) },
+                topBar = {
+                    HomeTopAppBar(
+                        navigateToSearch = navigateToSearch,
+                        searchType = navigateToSearchBySearchType
+                    )
+                },
                 // Host for custom snackbar
                 snackbarHost = { HomeSnackbar(it) }
             ) { paddingValues ->
@@ -75,11 +82,14 @@ fun HomeScreen(
                     HomeScreenUI(
                         selectedActor = selectedActor,
                         openHomeBottomSheet = openHomeBottomSheet,
-                        homeUIState = viewModel.uiState,
-                        homeSheetUIState = viewModel.sheetUiState,
+                        homeUIState = homeViewModel.uiState,
+                        homeSheetUIState = homeViewModel.sheetUiState,
                         favoriteMovies = favoriteMovies,
                         selectedMovie = { movieId ->
-                            viewModel.getSelectedMovieDetails(movieId)
+                            homeViewModel.getSelectedMovieDetails(movieId)
+                        },
+                        updateSearchType = { searchType: SearchType ->
+                            homeViewModel.updateHomeSearchType(searchType)
                         }
                     )
 

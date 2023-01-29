@@ -6,9 +6,18 @@ import android.speech.RecognizerIntent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Clear
@@ -142,7 +151,13 @@ fun SearchAppBar(
                     }
                 }
             },
-            placeholder = { Text(text = stringResource(R.string.hint_search_query)) },
+            placeholder = {
+                val searchHint = when (viewModel.searchType) {
+                    SearchType.Actors -> R.string.hint_search_query_actors
+                    SearchType.Movies -> R.string.hint_search_query_movies
+                }
+                Text(text = stringResource(searchHint))
+            },
             textStyle = MaterialTheme.typography.subtitle1,
             singleLine = true,
             keyboardOptions = KeyboardOptions(
