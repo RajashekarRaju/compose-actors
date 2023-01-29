@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
+import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.ShowSearchProgress
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 
@@ -36,12 +38,22 @@ fun SearchScreen(
         keyboardController?.hide()
     }
 
+    val searchHint = when (viewModel.searchType) {
+        SearchType.Actors -> stringResource(R.string.hint_search_query_actors)
+        SearchType.Movies -> stringResource(R.string.hint_search_query_movies)
+    }
+
     Surface(
         color = MaterialTheme.colors.background
     ) {
         Scaffold(
             topBar = {
-                SearchAppBar(navigateUp, viewModel, closeKeyboard)
+                SearchAppBar(
+                    navigateUp = navigateUp,
+                    onQueryChange = { viewModel.performQuery(it) },
+                    searchHint = searchHint,
+                    closeKeyboard = closeKeyboard
+                )
             }
         ) { paddingValues ->
             Box(

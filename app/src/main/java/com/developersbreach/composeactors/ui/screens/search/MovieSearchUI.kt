@@ -51,12 +51,12 @@ private fun ItemSearchMovie(
         color = MaterialTheme.colors.onBackground,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 12.dp)
-            .wrapContentWidth(Alignment.Start)
             .clickable {
                 closeKeyboard()
                 selectedMovie(movie.movieId)
             }
+            .padding(horizontal = 20.dp, vertical = 12.dp)
+            .wrapContentWidth(Alignment.Start)
     )
 }
 
