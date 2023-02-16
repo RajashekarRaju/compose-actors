@@ -10,12 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
+import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.ShowSearchProgress
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 
 
 /**
- * @param selectedActor navigates to user clicked actor from row.
+ * @param selectedIdSearchType navigates to user clicked actor from row.
  * @param viewModel to manage ui state of [SearchScreen]
  * @param navigateUp navigates user to previous screen.
  *
@@ -26,7 +28,7 @@ import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchScreen(
-    selectedActor: (Int) -> Unit,
+    selectedIdSearchType: (Int) -> Unit,
     viewModel: SearchViewModel,
     navigateUp: () -> Unit
 ) {
@@ -36,22 +38,51 @@ fun SearchScreen(
         keyboardController?.hide()
     }
 
+    val searchHint = when (viewModel.searchType) {
+        SearchType.Actors -> stringResource(R.string.hint_search_query_actors)
+        SearchType.Movies -> stringResource(R.string.hint_search_query_movies)
+    }
+
     Surface(
         color = MaterialTheme.colors.background
     ) {
         Scaffold(
             topBar = {
-                SearchAppBar(navigateUp, viewModel, closeKeyboard)
+                SearchAppBar(
+                    navigateUp = navigateUp,
+                    onQueryChange = { viewModel.performQuery(it) },
+                    searchHint = searchHint,
+                    closeKeyboard = closeKeyboard
+                )
             }
         ) { paddingValues ->
             Box(
                 modifier = Modifier.padding(paddingValues)
             ) {
-                // Show progress while search is happening
-                val isLoadingData = !uiState.isSearchingResults && uiState.actorList.isEmpty()
-                ShowSearchProgress(isLoadingData)
-                // Main content for this screen
-                SearchUI(uiState.actorList, selectedActor, closeKeyboard)
+                when (uiState) {
+                    is SearchUIState.ActorSearch -> {
+                        // Show progress while search is happening
+                        val isLoadingData = !uiState.isSearchingResults && uiState.actorList.isEmpty()
+                        ShowSearchProgress(isLoadingData)
+                        // Main content for this screen
+                        ActorSearchUI(
+                            actorsList = uiState.actorList,
+                            selectedActor = selectedIdSearchType,
+                            closeKeyboard = closeKeyboard
+                        )
+                    }
+                    is SearchUIState.MovieSearch -> {
+                        // Show progress while search is happening
+                        val isLoadingData = !uiState.isSearchingResults && uiState.movieList.isEmpty()
+                        ShowSearchProgress(isLoadingData)
+                        // Main content for this screen
+                        MovieSearchUI(
+                            movieList = uiState.movieList,
+                            selectedMovie = selectedIdSearchType,
+                            closeKeyboard = closeKeyboard
+                        )
+                    }
+                }
             }
         }
     }

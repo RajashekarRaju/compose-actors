@@ -6,9 +6,18 @@ import android.speech.RecognizerIntent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Clear
@@ -23,12 +32,14 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.KeyboardState
 import com.developersbreach.composeactors.ui.components.closeKeyboardAndNavigateUp
 import com.developersbreach.composeactors.ui.components.getCurrentKeyboardState
+import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
 /**
  * @param navigateUp Navigates to previous screen.
@@ -46,7 +57,8 @@ import com.developersbreach.composeactors.ui.components.getCurrentKeyboardState
 @Composable
 fun SearchAppBar(
     navigateUp: () -> Unit,
-    viewModel: SearchViewModel,
+    onQueryChange: (searchQuery: String) -> Unit,
+    searchHint: String,
     closeKeyboard: () -> Unit?
 ) {
     // Immediately update and keep track of query from text field changes.
@@ -75,7 +87,7 @@ fun SearchAppBar(
         if (!recordedSpeech.isNullOrEmpty()) {
             query = recordedSpeech[0]
             // Perform query with the recorded query string.
-            viewModel.performQuery(query)
+            onQueryChange(query)
         }
     }
 
@@ -86,13 +98,13 @@ fun SearchAppBar(
 
         TextField(
             value = query,
-            onValueChange = { onQueryChanged ->
+            onValueChange = { newQuery ->
                 // If user makes changes to text, immediately updated it.
-                query = onQueryChanged
+                query = newQuery
                 // To avoid crash, only query when string isn't empty.
-                if (onQueryChanged.isNotEmpty()) {
+                if (newQuery.isNotEmpty()) {
                     // Pass latest query to refresh search results.
-                    viewModel.performQuery(onQueryChanged)
+                    onQueryChange(newQuery)
                 }
             },
             leadingIcon = {
@@ -142,7 +154,7 @@ fun SearchAppBar(
                     }
                 }
             },
-            placeholder = { Text(text = stringResource(R.string.hint_search_query)) },
+            placeholder = { Text(text = searchHint) },
             textStyle = MaterialTheme.typography.subtitle1,
             singleLine = true,
             keyboardOptions = KeyboardOptions(
@@ -170,4 +182,30 @@ private val createLaunchSpeechRecognitionIntent = Intent(
         RecognizerIntent.EXTRA_LANGUAGE_MODEL,
         RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
     )
+}
+
+@Preview
+@Composable
+private fun SearchAppBarLightPreview() {
+    ComposeActorsTheme(darkTheme = true) {
+        SearchAppBar(
+            navigateUp = { },
+            onQueryChange = { },
+            searchHint = stringResource(id = R.string.hint_search_query_actors),
+            closeKeyboard = { }
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun SearchAppBarDarkPreview() {
+    ComposeActorsTheme(darkTheme = false) {
+        SearchAppBar(
+            navigateUp = { },
+            onQueryChange = { },
+            searchHint = stringResource(id = R.string.hint_search_query_movies),
+            closeKeyboard = { }
+        )
+    }
 }

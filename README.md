@@ -2,7 +2,7 @@
 
 ## Roadmap v0.3.0
 
-- [ ] Let users search for movies directly just like searching for actors.
+- [x] Let users search for movies directly just like searching for actors.
 - [x] Hilt will be replaced by removing Koin.
 - [x] Restructure packages and files by introducing new source files.
 - [ ] ~Replace every Spacer composable used in code with various custom AppSpacer.~

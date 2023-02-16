@@ -13,50 +13,48 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.data.model.Actor
+import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
 /**
- * @param actorsList searchable results row list elements of [Actor]
+ * @param movieList searchable results row list elements of [Movie]
  */
 @Composable
-fun SearchUI(
-    actorsList: List<Actor>,
-    selectedActor: (Int) -> Unit,
+fun MovieSearchUI(
+    movieList: List<Movie>,
+    selectedMovie: (Int) -> Unit,
     closeKeyboard: () -> Unit?
 ) {
     LazyColumn(
         // This padding helps avoid content going behind the navigation bars.
         modifier = Modifier.padding(bottom = 48.dp)
     ) {
-        items(actorsList) { actor ->
-            ItemSearchActor(actor, selectedActor, closeKeyboard)
+        items(movieList) { movie ->
+            ItemSearchMovie(movie, selectedMovie, closeKeyboard)
         }
     }
 }
 
 /**
- * @param selectedActor navigate to actor [ActorDetailsScreen] from user selected actor.
+ * @param selectedMovie navigate to actor [ActorDetailsScreen] from user selected movie.
  */
 @Composable
-private fun ItemSearchActor(
-    actor: Actor,
-    selectedActor: (Int) -> Unit,
+private fun ItemSearchMovie(
+    movie: Movie,
+    selectedMovie: (Int) -> Unit,
     closeKeyboard: () -> Unit?
 ) {
     Text(
-        text = actor.actorName,
+        text = movie.movieName,
         style = MaterialTheme.typography.h6,
         color = MaterialTheme.colors.onBackground,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(
-                onClick = {
-                    closeKeyboard()
-                    selectedActor(actor.actorId)
-                }
-            )
+            .clickable {
+                closeKeyboard()
+                selectedMovie(movie.movieId)
+            }
             .padding(horizontal = 20.dp, vertical = 12.dp)
             .wrapContentWidth(Alignment.Start)
     )
@@ -64,11 +62,11 @@ private fun ItemSearchActor(
 
 @Preview
 @Composable
-private fun SearchUIPreview() {
+private fun MovieSearchUIPreview() {
     ComposeActorsTheme {
-        SearchUI(
-            actorsList = listOf(),
-            selectedActor = {},
+        MovieSearchUI(
+            movieList = listOf(),
+            selectedMovie = {},
             closeKeyboard = {}
         )
     }
