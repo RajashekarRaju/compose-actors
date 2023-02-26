@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.home
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
 import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackbar
+import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
@@ -39,7 +41,11 @@ fun HomeScreen(
     // Remember state of scaffold to manage snackbar
     val scaffoldState = rememberScaffoldState()
 
-    val modalSheetState = modalBottomSheetState()
+    val modalSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        animationSpec = tween(durationMillis = 500),
+        skipHalfExpanded = true
+    )
     val openHomeBottomSheet = manageModalBottomSheet(
         modalSheetState = modalSheetState
     )
@@ -56,9 +62,8 @@ fun HomeScreen(
             sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             sheetBackgroundColor = MaterialTheme.colors.background,
             sheetContent = {
-                SheetContentMovieDetails(
-                    movie = homeViewModel.sheetUiState.selectedMovieDetails,
-                    selectedMovie = selectedMovie
+                OptionsModalSheetContent(
+                  modalSheetState
                 )
             },
         ) {
@@ -72,6 +77,7 @@ fun HomeScreen(
                         searchType = navigateToSearchBySearchType
                     )
                 },
+                bottomBar = { HomeBottomBar(modalSheetSheet = modalSheetState) },
                 // Host for custom snackbar
                 snackbarHost = { HomeSnackbar(it) }
             ) { paddingValues ->
