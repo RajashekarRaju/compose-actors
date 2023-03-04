@@ -15,9 +15,7 @@ import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackba
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
 import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackbar
 import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
-import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
-import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 
 /**
@@ -63,7 +61,7 @@ fun HomeScreen(
             sheetBackgroundColor = MaterialTheme.colors.background,
             sheetContent = {
                 OptionsModalSheetContent(
-                  modalSheetState
+                    modalSheetSheet = modalSheetState
                 )
             },
         ) {
@@ -77,7 +75,11 @@ fun HomeScreen(
                         searchType = navigateToSearchBySearchType
                     )
                 },
-                bottomBar = { HomeBottomBar(modalSheetSheet = modalSheetState) },
+                bottomBar = {
+                    HomeBottomBar(
+                        modalSheetSheet = modalSheetState
+                    )
+                },
                 // Host for custom snackbar
                 snackbarHost = { HomeSnackbar(it) }
             ) { paddingValues ->
