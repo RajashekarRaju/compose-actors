@@ -15,6 +15,7 @@ import com.developersbreach.composeactors.ui.screens.home.composables.HomeTabsCo
 import com.developersbreach.composeactors.ui.screens.home.tabs.ActorsTabContent
 import com.developersbreach.composeactors.ui.screens.home.tabs.FavoritesTabContent
 import com.developersbreach.composeactors.ui.screens.home.tabs.MoviesTabContent
+import com.developersbreach.composeactors.ui.screens.search.SearchType
 import kotlinx.coroutines.Job
 
 
@@ -27,6 +28,7 @@ fun HomeScreenContent(
     homeUIState: HomeUIState,
     homeSheetUIState: HomeSheetUIState,
     favoriteMovies: List<Movie>,
+    updateSearchType: (SearchType) -> Unit
 ) {
     val tabPage = rememberSaveable { mutableStateOf(0) }
 
@@ -42,21 +44,30 @@ fun HomeScreenContent(
                 .fillMaxWidth()
         ) {
             when (tabPage.value) {
-                0 -> ActorsTabContent(
-                    homeUIState = homeUIState,
-                    getSelectedActorDetails = selectedActor
-                )
-                1 -> MoviesTabContent(
-                    homeUIState = homeUIState,
-                    getSelectedMovieDetails = selectedMovie,
-                    openHomeBottomSheet = openHomeBottomSheet
-                )
-                2 -> FavoritesTabContent(
-                    homeUIState = homeUIState,
-                    getSelectedMovieDetails = selectedMovie,
-                    openHomeBottomSheet = openHomeBottomSheet,
-                    favoriteMovies = favoriteMovies
-                )
+                0 -> {
+                    updateSearchType(SearchType.Actors)
+                    ActorsTabContent(
+                        homeUIState = homeUIState,
+                        getSelectedActorDetails = selectedActor
+                    )
+                }
+                1 -> {
+                    updateSearchType(SearchType.Movies)
+                    MoviesTabContent(
+                        homeUIState = homeUIState,
+                        getSelectedMovieDetails = selectedMovie,
+                        openHomeBottomSheet = openHomeBottomSheet
+                    )
+                }
+                2 -> {
+                    updateSearchType(SearchType.Movies)
+                    FavoritesTabContent(
+                        homeUIState = homeUIState,
+                        getSelectedMovieDetails = selectedMovie,
+                        openHomeBottomSheet = openHomeBottomSheet,
+                        favoriteMovies = favoriteMovies
+                    )
+                }
             }
         }
 

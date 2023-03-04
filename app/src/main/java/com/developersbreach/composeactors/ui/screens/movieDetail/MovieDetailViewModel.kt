@@ -63,6 +63,7 @@ class MovieDetailViewModel @Inject constructor(
                 movieRepository.addMovieToFavorites(
                     Movie(
                         movieId = movie.movieId,
+                        movieName = movie.movieTitle,
                         posterPathUrl = movie.poster
                     )
                 )
@@ -77,6 +78,7 @@ class MovieDetailViewModel @Inject constructor(
                 movieRepository.deleteSelectedFavoriteMovie(
                     Movie(
                         movieId = movie.movieId,
+                        movieName = movie.movieTitle,
                         posterPathUrl = movie.poster
                     )
                 )

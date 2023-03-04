@@ -13,6 +13,9 @@ data class FavoriteMoviesEntity(
     @ColumnInfo(name = "column_movie_id")
     val movieId: Int,
 
+    @ColumnInfo(name = "column_movie_name")
+    val movieName: String,
+
     @ColumnInfo(name = "column_movie_posterUrl")
     val moviePosterUrl: String
 )
