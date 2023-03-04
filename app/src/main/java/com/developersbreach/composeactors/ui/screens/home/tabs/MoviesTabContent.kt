@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -27,6 +26,7 @@ import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
+import com.developersbreach.composeactors.ui.components.itemsPaging
 import com.developersbreach.composeactors.ui.screens.home.HomeUIState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.Job
@@ -122,21 +122,23 @@ private fun UpcomingMovies(
     }
 }
 
-fun LazyGridScope.nowPlayingMovies(
+private fun LazyGridScope.nowPlayingMovies(
     listItems: LazyPagingItems<Movie>,
     getSelectedMovieDetails: (Int) -> Unit,
     openHomeBottomSheet: () -> Job
 ) {
-    items(listItems.itemSnapshotList.items) {
+    itemsPaging(listItems) { movie ->
         LoadNetworkImage(
-            imageUrl = it.posterPathUrl,
+            imageUrl = movie?.posterPathUrl,
             contentDescription = stringResource(R.string.cd_movie_poster),
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier
                 .size(120.dp, 180.dp)
                 .clickable {
-                    getSelectedMovieDetails(it.movieId)
-                    openHomeBottomSheet()
+                    if (movie != null) {
+                        getSelectedMovieDetails(movie.movieId)
+                        openHomeBottomSheet()
+                    }
                 }
         )
     }
