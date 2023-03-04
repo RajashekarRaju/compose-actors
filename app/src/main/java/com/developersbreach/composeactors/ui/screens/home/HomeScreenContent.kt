@@ -6,12 +6,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.screens.home.composables.HomeTabsContainer
 import com.developersbreach.composeactors.ui.screens.home.tabs.ActorsTabContent
@@ -39,8 +37,6 @@ fun HomeScreenContent(
     ) {
 
         HomeTabsContainer(tabPage)
-
-        Spacer(modifier = Modifier.padding(vertical = 8.dp))
 
         Box(
             modifier = Modifier

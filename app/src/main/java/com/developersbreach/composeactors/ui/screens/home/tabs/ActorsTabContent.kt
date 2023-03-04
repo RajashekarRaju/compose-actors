@@ -28,6 +28,7 @@ import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeUIState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import kotlinx.coroutines.flow.emptyFlow
 
 
 @Composable
@@ -142,7 +143,7 @@ private fun ActorsTabContentPreview() {
                 trendingActorList = listOf(),
                 isFetchingActors = false,
                 upcomingMoviesList = listOf(),
-                nowPlayingMoviesList = listOf()
+                nowPlayingMoviesList = emptyFlow()
             ),
             getSelectedActorDetails = {}
         )
