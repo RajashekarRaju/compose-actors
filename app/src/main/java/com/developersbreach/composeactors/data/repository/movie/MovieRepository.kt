@@ -1,6 +1,7 @@
 package com.developersbreach.composeactors.data.repository.movie
 
 import androidx.lifecycle.LiveData
+import com.developersbreach.composeactors.data.PagedResponse
 import com.developersbreach.composeactors.data.model.Cast
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.MovieDetail
@@ -14,6 +15,10 @@ class MovieRepository @Inject constructor(
     private val networkDataSource: NetworkDataSource,
     private val databaseDataSource: DatabaseDataSource
 ) {
+
+    suspend fun getNowPlayingMoviesData(page: Int): PagedResponse<Movie> {
+        return networkDataSource.getNowPlayingMoviesData(page)
+    }
 
     suspend fun getSelectedMovieData(movieId: Int): MovieDetail {
         return networkDataSource.getSelectedMovieData(movieId)

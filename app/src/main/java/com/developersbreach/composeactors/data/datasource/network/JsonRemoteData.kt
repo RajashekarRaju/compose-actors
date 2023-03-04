@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.data.datasource.network
 
+import com.developersbreach.composeactors.data.PagedResponse
 import com.developersbreach.composeactors.data.model.*
 import org.json.JSONObject
 import javax.inject.Inject
@@ -208,20 +209,27 @@ class JsonRemoteData @Inject constructor(
     @Throws(Exception::class)
     fun fetchNowPlayingMoviesJsonData(
         response: String
-    ): List<Movie> {
+    ): PagedResponse<Movie> {
 
         val movieList: MutableList<Movie> = ArrayList()
         val baseJsonArray = JSONObject(response)
         val moviesJsonArray = baseJsonArray.getJSONArray("results")
+        val totalResults = baseJsonArray.getInt("total_results")
+        val page = baseJsonArray.getInt("page")
 
         for (notI: Int in 0 until moviesJsonArray.length()) {
             val jsonObject = moviesJsonArray.getJSONObject(notI)
             val movieId = jsonObject.getInt("id")
             val posterPathUrl = jsonObject.getString("poster_path")
-            val posterPath = "${LOW_RES_IMAGE}$posterPathUrl"
+            val posterPath = "${HIGH_RES_IMAGE}$posterPathUrl"
             movieList.add(Movie(movieId, posterPath))
         }
-        return movieList
+
+        return PagedResponse(
+            data = movieList,
+            total = totalResults,
+            page = page
+        )
     }
 
     companion object {
