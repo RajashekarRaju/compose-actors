@@ -10,12 +10,13 @@ import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.repository.actor.ActorRepository
 import com.developersbreach.composeactors.data.repository.movie.MovieRepository
+import com.developersbreach.composeactors.domain.GetPagedMovies
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * To manage ui state and data for screen HomeScreen.
@@ -23,7 +24,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
-    private val actorRepository: ActorRepository
+    private val actorRepository: ActorRepository,
+    private val getPagedMovies: GetPagedMovies
 ) : ViewModel() {
 
     var uiState by mutableStateOf(HomeUIState())
@@ -54,7 +56,7 @@ class HomeViewModel @Inject constructor(
             trendingActorList = actorRepository.getTrendingActorsData(),
             isFetchingActors = false,
             upcomingMoviesList = actorRepository.getUpcomingMoviesData(),
-            nowPlayingMoviesList = actorRepository.getNowPlayingMoviesData()
+            nowPlayingMoviesList = getPagedMovies(viewModelScope)
         )
     }
 

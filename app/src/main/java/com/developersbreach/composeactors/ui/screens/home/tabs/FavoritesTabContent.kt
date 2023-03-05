@@ -22,6 +22,7 @@ import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.home.HomeUIState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.emptyFlow
 
 
 /**
@@ -44,7 +45,7 @@ fun FavoritesTabContent(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(vertical = 2.dp, horizontal = 16.dp)
+        contentPadding = PaddingValues(16.dp)
     ) {
         items(
             items = favoriteMovies,
@@ -101,7 +102,7 @@ private fun FavoritesTabContentPreview() {
                 trendingActorList = listOf(),
                 isFetchingActors = false,
                 upcomingMoviesList = listOf(),
-                nowPlayingMoviesList = listOf()
+                nowPlayingMoviesList = emptyFlow()
             ),
             getSelectedMovieDetails = {},
             openHomeBottomSheet = { Job() },
