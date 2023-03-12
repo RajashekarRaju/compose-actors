@@ -43,30 +43,27 @@ jobs:
           key: avd-cache-${{ runner.os }}-${{ hashFiles('**/*.avd') }}
           restore-keys: avd-cache-${{ runner.os }}-
 
-      - name: Create AVD and generate snapshot for caching
-        if: steps.avd-cache.outputs.cache-hit != 'true'
+      - name: Create AVD and generate snapshot for caching and Run androidTest
         uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          emulator-build: 7425822
-          force-avd-creation: false
-          emulator-options: -wipe-data -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: echo "Generated AVD snapshot for caching."
-
-      - name: Run Android Test
-        uses: reactivecircus/android-emulator-runner@v2
+        continue-on-error: true
         env:
-          ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 60
+          ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 500
         with:
           api-level: 29
           emulator-build: 7425822
-          force-avd-creation: false
+          force-avd-creation: true
           emulator-options: -wipe-data -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: ./gradlew connectedCheck
+          disable-animations: false
+          script: |
+            echo "Generated AVD snapshot for caching."
+            ./gradlew connectedCheck
 
-      - name: Android Test Report
-        uses: asadmansr/android-test-report-action@v1.2.0
-        if: ${{ always() }}
+      - name: Upload Failing Test Report Log
+        if: steps.testing.outcome != 'success'
+        uses: actions/upload-artifact@v2
+        with:
+          name: logs
+          path: app/emulator.log
 
       - name: Upload build outputs (APKs)
         uses: actions/upload-artifact@v3
