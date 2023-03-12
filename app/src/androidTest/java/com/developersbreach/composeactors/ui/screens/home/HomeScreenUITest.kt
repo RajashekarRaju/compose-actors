@@ -58,7 +58,7 @@ class HomeScreenUITest {
             .performClick()
 
         composeTestRule
-            .onNodeWithText(text = "Favorite")
+            .onNodeWithText(text = "Favorites")
             .assertIsDisplayed()
             .performClick()
     }

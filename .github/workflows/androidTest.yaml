@@ -1,7 +1,7 @@
-name: check
+name: androidTest
 on:
   pull_request:
-    branches: [ master, v0.3.0 ]
+    branches: [ '*' ]
   push:
     branches: [ master, v0.3.0 ]
 
@@ -23,17 +23,25 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: gradle-cache-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: gradle-cache-${{ runner.os }}-
+
       - name: Run local tests
         run: ./gradlew testDebug --stacktrace
 
-      - name: AVD cache
+      - name: Cache AVD
         uses: actions/cache@v3
         id: avd-cache
         with:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-29
+          key: avd-cache-${{ runner.os }}-${{ hashFiles('**/*.avd') }}
+          restore-keys: avd-cache-${{ runner.os }}-
 
       - name: Create AVD and generate snapshot for caching
         if: steps.avd-cache.outputs.cache-hit != 'true'
@@ -45,7 +53,7 @@ jobs:
           emulator-options: -wipe-data -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: echo "Generated AVD snapshot for caching."
 
-      - name: Run androidTest
+      - name: Run Android Test
         uses: reactivecircus/android-emulator-runner@v2
         env:
           ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 60
