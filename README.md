@@ -12,6 +12,8 @@
 - [ ] Add feature for adding actors to favorites like movies.
 - [ ] Add bottom sheet to home screen to support navigation for various screens.
 - [x] Implement paging to upcoming lazy list movies in home tab.
+- [x] Setup project dependencies, resources for initial testing, write simple test. 
+- [ ] Write tests for app navigation for all composable destinations.
 
 ## Roadmap v0.4.0
 ### Rename app from Compose actors -> Compose Entertainer.
