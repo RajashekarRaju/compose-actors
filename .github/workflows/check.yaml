@@ -54,7 +54,7 @@ jobs:
           emulator-build: 7425822
           force-avd-creation: false
           emulator-options: -wipe-data -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: ./gradlew connectedDevDebugAndroidTest
+          script: ./gradlew connectedCheck
 
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
