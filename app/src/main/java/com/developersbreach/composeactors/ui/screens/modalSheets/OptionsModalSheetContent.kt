@@ -2,6 +2,7 @@ package com.developersbreach.composeactors.ui.screens.modalSheets
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -38,10 +39,12 @@ import kotlinx.coroutines.launch
 @Composable
 fun OptionsModalSheetContent(
     modalSheetSheet: ModalBottomSheetState,
-    coroutineScope: CoroutineScope = rememberCoroutineScope()
-) {
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    navigateToFavorite:() -> Unit,
+    ) {
     Column(
         modifier = Modifier
+            .background(MaterialTheme.colors.surface)
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(horizontal = 24.dp, vertical = 16.dp)
@@ -93,29 +96,26 @@ fun OptionsModalSheetContent(
             verticalArrangement = Arrangement.spacedBy(2.dp),
             contentPadding = PaddingValues(start = 4.dp)
         ) {
-            items(4) {
-                ItemOptionRow()
+            items(4) { index->
+                ItemOptionRow(index, navigateToFavorite)
             }
         }
     }
 }
 
 @Composable
-private fun ItemOptionRow(
-) {
+private fun ItemOptionRow(index: Int, navigateToFavorite: () -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .padding(vertical = 8.dp)
             .fillMaxWidth()
             .clickable {
-//                when (item.optionsId) {
-//                    1 -> appActions.optionsToFavorites()
-//                    2 -> appActions.optionsToSearch()
-//                    3 -> appActions.optionsToAuthors()
-//                    4 -> appActions.optionsToSettings()
-//                    5 -> appActions.optionsToIntro()
-//                }
+                when (index) {
+                    0 -> {
+                        navigateToFavorite()
+                    }
+                }
             }
     ) {
         Icon(
@@ -127,7 +127,7 @@ private fun ItemOptionRow(
         Spacer(modifier = Modifier.width(24.dp))
 
         Text(
-            text = "Title",
+            text = "Title + $index",
             color = MaterialTheme.colors.onBackground.copy(alpha = 0.75f),
             style = MaterialTheme.typography.h5,
         )

@@ -66,7 +66,6 @@ fun HomeScreenContent(
                 2 -> {
                     updateSearchType(SearchType.Movies)
                     FavoritesTabContent(
-                        homeUIState = homeUIState,
                         getSelectedMovieDetails = selectedMovie,
                         openHomeBottomSheet = openHomeBottomSheet,
                         favoriteMovies = favoriteMovies

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Compose Actors</string>
 
+    <string name="txt_more">More</string>
     <string name="cd_search_icon">Search Icon</string>
     <string name="cd_actor_image">Actor image</string>
     <string name="cd_cast_icon">Icon for cast</string>

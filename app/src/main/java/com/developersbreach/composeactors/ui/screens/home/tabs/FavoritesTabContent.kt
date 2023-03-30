@@ -30,7 +30,6 @@ import kotlinx.coroutines.Job
  */
 @Composable
 fun FavoritesTabContent(
-    homeUIState: HomeUIState,
     getSelectedMovieDetails: (Int) -> Unit,
     openHomeBottomSheet: () -> Job,
     favoriteMovies: List<Movie>
@@ -96,13 +95,6 @@ private fun ShowNoFavoritesFound() {
 private fun FavoritesTabContentPreview() {
     ComposeActorsTheme {
         FavoritesTabContent(
-            homeUIState = HomeUIState(
-                popularActorList = listOf(),
-                trendingActorList = listOf(),
-                isFetchingActors = false,
-                upcomingMoviesList = listOf(),
-                nowPlayingMoviesList = listOf()
-            ),
             getSelectedMovieDetails = {},
             openHomeBottomSheet = { Job() },
             favoriteMovies = listOf()

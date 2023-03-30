@@ -7,6 +7,8 @@ object AppDestinations {
     // Default destination
     const val HOME_ROUTE = "home"
 
+    const val FAVORITES_ROUTE = "favorites"
+
     // destination for searching actors
     const val SEARCH_ROUTE = "search"
     // search based on type

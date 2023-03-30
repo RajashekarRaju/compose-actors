@@ -10,6 +10,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsViewModel
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
+import com.developersbreach.composeactors.ui.screens.favorites.FavoriteViewModel
+import com.developersbreach.composeactors.ui.screens.favorites.FavoritesScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeViewModel
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailScreen
@@ -50,11 +52,22 @@ fun AppNavigation(
             AppDestinations.HOME_ROUTE
         ) {
             val homeViewModel = hiltViewModel<HomeViewModel>()
-            HomeScreen(
+            HomeScreen (
                 selectedActor = actions.selectedActor,
                 navigateToSearch = actions.navigateToSearch,
+                navigateToFavorite = actions.navigateToFavorite,
                 selectedMovie = actions.selectedMovie,
                 homeViewModel = homeViewModel
+            )
+        }
+
+        composable(
+            route = AppDestinations.FAVORITES_ROUTE,
+                  ) {
+            val favoriteViewModel = hiltViewModel<FavoriteViewModel>()
+            FavoritesScreen (
+                selectedMovie = actions.selectedMovie,
+                favoriteViewModel = favoriteViewModel
             )
         }
 

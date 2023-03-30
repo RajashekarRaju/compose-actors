@@ -37,7 +37,7 @@ fun HomeBottomBar(
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
     BottomAppBar(
-        backgroundColor = Color.Black,
+        backgroundColor = Color.White,
         elevation = 0.dp,
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
@@ -86,7 +86,7 @@ fun HomeBottomBar(
             }
 
             Text(
-                text = stringResource(id = R.string.app_name),
+                text = stringResource(id = R.string.txt_more),
                 color = MaterialTheme.colors.onBackground,
                 style = MaterialTheme.typography.h5,
                 modifier = Modifier

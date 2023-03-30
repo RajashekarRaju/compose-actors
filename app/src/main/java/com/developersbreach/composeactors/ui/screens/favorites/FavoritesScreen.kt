@@ -1,10 +1,17 @@
-package com.developersbreach.composeactors.ui.screens.home
+package com.developersbreach.composeactors.ui.screens.favorites
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -13,32 +20,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
-import com.developersbreach.composeactors.ui.screens.favorites.FavoriteViewModel
+import com.developersbreach.composeactors.ui.screens.home.HomeBottomBar
 import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackbar
+import com.developersbreach.composeactors.ui.screens.home.tabs.FavoritesTabContent
 import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
-import com.developersbreach.composeactors.ui.screens.search.SearchType
 
-/**
- * @param selectedActor navigates to user clicked actor from row.
- * @param navigateToSearch navigates user to search screen.
- * @param homeViewModel to manage ui state of [HomeScreen]
- *
- * Default destination.
- * Shows category list of actors in row.
- * Shows [HomeTopAppBar] search box looking ui in [TopAppBar]
- * If user is offline shows snackbar message.
- */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun HomeScreen(
-    selectedActor: (Int) -> Unit,
-    navigateToSearch: (SearchType) -> Unit,
-    navigateToFavorite:() -> Unit,
+fun FavoritesScreen(
     selectedMovie: (Int) -> Unit,
-    homeViewModel: HomeViewModel
-) {
-    // Remember state of scaffold to manage snackbar
+    favoriteViewModel: FavoriteViewModel) {
+
+    val favoriteMovies by favoriteViewModel.favoriteMovies.observeAsState(emptyList())
+
     val scaffoldState = rememberScaffoldState()
 
     val modalSheetState = rememberModalBottomSheetState(
@@ -50,9 +45,6 @@ fun HomeScreen(
         modalSheetState = modalSheetState
     )
 
-    val favoriteMovies by homeViewModel.favoriteMovies.observeAsState(emptyList())
-    val navigateToSearchBySearchType by homeViewModel.updateHomeSearchType.observeAsState(SearchType.Actors)
-
     Surface(
         color = MaterialTheme.colors.background,
     ) {
@@ -62,22 +54,13 @@ fun HomeScreen(
             sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             sheetBackgroundColor = MaterialTheme.colors.background,
             sheetContent = {
-                OptionsModalSheetContent(
-                    modalSheetState,
-                    navigateToFavorite = navigateToFavorite
-                )
+
             },
         ) {
             Scaffold(
                 // attach snackbar host state to the scaffold
                 scaffoldState = scaffoldState,
                 // Custom AppBar contains fake search bar.
-                topBar = {
-                    HomeTopAppBar(
-                        navigateToSearch = navigateToSearch,
-                        searchType = navigateToSearchBySearchType
-                    )
-                },
                 bottomBar = { HomeBottomBar(modalSheetSheet = modalSheetState) },
                 // Host for custom snackbar
                 snackbarHost = { HomeSnackbar(it) }
@@ -86,18 +69,12 @@ fun HomeScreen(
                     modifier = Modifier.padding(paddingValues = paddingValues)
                 ) {
                     // Main content for this screen
-                    HomeScreenUI(
-                        selectedActor = selectedActor,
-                        openHomeBottomSheet = openHomeBottomSheet,
-                        homeUIState = homeViewModel.uiState,
-                        homeSheetUIState = homeViewModel.sheetUiState,
-                        favoriteMovies = favoriteMovies,
-                        selectedMovie = { movieId ->
-                            homeViewModel.getSelectedMovieDetails(movieId)
+                    FavoritesTabContent (
+                        getSelectedMovieDetails = { movieId ->
+                            favoriteViewModel.getSelectedMovieDetails(movieId)
                         },
-                        updateSearchType = { searchType: SearchType ->
-                            homeViewModel.updateHomeSearchType(searchType)
-                        }
+                        openHomeBottomSheet = openHomeBottomSheet,
+                        favoriteMovies = favoriteMovies
                     )
 
                     // Perform network check and show snackbar if offline
@@ -110,3 +87,4 @@ fun HomeScreen(
         }
     }
 }
+
