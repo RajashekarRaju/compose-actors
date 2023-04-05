@@ -8,14 +8,22 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.data.model.BottomSheetType
+import com.developersbreach.composeactors.data.model.MenuItem
+import com.developersbreach.composeactors.data.model.MovieDetail
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
-import com.developersbreach.composeactors.ui.screens.favorites.FavoriteViewModel
 import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackbar
 import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
+import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 
@@ -34,12 +42,19 @@ import com.developersbreach.composeactors.ui.screens.search.SearchType
 fun HomeScreen(
     selectedActor: (Int) -> Unit,
     navigateToSearch: (SearchType) -> Unit,
-    navigateToFavorite:() -> Unit,
+    navigateToFavorite: () -> Unit,
     selectedMovie: (Int) -> Unit,
     homeViewModel: HomeViewModel
 ) {
     // Remember state of scaffold to manage snackbar
     val scaffoldState = rememberScaffoldState()
+
+    // Remember state of modal bottom sheet to manage bottom sheet
+    var currentBottomSheet: BottomSheetType? by remember { mutableStateOf(BottomSheetType.MoreMenu) }
+
+    val currentBottomSheetCallback: (BottomSheetType) -> Unit = { bottomSheetType ->
+        currentBottomSheet = bottomSheetType
+    }
 
     val modalSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -62,9 +77,13 @@ fun HomeScreen(
             sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             sheetBackgroundColor = MaterialTheme.colors.background,
             sheetContent = {
-                OptionsModalSheetContent(
+                GetSheetContent(
+                    currentBottomSheet,
+                    homeViewModel.sheetUiState.selectedMovieDetails,
+                    selectedMovie,
                     modalSheetState,
-                    navigateToFavorite = navigateToFavorite
+                    navigateToFavorite,
+                    homeViewModel.getMenuItems()
                 )
             },
         ) {
@@ -78,7 +97,12 @@ fun HomeScreen(
                         searchType = navigateToSearchBySearchType
                     )
                 },
-                bottomBar = { HomeBottomBar(modalSheetSheet = modalSheetState) },
+                bottomBar = {
+                    HomeBottomBar(
+                        modalSheetSheet = modalSheetState,
+                        currentBottomSheetCallback = currentBottomSheetCallback
+                    )
+                },
                 // Host for custom snackbar
                 snackbarHost = { HomeSnackbar(it) }
             ) { paddingValues ->
@@ -88,6 +112,7 @@ fun HomeScreen(
                     // Main content for this screen
                     HomeScreenUI(
                         selectedActor = selectedActor,
+                        currentBottomSheetCallback = currentBottomSheetCallback,
                         openHomeBottomSheet = openHomeBottomSheet,
                         homeUIState = homeViewModel.uiState,
                         homeSheetUIState = homeViewModel.sheetUiState,
@@ -110,3 +135,31 @@ fun HomeScreen(
         }
     }
 }
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun GetSheetContent(
+    currentBottomSheet: BottomSheetType?,
+    selectedMovieDetails: MovieDetail?,
+    selectedMovie: (Int) -> Unit,
+    modalSheetState: ModalBottomSheetState,
+    navigateToFavorite: () -> Unit,
+    menuItems: List<MenuItem>
+) = when (currentBottomSheet) {
+    BottomSheetType.MoreMenu -> {
+        OptionsModalSheetContent(
+            modalSheetState,
+            navigateToFavorite = navigateToFavorite,
+            selectedMovieDetail = selectedMovieDetails,
+            menuItemList = menuItems
+        )
+    }
+    BottomSheetType.MovieDetails -> {
+        SheetContentMovieDetails(
+            movie = selectedMovieDetails,
+            selectedMovie = selectedMovie
+        )
+    }
+    else -> {}
+}
+

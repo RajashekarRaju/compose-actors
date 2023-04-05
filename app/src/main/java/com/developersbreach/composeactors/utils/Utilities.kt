@@ -1,5 +1,7 @@
 package com.developersbreach.composeactors.utils
 
+import com.squareup.moshi.Moshi
+import java.lang.reflect.Type
 import java.util.*
 
 /**
@@ -51,6 +53,13 @@ fun getPlaceOfBirth(
     return cityStateCountry?.let {
         findKnownLocation[it].trim()
     }
+}
+fun toJsonString(value: Any, type: Type): String {
+    return Moshi.Builder().build().adapter<Any>(type).toJson(value)
+}
+
+fun <T> fromJsonString(value: String, type: Type): T? {
+    return Moshi.Builder().build().adapter<T>(type).fromJson(value)
 }
 
 fun getMovieRuntimeFormatted(

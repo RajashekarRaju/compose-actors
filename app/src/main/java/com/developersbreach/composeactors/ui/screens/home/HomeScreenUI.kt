@@ -2,6 +2,7 @@ package com.developersbreach.composeactors.ui.screens.home
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
@@ -11,6 +12,7 @@ import kotlinx.coroutines.Job
 fun HomeScreenUI(
     selectedActor: (Int) -> Unit,
     selectedMovie: (Int) -> Unit,
+    currentBottomSheetCallback: (BottomSheetType) -> Unit,
     openHomeBottomSheet: () -> Job,
     homeUIState: HomeUIState,
     homeSheetUIState: HomeSheetUIState,
@@ -20,6 +22,7 @@ fun HomeScreenUI(
     HomeScreenContent(
         selectedActor = selectedActor,
         selectedMovie = selectedMovie,
+        currentBottomSheetCallback = currentBottomSheetCallback,
         openHomeBottomSheet = openHomeBottomSheet,
         homeUIState = homeUIState,
         homeSheetUIState = homeSheetUIState,
@@ -35,6 +38,7 @@ private fun HomeScreenUIPreview() {
         HomeScreenUI(
             selectedActor = {},
             selectedMovie = {},
+            currentBottomSheetCallback = {},
             openHomeBottomSheet = { Job() },
             homeUIState = HomeUIState(
                 popularActorList = listOf(),

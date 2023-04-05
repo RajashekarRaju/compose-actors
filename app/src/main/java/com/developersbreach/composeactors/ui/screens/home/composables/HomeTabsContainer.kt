@@ -76,5 +76,5 @@ private data class Tabs(
 private val tabs = listOf(
     Tabs("Actors"),
     Tabs("Movies"),
-    Tabs("Favorites")
+    Tabs("MovieDetails")
 )

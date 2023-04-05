@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.home.HomeUIState
@@ -25,6 +26,7 @@ import kotlinx.coroutines.Job
 fun MoviesTabContent(
     homeUIState: HomeUIState,
     getSelectedMovieDetails: (Int) -> Unit,
+    currentBottomSheetCallback: (BottomSheetType) -> Unit,
     openHomeBottomSheet: () -> Job
 ) {
     LazyColumn(
@@ -34,11 +36,11 @@ fun MoviesTabContent(
             Spacer(modifier = Modifier.height(8.dp))
             CategoryTitle(title = "Upcoming", alpha = 0.5f)
             Spacer(modifier = Modifier.height(16.dp))
-            UpcomingMovies(homeUIState, getSelectedMovieDetails, openHomeBottomSheet)
+            UpcomingMovies(homeUIState, getSelectedMovieDetails, openHomeBottomSheet, currentBottomSheetCallback)
             Spacer(modifier = Modifier.height(28.dp))
             CategoryTitle(title = "Now Playing", alpha = 0.5f)
             Spacer(modifier = Modifier.height(8.dp))
-            NowPlayingMovies(homeUIState, getSelectedMovieDetails, openHomeBottomSheet)
+            NowPlayingMovies(homeUIState, getSelectedMovieDetails, openHomeBottomSheet, currentBottomSheetCallback)
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
@@ -48,7 +50,8 @@ fun MoviesTabContent(
 private fun UpcomingMovies(
     homeUIState: HomeUIState,
     getSelectedMovieDetails: (Int) -> Unit,
-    openHomeBottomSheet: () -> Job
+    openHomeBottomSheet: () -> Job,
+    currentBottomSheetCallback: (BottomSheetType) -> Unit
 ) {
     LazyRow(
         contentPadding = PaddingValues(horizontal = 16.dp),
@@ -71,6 +74,7 @@ private fun UpcomingMovies(
                     .clickable {
                         getSelectedMovieDetails(movieItem.movieId)
                         openHomeBottomSheet()
+                        currentBottomSheetCallback(BottomSheetType.MovieDetails)
                     }
             )
         }
@@ -81,7 +85,8 @@ private fun UpcomingMovies(
 private fun NowPlayingMovies(
     homeUIState: HomeUIState,
     getSelectedMovieDetails: (Int) -> Unit,
-    closeHomeBottomSheet: () -> Job
+    closeHomeBottomSheet: () -> Job,
+    currentBottomSheetCallback: (BottomSheetType) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -105,6 +110,7 @@ private fun NowPlayingMovies(
                     .clickable {
                         getSelectedMovieDetails(movieItem.movieId)
                         closeHomeBottomSheet()
+                        currentBottomSheetCallback(BottomSheetType.MovieDetails)
                     }
             )
         }
@@ -124,7 +130,8 @@ private fun MoviesTabContentPreview() {
                 nowPlayingMoviesList = listOf()
             ),
             getSelectedMovieDetails = {},
-            openHomeBottomSheet = { Job() }
+            openHomeBottomSheet = { Job() },
+            currentBottomSheetCallback = {}
         )
     }
 }

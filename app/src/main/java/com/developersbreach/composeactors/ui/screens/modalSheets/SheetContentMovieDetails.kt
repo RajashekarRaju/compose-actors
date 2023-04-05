@@ -44,7 +44,7 @@ import com.developersbreach.composeactors.utils.getMovieRuntimeFormatted
 fun SheetContentMovieDetails(
     movie: MovieDetail?,
     selectedMovie: (Int) -> Unit
-) {
+    ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()

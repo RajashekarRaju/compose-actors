@@ -12,10 +12,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.screens.home.composables.HomeTabsContainer
 import com.developersbreach.composeactors.ui.screens.home.tabs.ActorsTabContent
-import com.developersbreach.composeactors.ui.screens.home.tabs.FavoritesTabContent
+import com.developersbreach.composeactors.ui.screens.home.tabs.FavoritesScreenUI
 import com.developersbreach.composeactors.ui.screens.home.tabs.MoviesTabContent
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import kotlinx.coroutines.Job
@@ -26,6 +27,7 @@ import kotlinx.coroutines.Job
 fun HomeScreenContent(
     selectedActor: (Int) -> Unit,
     selectedMovie: (Int) -> Unit,
+    currentBottomSheetCallback: (BottomSheetType) -> Unit,
     openHomeBottomSheet: () -> Job,
     homeUIState: HomeUIState,
     homeSheetUIState: HomeSheetUIState,
@@ -60,12 +62,13 @@ fun HomeScreenContent(
                     MoviesTabContent(
                         homeUIState = homeUIState,
                         getSelectedMovieDetails = selectedMovie,
+                        currentBottomSheetCallback = currentBottomSheetCallback,
                         openHomeBottomSheet = openHomeBottomSheet
                     )
                 }
                 2 -> {
                     updateSearchType(SearchType.Movies)
-                    FavoritesTabContent(
+                    FavoritesScreenUI(
                         getSelectedMovieDetails = selectedMovie,
                         openHomeBottomSheet = openHomeBottomSheet,
                         favoriteMovies = favoriteMovies

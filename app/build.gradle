@@ -71,6 +71,9 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
 
+    // Moshi for Json parsing
+    implementation("com.squareup.moshi:moshi:1.14.0")
+
     // Constraint Layout
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 

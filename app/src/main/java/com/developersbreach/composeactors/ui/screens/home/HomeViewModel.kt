@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.data.model.MenuItem
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.repository.actor.ActorRepository
 import com.developersbreach.composeactors.data.repository.movie.MovieRepository
@@ -45,6 +47,13 @@ class HomeViewModel @Inject constructor(
                 Timber.e("$e")
             }
         }
+    }
+
+    fun getMenuItems(): List<MenuItem> {
+        val menuItemList = ArrayList<MenuItem>()
+        val menuItem = MenuItem("Favorites", R.drawable.baseline_looks_one_24)
+        menuItemList.add(menuItem)
+        return menuItemList
     }
 
     private suspend fun startFetchingActors() {

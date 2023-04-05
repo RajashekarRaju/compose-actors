@@ -32,6 +32,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.data.model.MenuItem
+import com.developersbreach.composeactors.data.model.MovieDetail
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -41,13 +43,15 @@ fun OptionsModalSheetContent(
     modalSheetSheet: ModalBottomSheetState,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navigateToFavorite:() -> Unit,
+    menuItemList: List<MenuItem>,
+    selectedMovieDetail: MovieDetail?
     ) {
     Column(
         modifier = Modifier
             .background(MaterialTheme.colors.surface)
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(horizontal = 24.dp, vertical = 16.dp)
+            .padding(top = 28.dp, start = 20.dp, end = 20.dp, bottom = 32.dp)
     ) {
         IconButton(
             modifier = Modifier.size(28.dp),
@@ -96,15 +100,26 @@ fun OptionsModalSheetContent(
             verticalArrangement = Arrangement.spacedBy(2.dp),
             contentPadding = PaddingValues(start = 4.dp)
         ) {
-            items(4) { index->
-                ItemOptionRow(index, navigateToFavorite)
+            items(menuItemList.size) { index ->
+                val menuItem = menuItemList[index]
+                ItemOptionRow(
+                    navigateToFavorite = navigateToFavorite,
+                    selectedMovieDetail = selectedMovieDetail,
+                    menuItem = menuItem,
+                    index = index,
+                )
             }
         }
     }
 }
 
 @Composable
-private fun ItemOptionRow(index: Int, navigateToFavorite: () -> Unit) {
+private fun ItemOptionRow(
+    navigateToFavorite: () -> Unit,
+    selectedMovieDetail: MovieDetail?,
+    menuItem: MenuItem,
+    index: Int
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -119,7 +134,7 @@ private fun ItemOptionRow(index: Int, navigateToFavorite: () -> Unit) {
             }
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.baseline_looks_one_24),
+            painter = painterResource(id = menuItem.getIconId()),
             contentDescription = "",
             tint = MaterialTheme.colors.onBackground.copy(alpha = 0.75f)
         )
@@ -127,7 +142,7 @@ private fun ItemOptionRow(index: Int, navigateToFavorite: () -> Unit) {
         Spacer(modifier = Modifier.width(24.dp))
 
         Text(
-            text = "Title + $index",
+            text = menuItem.getTitle(),
             color = MaterialTheme.colors.onBackground.copy(alpha = 0.75f),
             style = MaterialTheme.typography.h5,
         )

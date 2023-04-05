@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.home.tabs
 
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -19,17 +21,16 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.screens.home.HomeUIState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.Job
 
 
 /**
- * Content shown for home tab Favorites.
+ * Content shown for home tab MovieDetails.
  * If user did not add any movies to favorites, a message will be shown.
  */
 @Composable
-fun FavoritesTabContent(
+fun FavoritesScreenUI(
     getSelectedMovieDetails: (Int) -> Unit,
     openHomeBottomSheet: () -> Job,
     favoriteMovies: List<Movie>
@@ -94,7 +95,7 @@ private fun ShowNoFavoritesFound() {
 @Composable
 private fun FavoritesTabContentPreview() {
     ComposeActorsTheme {
-        FavoritesTabContent(
+        FavoritesScreenUI(
             getSelectedMovieDetails = {},
             openHomeBottomSheet = { Job() },
             favoriteMovies = listOf()
