@@ -66,7 +66,7 @@ fun MoviesTabContent(
                     openHomeBottomSheet = openHomeBottomSheet,
                     modifier = Modifier
                         .height(140.dp)
-                        .width(260.dp)
+                        .fillMaxWidth()
                 )
             }
         )
@@ -112,7 +112,7 @@ private fun UpcomingMovies(
                 shape = MaterialTheme.shapes.large,
                 showAnimProgress = false,
                 modifier = modifier
-                    .fillParentMaxSize()
+                    .width(260.dp)
                     .clickable {
                         getSelectedMovieDetails(movieItem.movieId)
                         openHomeBottomSheet()
