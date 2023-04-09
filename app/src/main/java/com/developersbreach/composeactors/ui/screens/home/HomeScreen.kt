@@ -34,6 +34,7 @@ fun HomeScreen(
     selectedActor: (Int) -> Unit,
     navigateToSearch: (SearchType) -> Unit,
     selectedMovie: (Int) -> Unit,
+    navigateToFavorite: () -> Unit,
     homeViewModel: HomeViewModel
 ) {
     // Remember state of scaffold to manage snackbar
@@ -61,7 +62,8 @@ fun HomeScreen(
             sheetBackgroundColor = MaterialTheme.colors.background,
             sheetContent = {
                 OptionsModalSheetContent(
-                    modalSheetSheet = modalSheetState
+                    modalSheetSheet = modalSheetState,
+                    navigateToFavorite = navigateToFavorite
                 )
             },
         ) {
