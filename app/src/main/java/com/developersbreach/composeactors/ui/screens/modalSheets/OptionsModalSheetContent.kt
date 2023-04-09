@@ -47,7 +47,7 @@ fun OptionsModalSheetContent(
             .background(MaterialTheme.colors.surface)
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(horizontal = 24.dp, vertical = 16.dp)
+            .padding(top = 28.dp, start = 20.dp, end = 20.dp, bottom = 32.dp)
     ) {
         IconButton(
             modifier = Modifier.size(28.dp),

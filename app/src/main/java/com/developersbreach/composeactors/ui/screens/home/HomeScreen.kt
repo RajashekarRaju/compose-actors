@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
-import com.developersbreach.composeactors.ui.screens.favorites.FavoriteViewModel
 import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackbar
 import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
@@ -34,7 +33,6 @@ import com.developersbreach.composeactors.ui.screens.search.SearchType
 fun HomeScreen(
     selectedActor: (Int) -> Unit,
     navigateToSearch: (SearchType) -> Unit,
-    navigateToFavorite:() -> Unit,
     selectedMovie: (Int) -> Unit,
     homeViewModel: HomeViewModel
 ) {
@@ -63,8 +61,7 @@ fun HomeScreen(
             sheetBackgroundColor = MaterialTheme.colors.background,
             sheetContent = {
                 OptionsModalSheetContent(
-                    modalSheetState,
-                    navigateToFavorite = navigateToFavorite
+                    modalSheetSheet = modalSheetState
                 )
             },
         ) {
@@ -78,7 +75,11 @@ fun HomeScreen(
                         searchType = navigateToSearchBySearchType
                     )
                 },
-                bottomBar = { HomeBottomBar(modalSheetSheet = modalSheetState) },
+                bottomBar = {
+                    HomeBottomBar(
+                        modalSheetSheet = modalSheetState
+                    )
+                },
                 // Host for custom snackbar
                 snackbarHost = { HomeSnackbar(it) }
             ) { paddingValues ->
