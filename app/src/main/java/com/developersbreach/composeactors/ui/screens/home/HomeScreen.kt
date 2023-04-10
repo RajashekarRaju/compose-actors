@@ -15,7 +15,6 @@ import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackba
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
 import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackbar
 import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
-import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 
 /**
@@ -45,9 +44,6 @@ fun HomeScreen(
         animationSpec = tween(durationMillis = 500),
         skipHalfExpanded = true
     )
-    val openHomeBottomSheet = manageModalBottomSheet(
-        modalSheetState = modalSheetState
-    )
 
     val favoriteMovies by homeViewModel.favoriteMovies.observeAsState(emptyList())
     val navigateToSearchBySearchType by homeViewModel.updateHomeSearchType.observeAsState(SearchType.Actors)
@@ -63,7 +59,9 @@ fun HomeScreen(
             sheetContent = {
                 OptionsModalSheetContent(
                     modalSheetSheet = modalSheetState,
-                    navigateToFavorite = navigateToFavorite
+                    navigateToFavorite = navigateToFavorite,
+                    navigateToSearch = { navigateToSearch(SearchType.Movies) },
+                    navigateToProfile = { }
                 )
             },
         ) {
@@ -91,13 +89,10 @@ fun HomeScreen(
                     // Main content for this screen
                     HomeScreenUI(
                         selectedActor = selectedActor,
-                        openHomeBottomSheet = openHomeBottomSheet,
                         homeUIState = homeViewModel.uiState,
                         homeSheetUIState = homeViewModel.sheetUiState,
                         favoriteMovies = favoriteMovies,
-                        selectedMovie = { movieId ->
-                            homeViewModel.getSelectedMovieDetails(movieId)
-                        },
+                        selectedMovie = selectedMovie,
                         updateSearchType = { searchType: SearchType ->
                             homeViewModel.updateHomeSearchType(searchType)
                         }

@@ -1,7 +1,13 @@
 package com.developersbreach.composeactors.ui.screens.home.tabs
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -17,15 +23,15 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
+import com.developersbreach.composeactors.ui.screens.home.HomeSheetUIState
 import com.developersbreach.composeactors.ui.screens.home.HomeUIState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
-import kotlinx.coroutines.Job
 
 @Composable
 fun MoviesTabContent(
     homeUIState: HomeUIState,
     getSelectedMovieDetails: (Int) -> Unit,
-    openHomeBottomSheet: () -> Job
+    homeSheetUIState: HomeSheetUIState,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
@@ -34,11 +40,11 @@ fun MoviesTabContent(
             Spacer(modifier = Modifier.height(8.dp))
             CategoryTitle(title = "Upcoming", alpha = 0.5f)
             Spacer(modifier = Modifier.height(16.dp))
-            UpcomingMovies(homeUIState, getSelectedMovieDetails, openHomeBottomSheet)
+            UpcomingMovies(homeUIState, getSelectedMovieDetails)
             Spacer(modifier = Modifier.height(28.dp))
             CategoryTitle(title = "Now Playing", alpha = 0.5f)
             Spacer(modifier = Modifier.height(8.dp))
-            NowPlayingMovies(homeUIState, getSelectedMovieDetails, openHomeBottomSheet)
+            NowPlayingMovies(homeUIState, getSelectedMovieDetails)
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
@@ -48,7 +54,6 @@ fun MoviesTabContent(
 private fun UpcomingMovies(
     homeUIState: HomeUIState,
     getSelectedMovieDetails: (Int) -> Unit,
-    openHomeBottomSheet: () -> Job
 ) {
     LazyRow(
         contentPadding = PaddingValues(horizontal = 16.dp),
@@ -70,7 +75,6 @@ private fun UpcomingMovies(
                     .fillParentMaxSize()
                     .clickable {
                         getSelectedMovieDetails(movieItem.movieId)
-                        openHomeBottomSheet()
                     }
             )
         }
@@ -81,7 +85,6 @@ private fun UpcomingMovies(
 private fun NowPlayingMovies(
     homeUIState: HomeUIState,
     getSelectedMovieDetails: (Int) -> Unit,
-    closeHomeBottomSheet: () -> Job
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -104,7 +107,6 @@ private fun NowPlayingMovies(
                     .size(120.dp, 180.dp)
                     .clickable {
                         getSelectedMovieDetails(movieItem.movieId)
-                        closeHomeBottomSheet()
                     }
             )
         }
@@ -124,7 +126,7 @@ private fun MoviesTabContentPreview() {
                 nowPlayingMoviesList = listOf()
             ),
             getSelectedMovieDetails = {},
-            openHomeBottomSheet = { Job() }
+            homeSheetUIState = HomeSheetUIState()
         )
     }
 }

@@ -73,7 +73,7 @@ fun HomeBottomBar(
                         .size(28.dp)
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.baseline_keyboard_arrow_up_24),
+                        painter = painterResource(id = R.drawable.ic_arrow_up),
                         contentDescription = "",
                         tint = MaterialTheme.colors.onBackground
                     )

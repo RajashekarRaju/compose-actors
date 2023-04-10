@@ -1,7 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.modalSheets
 
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,11 +10,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -27,11 +29,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.data.model.HomeOptionItems
+import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -41,44 +46,40 @@ fun OptionsModalSheetContent(
     modalSheetSheet: ModalBottomSheetState,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navigateToFavorite:() -> Unit,
-    ) {
+    navigateToSearch: () -> Unit,
+    navigateToProfile: () -> Unit
+) {
     Column(
         modifier = Modifier
             .background(MaterialTheme.colors.surface)
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(top = 28.dp, start = 20.dp, end = 20.dp, bottom = 32.dp)
+            .padding(top = 28.dp, bottom = 32.dp)
+            .navigationBarsPadding()
     ) {
-        IconButton(
-            modifier = Modifier.size(28.dp),
-            onClick = {
-                coroutineScope.launch {
-                    modalSheetSheet.animateTo(
-                        targetValue = ModalBottomSheetValue.Hidden,
-                        anim = tween(durationMillis = 350)
-                    )
-                }
-            },
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.baseline_keyboard_arrow_down_24),
-                contentDescription = "",
-                tint = MaterialTheme.colors.onBackground
-            )
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp)
         ) {
-
-            Image(
-                painter = painterResource(id = R.drawable.baseline_developer_mode_24),
-                contentDescription = "",
-                modifier = Modifier.size(dimensionResource(id = R.dimen.bottom_app_bar_icon_size))
-            )
+            IconButton(
+                modifier = Modifier.size(28.dp),
+                onClick = {
+                    coroutineScope.launch {
+                        modalSheetSheet.animateTo(
+                            targetValue = ModalBottomSheetValue.Hidden,
+                            anim = tween(durationMillis = 350)
+                        )
+                    }
+                }
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_arrow_down),
+                    contentDescription = "",
+                    tint = MaterialTheme.colors.onBackground
+                )
+            }
 
             Spacer(modifier = Modifier.width(20.dp))
 
@@ -94,32 +95,43 @@ fun OptionsModalSheetContent(
 
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(2.dp),
-            contentPadding = PaddingValues(start = 4.dp)
+            contentPadding = PaddingValues(horizontal = 4.dp)
         ) {
-            items(4) { index->
-                ItemOptionRow(index, navigateToFavorite)
+            items(HomeOptionItems.homeOptions) {option ->
+                ItemOptionRow(
+                    option = option,
+                    navigateToFavorite = navigateToFavorite,
+                    navigateToSearch = navigateToSearch,
+                    navigateToProfile = navigateToProfile
+                )
             }
         }
     }
 }
 
 @Composable
-private fun ItemOptionRow(index: Int, navigateToFavorite: () -> Unit) {
+private fun ItemOptionRow(
+    option: HomeOptionItems,
+    navigateToFavorite: () -> Unit,
+    navigateToSearch: () -> Unit,
+    navigateToProfile: () -> Unit
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .padding(vertical = 8.dp)
             .fillMaxWidth()
+            .clip(RoundedCornerShape(100))
             .clickable {
-                when (index) {
-                    0 -> {
-                        navigateToFavorite()
-                    }
+                when (option.id) {
+                    1 -> navigateToFavorite()
+                    2 -> navigateToSearch()
+                    3 -> navigateToProfile()
                 }
             }
+            .padding(top = 8.dp, start = 20.dp, end = 20.dp, bottom = 8.dp)
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.baseline_looks_one_24),
+            painter = painterResource(id = option.icon),
             contentDescription = "",
             tint = MaterialTheme.colors.onBackground.copy(alpha = 0.75f)
         )
@@ -127,9 +139,37 @@ private fun ItemOptionRow(index: Int, navigateToFavorite: () -> Unit) {
         Spacer(modifier = Modifier.width(24.dp))
 
         Text(
-            text = "Title + $index",
+            text = option.title,
             color = MaterialTheme.colors.onBackground.copy(alpha = 0.75f),
-            style = MaterialTheme.typography.h5,
+            style = MaterialTheme.typography.h6,
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Preview
+@Composable
+private fun OptionsModalSheetContentLightPreview() {
+    ComposeActorsTheme(darkTheme = false) {
+        OptionsModalSheetContent(
+            modalSheetSheet = ModalBottomSheetState(ModalBottomSheetValue.Expanded),
+            navigateToFavorite = {},
+            navigateToSearch = {},
+            navigateToProfile = {}
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Preview
+@Composable
+private fun OptionsModalSheetContentDarkPreview() {
+    ComposeActorsTheme(darkTheme = true) {
+        OptionsModalSheetContent(
+            modalSheetSheet = ModalBottomSheetState(ModalBottomSheetValue.Expanded),
+            navigateToFavorite = {},
+            navigateToSearch = {},
+            navigateToProfile = {}
         )
     }
 }
