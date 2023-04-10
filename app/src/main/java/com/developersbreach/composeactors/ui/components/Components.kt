@@ -95,14 +95,20 @@ fun CategoryTitle(
     title: String,
     textColor: Color = MaterialTheme.colors.onBackground,
     alpha: Float = 0.5f,
-    startPadding: Dp = 20.dp
+    startPadding: Dp = 20.dp,
+    topPadding: Dp = 0.dp,
+    bottomPadding: Dp = 0.dp
 ) {
     Text(
         text = title,
         style = MaterialTheme.typography.h6,
         color = textColor,
         modifier = Modifier
-            .padding(start = startPadding)
+            .padding(
+                start = startPadding,
+                top = topPadding,
+                bottom = bottomPadding
+            )
             .alpha(alpha)
     )
 }
