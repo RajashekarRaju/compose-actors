@@ -1,7 +1,7 @@
 package com.developersbreach.composeactors.data.datasource.database
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import com.developersbreach.composeactors.data.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,7 +17,7 @@ class DatabaseDataSource @Inject constructor(
     fun getAllFavoriteMovies(): LiveData<List<Movie>> {
         val allFavoriteMovies = database.favoriteMoviesDao.getAllFavoriteMovies()
         // Change to distinct until changed
-        return Transformations.map(allFavoriteMovies) { favEntityList ->
+        return allFavoriteMovies.map { favEntityList ->
             favEntityList.movieAsDomainModel()
         }
     }
@@ -25,7 +25,7 @@ class DatabaseDataSource @Inject constructor(
     fun getAllFavoriteActors(): LiveData<List<Actor>> {
         val allFavoriteActors = database.favoriteActorsDao.getAllFavoriteActors()
         // Change to distinct until changed
-        return Transformations.map(allFavoriteActors) { favEntityList ->
+        return allFavoriteActors.map { favEntityList ->
             favEntityList.actorAsDomainModel()
         }
     }
