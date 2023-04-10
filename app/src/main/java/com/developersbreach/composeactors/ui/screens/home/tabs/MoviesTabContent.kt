@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -31,7 +30,6 @@ import com.developersbreach.composeactors.ui.components.itemsPaging
 import com.developersbreach.composeactors.ui.screens.home.HomeSheetUIState
 import com.developersbreach.composeactors.ui.screens.home.HomeUIState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.emptyFlow
 
 @Composable
@@ -65,7 +63,6 @@ fun MoviesTabContent(
                 UpcomingMovies(
                     homeUIState = homeUIState,
                     getSelectedMovieDetails = getSelectedMovieDetails,
-                    openHomeBottomSheet = openHomeBottomSheet,
                     modifier = Modifier
                         .height(140.dp)
                         .fillMaxWidth()
@@ -87,7 +84,6 @@ fun MoviesTabContent(
         nowPlayingMovies(
             listItems = nowPlayingMovies,
             getSelectedMovieDetails = getSelectedMovieDetails,
-            openHomeBottomSheet = openHomeBottomSheet
         )
     }
 }
@@ -136,7 +132,6 @@ private fun LazyGridScope.nowPlayingMovies(
                 .clickable {
                     if (movie != null) {
                         getSelectedMovieDetails(movie.movieId)
-                        openHomeBottomSheet()
                     }
                 }
         )

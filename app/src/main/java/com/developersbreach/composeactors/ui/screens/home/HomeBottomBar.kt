@@ -62,10 +62,7 @@ fun HomeBottomBar(
                 IconButton(
                     onClick = {
                         coroutineScope.launch {
-                            modalSheetSheet.animateTo(
-                                targetValue = ModalBottomSheetValue.Expanded,
-                                anim = tween(durationMillis = 350)
-                            )
+                            modalSheetSheet.show()
                         }
                     },
                     modifier = Modifier

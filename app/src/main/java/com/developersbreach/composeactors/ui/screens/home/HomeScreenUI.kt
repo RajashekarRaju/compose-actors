@@ -20,6 +20,7 @@ import com.developersbreach.composeactors.ui.screens.home.tabs.MoviesTabContent
 import com.developersbreach.composeactors.ui.screens.home.tabs.TvShowsTabContent
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import kotlinx.coroutines.flow.emptyFlow
 
 @Composable
 fun HomeScreenUI(
@@ -88,7 +89,7 @@ private fun HomeScreenUIPreview() {
                 trendingActorList = listOf(),
                 isFetchingActors = false,
                 upcomingMoviesList = listOf(),
-                nowPlayingMoviesList = listOf()
+                nowPlayingMoviesList = emptyFlow()
             ),
             homeSheetUIState = HomeSheetUIState(
                 selectedMovieDetails = null

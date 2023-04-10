@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.screens.modalSheets
 
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -67,10 +66,7 @@ fun OptionsModalSheetContent(
                 modifier = Modifier.size(28.dp),
                 onClick = {
                     coroutineScope.launch {
-                        modalSheetSheet.animateTo(
-                            targetValue = ModalBottomSheetValue.Hidden,
-                            anim = tween(durationMillis = 350)
-                        )
+                        modalSheetSheet.show()
                     }
                 }
             ) {
