@@ -8,7 +8,6 @@ import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.screens.search.SearchType
-import kotlinx.coroutines.Job
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,7 +23,6 @@ class HomeScreenUITest {
     private fun HomeScreenUIContent(
         selectedActor: (actorId: Int) -> Unit = { },
         selectedMovie: (movieId: Int) -> Unit = { },
-        openHomeBottomSheet: () -> Job = { Job() },
         favoriteMovies: List<Movie> = emptyList(),
         updateSearchType: (searchType: SearchType) -> Unit = {  },
         homeSheetUIState: HomeSheetUIState = HomeSheetUIState(),
@@ -33,7 +31,6 @@ class HomeScreenUITest {
         HomeScreenUI(
             selectedActor = selectedActor,
             selectedMovie = selectedMovie,
-            openHomeBottomSheet = openHomeBottomSheet,
             homeSheetUIState = homeSheetUIState,
             favoriteMovies = favoriteMovies,
             updateSearchType = updateSearchType,
@@ -58,7 +55,7 @@ class HomeScreenUITest {
             .performClick()
 
         composeTestRule
-            .onNodeWithText(text = "Favorites")
+            .onNodeWithText(text = "TV Shows")
             .assertIsDisplayed()
             .performClick()
     }

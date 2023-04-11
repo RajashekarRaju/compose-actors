@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.screens.home.composables
+package com.developersbreach.composeactors.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
@@ -17,10 +17,10 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.ui.components.TransparentRippleTheme
 
 @Composable
-fun HomeTabsContainer(
+fun TabsContainer(
+    tabs: List<TabItem>,
     tabPage: MutableState<Int>
 ) {
     CompositionLocalProvider(
@@ -69,12 +69,6 @@ private fun RoundedTabIndicator(
 }
 
 @Immutable
-private data class Tabs(
+data class TabItem(
     val tabName: String
-)
-
-private val tabs = listOf(
-    Tabs("Actors"),
-    Tabs("Movies"),
-    Tabs("Favorites")
 )

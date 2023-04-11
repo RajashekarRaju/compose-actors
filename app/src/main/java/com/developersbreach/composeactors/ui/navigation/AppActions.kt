@@ -27,6 +27,11 @@ class AppActions(
         navController.navigate("${routes.SEARCH_ROUTE}/$searchType")
     }
 
+    // Triggered when user tries to navigate to favorite screen from More menu.
+    val navigateToFavorite: () -> Unit = {
+        navController.navigate(routes.FAVORITES_ROUTE)
+    }
+
     // Navigates to previous screen from current screen.
     val navigateUp: () -> Unit = {
         navController.navigateUp()

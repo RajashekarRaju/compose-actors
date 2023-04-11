@@ -27,16 +27,16 @@ import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.itemsPaging
+import com.developersbreach.composeactors.ui.screens.home.HomeSheetUIState
 import com.developersbreach.composeactors.ui.screens.home.HomeUIState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.emptyFlow
 
 @Composable
 fun MoviesTabContent(
     homeUIState: HomeUIState,
     getSelectedMovieDetails: (Int) -> Unit,
-    openHomeBottomSheet: () -> Job
+    homeSheetUIState: HomeSheetUIState,
 ) {
     val nowPlayingMovies = homeUIState.nowPlayingMoviesList.collectAsLazyPagingItems()
 
@@ -63,7 +63,6 @@ fun MoviesTabContent(
                 UpcomingMovies(
                     homeUIState = homeUIState,
                     getSelectedMovieDetails = getSelectedMovieDetails,
-                    openHomeBottomSheet = openHomeBottomSheet,
                     modifier = Modifier
                         .height(140.dp)
                         .fillMaxWidth()
@@ -85,7 +84,6 @@ fun MoviesTabContent(
         nowPlayingMovies(
             listItems = nowPlayingMovies,
             getSelectedMovieDetails = getSelectedMovieDetails,
-            openHomeBottomSheet = openHomeBottomSheet
         )
     }
 }
@@ -94,7 +92,6 @@ fun MoviesTabContent(
 private fun UpcomingMovies(
     homeUIState: HomeUIState,
     getSelectedMovieDetails: (Int) -> Unit,
-    openHomeBottomSheet: () -> Job,
     modifier: Modifier
 ) {
     LazyRow(
@@ -115,7 +112,6 @@ private fun UpcomingMovies(
                     .width(260.dp)
                     .clickable {
                         getSelectedMovieDetails(movieItem.movieId)
-                        openHomeBottomSheet()
                     }
             )
         }
@@ -125,7 +121,6 @@ private fun UpcomingMovies(
 private fun LazyGridScope.nowPlayingMovies(
     listItems: LazyPagingItems<Movie>,
     getSelectedMovieDetails: (Int) -> Unit,
-    openHomeBottomSheet: () -> Job
 ) {
     itemsPaging(listItems) { movie ->
         LoadNetworkImage(
@@ -137,7 +132,6 @@ private fun LazyGridScope.nowPlayingMovies(
                 .clickable {
                     if (movie != null) {
                         getSelectedMovieDetails(movie.movieId)
-                        openHomeBottomSheet()
                     }
                 }
         )
@@ -157,7 +151,7 @@ private fun MoviesTabContentPreview() {
                 nowPlayingMoviesList = emptyFlow()
             ),
             getSelectedMovieDetails = {},
-            openHomeBottomSheet = { Job() }
+            homeSheetUIState = HomeSheetUIState()
         )
     }
 }
