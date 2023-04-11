@@ -11,38 +11,27 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
-import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
-import com.developersbreach.composeactors.ui.screens.home.HomeBottomBar
-import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackbar
-import com.developersbreach.composeactors.ui.screens.home.tabs.FavoritesTabContent
-import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
-import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
+import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FavoritesScreen(
+    navigateUp: () -> Unit,
     selectedMovie: (Int) -> Unit,
-    favoriteViewModel: FavoriteViewModel) {
-
+    favoriteViewModel: FavoriteViewModel
+) {
     val favoriteMovies by favoriteViewModel.favoriteMovies.observeAsState(emptyList())
-
-    val scaffoldState = rememberScaffoldState()
 
     val modalSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         animationSpec = tween(durationMillis = 500),
         skipHalfExpanded = true
-    )
-    val openHomeBottomSheet = manageModalBottomSheet(
-        modalSheetState = modalSheetState
     )
 
     Surface(
@@ -54,37 +43,28 @@ fun FavoritesScreen(
             sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             sheetBackgroundColor = MaterialTheme.colors.background,
             sheetContent = {
-
-            },
+                SheetContentMovieDetails(
+                    movie = null,
+                    selectedMovie = selectedMovie
+                )
+            }
         ) {
             Scaffold(
-                // attach snackbar host state to the scaffold
-                scaffoldState = scaffoldState,
-                // Custom AppBar contains fake search bar.
-                bottomBar = { HomeBottomBar(modalSheetSheet = modalSheetState) },
-                // Host for custom snackbar
-                snackbarHost = { HomeSnackbar(it) }
+                topBar = {
+                    FavoritesTopAppBar(
+                        navigateUp = navigateUp
+                    )
+                }
             ) { paddingValues ->
                 Box(
                     modifier = Modifier.padding(paddingValues = paddingValues)
                 ) {
-                    // Main content for this screen
-                    FavoritesTabContent (
-                        getSelectedMovieDetails = { movieId ->
-                            favoriteViewModel.getSelectedMovieDetails(movieId)
-                        },
-                        openHomeBottomSheet = openHomeBottomSheet,
-                        favoriteMovies = favoriteMovies
+                    FavoritesScreenUI(
+                        favoriteMovies = favoriteMovies,
+                        selectedMovie = selectedMovie
                     )
-
-                    // Perform network check and show snackbar if offline
-                    IfOfflineShowSnackbar(scaffoldState)
-
-                    // If Api key is missing, show a SnackBar.
-                    ApiKeyMissingShowSnackbar(scaffoldState)
                 }
             }
         }
     }
 }
-

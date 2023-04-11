@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.data.datasource.network
 
+import com.developersbreach.composeactors.data.PagedResponse
 import com.developersbreach.composeactors.data.model.*
 import com.developersbreach.composeactors.utils.NetworkQueryUtils
 import kotlinx.coroutines.Dispatchers
@@ -110,8 +111,10 @@ class NetworkDataSource @Inject constructor(
         jsonData.fetchUpcomingMoviesJsonData(response)
     }
 
-    suspend fun getNowPlayingMoviesData(): List<Movie> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getNowPlayingMoviesUrl()
+    suspend fun getNowPlayingMoviesData(
+        page: Int
+    ): PagedResponse<Movie> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getNowPlayingMoviesUrl(page)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchNowPlayingMoviesJsonData(response)
     }

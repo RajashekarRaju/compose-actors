@@ -52,22 +52,12 @@ fun AppNavigation(
             AppDestinations.HOME_ROUTE
         ) {
             val homeViewModel = hiltViewModel<HomeViewModel>()
-            HomeScreen (
+            HomeScreen(
                 selectedActor = actions.selectedActor,
                 navigateToSearch = actions.navigateToSearch,
                 navigateToFavorite = actions.navigateToFavorite,
                 selectedMovie = actions.selectedMovie,
                 homeViewModel = homeViewModel
-            )
-        }
-
-        composable(
-            route = AppDestinations.FAVORITES_ROUTE,
-                  ) {
-            val favoriteViewModel = hiltViewModel<FavoriteViewModel>()
-            FavoritesScreen (
-                selectedMovie = actions.selectedMovie,
-                favoriteViewModel = favoriteViewModel
             )
         }
 
@@ -133,6 +123,17 @@ fun AppNavigation(
                 navigateUp = actions.navigateUp,
                 viewModel = viewModel,
                 selectedMovie = actions.selectedMovie
+            )
+        }
+
+        composable(
+            route = AppDestinations.FAVORITES_ROUTE
+        ) {
+            val favoriteViewModel = hiltViewModel<FavoriteViewModel>()
+            FavoritesScreen(
+                navigateUp = actions.navigateUp,
+                selectedMovie = actions.selectedMovie,
+                favoriteViewModel = favoriteViewModel
             )
         }
     }

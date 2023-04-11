@@ -13,10 +13,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
-import com.developersbreach.composeactors.ui.screens.favorites.FavoriteViewModel
 import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackbar
 import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
-import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 
 /**
@@ -34,8 +32,8 @@ import com.developersbreach.composeactors.ui.screens.search.SearchType
 fun HomeScreen(
     selectedActor: (Int) -> Unit,
     navigateToSearch: (SearchType) -> Unit,
-    navigateToFavorite:() -> Unit,
     selectedMovie: (Int) -> Unit,
+    navigateToFavorite: () -> Unit,
     homeViewModel: HomeViewModel
 ) {
     // Remember state of scaffold to manage snackbar
@@ -45,9 +43,6 @@ fun HomeScreen(
         initialValue = ModalBottomSheetValue.Hidden,
         animationSpec = tween(durationMillis = 500),
         skipHalfExpanded = true
-    )
-    val openHomeBottomSheet = manageModalBottomSheet(
-        modalSheetState = modalSheetState
     )
 
     val favoriteMovies by homeViewModel.favoriteMovies.observeAsState(emptyList())
@@ -63,8 +58,10 @@ fun HomeScreen(
             sheetBackgroundColor = MaterialTheme.colors.background,
             sheetContent = {
                 OptionsModalSheetContent(
-                    modalSheetState,
-                    navigateToFavorite = navigateToFavorite
+                    modalSheetSheet = modalSheetState,
+                    navigateToFavorite = navigateToFavorite,
+                    navigateToSearch = { navigateToSearch(SearchType.Movies) },
+                    navigateToProfile = { }
                 )
             },
         ) {
@@ -78,7 +75,11 @@ fun HomeScreen(
                         searchType = navigateToSearchBySearchType
                     )
                 },
-                bottomBar = { HomeBottomBar(modalSheetSheet = modalSheetState) },
+                bottomBar = {
+                    HomeBottomBar(
+                        modalSheetSheet = modalSheetState
+                    )
+                },
                 // Host for custom snackbar
                 snackbarHost = { HomeSnackbar(it) }
             ) { paddingValues ->
@@ -88,13 +89,10 @@ fun HomeScreen(
                     // Main content for this screen
                     HomeScreenUI(
                         selectedActor = selectedActor,
-                        openHomeBottomSheet = openHomeBottomSheet,
                         homeUIState = homeViewModel.uiState,
                         homeSheetUIState = homeViewModel.sheetUiState,
                         favoriteMovies = favoriteMovies,
-                        selectedMovie = { movieId ->
-                            homeViewModel.getSelectedMovieDetails(movieId)
-                        },
+                        selectedMovie = selectedMovie,
                         updateSearchType = { searchType: SearchType ->
                             homeViewModel.updateHomeSearchType(searchType)
                         }

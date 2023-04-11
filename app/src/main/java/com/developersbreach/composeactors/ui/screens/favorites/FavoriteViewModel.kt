@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.repository.movie.MovieRepository
-import com.developersbreach.composeactors.ui.screens.home.HomeSheetUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.IOException
 import javax.inject.Inject
