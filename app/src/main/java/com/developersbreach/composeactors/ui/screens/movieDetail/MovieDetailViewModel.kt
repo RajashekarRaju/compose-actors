@@ -1,5 +1,7 @@
 package com.developersbreach.composeactors.ui.screens.movieDetail
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,7 +14,7 @@ import com.developersbreach.composeactors.data.model.MovieDetail
 import com.developersbreach.composeactors.data.repository.actor.ActorRepository
 import com.developersbreach.composeactors.data.repository.movie.MovieRepository
 import com.developersbreach.composeactors.ui.navigation.AppDestinations.MOVIE_DETAILS_ID_KEY
-import com.developersbreach.composeactors.domain.use_case.RemoveFavoriteMovieUseCase
+import com.developersbreach.composeactors.domain.useCase.RemoveFavoriteMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -66,21 +68,30 @@ class MovieDetailViewModel @Inject constructor(
                     Movie(
                         movieId = movie.movieId,
                         movieName = movie.movieTitle,
-                        posterPathUrl = movie.poster
+                        posterPathUrl = movie.poster,
+                        bannerUrl = movie.banner,
                     )
                 )
             }
         }
     }
 
+    @SuppressLint("LogNotTimber")
     fun removeMovieFromFavorites() {
         viewModelScope.launch {
             val movie: MovieDetail? = uiState.movieData
-            movie?.let { removeFavoriteMovieUseCase.invoke(Movie(
-                movieId = movie.movieId,
-                movieName = movie.movieTitle,
-                posterPathUrl = movie.poster
-            )) }
+            if (movie != null) {
+                removeFavoriteMovieUseCase(
+                    Movie(
+                        movieId = movie.movieId,
+                        movieName = movie.movieTitle,
+                        posterPathUrl = movie.poster,
+                        bannerUrl = movie.banner,
+                    )
+                )
+            } else {
+                Log.e("MovieDetailViewModel", "Id of $movie was null while delete operation.")
+            }
         }
     }
 

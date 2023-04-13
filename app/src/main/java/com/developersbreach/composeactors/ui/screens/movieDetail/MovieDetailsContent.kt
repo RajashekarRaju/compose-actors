@@ -59,10 +59,16 @@ fun MovieDetailsContent(
             GetMovieCast(uiState, openMovieDetailsBottomSheet, selectedActorDetails)
             Spacer(modifier = Modifier.height(24.dp))
             CategoryTitle(title = "Similar", alpha = 1f)
-            GetRelatedMovies(movieList = uiState.similarMovies)
+            GetSimilarOrRecommendedMovies(
+                movieList = uiState.similarMovies,
+                openMovieDetailsBottomSheet = openMovieDetailsBottomSheet
+            )
             Spacer(modifier = Modifier.height(12.dp))
             CategoryTitle(title = "Recommended", alpha = 1f)
-            GetRelatedMovies(movieList = uiState.recommendedMovies)
+            GetSimilarOrRecommendedMovies(
+                movieList = uiState.recommendedMovies,
+                openMovieDetailsBottomSheet = openMovieDetailsBottomSheet
+            )
             Spacer(modifier = Modifier.height(12.dp))
         }
     }

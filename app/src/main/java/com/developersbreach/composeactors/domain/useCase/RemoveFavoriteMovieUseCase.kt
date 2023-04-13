@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.domain.use_case
+package com.developersbreach.composeactors.domain.useCase
 
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.repository.movie.MovieRepository

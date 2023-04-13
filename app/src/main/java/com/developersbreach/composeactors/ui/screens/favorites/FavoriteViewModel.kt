@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.repository.movie.MovieRepository
-import com.developersbreach.composeactors.domain.use_case.RemoveFavoriteMovieUseCase
+import com.developersbreach.composeactors.domain.useCase.RemoveFavoriteMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.IOException
 import javax.inject.Inject
@@ -35,7 +35,7 @@ class FavoriteViewModel @Inject constructor(
 
     fun removeMovieFromFavorites(movie: Movie) {
         viewModelScope.launch {
-            movie.let { removeFavoriteMovieUseCase.invoke(it) }
+            removeFavoriteMovieUseCase.invoke(movie)
         }
     }
 }
