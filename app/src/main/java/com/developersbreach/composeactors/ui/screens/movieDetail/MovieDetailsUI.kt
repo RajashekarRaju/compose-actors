@@ -5,6 +5,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.tooling.preview.Preview
+import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.Job
 
@@ -15,14 +16,14 @@ fun MovieDetailsUI(
     navigateUp: () -> Unit,
     showFab: MutableState<Boolean>,
     openMovieDetailsBottomSheet: () -> Job,
-    selectedActorDetails: (Int) -> Unit
+    selectBottomSheetCallback: (BottomSheetType) -> Unit
 ) {
     MovieDetailsContent(
         uiState = uiState,
         navigateUp = navigateUp,
         showFab = showFab,
         openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
-        selectedActorDetails = selectedActorDetails
+        selectBottomSheetCallback = selectBottomSheetCallback
     )
 }
 
@@ -31,10 +32,6 @@ fun MovieDetailsUI(
 private fun MovieDetailsUIPreview() {
     ComposeActorsTheme {
         MovieDetailsUI(
-            navigateUp = {},
-            showFab = rememberSaveable { mutableStateOf(true) },
-            openMovieDetailsBottomSheet = { Job() },
-            selectedActorDetails = {},
             uiState = MovieDetailsUIState(
                 movieData = null,
                 similarMovies = listOf(),
@@ -42,6 +39,10 @@ private fun MovieDetailsUIPreview() {
                 movieCast = listOf(),
                 isFetchingDetails = false
             ),
+            navigateUp = {},
+            showFab = rememberSaveable { mutableStateOf(true) },
+            openMovieDetailsBottomSheet = { Job() },
+            selectBottomSheetCallback = { }
         )
     }
 }

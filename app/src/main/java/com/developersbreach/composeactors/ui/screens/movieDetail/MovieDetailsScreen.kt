@@ -18,10 +18,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.ui.animations.LayerRevealImage
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentActorDetails
+import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddFavoritesButton
@@ -41,6 +43,7 @@ fun MovieDetailScreen(
 ) {
     val uiState = viewModel.uiState
     val sheetUiState = viewModel.sheetUiState
+    val movieSheetUIState = viewModel.movieSheetUiState
     // This helps us reveal screen content with fadeIn anim once reveal effect is completed.
     val isLayerRevealAnimationEnded = rememberSaveable { mutableStateOf(false) }
     // Change button state with respect to scroll changes.
@@ -49,6 +52,12 @@ fun MovieDetailScreen(
     val modalSheetState = modalBottomSheetState(
         animationSpec = tween(durationMillis = 300, delayMillis = 50)
     )
+
+    val selectedBottomSheet =
+        remember { mutableStateOf<BottomSheetType?>(BottomSheetType.MovieDetailBottomSheet) }
+
+    val selectBottomSheetCallback = setBottomSheetCallBack(viewModel, selectedBottomSheet)
+
     val openMovieDetailsBottomSheet = manageModalBottomSheet(
         modalSheetState = modalSheetState
     )
@@ -60,8 +69,11 @@ fun MovieDetailScreen(
         sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
         sheetBackgroundColor = MaterialTheme.colors.background,
         sheetContent = {
-            SheetContentActorDetails(
-                actor = sheetUiState.selectedActorDetails,
+            GetBottomSheetContent(
+                selectedBottomSheet.value,
+                sheetUiState,
+                movieSheetUIState,
+                selectedMovie
             )
         },
     ) {
@@ -77,9 +89,7 @@ fun MovieDetailScreen(
                     navigateUp = navigateUp,
                     showFab = showFab,
                     openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
-                    selectedActorDetails = { actorId ->
-                        viewModel.getSelectedActorDetails(actorId)
-                    }
+                    selectBottomSheetCallback = selectBottomSheetCallback
                 )
             }
             // Progress bar - Hidden temporarily, although it works fine cannot have it in current
@@ -93,12 +103,49 @@ fun MovieDetailScreen(
 }
 
 @Composable
+private fun GetBottomSheetContent(
+    bottomSheetType: BottomSheetType?,
+    sheetUiState: ActorsSheetUIState,
+    movieSheetUIState: MovieSheetUIState,
+    selectedMovie: (Int) -> Unit
+) {
+    bottomSheetType?.let { type ->
+        when (type) {
+            BottomSheetType.MovieDetailBottomSheet -> {
+                SheetContentMovieDetails(
+                    movieSheetUIState.selectedMovieDetails,
+                    selectedMovie
+                )
+            }
+            BottomSheetType.ActorDetailBottomSheet -> {
+                SheetContentActorDetails(actor = sheetUiState.selectedActorDetails)
+            }
+        }
+    }
+}
+
+private fun setBottomSheetCallBack(
+    viewModel: MovieDetailViewModel,
+    selectedBottomSheet: MutableState<BottomSheetType?>
+) = { bottomSheetType: BottomSheetType ->
+    when (bottomSheetType) {
+        BottomSheetType.MovieDetailBottomSheet -> {
+            viewModel.getSelectedMovieDetails(bottomSheetType.movieOrActorId)
+        }
+        BottomSheetType.ActorDetailBottomSheet -> {
+            viewModel.getSelectedActorDetails(bottomSheetType.movieOrActorId)
+        }
+    }
+    selectedBottomSheet.value = bottomSheetType
+}
+
+@Composable
 private fun AnimateMovieDetailScreenContent(
     uiState: MovieDetailsUIState,
     navigateUp: () -> Unit,
     showFab: MutableState<Boolean>,
     openMovieDetailsBottomSheet: () -> Job,
-    selectedActorDetails: (Int) -> Unit
+    selectBottomSheetCallback: (BottomSheetType) -> Unit
 ) {
     val state = remember {
         MutableTransitionState(false).apply {
@@ -117,7 +164,7 @@ private fun AnimateMovieDetailScreenContent(
             navigateUp = navigateUp,
             showFab = showFab,
             openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
-            selectedActorDetails = selectedActorDetails
+            selectBottomSheetCallback = selectBottomSheetCallback
         )
     }
 }

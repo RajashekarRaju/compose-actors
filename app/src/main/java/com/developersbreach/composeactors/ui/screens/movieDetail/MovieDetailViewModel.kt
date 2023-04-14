@@ -33,6 +33,8 @@ class MovieDetailViewModel @Inject constructor(
     var sheetUiState by mutableStateOf(ActorsSheetUIState(selectedActorDetails = null))
         private set
 
+    var movieSheetUiState by mutableStateOf(MovieSheetUIState(selectedMovieDetails = null))
+
     val isFavoriteMovie: LiveData<Int> = movieRepository.isFavoriteMovie(movieId)
 
     init {
@@ -99,6 +101,21 @@ class MovieDetailViewModel @Inject constructor(
                 if (actorId != null) {
                     val actorsData = actorRepository.getSelectedActorData(actorId)
                     sheetUiState = ActorsSheetUIState(selectedActorDetails = actorsData)
+                }
+            } catch (e: IOException) {
+                Timber.e("$e")
+            }
+        }
+    }
+
+    fun getSelectedMovieDetails(
+        movieId: Int?
+    ) {
+        viewModelScope.launch {
+            try {
+                movieId?.let { id ->
+                    val movieData = movieRepository.getSelectedMovieData(id)
+                    movieSheetUiState = MovieSheetUIState(selectedMovieDetails = movieData)
                 }
             } catch (e: IOException) {
                 Timber.e("$e")

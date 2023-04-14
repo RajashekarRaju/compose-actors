@@ -16,16 +16,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.data.model.Cast
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailsUIState
 import kotlinx.coroutines.Job
 
 @Composable
- fun GetMovieCast(
+fun GetMovieCast(
     uiState: MovieDetailsUIState,
     openMovieDetailsBottomSheet: () -> Job,
-    getSelectedActorDetails: (Int) -> Unit
+    selectBottomSheetCallback: (BottomSheetType) -> Unit
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -39,7 +40,7 @@ import kotlinx.coroutines.Job
                 cast = cast,
                 movieDetailsUIState = uiState,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
-                getSelectedActorDetails = getSelectedActorDetails
+                selectBottomSheetCallback = selectBottomSheetCallback
             )
         }
     }
@@ -50,15 +51,17 @@ private fun ItemCast(
     cast: Cast,
     movieDetailsUIState: MovieDetailsUIState,
     openMovieDetailsBottomSheet: () -> Job,
-    getSelectedActorDetails: (Int) -> Unit
+    selectBottomSheetCallback: (BottomSheetType) -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .width(120.dp)
             .clickable {
-                getSelectedActorDetails(cast.actorId)
                 openMovieDetailsBottomSheet()
+                selectBottomSheetCallback(BottomSheetType.ActorDetailBottomSheet.apply {
+                    movieOrActorId = cast.actorId
+                })
             }
     ) {
         LoadNetworkImage(
