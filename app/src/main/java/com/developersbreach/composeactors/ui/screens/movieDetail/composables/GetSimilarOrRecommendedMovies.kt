@@ -33,7 +33,8 @@ fun GetSimilarOrRecommendedMovies(
                 imageUrl = movie.posterPathUrl,
                 contentDescription = stringResource(R.string.cd_movie_poster),
                 shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.size(100.dp, 150.dp)
+                modifier = Modifier
+                    .size(100.dp, 150.dp)
                     .clickable { openMovieDetailsBottomSheet() }
             )
         }
