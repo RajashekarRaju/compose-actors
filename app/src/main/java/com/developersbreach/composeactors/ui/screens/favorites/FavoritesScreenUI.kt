@@ -25,7 +25,8 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 @Composable
 fun FavoritesScreenUI(
     favoriteMovies: List<Movie>,
-    selectedMovie: (Int) -> Unit
+    selectedMovie: (Int) -> Unit,
+    removeFavoriteMovie: (Movie) -> Unit
 ) {
     val tabPage = rememberSaveable { mutableStateOf(0) }
     val favoriteTabs = listOf(
@@ -39,8 +40,6 @@ fun FavoritesScreenUI(
 
         TabsContainer(favoriteTabs, tabPage)
 
-        Spacer(modifier = Modifier.padding(vertical = 8.dp))
-
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -50,7 +49,8 @@ fun FavoritesScreenUI(
                 0 -> FeatureComingSoonTextUI()
                 1 -> FavoriteMoviesTabContent(
                     getSelectedMovieDetails = selectedMovie,
-                    favoriteMovies = favoriteMovies
+                    favoriteMovies = favoriteMovies,
+                    removeFavoriteMovie = removeFavoriteMovie
                 )
                 2 -> FeatureComingSoonTextUI()
             }
@@ -80,7 +80,8 @@ private fun FavoriteScreenUIPreview() {
     ComposeActorsTheme {
         FavoritesScreenUI(
             favoriteMovies = emptyList(),
-            selectedMovie = {}
+            selectedMovie = {},
+            removeFavoriteMovie = {}
         )
     }
 }

@@ -53,7 +53,9 @@ class JsonRemoteData @Inject constructor(
             val originalTitle = jsonObject.getString("original_title")
             val posterPathUrl = jsonObject.getString("poster_path")
             val posterPath = "${LOW_RES_IMAGE}$posterPathUrl"
-            moviesList.add(Movie(movieId, originalTitle, posterPath))
+            val bannerUrl = jsonObject.getString("backdrop_path")
+            val banner = "${HIGH_RES_IMAGE}$bannerUrl"
+            moviesList.add(Movie(movieId, originalTitle, posterPath, banner))
         }
         return moviesList
     }
@@ -97,7 +99,9 @@ class JsonRemoteData @Inject constructor(
             val originalTitle = jsonObject.getString("original_title")
             val posterPathUrl = jsonObject.getString("poster_path")
             val posterPath = "${LOW_RES_IMAGE}$posterPathUrl"
-            movieList.add(Movie(movieId, originalTitle, posterPath))
+            val bannerUrl = jsonObject.getString("backdrop_path")
+            val banner = "${HIGH_RES_IMAGE}$bannerUrl"
+            movieList.add(Movie(movieId, originalTitle, posterPath, banner))
         }
         return movieList
     }
@@ -180,7 +184,9 @@ class JsonRemoteData @Inject constructor(
             val originalTitle = jsonObject.getString("original_title")
             val posterPathUrl = jsonObject.getString("poster_path")
             val posterPath = "${LOW_RES_IMAGE}$posterPathUrl"
-            movieList.add(Movie(movieId, originalTitle, posterPath))
+            val bannerUrl = jsonObject.getString("backdrop_path")
+            val banner = "${HIGH_RES_IMAGE}$bannerUrl"
+            movieList.add(Movie(movieId, originalTitle, posterPath, banner))
         }
         return movieList
     }
@@ -224,7 +230,9 @@ class JsonRemoteData @Inject constructor(
             val originalTitle = jsonObject.getString("original_title")
             val backdropPathUrl = jsonObject.getString("backdrop_path")
             val backdropPath = "${HIGH_RES_IMAGE}$backdropPathUrl"
-            movieList.add(Movie(movieId, originalTitle, backdropPath))
+            val bannerUrl = jsonObject.getString("backdrop_path")
+            val banner = "${HIGH_RES_IMAGE}$bannerUrl"
+            movieList.add(Movie(movieId, originalTitle, backdropPath, banner))
         }
         return movieList
     }
@@ -246,7 +254,9 @@ class JsonRemoteData @Inject constructor(
             val originalTitle = jsonObject.getString("original_title")
             val posterPathUrl = jsonObject.getString("poster_path")
             val posterPath = "${HIGH_RES_IMAGE}$posterPathUrl"
-            movieList.add(Movie(movieId, originalTitle, posterPath))
+            val bannerUrl = jsonObject.getString("backdrop_path")
+            val banner = "${HIGH_RES_IMAGE}$bannerUrl"
+            movieList.add(Movie(movieId, originalTitle, posterPath, banner))
         }
 
         return PagedResponse(

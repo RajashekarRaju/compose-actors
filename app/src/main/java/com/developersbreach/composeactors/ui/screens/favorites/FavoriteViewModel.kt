@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.repository.movie.MovieRepository
+import com.developersbreach.composeactors.domain.useCase.RemoveMovieFromFavoritesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.IOException
 import javax.inject.Inject
@@ -13,7 +14,8 @@ import timber.log.Timber
 
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository,
+    private val removeMovieFromFavoritesUseCase: RemoveMovieFromFavoritesUseCase,
 ) : ViewModel() {
     val favoriteMovies: LiveData<List<Movie>> = movieRepository.getAllFavoriteMovies()
 
@@ -28,6 +30,12 @@ class FavoriteViewModel @Inject constructor(
             } catch (e: IOException) {
                 Timber.e("$e")
             }
+        }
+    }
+
+    fun removeMovieFromFavorites(movie: Movie) {
+        viewModelScope.launch {
+            removeMovieFromFavoritesUseCase.invoke(movie)
         }
     }
 }
