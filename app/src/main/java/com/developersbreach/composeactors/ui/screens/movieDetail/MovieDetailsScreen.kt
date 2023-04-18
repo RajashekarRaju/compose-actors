@@ -24,7 +24,7 @@ import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentActorDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
-import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddFavoritesButton
+import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddMoviesToFavoritesButton
 import kotlinx.coroutines.Job
 
 
@@ -86,7 +86,7 @@ fun MovieDetailScreen(
             // screen placement since it is on top of reveal animation.
             // ShowProgressIndicator(isLoadingData = uiState.isFetchingDetails)
             if (showFab.value) {
-                FloatingAddFavoritesButton(viewModel)
+                FloatingAddMoviesToFavoritesButton(viewModel)
             }
         }
     }

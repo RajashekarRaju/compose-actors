@@ -2,11 +2,16 @@ package com.developersbreach.composeactors.data.datasource.database
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import com.developersbreach.composeactors.data.model.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.developersbreach.composeactors.data.model.FavoriteActor
+import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.model.actorAsDatabaseModel
+import com.developersbreach.composeactors.data.model.actorAsDomainModel
+import com.developersbreach.composeactors.data.model.movieAsDatabaseModel
+import com.developersbreach.composeactors.data.model.movieAsDomainModel
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 @Singleton
@@ -22,7 +27,7 @@ class DatabaseDataSource @Inject constructor(
         }
     }
 
-    fun getAllFavoriteActors(): LiveData<List<Actor>> {
+    fun getAllFavoriteActors(): LiveData<List<FavoriteActor>> {
         val allFavoriteActors = database.favoriteActorsDao.getAllFavoriteActors()
         // Change to distinct until changed
         return allFavoriteActors.map { favEntityList ->
@@ -47,7 +52,7 @@ class DatabaseDataSource @Inject constructor(
     }
 
     suspend fun addActorToFavorites(
-        actor: Actor
+        actor: FavoriteActor
     ) = withContext(Dispatchers.IO) {
         with(actor.actorAsDatabaseModel()) {
             database.favoriteActorsDao.addActorToFavorites(favoriteActorsEntity = this)
@@ -63,7 +68,7 @@ class DatabaseDataSource @Inject constructor(
     }
 
     suspend fun deleteSelectedFavoriteActor(
-        actor: Actor
+        actor: FavoriteActor
     ) = withContext(Dispatchers.IO) {
         with(actor.actorAsDatabaseModel()) {
             database.favoriteActorsDao.deleteSelectedFavoriteActor(favoriteActorsEntity = this)

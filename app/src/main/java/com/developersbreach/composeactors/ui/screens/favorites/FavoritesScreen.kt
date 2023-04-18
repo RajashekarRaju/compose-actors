@@ -17,6 +17,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.data.model.FavoriteActor
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 
@@ -25,9 +26,11 @@ import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMov
 fun FavoritesScreen(
     navigateUp: () -> Unit,
     selectedMovie: (Int) -> Unit,
+    selectedActor: (Int) -> Unit,
     favoriteViewModel: FavoriteViewModel
 ) {
     val favoriteMovies by favoriteViewModel.favoriteMovies.observeAsState(emptyList())
+    val favoriteActors by favoriteViewModel.favoriteActors.observeAsState(emptyList())
 
     val modalSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -37,6 +40,10 @@ fun FavoritesScreen(
 
     val removeFavoriteMovie = { movie: Movie ->
         favoriteViewModel.removeMovieFromFavorites(movie)
+    }
+
+    val removeFavoriteActor = { actor: FavoriteActor ->
+        favoriteViewModel.removeActorFromFavorites(actor)
     }
 
     Surface(
@@ -67,7 +74,10 @@ fun FavoritesScreen(
                     FavoritesScreenUI(
                         favoriteMovies = favoriteMovies,
                         selectedMovie = selectedMovie,
+                        selectedActor = selectedActor,
+                        favoriteActors = favoriteActors,
                         removeFavoriteMovie = removeFavoriteMovie,
+                        removeFavoriteActor = removeFavoriteActor
                     )
                 }
             }

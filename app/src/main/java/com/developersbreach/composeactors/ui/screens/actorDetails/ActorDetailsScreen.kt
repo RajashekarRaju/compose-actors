@@ -1,7 +1,11 @@
 package com.developersbreach.composeactors.ui.screens.actorDetails
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import com.developersbreach.composeactors.ui.screens.actorDetails.composables.FloatingAddActorsToFavoritesButton
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
@@ -32,16 +36,20 @@ internal fun ActorDetailsScreen(
         modalSheetState = modalSheetState
     )
 
-    ActorDetailsUI(
-        detailUIState = detailUIState,
-        sheetUIState = sheetUIState,
-        actorProfileUrl = actorProfileUrl,
-        modalSheetState = modalSheetState,
-        selectedMovie = selectedMovie,
-        navigateUp = navigateUp,
-        openActorDetailsBottomSheet = openActorDetailsBottomSheet,
-        getSelectedMovieDetails = { movieId ->
-            viewModel.getSelectedMovieDetails(movieId)
-        }
-    )
+    Box(modifier = Modifier.fillMaxSize()) {
+        ActorDetailsUI(
+            detailUIState = detailUIState,
+            sheetUIState = sheetUIState,
+            actorProfileUrl = actorProfileUrl,
+            modalSheetState = modalSheetState,
+            selectedMovie = selectedMovie,
+            navigateUp = navigateUp,
+            openActorDetailsBottomSheet = openActorDetailsBottomSheet,
+            getSelectedMovieDetails = { movieId ->
+                viewModel.getSelectedMovieDetails(movieId)
+            }
+        )
+
+        FloatingAddActorsToFavoritesButton(viewModel = viewModel)
+    }
 }

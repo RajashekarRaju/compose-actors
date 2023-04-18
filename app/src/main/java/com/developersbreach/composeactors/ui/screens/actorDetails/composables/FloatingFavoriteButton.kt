@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.screens.movieDetail.composables
+package com.developersbreach.composeactors.ui.screens.actorDetails.composables
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
@@ -22,11 +22,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailViewModel
+import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsViewModel
 
 @Composable
-fun FloatingAddMoviesToFavoritesButton(
-    viewModel: MovieDetailViewModel,
+fun FloatingAddActorsToFavoritesButton(
+    viewModel: ActorDetailsViewModel,
 ) {
     val movieId by viewModel.isFavoriteMovie.observeAsState()
     val isFavoriteMovie = movieId != 0 && movieId != null
@@ -87,11 +87,11 @@ private fun getFavoriteText(
 
 private fun getFavoriteState(
     isFavoriteMovie: Boolean,
-    viewModel: MovieDetailViewModel
+    viewModel: ActorDetailsViewModel
 ) {
     if (!isFavoriteMovie) {
-        viewModel.addMovieToFavorites()
+        viewModel.addActorToFavorites()
     } else {
-        viewModel.removeMovieFromFavorites()
+        viewModel.removeActorFromFavorites()
     }
 }

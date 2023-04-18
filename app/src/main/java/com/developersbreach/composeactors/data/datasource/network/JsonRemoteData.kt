@@ -2,9 +2,9 @@ package com.developersbreach.composeactors.data.datasource.network
 
 import com.developersbreach.composeactors.data.PagedResponse
 import com.developersbreach.composeactors.data.model.*
-import org.json.JSONObject
 import javax.inject.Inject
 import javax.inject.Singleton
+import org.json.JSONObject
 
 /**
  * @property urls for low and high resolution images.
@@ -70,6 +70,7 @@ class JsonRemoteData @Inject constructor(
     ): ActorDetail {
 
         val jsonObject = JSONObject(response)
+        val actorId = jsonObject.getInt("id")
         val actorName = jsonObject.getString("name")
         val biography = jsonObject.getString("biography")
         val dateOfBirth = jsonObject.getString("birthday")
@@ -78,7 +79,15 @@ class JsonRemoteData @Inject constructor(
         val profilePathUrl = jsonObject.getString("profile_path")
         val profilePath = "${HIGH_RES_IMAGE}$profilePathUrl"
 
-        return ActorDetail(actorName, profilePath, biography, dateOfBirth, placeOfBirth, popularity)
+        return ActorDetail(
+            actorId,
+            actorName,
+            profilePath,
+            biography,
+            dateOfBirth,
+            placeOfBirth,
+            popularity
+        )
     }
 
     /**

@@ -8,8 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsViewModel
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
+import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsViewModel
 import com.developersbreach.composeactors.ui.screens.favorites.FavoriteViewModel
 import com.developersbreach.composeactors.ui.screens.favorites.FavoritesScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
@@ -17,8 +17,8 @@ import com.developersbreach.composeactors.ui.screens.home.HomeViewModel
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailScreen
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailViewModel
 import com.developersbreach.composeactors.ui.screens.search.SearchScreen
-import com.developersbreach.composeactors.ui.screens.search.SearchViewModel
 import com.developersbreach.composeactors.ui.screens.search.SearchType
+import com.developersbreach.composeactors.ui.screens.search.SearchViewModel
 
 
 /**
@@ -133,6 +133,7 @@ fun AppNavigation(
             FavoritesScreen(
                 navigateUp = actions.navigateUp,
                 selectedMovie = actions.selectedMovie,
+                selectedActor = actions.selectedActor,
                 favoriteViewModel = favoriteViewModel
             )
         }

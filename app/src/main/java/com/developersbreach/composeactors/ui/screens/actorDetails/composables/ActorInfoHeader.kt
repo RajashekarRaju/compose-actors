@@ -1,7 +1,12 @@
 package com.developersbreach.composeactors.ui.screens.actorDetails.composables
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -150,6 +155,7 @@ private fun ActorInfoHeaderPreview() {
     ComposeActorsTheme {
         ActorInfoHeader(
             actorData = ActorDetail(
+                actorId = 1,
                 actorName = "Kate WinsletKate Winslet",
                 profileUrl = "",
                 biography = "Kate Elizabeth Winslet CBE born 5 October 1975 is an English actress. Known for her work in independent films, particularly period dramas, and for her portrayals of headstrong and complicated women, she has received numerous accolades, including an Academy Award, a Grammy Award, two Primetime Emmy Awards, three BAFTA Awards, and five Golden Globe Awards. Time magazine named Winslet one of the 100 most influential people in the world in 2009 and 2021. She was appointed Commander of the Order of the British Empire (CBE) in 2012.",
