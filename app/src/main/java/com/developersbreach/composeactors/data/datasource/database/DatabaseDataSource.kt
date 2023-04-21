@@ -68,9 +68,9 @@ class DatabaseDataSource @Inject constructor(
     }
 
     suspend fun deleteSelectedFavoriteActor(
-        actor: FavoriteActor
+        favoriteActor: FavoriteActor
     ) = withContext(Dispatchers.IO) {
-        with(actor.actorAsDatabaseModel()) {
+        with(favoriteActor.actorAsDatabaseModel()) {
             database.favoriteActorsDao.deleteSelectedFavoriteActor(favoriteActorsEntity = this)
         }
     }

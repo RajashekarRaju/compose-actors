@@ -88,6 +88,8 @@ class ActorDetailsViewModel @Inject constructor(
                 actorRepository.addActorsToFavorite(
                     actor.toFavoriteActor()
                 )
+            } else {
+                Timber.e("Id of ${actor} was null while adding to favorite operation.")
             }
         }
     }

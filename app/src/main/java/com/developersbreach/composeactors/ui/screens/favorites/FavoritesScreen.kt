@@ -42,8 +42,8 @@ fun FavoritesScreen(
         favoriteViewModel.removeMovieFromFavorites(movie)
     }
 
-    val removeFavoriteActor = { actor: FavoriteActor ->
-        favoriteViewModel.removeActorFromFavorites(actor)
+    val removeFavoriteActor = { favoriteActor: FavoriteActor ->
+        favoriteViewModel.removeActorFromFavorites(favoriteActor)
     }
 
     Surface(

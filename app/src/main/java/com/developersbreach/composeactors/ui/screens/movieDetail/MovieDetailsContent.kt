@@ -69,7 +69,7 @@ fun MovieDetailsContent(
                 movieList = uiState.recommendedMovies,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(52.dp))
         }
     }
 }

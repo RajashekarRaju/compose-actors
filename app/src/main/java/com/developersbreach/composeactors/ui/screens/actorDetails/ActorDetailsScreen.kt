@@ -4,11 +4,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import com.developersbreach.composeactors.ui.screens.actorDetails.composables.FloatingAddActorsToFavoritesButton
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
+import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToFavoritesButton
 import com.developersbreach.composeactors.ui.screens.search.SearchScreen
 
 
@@ -36,6 +40,8 @@ internal fun ActorDetailsScreen(
         modalSheetState = modalSheetState
     )
 
+    val showFab = rememberSaveable { mutableStateOf(true) }
+
     Box(modifier = Modifier.fillMaxSize()) {
         ActorDetailsUI(
             detailUIState = detailUIState,
@@ -47,9 +53,19 @@ internal fun ActorDetailsScreen(
             openActorDetailsBottomSheet = openActorDetailsBottomSheet,
             getSelectedMovieDetails = { movieId ->
                 viewModel.getSelectedMovieDetails(movieId)
-            }
+            },
+            showFab = showFab
         )
 
-        FloatingAddActorsToFavoritesButton(viewModel = viewModel)
+        val movieId by viewModel.isFavoriteMovie.observeAsState()
+        val isFavoriteMovie = movieId != 0 && movieId != null
+
+        if (showFab.value) {
+            FloatingAddToFavoritesButton(
+                isFavoriteMovie,
+                { viewModel.addActorToFavorites() },
+                { viewModel.removeActorFromFavorites() }
+            )
+        }
     }
 }

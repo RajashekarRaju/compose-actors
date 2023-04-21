@@ -43,9 +43,9 @@ class FavoriteViewModel @Inject constructor(
         }
     }
 
-    fun removeActorFromFavorites(actor: FavoriteActor) {
+    fun removeActorFromFavorites(favoriteActor: FavoriteActor) {
         viewModelScope.launch {
-            actorRepository.deleteSelectedFavoriteActor(actor)
+            actorRepository.deleteSelectedFavoriteActor(favoriteActor)
         }
     }
 }

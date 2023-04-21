@@ -7,9 +7,9 @@ import javax.inject.Inject
 class RemoveActorsFromFavoritesUseCase @Inject constructor(
     private val actorRepository: ActorRepository
 ) {
-    suspend operator fun invoke(actor: FavoriteActor) {
+    suspend operator fun invoke(favoriteActor: FavoriteActor) {
         actorRepository.deleteSelectedFavoriteActor(
-            actor = actor
+            favoriteActor = favoriteActor
         )
     }
 }

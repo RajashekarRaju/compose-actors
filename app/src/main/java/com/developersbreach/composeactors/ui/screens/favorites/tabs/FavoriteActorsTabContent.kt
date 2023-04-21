@@ -65,7 +65,7 @@ fun FavoriteActorsTabContent(
 }
 
 @Composable
-fun ItemFavoriteActor(
+private fun ItemFavoriteActor(
     actorItem: FavoriteActor,
     getSelectedActorDetails: (Int) -> Unit,
     removeFavoriteActor: (FavoriteActor) -> Unit
