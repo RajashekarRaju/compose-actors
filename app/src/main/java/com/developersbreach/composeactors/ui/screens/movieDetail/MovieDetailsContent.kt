@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.*
 import kotlinx.coroutines.Job
@@ -20,7 +21,7 @@ fun MovieDetailsContent(
     navigateUp: () -> Unit,
     showFab: MutableState<Boolean>,
     openMovieDetailsBottomSheet: () -> Job,
-    selectedActorDetails: (Int) -> Unit
+    selectBottomSheetCallback: (BottomSheetType) -> Unit
 ) {
     val movieData = uiState.movieData
     val listState = rememberLazyListState()
@@ -56,18 +57,24 @@ fun MovieDetailsContent(
             Spacer(modifier = Modifier.height(16.dp))
             CategoryTitle(title = "Cast", alpha = 1f)
             Spacer(modifier = Modifier.height(16.dp))
-            GetMovieCast(uiState, openMovieDetailsBottomSheet, selectedActorDetails)
+            GetMovieCast(
+                uiState = uiState,
+                openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
+                selectBottomSheetCallback = selectBottomSheetCallback
+            )
             Spacer(modifier = Modifier.height(24.dp))
             CategoryTitle(title = "Similar", alpha = 1f)
-            GetSimilarOrRecommendedMovies(
+            GetRelatedMovies(
                 movieList = uiState.similarMovies,
-                openMovieDetailsBottomSheet = openMovieDetailsBottomSheet
+                openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
+                selectBottomSheetCallback = selectBottomSheetCallback
             )
             Spacer(modifier = Modifier.height(12.dp))
             CategoryTitle(title = "Recommended", alpha = 1f)
-            GetSimilarOrRecommendedMovies(
+            GetRelatedMovies(
                 movieList = uiState.recommendedMovies,
-                openMovieDetailsBottomSheet = openMovieDetailsBottomSheet
+                openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
+                selectBottomSheetCallback = selectBottomSheetCallback
             )
             Spacer(modifier = Modifier.height(12.dp))
         }

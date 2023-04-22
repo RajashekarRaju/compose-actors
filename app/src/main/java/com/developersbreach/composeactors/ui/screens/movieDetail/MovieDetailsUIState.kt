@@ -24,3 +24,8 @@ data class MovieDetailsUIState(
 data class ActorsSheetUIState(
     val selectedActorDetails: ActorDetail? = null
 )
+
+data class MovieSheetUIState(
+    val selectedMovieDetails: MovieDetail? = null
+)
+
