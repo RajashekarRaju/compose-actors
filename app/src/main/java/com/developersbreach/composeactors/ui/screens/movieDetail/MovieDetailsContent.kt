@@ -58,22 +58,22 @@ fun MovieDetailsContent(
             CategoryTitle(title = "Cast", alpha = 1f)
             Spacer(modifier = Modifier.height(16.dp))
             GetMovieCast(
-                uiState,
-                openMovieDetailsBottomSheet,
+                uiState = uiState,
+                openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
                 selectBottomSheetCallback = selectBottomSheetCallback
             )
             Spacer(modifier = Modifier.height(24.dp))
             CategoryTitle(title = "Similar", alpha = 1f)
             GetRelatedMovies(
                 movieList = uiState.similarMovies,
-                openMovieDetailsBottomSheet,
+                openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
                 selectBottomSheetCallback = selectBottomSheetCallback
             )
             Spacer(modifier = Modifier.height(12.dp))
             CategoryTitle(title = "Recommended", alpha = 1f)
             GetRelatedMovies(
                 movieList = uiState.recommendedMovies,
-                openMovieDetailsBottomSheet,
+                openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
                 selectBottomSheetCallback = selectBottomSheetCallback
             )
             Spacer(modifier = Modifier.height(12.dp))
