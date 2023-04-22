@@ -76,7 +76,7 @@ fun MovieDetailsContent(
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
                 selectBottomSheetCallback = selectBottomSheetCallback
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(52.dp))
         }
     }
 }

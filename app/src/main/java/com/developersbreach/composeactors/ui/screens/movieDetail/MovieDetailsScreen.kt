@@ -12,6 +12,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -26,7 +28,7 @@ import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentAct
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
-import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddFavoritesButton
+import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToFavoritesButton
 import kotlinx.coroutines.Job
 
 
@@ -48,6 +50,7 @@ fun MovieDetailScreen(
     val isLayerRevealAnimationEnded = rememberSaveable { mutableStateOf(false) }
     // Change button state with respect to scroll changes.
     val showFab = rememberSaveable { mutableStateOf(true) }
+    val movieId by viewModel.isFavoriteMovie.observeAsState()
 
     val modalSheetState = modalBottomSheetState(
         animationSpec = tween(durationMillis = 300, delayMillis = 50)
@@ -96,7 +99,11 @@ fun MovieDetailScreen(
             // screen placement since it is on top of reveal animation.
             // ShowProgressIndicator(isLoadingData = uiState.isFetchingDetails)
             if (showFab.value) {
-                FloatingAddFavoritesButton(viewModel)
+                FloatingAddToFavoritesButton(
+                    isFavorite = movieId != 0 && movieId != null,
+                    addToFavorites = { viewModel.addMovieToFavorites() },
+                    removeFromFavorites = { viewModel.removeMovieFromFavorites() }
+                )
             }
         }
     }

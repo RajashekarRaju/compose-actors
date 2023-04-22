@@ -17,5 +17,8 @@ data class FavoriteActorsEntity(
     val actorName: String,
 
     @ColumnInfo(name = "column_actor_profileUrl")
-    val actorProfileUrl: String
+    val actorProfileUrl: String,
+
+    @ColumnInfo(name = "column_actor_placeOfBirth")
+    val actorPlaceOfBirth: String
 )

@@ -2,7 +2,6 @@ package com.developersbreach.composeactors.ui.screens.favorites
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,9 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.data.model.FavoriteActor
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
+import com.developersbreach.composeactors.ui.screens.favorites.tabs.FavoriteActorsTabContent
 import com.developersbreach.composeactors.ui.screens.favorites.tabs.FavoriteMoviesTabContent
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
@@ -26,7 +27,10 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 fun FavoritesScreenUI(
     favoriteMovies: List<Movie>,
     selectedMovie: (Int) -> Unit,
-    removeFavoriteMovie: (Movie) -> Unit
+    removeFavoriteMovie: (Movie) -> Unit,
+    selectedActor: (Int) -> Unit,
+    favoriteActors: List<FavoriteActor>,
+    removeFavoriteActor: (FavoriteActor) -> Unit,
 ) {
     val tabPage = rememberSaveable { mutableStateOf(0) }
     val favoriteTabs = listOf(
@@ -46,7 +50,11 @@ fun FavoritesScreenUI(
                 .fillMaxWidth()
         ) {
             when (tabPage.value) {
-                0 -> FeatureComingSoonTextUI()
+                0 -> FavoriteActorsTabContent(
+                    getSelectedActorDetails = selectedActor,
+                    favoriteActors = favoriteActors,
+                    removeFavoriteActor = removeFavoriteActor
+                )
                 1 -> FavoriteMoviesTabContent(
                     getSelectedMovieDetails = selectedMovie,
                     favoriteMovies = favoriteMovies,
@@ -81,7 +89,9 @@ private fun FavoriteScreenUIPreview() {
         FavoritesScreenUI(
             favoriteMovies = emptyList(),
             selectedMovie = {},
-            removeFavoriteMovie = {}
-        )
+            removeFavoriteMovie = {},
+            selectedActor = {},
+            favoriteActors = emptyList()
+        ) {}
     }
 }

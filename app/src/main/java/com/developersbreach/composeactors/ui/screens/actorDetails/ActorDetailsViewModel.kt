@@ -3,17 +3,21 @@ package com.developersbreach.composeactors.ui.screens.actorDetails
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.developersbreach.composeactors.data.model.ActorDetail
+import com.developersbreach.composeactors.data.model.toFavoriteActor
 import com.developersbreach.composeactors.data.repository.actor.ActorRepository
 import com.developersbreach.composeactors.data.repository.movie.MovieRepository
+import com.developersbreach.composeactors.domain.useCase.RemoveActorsFromFavoritesUseCase
 import com.developersbreach.composeactors.ui.navigation.AppDestinations.ACTOR_DETAIL_ID_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * To manage ui state and data for screen ActorDetailsScreen.
@@ -22,7 +26,8 @@ import javax.inject.Inject
 class ActorDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val movieRepository: MovieRepository,
-    private val actorRepository: ActorRepository
+    private val actorRepository: ActorRepository,
+    private val removeActorsFromFavoritesUseCase: RemoveActorsFromFavoritesUseCase
 ) : ViewModel() {
 
     private val actorId: Int = checkNotNull(savedStateHandle[ACTOR_DETAIL_ID_KEY])
@@ -32,6 +37,8 @@ class ActorDetailsViewModel @Inject constructor(
 
     var sheetUIState by mutableStateOf(ActorDetailsSheetUIState())
         private set
+
+    val isFavoriteMovie: LiveData<Int> = actorRepository.isFavoriteActor(actorId)
 
     init {
         viewModelScope.launch {
@@ -70,6 +77,32 @@ class ActorDetailsViewModel @Inject constructor(
                 }
             } catch (e: IOException) {
                 Timber.e("$e")
+            }
+        }
+    }
+
+    fun addActorToFavorites() {
+        viewModelScope.launch {
+            val actor: ActorDetail? = detailUIState.actorData
+            if (actor != null) {
+                actorRepository.addActorsToFavorite(
+                    actor.toFavoriteActor()
+                )
+            } else {
+                Timber.e("Id of ${actor} was null while adding to favorite operation.")
+            }
+        }
+    }
+
+    fun removeActorFromFavorites() {
+        viewModelScope.launch {
+            val actor: ActorDetail? = detailUIState.actorData
+            if (actor != null) {
+                removeActorsFromFavoritesUseCase(
+                    actor.toFavoriteActor()
+                )
+            } else {
+                Timber.e("Id of ${actor} was null while delete operation.")
             }
         }
     }
