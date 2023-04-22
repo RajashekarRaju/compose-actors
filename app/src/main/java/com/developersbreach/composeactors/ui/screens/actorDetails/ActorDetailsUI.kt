@@ -49,7 +49,7 @@ internal fun ActorDetailsUI(
         }
     ) {
         ImageBackgroundThemeGenerator(
-            podcastImageUrl = actorProfileUrl
+            imageUrl = actorProfileUrl
         ) {
             Box {
                 // Draws gradient from image and overlays on it.

@@ -1,9 +1,12 @@
 package com.developersbreach.composeactors.ui.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Tab
@@ -14,33 +17,40 @@ import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TabsContainer(
+    modifier: Modifier = Modifier,
     tabs: List<TabItem>,
-    tabPage: MutableState<Int>
+    pagerState: PagerState
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
     CompositionLocalProvider(
         LocalRippleTheme provides TransparentRippleTheme
     ) {
         TabRow(
+            modifier = modifier.fillMaxWidth(),
             backgroundColor = MaterialTheme.colors.background,
-            selectedTabIndex = tabPage.value,
+            selectedTabIndex = pagerState.currentPage,
+            divider = { },
             indicator = { tabPositions ->
                 RoundedTabIndicator(
-                    modifier = Modifier.tabIndicatorOffset(tabPositions[tabPage.value])
+                    modifier = Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage])
                 )
             }
         ) {
             tabs.forEachIndexed { tabIndex, currentTab ->
                 Tab(
-                    selected = tabPage.value == tabIndex,
+                    selected = pagerState.currentPage == tabIndex,
                     selectedContentColor = MaterialTheme.colors.primary,
                     unselectedContentColor = MaterialTheme.colors.primary.copy(0.50f),
-                    onClick = { tabPage.value = tabIndex },
+                    onClick = { coroutineScope.launch { pagerState.animateScrollToPage(tabIndex) } },
                     text = {
                         Text(
                             text = currentTab.tabName,
@@ -59,7 +69,7 @@ private fun RoundedTabIndicator(
 ) {
     Spacer(
         modifier
-            .padding(horizontal = 24.dp)
+            .padding(horizontal = 40.dp)
             .height(2.dp)
             .background(
                 MaterialTheme.colors.primary,

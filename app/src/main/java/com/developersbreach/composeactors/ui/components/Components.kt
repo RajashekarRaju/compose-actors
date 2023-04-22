@@ -77,11 +77,12 @@ fun ApiKeyMissingShowSnackbar(
 
 @Composable
 fun AppDivider(
-    verticalPadding: Dp
+    verticalPadding: Dp,
+    thickness: Dp = 1.dp
 ) {
     Divider(
         color = MaterialTheme.colors.onBackground.copy(alpha = 0.1f),
-        thickness = 1.dp,
+        thickness = thickness,
         startIndent = 0.dp,
         modifier = Modifier.padding(vertical = verticalPadding)
     )

@@ -1,18 +1,19 @@
 package com.developersbreach.composeactors.ui.screens.home
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
 import com.developersbreach.composeactors.ui.screens.home.tabs.ActorsTabContent
@@ -22,6 +23,7 @@ import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.flow.emptyFlow
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreenUI(
     selectedActor: (Int) -> Unit,
@@ -31,7 +33,9 @@ fun HomeScreenUI(
     favoriteMovies: List<Movie>,
     updateSearchType: (SearchType) -> Unit
 ) {
-    val tabPage = rememberSaveable { mutableStateOf(0) }
+    val popularActorsListState = rememberLazyListState()
+    val trendingActorsListState = rememberLazyListState()
+    val homePagerState = rememberPagerState()
     val homeTabs = listOf(
         TabItem("Actors"),
         TabItem("Movies"),
@@ -41,24 +45,24 @@ fun HomeScreenUI(
     Column(
         Modifier.fillMaxSize()
     ) {
-
-        TabsContainer(homeTabs, tabPage)
-
+        TabsContainer(tabs = homeTabs, pagerState = homePagerState)
+        AppDivider(thickness = 1.dp, verticalPadding = 0.dp)
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
-
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
+        HorizontalPager(
+            state = homePagerState,
+            pageCount = homeTabs.size
         ) {
-            when (tabPage.value) {
+            when (it) {
                 0 -> {
                     updateSearchType(SearchType.Actors)
                     ActorsTabContent(
                         homeUIState = homeUIState,
-                        getSelectedActorDetails = selectedActor
+                        getSelectedActorDetails = selectedActor,
+                        popularActorsListState = popularActorsListState,
+                        trendingActorsListState = trendingActorsListState
                     )
                 }
+
                 1 -> {
                     updateSearchType(SearchType.Movies)
                     MoviesTabContent(
@@ -67,6 +71,7 @@ fun HomeScreenUI(
                         getSelectedMovieDetails = selectedMovie
                     )
                 }
+
                 2 -> {
                     TvShowsTabContent(
                         homeSheetUIState = homeSheetUIState
