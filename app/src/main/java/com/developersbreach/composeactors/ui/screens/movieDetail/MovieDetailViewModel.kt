@@ -12,6 +12,7 @@ import com.developersbreach.composeactors.data.model.MovieDetail
 import com.developersbreach.composeactors.data.repository.actor.ActorRepository
 import com.developersbreach.composeactors.data.repository.movie.MovieRepository
 import com.developersbreach.composeactors.ui.navigation.AppDestinations.MOVIE_DETAILS_ID_KEY
+import com.developersbreach.composeactors.domain.useCase.RemoveMovieFromFavoritesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -22,7 +23,8 @@ import javax.inject.Inject
 class MovieDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val movieRepository: MovieRepository,
-    private val actorRepository: ActorRepository
+    private val actorRepository: ActorRepository,
+    private val removeMovieFromFavoritesUseCase: RemoveMovieFromFavoritesUseCase,
 ) : ViewModel() {
 
     private val movieId: Int = checkNotNull(savedStateHandle[MOVIE_DETAILS_ID_KEY])
@@ -66,7 +68,8 @@ class MovieDetailViewModel @Inject constructor(
                     Movie(
                         movieId = movie.movieId,
                         movieName = movie.movieTitle,
-                        posterPathUrl = movie.poster
+                        posterPathUrl = movie.poster,
+                        bannerUrl = movie.banner,
                     )
                 )
             }
@@ -77,13 +80,16 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             val movie: MovieDetail? = uiState.movieData
             if (movie != null) {
-                movieRepository.deleteSelectedFavoriteMovie(
+                removeMovieFromFavoritesUseCase(
                     Movie(
                         movieId = movie.movieId,
                         movieName = movie.movieTitle,
-                        posterPathUrl = movie.poster
+                        posterPathUrl = movie.poster,
+                        bannerUrl = movie.banner,
                     )
                 )
+            } else {
+                Timber.e("Id of $movie was null while delete operation.")
             }
         }
     }

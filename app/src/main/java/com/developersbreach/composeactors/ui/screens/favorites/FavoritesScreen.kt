@@ -17,6 +17,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -33,6 +34,10 @@ fun FavoritesScreen(
         animationSpec = tween(durationMillis = 500),
         skipHalfExpanded = true
     )
+
+    val removeFavoriteMovie = { movie: Movie ->
+        favoriteViewModel.removeMovieFromFavorites(movie)
+    }
 
     Surface(
         color = MaterialTheme.colors.background,
@@ -61,7 +66,8 @@ fun FavoritesScreen(
                 ) {
                     FavoritesScreenUI(
                         favoriteMovies = favoriteMovies,
-                        selectedMovie = selectedMovie
+                        selectedMovie = selectedMovie,
+                        removeFavoriteMovie = removeFavoriteMovie,
                     )
                 }
             }
