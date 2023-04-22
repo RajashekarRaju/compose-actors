@@ -55,9 +55,8 @@ fun FavoriteActorsTabContent(
             .padding(top = 8.dp),
         pageCount = favoriteActors.size
     ) { currentPage ->
-        val actor = favoriteActors[currentPage]
         ItemFavoriteActor(
-            actorItem = actor,
+            actorItem = favoriteActors[currentPage],
             getSelectedActorDetails = getSelectedActorDetails,
             removeFavoriteActor = removeFavoriteActor
         )

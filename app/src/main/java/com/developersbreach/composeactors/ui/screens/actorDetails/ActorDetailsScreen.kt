@@ -34,6 +34,7 @@ internal fun ActorDetailsScreen(
     val detailUIState = viewModel.detailUIState
     val sheetUIState = viewModel.sheetUIState
     val actorProfileUrl = "${detailUIState.actorData?.profileUrl}"
+    val movieId by viewModel.isFavoriteMovie.observeAsState()
 
     val modalSheetState = modalBottomSheetState()
     val openActorDetailsBottomSheet = manageModalBottomSheet(
@@ -51,20 +52,17 @@ internal fun ActorDetailsScreen(
             selectedMovie = selectedMovie,
             navigateUp = navigateUp,
             openActorDetailsBottomSheet = openActorDetailsBottomSheet,
+            showFab = showFab,
             getSelectedMovieDetails = { movieId ->
                 viewModel.getSelectedMovieDetails(movieId)
-            },
-            showFab = showFab
+            }
         )
-
-        val movieId by viewModel.isFavoriteMovie.observeAsState()
-        val isFavoriteMovie = movieId != 0 && movieId != null
 
         if (showFab.value) {
             FloatingAddToFavoritesButton(
-                isFavoriteMovie,
-                { viewModel.addActorToFavorites() },
-                { viewModel.removeActorFromFavorites() }
+                isFavorite = movieId != 0 && movieId != null,
+                addToFavorites = { viewModel.addActorToFavorites() },
+                removeFromFavorites = { viewModel.removeActorFromFavorites() }
             )
         }
     }

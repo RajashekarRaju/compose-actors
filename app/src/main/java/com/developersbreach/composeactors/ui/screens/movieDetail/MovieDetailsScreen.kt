@@ -47,6 +47,7 @@ fun MovieDetailScreen(
     val isLayerRevealAnimationEnded = rememberSaveable { mutableStateOf(false) }
     // Change button state with respect to scroll changes.
     val showFab = rememberSaveable { mutableStateOf(true) }
+    val movieId by viewModel.isFavoriteMovie.observeAsState()
 
     val modalSheetState = modalBottomSheetState(
         animationSpec = tween(durationMillis = 300, delayMillis = 50)
@@ -88,12 +89,10 @@ fun MovieDetailScreen(
             // screen placement since it is on top of reveal animation.
             // ShowProgressIndicator(isLoadingData = uiState.isFetchingDetails)
             if (showFab.value) {
-                val movieId by viewModel.isFavoriteMovie.observeAsState()
-                val isFavoriteMovie = movieId != 0 && movieId != null
                 FloatingAddToFavoritesButton(
-                    isFavoriteMovie,
-                    { viewModel.addMovieToFavorites() },
-                    { viewModel.removeMovieFromFavorites() }
+                    isFavorite = movieId != 0 && movieId != null,
+                    addToFavorites = { viewModel.addMovieToFavorites() },
+                    removeFromFavorites = { viewModel.removeMovieFromFavorites() }
                 )
             }
         }

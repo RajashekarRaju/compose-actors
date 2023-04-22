@@ -52,9 +52,9 @@ class DatabaseDataSource @Inject constructor(
     }
 
     suspend fun addActorToFavorites(
-        actor: FavoriteActor
+        favoriteActor: FavoriteActor
     ) = withContext(Dispatchers.IO) {
-        with(actor.actorAsDatabaseModel()) {
+        with(favoriteActor.actorAsDatabaseModel()) {
             database.favoriteActorsDao.addActorToFavorites(favoriteActorsEntity = this)
         }
     }

@@ -39,8 +39,8 @@ class ActorRepository @Inject constructor(
         return databaseDataSource.checkIfActorIsFavorite(actorId)
     }
 
-    suspend fun addActorsToFavorite(actor: FavoriteActor) {
-        databaseDataSource.addActorToFavorites(actor)
+    suspend fun addActorsToFavorite(favoriteActor: FavoriteActor) {
+        databaseDataSource.addActorToFavorites(favoriteActor)
     }
 
     suspend fun deleteSelectedFavoriteActor(favoriteActor: FavoriteActor) {
