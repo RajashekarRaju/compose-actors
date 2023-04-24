@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
 import coil.Coil
+import coil.imageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import coil.size.Scale
@@ -123,7 +124,7 @@ private suspend fun calculateSwatchesInImage(
         .allowHardware(false)
         .build()
 
-    val bitmap = when (val result = Coil.execute(r)) {
+    val bitmap = when (val result = r.context.imageLoader.execute(r)) {
         is SuccessResult -> result.drawable.toBitmap()
         else -> null
     }
@@ -147,10 +148,10 @@ private suspend fun calculateSwatchesInImage(
 
 @Composable
 fun ImageBackgroundThemeGenerator(
-    podcastImageUrl: String,
+    imageUrl: String,
+    backgroundColor: Color = MaterialTheme.colors.background,
     content: @Composable () -> Unit
 ) {
-    val backgroundColor = MaterialTheme.colors.background
     val dominantColorState = rememberDominantColorState(
         defaultColor = MaterialTheme.colors.background
     ) { color ->
@@ -159,8 +160,8 @@ fun ImageBackgroundThemeGenerator(
     }
     DynamicThemePrimaryColorsFromImage(dominantColorState) {
         // Update the dominantColorState with colors coming from the podcast image URL
-        LaunchedEffect(podcastImageUrl) {
-            dominantColorState.updateColorsFromImageUrl(podcastImageUrl)
+        LaunchedEffect(imageUrl) {
+            dominantColorState.updateColorsFromImageUrl(imageUrl)
         }
         content()
     }
