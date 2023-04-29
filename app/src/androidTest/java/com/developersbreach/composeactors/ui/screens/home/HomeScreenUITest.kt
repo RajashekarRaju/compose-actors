@@ -3,11 +3,16 @@ package com.developersbreach.composeactors.ui.screens.home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.paging.PagingData
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.developersbreach.composeactors.data.model.Actor
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.screens.search.SearchType
+import kotlinx.coroutines.flow.flowOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,22 +24,32 @@ class HomeScreenUITest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private val mockHomeUIState: HomeUIState = HomeUIState(
+        popularActorList = popularActorList,
+        trendingActorList = trendingActorList,
+        isFetchingActors = false,
+        upcomingMoviesList = upcomingMoviesList,
+        nowPlayingMoviesList = flowOf(PagingData.from(nowPlayingMoviesList))
+    )
+
     @Composable
     private fun HomeScreenUIContent(
         selectedActor: (actorId: Int) -> Unit = { },
         selectedMovie: (movieId: Int) -> Unit = { },
-        favoriteMovies: List<Movie> = emptyList(),
         updateSearchType: (searchType: SearchType) -> Unit = {  },
+        navigateToSearchBySearchType: SearchType = SearchType.Actors,
         homeSheetUIState: HomeSheetUIState = HomeSheetUIState(),
-        homeUIState: HomeUIState = HomeUIState()
+        homeUIState: HomeUIState = mockHomeUIState
     ) {
         HomeScreenUI(
             selectedActor = selectedActor,
             selectedMovie = selectedMovie,
-            homeSheetUIState = homeSheetUIState,
-            favoriteMovies = favoriteMovies,
-            updateSearchType = updateSearchType,
-            homeUIState = homeUIState,
+            navigateToFavorite = {},
+            navigateToSearch = {},
+            navigateToSearchBySearchType = navigateToSearchBySearchType,
+            uiState = homeUIState,
+            sheetUiState = homeSheetUIState,
+            updateHomeSearchType = updateSearchType,
         )
     }
 
@@ -58,5 +73,128 @@ class HomeScreenUITest {
             .onNodeWithText(text = "TV Shows")
             .assertIsDisplayed()
             .performClick()
+    }
+
+    @Test
+    fun assertPopularAndTrendingActorsItemsAreVisibleInHomeScreen() {
+        composeTestRule.setContent {
+            HomeScreenUIContent()
+        }
+
+        composeTestRule
+            .onNodeWithText(text = "Monica Bellucci")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithText(text = "Daniel Craig")
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun onClickAnyActorItem_InActorsTab_shouldNavigateToActorDetailsScreen() {
+        composeTestRule.setContent {
+            HomeScreenUIContent()
+        }
+
+        // We need to be in actors tab for actors list to appear and interact
+        composeTestRule
+            .onNodeWithText(text = "Actors")
+            .assertIsDisplayed()
+            .performClick()
+
+        // Click actor with name on home screen
+        composeTestRule
+            .onNodeWithText(text = "Monica Bellucci")
+            .assertIsDisplayed()
+            .performClick()
+
+        // If actors name visible in details screen, we have navigated to details screen
+        composeTestRule
+            .onNodeWithText("Monica Bellucci")
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun onClickAnyMovieItem_InMoviesTab_shouldNavigateToMovieDetailsScreen() {
+        composeTestRule.setContent {
+            HomeScreenUIContent()
+        }
+
+        // We need to be in movies tab for movies to appear and interact
+        composeTestRule
+            .onNodeWithText(text = "Movies")
+            .assertIsDisplayed()
+            .performClick()
+
+        // Click movie with name on home screen
+        composeTestRule
+            .onNodeWithContentDescription(label = "Oppenheimer")
+            .assertIsDisplayed()
+            .performClick()
+    }
+
+    @Test
+    fun onClickSearchTopAppBar_shouldNavigateToSearchScreen() {
+        composeTestRule.setContent {
+            HomeScreenUIContent(
+                navigateToSearchBySearchType = SearchType.Actors
+            )
+        }
+
+        // We need to be in actors tab for actors list to appear and interact
+        composeTestRule
+            .onNodeWithText(text = "Actors")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithTag(testTag = "TestTag:HomeTopAppBar")
+            .assertExists()
+            .performClick()
+    }
+
+    companion object {
+        val popularActorList = listOf(
+            Actor(
+                actorId = 28782,
+                actorName = "Monica Bellucci",
+                profileUrl = "z3sLuRKP7hQVrvSTsqdLjGSldwG.jpg"
+            ),
+            Actor(
+                actorId = 287,
+                actorName = "Brad Pitt",
+                profileUrl = "kU3B75TyRiCgE270EyZnHjfivoq.jpg"
+            )
+        )
+        val trendingActorList = listOf(
+            Actor(
+                actorId = 8784,
+                actorName = "Daniel Craig",
+                profileUrl = "rFuETZeyOAfIqBahOObF7Soq5Dh.jpg"
+            ),
+            Actor(
+                actorId = 1892,
+                actorName = "Matt Damon",
+                profileUrl = "7wbHIn7GziFlJLPl8Zu1XVl24EG.jpg"
+            ),
+        )
+
+        val upcomingMoviesList = listOf(
+            Movie(
+                movieId = 363736, movieName = "Oppenheimer", posterPathUrl = "", bannerUrl = ""
+            ),
+            Movie(
+                movieId = 123434, movieName = "Dune", posterPathUrl = "", bannerUrl = ""
+            )
+        )
+
+        val nowPlayingMoviesList = listOf(
+            Movie(
+                movieId = 157336, movieName = "Interstellar", posterPathUrl = "", bannerUrl = ""
+            ),
+            Movie(
+                movieId = 244786, movieName = "Whiplash", posterPathUrl = "", bannerUrl = ""
+            )
+        )
     }
 }
