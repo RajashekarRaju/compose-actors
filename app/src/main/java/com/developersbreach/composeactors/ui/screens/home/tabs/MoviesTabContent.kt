@@ -105,7 +105,7 @@ private fun UpcomingMovies(
         ) { movieItem ->
             LoadNetworkImage(
                 imageUrl = movieItem.posterPathUrl,
-                contentDescription = "",
+                contentDescription = movieItem.movieName,
                 shape = MaterialTheme.shapes.large,
                 showAnimProgress = false,
                 modifier = modifier

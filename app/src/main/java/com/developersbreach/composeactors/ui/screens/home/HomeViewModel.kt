@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.repository.actor.ActorRepository
 import com.developersbreach.composeactors.data.repository.movie.MovieRepository
 import com.developersbreach.composeactors.domain.GetPagedMovies
@@ -33,8 +32,6 @@ class HomeViewModel @Inject constructor(
 
     var sheetUiState by mutableStateOf(HomeSheetUIState())
         private set
-
-    val favoriteMovies: LiveData<List<Movie>> = movieRepository.getAllFavoriteMovies()
 
     private val _updateHomeSearchType = MutableLiveData<SearchType>()
     val updateHomeSearchType: LiveData<SearchType> = _updateHomeSearchType

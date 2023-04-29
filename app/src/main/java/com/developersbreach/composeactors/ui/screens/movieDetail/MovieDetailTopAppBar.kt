@@ -27,19 +27,20 @@ import com.developersbreach.composeactors.R
  */
 @Composable
 fun MovieDetailTopAppBar(
+    modifier: Modifier = Modifier,
     navigateUp: () -> Unit,
     title: String?,
     showTopBarBackground: State<Boolean>
 ) {
-    val modifier = if (showTopBarBackground.value) {
-        Modifier.background(color = MaterialTheme.colors.background)
+    val conditionalModifier = if (showTopBarBackground.value) {
+        modifier.background(color = MaterialTheme.colors.background)
     } else {
-        Modifier
+        modifier
     }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
+        modifier = conditionalModifier
             .fillMaxWidth()
             .statusBarsPadding()
     ) {

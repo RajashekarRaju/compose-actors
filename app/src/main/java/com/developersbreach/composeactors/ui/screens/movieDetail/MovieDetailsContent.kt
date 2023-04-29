@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.ui.components.CategoryTitle
@@ -17,6 +18,7 @@ import kotlinx.coroutines.Job
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieDetailsContent(
+    modifier: Modifier = Modifier,
     uiState: MovieDetailsUIState,
     navigateUp: () -> Unit,
     showFab: MutableState<Boolean>,
@@ -36,11 +38,12 @@ fun MovieDetailsContent(
 
     LazyColumn(
         state = listState,
-        modifier = Modifier.navigationBarsPadding()
+        modifier = modifier.navigationBarsPadding()
     ) {
 
         stickyHeader {
             MovieDetailTopAppBar(
+                modifier = modifier.testTag("TestTag:MovieDetailTopAppBar"),
                 navigateUp = navigateUp,
                 title = movieData?.movieTitle,
                 showTopBarBackground = showTopBarBackground

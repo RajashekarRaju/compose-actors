@@ -1,20 +1,10 @@
 package com.developersbreach.composeactors.ui.screens.home
 
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
-import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
-import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackbar
-import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 
 /**
@@ -27,7 +17,6 @@ import com.developersbreach.composeactors.ui.screens.search.SearchType
  * Shows [HomeTopAppBar] search box looking ui in [TopAppBar]
  * If user is offline shows snackbar message.
  */
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
     selectedActor: (Int) -> Unit,
@@ -36,75 +25,19 @@ fun HomeScreen(
     navigateToFavorite: () -> Unit,
     homeViewModel: HomeViewModel
 ) {
-    // Remember state of scaffold to manage snackbar
-    val scaffoldState = rememberScaffoldState()
-
-    val modalSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        animationSpec = tween(durationMillis = 500),
-        skipHalfExpanded = true
-    )
-
-    val favoriteMovies by homeViewModel.favoriteMovies.observeAsState(emptyList())
     val navigateToSearchBySearchType by homeViewModel.updateHomeSearchType.observeAsState(SearchType.Actors)
 
-    Surface(
-        color = MaterialTheme.colors.background,
-    ) {
-        ModalBottomSheetLayout(
-            sheetState = modalSheetState,
-            scrimColor = Color.Black.copy(alpha = 0.5f),
-            sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-            sheetBackgroundColor = MaterialTheme.colors.background,
-            sheetContent = {
-                OptionsModalSheetContent(
-                    modalSheetSheet = modalSheetState,
-                    navigateToFavorite = navigateToFavorite,
-                    navigateToSearch = { navigateToSearch(SearchType.Movies) },
-                    navigateToProfile = { }
-                )
-            },
-        ) {
-            Scaffold(
-                // attach snackbar host state to the scaffold
-                scaffoldState = scaffoldState,
-                // Custom AppBar contains fake search bar.
-                topBar = {
-                    HomeTopAppBar(
-                        navigateToSearch = navigateToSearch,
-                        searchType = navigateToSearchBySearchType
-                    )
-                },
-                bottomBar = {
-                    HomeBottomBar(
-                        modalSheetSheet = modalSheetState
-                    )
-                },
-                // Host for custom snackbar
-                snackbarHost = { HomeSnackbar(it) }
-            ) { paddingValues ->
-                Box(
-                    modifier = Modifier.padding(paddingValues = paddingValues)
-                ) {
-                    // Main content for this screen
-                    HomeScreenUI(
-                        selectedActor = selectedActor,
-                        homeUIState = homeViewModel.uiState,
-                        homeSheetUIState = homeViewModel.sheetUiState,
-                        favoriteMovies = favoriteMovies,
-                        selectedMovie = selectedMovie,
-                        updateSearchType = { searchType: SearchType ->
-                            homeViewModel.updateHomeSearchType(searchType)
-                        }
-                    )
-
-                    // Perform network check and show snackbar if offline
-                    IfOfflineShowSnackbar(scaffoldState)
-
-                    // If Api key is missing, show a SnackBar.
-                    ApiKeyMissingShowSnackbar(scaffoldState)
-                }
-            }
+    HomeScreenUI(
+        modifier = Modifier,
+        navigateToFavorite = navigateToFavorite,
+        navigateToSearch = navigateToSearch,
+        navigateToSearchBySearchType = navigateToSearchBySearchType,
+        selectedActor = selectedActor,
+        selectedMovie = selectedMovie,
+        uiState = homeViewModel.uiState,
+        sheetUiState = homeViewModel.sheetUiState,
+        updateHomeSearchType = { searchType: SearchType ->
+            homeViewModel.updateHomeSearchType(searchType)
         }
-    }
+    )
 }

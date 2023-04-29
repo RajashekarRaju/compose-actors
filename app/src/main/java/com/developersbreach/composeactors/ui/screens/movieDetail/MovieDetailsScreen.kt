@@ -1,9 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.movieDetail
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.ui.animations.LayerRevealImage
@@ -29,7 +27,6 @@ import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMov
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToFavoritesButton
-import kotlinx.coroutines.Job
 
 
 /**
@@ -81,13 +78,14 @@ fun MovieDetailScreen(
         },
     ) {
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize().testTag("TestTag:MovieDetailScreen")
         ) {
             // Background poster with layer reveal effect
             LayerRevealImage(uiState.movieData?.poster, isLayerRevealAnimationEnded)
             // Fade enter animation detail screen once layer reveal completes
             if (isLayerRevealAnimationEnded.value) {
-                AnimateMovieDetailScreenContent(
+                MovieDetailsUI(
+                    modifier = Modifier,
                     uiState = uiState,
                     navigateUp = navigateUp,
                     showFab = showFab,
@@ -144,34 +142,4 @@ private fun setBottomSheetCallBack(
         }
     }
     selectedBottomSheet.value = bottomSheetType
-}
-
-@Composable
-private fun AnimateMovieDetailScreenContent(
-    uiState: MovieDetailsUIState,
-    navigateUp: () -> Unit,
-    showFab: MutableState<Boolean>,
-    openMovieDetailsBottomSheet: () -> Job,
-    selectBottomSheetCallback: (BottomSheetType) -> Unit
-) {
-    val state = remember {
-        MutableTransitionState(false).apply {
-            // Start the animation immediately.
-            targetState = true
-        }
-    }
-
-    AnimatedVisibility(
-        visibleState = state,
-        enter = fadeIn()
-    ) {
-        // Main details content
-        MovieDetailsUI(
-            uiState = uiState,
-            navigateUp = navigateUp,
-            showFab = showFab,
-            openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
-            selectBottomSheetCallback = selectBottomSheetCallback
-        )
-    }
 }

@@ -1,6 +1,8 @@
 package com.developersbreach.composeactors.ui.screens.home
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,29 +10,123 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.components.AppDivider
+import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
+import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackbar
 import com.developersbreach.composeactors.ui.screens.home.tabs.ActorsTabContent
 import com.developersbreach.composeactors.ui.screens.home.tabs.MoviesTabContent
 import com.developersbreach.composeactors.ui.screens.home.tabs.TvShowsTabContent
+import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.flow.emptyFlow
 
+@Composable
+@OptIn(ExperimentalMaterialApi::class)
+fun HomeScreenUI(
+    modifier: Modifier = Modifier,
+    navigateToFavorite: () -> Unit,
+    navigateToSearch: (SearchType) -> Unit,
+    navigateToSearchBySearchType: SearchType,
+    selectedActor: (Int) -> Unit,
+    selectedMovie: (Int) -> Unit,
+    uiState: HomeUIState,
+    sheetUiState: HomeSheetUIState,
+    updateHomeSearchType: (SearchType) -> Unit
+) {
+    // Remember state of scaffold to manage snackbar
+    val scaffoldState = rememberScaffoldState()
+    val modalSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        animationSpec = tween(durationMillis = 500),
+        skipHalfExpanded = true
+    )
+
+    Surface(
+        color = MaterialTheme.colors.background,
+        modifier = modifier
+    ) {
+        ModalBottomSheetLayout(
+            sheetState = modalSheetState,
+            scrimColor = Color.Black.copy(alpha = 0.5f),
+            sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+            sheetBackgroundColor = MaterialTheme.colors.background,
+            sheetContent = {
+                OptionsModalSheetContent(
+                    modalSheetSheet = modalSheetState,
+                    navigateToFavorite = navigateToFavorite,
+                    navigateToSearch = { navigateToSearch(SearchType.Movies) },
+                    navigateToProfile = { }
+                )
+            },
+        ) {
+            Scaffold(
+                // attach snackbar host state to the scaffold
+                scaffoldState = scaffoldState,
+                // Custom AppBar contains fake search bar.
+                topBar = {
+                    HomeTopAppBar(
+                        modifier = Modifier.testTag("TestTag:HomeTopAppBar"),
+                        navigateToSearch = navigateToSearch,
+                        searchType = navigateToSearchBySearchType
+                    )
+                },
+                bottomBar = {
+                    HomeBottomBar(
+                        modalSheetSheet = modalSheetState
+                    )
+                },
+                // Host for custom snackbar
+                snackbarHost = { HomeSnackbar(it) }
+            ) { paddingValues ->
+                Box(
+                    modifier = modifier.padding(paddingValues = paddingValues)
+                ) {
+                    // Main content for this screen
+                    HomeScreenUI(
+                        selectedActor = selectedActor,
+                        homeUIState = uiState,
+                        homeSheetUIState = sheetUiState,
+                        selectedMovie = selectedMovie,
+                        updateSearchType = updateHomeSearchType
+                    )
+
+                    // Perform network check and show snackbar if offline
+                    IfOfflineShowSnackbar(scaffoldState)
+
+                    // If Api key is missing, show a SnackBar.
+                    ApiKeyMissingShowSnackbar(scaffoldState)
+                }
+            }
+        }
+    }
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreenUI(
+private fun HomeScreenUI(
     selectedActor: (Int) -> Unit,
     selectedMovie: (Int) -> Unit,
     homeUIState: HomeUIState,
     homeSheetUIState: HomeSheetUIState,
-    favoriteMovies: List<Movie>,
     updateSearchType: (SearchType) -> Unit
 ) {
     val popularActorsListState = rememberLazyListState()
@@ -99,7 +195,6 @@ private fun HomeScreenUIPreview() {
             homeSheetUIState = HomeSheetUIState(
                 selectedMovieDetails = null
             ),
-            favoriteMovies = emptyList(),
             updateSearchType = {}
         )
     }

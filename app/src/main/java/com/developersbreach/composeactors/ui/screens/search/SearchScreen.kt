@@ -11,6 +11,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.ShowSearchProgress
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
@@ -44,7 +46,8 @@ fun SearchScreen(
     }
 
     Surface(
-        color = MaterialTheme.colors.background
+        color = MaterialTheme.colors.background,
+        modifier = Modifier.semantics { testTag = "TestTag:SearchScreen" }
     ) {
         Scaffold(
             topBar = {
