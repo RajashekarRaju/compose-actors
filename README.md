@@ -7,8 +7,8 @@
 - [x] Restructure packages and files by introducing new source files.
 - [ ] ~Replace every Spacer composable used in code with various custom AppSpacer.~
 - [x] Separate the ViewModel param from Screen and UI composables to see previews for all screens.
-- [ ] Break composables into smaller for previewing.
-- [x] Break composables into smaller and move them to separate composables packages in each screen.
+- [x] Break composables into smaller for previewing.
+- [x] Separate composables into Screen and UI to separated ViewModel usage and previewing for all screens.
 - [x] Add feature for adding actors to favorites like movies.
 - [x] Add bottom sheet to home screen to support navigation for various screens.
 - [x] Implement paging to upcoming lazy list movies in home tab.
