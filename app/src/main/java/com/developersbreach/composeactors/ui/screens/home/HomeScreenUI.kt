@@ -25,19 +25,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.data.datasource.fake.fakeActorsList
+import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
+import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
-import com.developersbreach.composeactors.ui.screens.home.composables.HomeSnackbar
 import com.developersbreach.composeactors.ui.screens.home.tabs.ActorsTabContent
 import com.developersbreach.composeactors.ui.screens.home.tabs.MoviesTabContent
 import com.developersbreach.composeactors.ui.screens.home.tabs.TvShowsTabContent
 import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
-import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flow
 
 @Composable
 @OptIn(ExperimentalMaterialApi::class)
@@ -46,8 +48,8 @@ fun HomeScreenUI(
     navigateToFavorite: () -> Unit,
     navigateToSearch: (SearchType) -> Unit,
     navigateToSearchBySearchType: SearchType,
-    selectedActor: (Int) -> Unit,
-    selectedMovie: (Int) -> Unit,
+    navigateToSelectedActor: (Int) -> Unit,
+    navigateToSelectedMovie: (Int) -> Unit,
     uiState: HomeUIState,
     sheetUiState: HomeSheetUIState,
     updateHomeSearchType: (SearchType) -> Unit
@@ -64,6 +66,7 @@ fun HomeScreenUI(
         color = MaterialTheme.colors.background,
         modifier = modifier
     ) {
+        // TODO Replace ModalSheet with BottomSheetScaffold
         ModalBottomSheetLayout(
             sheetState = modalSheetState,
             scrimColor = Color.Black.copy(alpha = 0.5f),
@@ -102,10 +105,10 @@ fun HomeScreenUI(
                 ) {
                     // Main content for this screen
                     HomeScreenUI(
-                        selectedActor = selectedActor,
+                        navigateToSelectedActor = navigateToSelectedActor,
                         homeUIState = uiState,
                         homeSheetUIState = sheetUiState,
-                        selectedMovie = selectedMovie,
+                        navigateToSelectedMovie = navigateToSelectedMovie,
                         updateSearchType = updateHomeSearchType
                     )
 
@@ -123,11 +126,11 @@ fun HomeScreenUI(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HomeScreenUI(
-    selectedActor: (Int) -> Unit,
-    selectedMovie: (Int) -> Unit,
+    navigateToSelectedActor: (Int) -> Unit,
+    navigateToSelectedMovie: (Int) -> Unit,
     homeUIState: HomeUIState,
     homeSheetUIState: HomeSheetUIState,
-    updateSearchType: (SearchType) -> Unit
+    updateSearchType: (navigateToSearchByType: SearchType) -> Unit
 ) {
     val popularActorsListState = rememberLazyListState()
     val trendingActorsListState = rememberLazyListState()
@@ -153,7 +156,7 @@ private fun HomeScreenUI(
                     updateSearchType(SearchType.Actors)
                     ActorsTabContent(
                         homeUIState = homeUIState,
-                        getSelectedActorDetails = selectedActor,
+                        navigateToSelectedActor = navigateToSelectedActor,
                         popularActorsListState = popularActorsListState,
                         trendingActorsListState = trendingActorsListState
                     )
@@ -164,7 +167,7 @@ private fun HomeScreenUI(
                     MoviesTabContent(
                         homeUIState = homeUIState,
                         homeSheetUIState = homeSheetUIState,
-                        getSelectedMovieDetails = selectedMovie
+                        navigateToSelectedMovie = navigateToSelectedMovie
                     )
                 }
 
@@ -178,24 +181,42 @@ private fun HomeScreenUI(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-private fun HomeScreenUIPreview() {
-    ComposeActorsTheme {
+private fun HomeScreenUILightPreview() {
+    ComposeActorsTheme(darkTheme = false) {
         HomeScreenUI(
-            selectedActor = {},
-            selectedMovie = {},
+            navigateToSelectedActor = {},
+            navigateToSelectedMovie = {},
+            homeSheetUIState = HomeSheetUIState(fakeMovieDetail),
+            updateSearchType = {},
             homeUIState = HomeUIState(
-                popularActorList = listOf(),
-                trendingActorList = listOf(),
+                popularActorList = fakeActorsList(),
+                trendingActorList = fakeActorsList(),
                 isFetchingActors = false,
-                upcomingMoviesList = listOf(),
-                nowPlayingMoviesList = emptyFlow()
+                upcomingMoviesList = fakeMovieList(),
+                nowPlayingMoviesList = flow { fakeMovieList() }
             ),
-            homeSheetUIState = HomeSheetUIState(
-                selectedMovieDetails = null
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@Composable
+private fun HomeScreenUIDarkPreview() {
+    ComposeActorsTheme(darkTheme = true) {
+        HomeScreenUI(
+            navigateToSelectedActor = {},
+            navigateToSelectedMovie = {},
+            homeSheetUIState = HomeSheetUIState(fakeMovieDetail),
+            updateSearchType = {},
+            homeUIState = HomeUIState(
+                popularActorList = fakeActorsList(),
+                trendingActorList = fakeActorsList(),
+                isFetchingActors = false,
+                upcomingMoviesList = fakeMovieList(),
+                nowPlayingMoviesList = flow { fakeMovieList() }
             ),
-            updateSearchType = {}
         )
     }
 }

@@ -1,18 +1,10 @@
 package com.developersbreach.composeactors.ui.screens.actorDetails
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
-import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
-import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
-import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToFavoritesButton
 import com.developersbreach.composeactors.ui.screens.search.SearchScreen
 
 
@@ -24,46 +16,24 @@ import com.developersbreach.composeactors.ui.screens.search.SearchScreen
  *
  * This destination can be accessed from [HomeScreen] & [SearchScreen].
  */
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun ActorDetailsScreen(
-    selectedMovie: (Int) -> Unit,
+    viewModel: ActorDetailsViewModel = hiltViewModel(),
+    navigateToSelectedMovie: (Int) -> Unit,
     navigateUp: () -> Unit,
-    viewModel: ActorDetailsViewModel
 ) {
     val detailUIState = viewModel.detailUIState
     val sheetUIState = viewModel.sheetUIState
-    val actorProfileUrl = "${detailUIState.actorData?.profileUrl}"
     val movieId by viewModel.isFavoriteMovie.observeAsState()
 
-    val modalSheetState = modalBottomSheetState()
-    val openActorDetailsBottomSheet = manageModalBottomSheet(
-        modalSheetState = modalSheetState
+    ActorDetailsUI(
+        detailUIState = detailUIState,
+        sheetUIState = sheetUIState,
+        navigateToSelectedMovie = navigateToSelectedMovie,
+        isFavoriteMovie = movieId != 0 && movieId != null,
+        navigateUp = navigateUp,
+        getSelectedMovieDetails = { viewModel.getSelectedMovieDetails(it) },
+        addActorToFavorites = { viewModel.addActorToFavorites() },
+        removeActorFromFavorites = { viewModel.removeActorFromFavorites() }
     )
-
-    val showFab = rememberSaveable { mutableStateOf(true) }
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        ActorDetailsUI(
-            detailUIState = detailUIState,
-            sheetUIState = sheetUIState,
-            actorProfileUrl = actorProfileUrl,
-            modalSheetState = modalSheetState,
-            selectedMovie = selectedMovie,
-            navigateUp = navigateUp,
-            openActorDetailsBottomSheet = openActorDetailsBottomSheet,
-            showFab = showFab,
-            getSelectedMovieDetails = { movieId ->
-                viewModel.getSelectedMovieDetails(movieId)
-            }
-        )
-
-        if (showFab.value) {
-            FloatingAddToFavoritesButton(
-                isFavorite = movieId != 0 && movieId != null,
-                addToFavorites = { viewModel.addActorToFavorites() },
-                removeFromFavorites = { viewModel.removeActorFromFavorites() }
-            )
-        }
-    }
 }

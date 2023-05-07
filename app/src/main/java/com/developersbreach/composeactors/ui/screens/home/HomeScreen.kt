@@ -5,12 +5,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 
 /**
- * @param selectedActor navigates to user clicked actor from row.
+ * @param navigateToSelectedActor navigates to user clicked actor from row.
  * @param navigateToSearch navigates user to search screen.
- * @param homeViewModel to manage ui state of [HomeScreen]
+ * @param viewModel to manage ui state of [HomeScreen]
  *
  * Default destination.
  * Shows category list of actors in row.
@@ -19,25 +20,25 @@ import com.developersbreach.composeactors.ui.screens.search.SearchType
  */
 @Composable
 fun HomeScreen(
-    selectedActor: (Int) -> Unit,
+    viewModel: HomeViewModel = hiltViewModel(),
+    navigateToSelectedActor: (Int) -> Unit,
     navigateToSearch: (SearchType) -> Unit,
-    selectedMovie: (Int) -> Unit,
+    navigateToSelectedMovie: (Int) -> Unit,
     navigateToFavorite: () -> Unit,
-    homeViewModel: HomeViewModel
 ) {
-    val navigateToSearchBySearchType by homeViewModel.updateHomeSearchType.observeAsState(SearchType.Actors)
+    val navigateToSearchBySearchType by viewModel.updateHomeSearchType.observeAsState(SearchType.Actors)
 
     HomeScreenUI(
         modifier = Modifier,
         navigateToFavorite = navigateToFavorite,
         navigateToSearch = navigateToSearch,
         navigateToSearchBySearchType = navigateToSearchBySearchType,
-        selectedActor = selectedActor,
-        selectedMovie = selectedMovie,
-        uiState = homeViewModel.uiState,
-        sheetUiState = homeViewModel.sheetUiState,
+        navigateToSelectedActor = navigateToSelectedActor,
+        navigateToSelectedMovie = navigateToSelectedMovie,
+        uiState = viewModel.uiState,
+        sheetUiState = viewModel.sheetUiState,
         updateHomeSearchType = { searchType: SearchType ->
-            homeViewModel.updateHomeSearchType(searchType)
+            viewModel.updateHomeSearchType(searchType)
         }
     )
 }

@@ -66,7 +66,7 @@ fun OptionsModalSheetContent(
                 modifier = Modifier.size(28.dp),
                 onClick = {
                     coroutineScope.launch {
-                        modalSheetSheet.show()
+                        modalSheetSheet.hide()
                     }
                 }
             ) {
