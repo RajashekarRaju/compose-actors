@@ -35,7 +35,7 @@ import kotlinx.coroutines.flow.emptyFlow
 @Composable
 fun MoviesTabContent(
     homeUIState: HomeUIState,
-    getSelectedMovieDetails: (Int) -> Unit,
+    navigateToSelectedMovie: (Int) -> Unit,
     homeSheetUIState: HomeSheetUIState,
 ) {
     val nowPlayingMovies = homeUIState.nowPlayingMoviesList.collectAsLazyPagingItems()
@@ -62,7 +62,7 @@ fun MoviesTabContent(
             content = {
                 UpcomingMovies(
                     homeUIState = homeUIState,
-                    getSelectedMovieDetails = getSelectedMovieDetails,
+                    navigateToSelectedMovie = navigateToSelectedMovie,
                     modifier = Modifier
                         .height(140.dp)
                         .fillMaxWidth()
@@ -83,7 +83,7 @@ fun MoviesTabContent(
 
         nowPlayingMovies(
             listItems = nowPlayingMovies,
-            getSelectedMovieDetails = getSelectedMovieDetails,
+            navigateToSelectedMovie = navigateToSelectedMovie,
         )
     }
 }
@@ -91,7 +91,7 @@ fun MoviesTabContent(
 @Composable
 private fun UpcomingMovies(
     homeUIState: HomeUIState,
-    getSelectedMovieDetails: (Int) -> Unit,
+    navigateToSelectedMovie: (Int) -> Unit,
     modifier: Modifier
 ) {
     LazyRow(
@@ -111,7 +111,7 @@ private fun UpcomingMovies(
                 modifier = modifier
                     .width(260.dp)
                     .clickable {
-                        getSelectedMovieDetails(movieItem.movieId)
+                        navigateToSelectedMovie(movieItem.movieId)
                     }
             )
         }
@@ -120,7 +120,7 @@ private fun UpcomingMovies(
 
 private fun LazyGridScope.nowPlayingMovies(
     listItems: LazyPagingItems<Movie>,
-    getSelectedMovieDetails: (Int) -> Unit,
+    navigateToSelectedMovie: (Int) -> Unit,
 ) {
     itemsPaging(listItems) { movie ->
         LoadNetworkImage(
@@ -131,7 +131,7 @@ private fun LazyGridScope.nowPlayingMovies(
                 .size(120.dp, 180.dp)
                 .clickable {
                     if (movie != null) {
-                        getSelectedMovieDetails(movie.movieId)
+                        navigateToSelectedMovie(movie.movieId)
                     }
                 }
         )
@@ -150,7 +150,7 @@ private fun MoviesTabContentPreview() {
                 upcomingMoviesList = listOf(),
                 nowPlayingMoviesList = emptyFlow()
             ),
-            getSelectedMovieDetails = {},
+            navigateToSelectedMovie = {},
             homeSheetUIState = HomeSheetUIState()
         )
     }

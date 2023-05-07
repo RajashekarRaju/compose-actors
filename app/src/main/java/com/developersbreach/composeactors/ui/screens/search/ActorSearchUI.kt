@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.data.datasource.fake.fakeActorsList
 import com.developersbreach.composeactors.data.model.Actor
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
@@ -23,7 +24,7 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 @Composable
 fun ActorSearchUI(
     actorsList: List<Actor>,
-    selectedActor: (Int) -> Unit,
+    navigateToSelectedActor: (Int) -> Unit,
     closeKeyboard: () -> Unit?
 ) {
     LazyColumn(
@@ -31,18 +32,22 @@ fun ActorSearchUI(
         modifier = Modifier.padding(bottom = 48.dp)
     ) {
         items(actorsList) { actor ->
-            ItemSearchActor(actor, selectedActor, closeKeyboard)
+            ItemSearchActor(
+                actor = actor,
+                onClickActor = navigateToSelectedActor,
+                closeKeyboard = closeKeyboard
+            )
         }
     }
 }
 
 /**
- * @param selectedActor navigate to actor [ActorDetailsScreen] from user selected actor.
+ * @param onClickActor navigate to actor [ActorDetailsScreen] from user selected actor.
  */
 @Composable
 private fun ItemSearchActor(
     actor: Actor,
-    selectedActor: (Int) -> Unit,
+    onClickActor: (Int) -> Unit,
     closeKeyboard: () -> Unit?
 ) {
     Text(
@@ -51,22 +56,34 @@ private fun ItemSearchActor(
         color = MaterialTheme.colors.onBackground,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 12.dp)
-            .wrapContentWidth(Alignment.Start)
             .clickable {
                 closeKeyboard()
-                selectedActor(actor.actorId)
+                onClickActor(actor.actorId)
             }
+            .padding(horizontal = 20.dp, vertical = 12.dp)
+            .wrapContentWidth(Alignment.Start)
     )
 }
 
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF211a18)
 @Composable
-private fun ActorSearchUIPreview() {
-    ComposeActorsTheme {
+private fun ActorSearchUIDarkPreview() {
+    ComposeActorsTheme(darkTheme = true) {
         ActorSearchUI(
-            actorsList = listOf(),
-            selectedActor = {},
+            actorsList = fakeActorsList(),
+            navigateToSelectedActor = {},
+            closeKeyboard = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ActorSearchUILightPreview() {
+    ComposeActorsTheme(darkTheme = false) {
+        ActorSearchUI(
+            actorsList = fakeActorsList(),
+            navigateToSelectedActor = {},
             closeKeyboard = {}
         )
     }

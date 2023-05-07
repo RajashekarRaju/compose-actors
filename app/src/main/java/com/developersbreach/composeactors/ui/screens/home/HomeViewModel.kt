@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.repository.actor.ActorRepository
-import com.developersbreach.composeactors.data.repository.movie.MovieRepository
 import com.developersbreach.composeactors.domain.GetPagedMovies
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +21,6 @@ import timber.log.Timber
  */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val movieRepository: MovieRepository,
     private val actorRepository: ActorRepository,
     private val getPagedMovies: GetPagedMovies
 ) : ViewModel() {
@@ -55,26 +53,6 @@ class HomeViewModel @Inject constructor(
             upcomingMoviesList = actorRepository.getUpcomingMoviesData(),
             nowPlayingMoviesList = getPagedMovies(viewModelScope)
         )
-    }
-
-    /**
-     * @param movieId for querying selected movie details.
-     * This function will be triggered only when user clicks any movie items.
-     * Updates the data values to show in modal sheet.
-     */
-    fun getSelectedMovieDetails(
-        movieId: Int?
-    ) {
-        viewModelScope.launch {
-            try {
-                if (movieId != null) {
-                    val movieData = movieRepository.getSelectedMovieData(movieId)
-                    sheetUiState = HomeSheetUIState(selectedMovieDetails = movieData)
-                }
-            } catch (e: IOException) {
-                Timber.e("$e")
-            }
-        }
     }
 
     fun updateHomeSearchType(searchType: SearchType) {
