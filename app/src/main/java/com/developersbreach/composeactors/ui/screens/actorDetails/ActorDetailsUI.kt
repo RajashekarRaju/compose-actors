@@ -8,6 +8,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,7 +32,8 @@ internal fun ActorDetailsUI(
     selectedMovie: (Int) -> Unit,
     navigateUp: () -> Unit,
     openActorDetailsBottomSheet: () -> Job,
-    getSelectedMovieDetails: (Int) -> Unit
+    getSelectedMovieDetails: (Int) -> Unit,
+    showFab: MutableState<Boolean>
 ) {
 
     ModalBottomSheetLayout(
@@ -45,7 +49,7 @@ internal fun ActorDetailsUI(
         }
     ) {
         ImageBackgroundThemeGenerator(
-            podcastImageUrl = actorProfileUrl
+            imageUrl = actorProfileUrl
         ) {
             Box {
                 // Draws gradient from image and overlays on it.
@@ -63,7 +67,8 @@ internal fun ActorDetailsUI(
                         navigateUp = navigateUp,
                         detailUIState = detailUIState,
                         openActorDetailsBottomSheet = openActorDetailsBottomSheet,
-                        getSelectedMovieDetails = getSelectedMovieDetails
+                        getSelectedMovieDetails = getSelectedMovieDetails,
+                        showFab = showFab
                     )
                 }
                 // Progress bar
@@ -92,7 +97,8 @@ fun ActorDetailsUIPreview() {
             selectedMovie = {},
             navigateUp = {},
             openActorDetailsBottomSheet = { Job() },
-            getSelectedMovieDetails = {}
+            getSelectedMovieDetails = {},
+            showFab = rememberSaveable { mutableStateOf(true) }
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.movieDetail.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
@@ -11,12 +12,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
+import kotlinx.coroutines.Job
 
 @Composable
 fun GetRelatedMovies(
-    movieList: List<Movie>
+    movieList: List<Movie>,
+    openMovieDetailsBottomSheet: () -> Job,
+    selectBottomSheetCallback: (BottomSheetType) -> Unit
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -30,7 +35,14 @@ fun GetRelatedMovies(
                 imageUrl = movie.posterPathUrl,
                 contentDescription = stringResource(R.string.cd_movie_poster),
                 shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.size(100.dp, 150.dp)
+                modifier = Modifier
+                    .size(100.dp, 150.dp)
+                    .clickable {
+                        selectBottomSheetCallback(BottomSheetType.MovieDetailBottomSheet.apply {
+                            movieOrActorId = movie.movieId
+                        })
+                        openMovieDetailsBottomSheet()
+                    }
             )
         }
     }

@@ -8,7 +8,8 @@ import com.developersbreach.composeactors.data.datasource.database.entity.Favori
 data class Movie(
     @Stable val movieId: Int,
     val movieName: String,
-    val posterPathUrl: String
+    val posterPathUrl: String,
+    val bannerUrl: String
 )
 
 fun Movie.movieAsDatabaseModel(): FavoriteMoviesEntity {
@@ -16,6 +17,7 @@ fun Movie.movieAsDatabaseModel(): FavoriteMoviesEntity {
         movieId = this.movieId,
         movieName = this.movieName,
         moviePosterUrl = this.posterPathUrl,
+        movieBanner = this.bannerUrl
     )
 }
 
@@ -24,7 +26,8 @@ fun List<FavoriteMoviesEntity>.movieAsDomainModel(): List<Movie> {
         Movie(
             movieId = it.movieId,
             movieName = it.movieName,
-            posterPathUrl = it.moviePosterUrl
+            posterPathUrl = it.moviePosterUrl,
+            bannerUrl = it.movieBanner
         )
     }
 }

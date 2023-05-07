@@ -2,9 +2,9 @@ package com.developersbreach.composeactors.data.datasource.network
 
 import com.developersbreach.composeactors.data.PagedResponse
 import com.developersbreach.composeactors.data.model.*
-import org.json.JSONObject
 import javax.inject.Inject
 import javax.inject.Singleton
+import org.json.JSONObject
 
 /**
  * @property urls for low and high resolution images.
@@ -53,7 +53,9 @@ class JsonRemoteData @Inject constructor(
             val originalTitle = jsonObject.getString("original_title")
             val posterPathUrl = jsonObject.getString("poster_path")
             val posterPath = "${LOW_RES_IMAGE}$posterPathUrl"
-            moviesList.add(Movie(movieId, originalTitle, posterPath))
+            val bannerUrl = jsonObject.getString("backdrop_path")
+            val banner = "${HIGH_RES_IMAGE}$bannerUrl"
+            moviesList.add(Movie(movieId, originalTitle, posterPath, banner))
         }
         return moviesList
     }
@@ -68,6 +70,7 @@ class JsonRemoteData @Inject constructor(
     ): ActorDetail {
 
         val jsonObject = JSONObject(response)
+        val actorId = jsonObject.getInt("id")
         val actorName = jsonObject.getString("name")
         val biography = jsonObject.getString("biography")
         val dateOfBirth = jsonObject.getString("birthday")
@@ -76,7 +79,15 @@ class JsonRemoteData @Inject constructor(
         val profilePathUrl = jsonObject.getString("profile_path")
         val profilePath = "${HIGH_RES_IMAGE}$profilePathUrl"
 
-        return ActorDetail(actorName, profilePath, biography, dateOfBirth, placeOfBirth, popularity)
+        return ActorDetail(
+            actorId,
+            actorName,
+            profilePath,
+            biography,
+            dateOfBirth,
+            placeOfBirth,
+            popularity
+        )
     }
 
     /**
@@ -97,7 +108,9 @@ class JsonRemoteData @Inject constructor(
             val originalTitle = jsonObject.getString("original_title")
             val posterPathUrl = jsonObject.getString("poster_path")
             val posterPath = "${LOW_RES_IMAGE}$posterPathUrl"
-            movieList.add(Movie(movieId, originalTitle, posterPath))
+            val bannerUrl = jsonObject.getString("backdrop_path")
+            val banner = "${HIGH_RES_IMAGE}$bannerUrl"
+            movieList.add(Movie(movieId, originalTitle, posterPath, banner))
         }
         return movieList
     }
@@ -180,7 +193,9 @@ class JsonRemoteData @Inject constructor(
             val originalTitle = jsonObject.getString("original_title")
             val posterPathUrl = jsonObject.getString("poster_path")
             val posterPath = "${LOW_RES_IMAGE}$posterPathUrl"
-            movieList.add(Movie(movieId, originalTitle, posterPath))
+            val bannerUrl = jsonObject.getString("backdrop_path")
+            val banner = "${HIGH_RES_IMAGE}$bannerUrl"
+            movieList.add(Movie(movieId, originalTitle, posterPath, banner))
         }
         return movieList
     }
@@ -224,7 +239,9 @@ class JsonRemoteData @Inject constructor(
             val originalTitle = jsonObject.getString("original_title")
             val backdropPathUrl = jsonObject.getString("backdrop_path")
             val backdropPath = "${HIGH_RES_IMAGE}$backdropPathUrl"
-            movieList.add(Movie(movieId, originalTitle, backdropPath))
+            val bannerUrl = jsonObject.getString("backdrop_path")
+            val banner = "${HIGH_RES_IMAGE}$bannerUrl"
+            movieList.add(Movie(movieId, originalTitle, backdropPath, banner))
         }
         return movieList
     }
@@ -246,7 +263,9 @@ class JsonRemoteData @Inject constructor(
             val originalTitle = jsonObject.getString("original_title")
             val posterPathUrl = jsonObject.getString("poster_path")
             val posterPath = "${HIGH_RES_IMAGE}$posterPathUrl"
-            movieList.add(Movie(movieId, originalTitle, posterPath))
+            val bannerUrl = jsonObject.getString("backdrop_path")
+            val banner = "${HIGH_RES_IMAGE}$bannerUrl"
+            movieList.add(Movie(movieId, originalTitle, posterPath, banner))
         }
 
         return PagedResponse(

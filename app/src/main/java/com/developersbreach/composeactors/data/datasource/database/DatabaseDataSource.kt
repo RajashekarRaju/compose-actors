@@ -1,12 +1,17 @@
 package com.developersbreach.composeactors.data.datasource.database
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import com.developersbreach.composeactors.data.model.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import androidx.lifecycle.map
+import com.developersbreach.composeactors.data.model.FavoriteActor
+import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.model.actorAsDatabaseModel
+import com.developersbreach.composeactors.data.model.actorAsDomainModel
+import com.developersbreach.composeactors.data.model.movieAsDatabaseModel
+import com.developersbreach.composeactors.data.model.movieAsDomainModel
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 @Singleton
@@ -17,15 +22,15 @@ class DatabaseDataSource @Inject constructor(
     fun getAllFavoriteMovies(): LiveData<List<Movie>> {
         val allFavoriteMovies = database.favoriteMoviesDao.getAllFavoriteMovies()
         // Change to distinct until changed
-        return Transformations.map(allFavoriteMovies) { favEntityList ->
+        return allFavoriteMovies.map { favEntityList ->
             favEntityList.movieAsDomainModel()
         }
     }
 
-    fun getAllFavoriteActors(): LiveData<List<Actor>> {
+    fun getAllFavoriteActors(): LiveData<List<FavoriteActor>> {
         val allFavoriteActors = database.favoriteActorsDao.getAllFavoriteActors()
         // Change to distinct until changed
-        return Transformations.map(allFavoriteActors) { favEntityList ->
+        return allFavoriteActors.map { favEntityList ->
             favEntityList.actorAsDomainModel()
         }
     }
@@ -47,9 +52,9 @@ class DatabaseDataSource @Inject constructor(
     }
 
     suspend fun addActorToFavorites(
-        actor: Actor
+        favoriteActor: FavoriteActor
     ) = withContext(Dispatchers.IO) {
-        with(actor.actorAsDatabaseModel()) {
+        with(favoriteActor.actorAsDatabaseModel()) {
             database.favoriteActorsDao.addActorToFavorites(favoriteActorsEntity = this)
         }
     }
@@ -63,9 +68,9 @@ class DatabaseDataSource @Inject constructor(
     }
 
     suspend fun deleteSelectedFavoriteActor(
-        actor: Actor
+        favoriteActor: FavoriteActor
     ) = withContext(Dispatchers.IO) {
-        with(actor.actorAsDatabaseModel()) {
+        with(favoriteActor.actorAsDatabaseModel()) {
             database.favoriteActorsDao.deleteSelectedFavoriteActor(favoriteActorsEntity = this)
         }
     }

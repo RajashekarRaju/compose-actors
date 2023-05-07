@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Compose Actors</string>
 
+    <string name="txt_more">More</string>
     <string name="cd_search_icon">Search Icon</string>
     <string name="cd_actor_image">Actor image</string>
     <string name="cd_cast_icon">Icon for cast</string>
@@ -25,7 +26,7 @@
     <string name="offline_snackbar_message">You Are Offline!</string>
     <string name="missing_api_key_snackbar_message">Tmdb Api Key Missing</string>
 
-    <string name="no_favorites_found_message">You Have No Favorite Movies.</string>
+    <string name="no_favorites_found_message">You Have Added Nothing To Favorites.</string>
     <string name="add_to_favorites_text">Add to favorites</string>
     <string name="remove_from_favorites_text">Remove favorite</string>
 

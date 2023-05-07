@@ -4,8 +4,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -34,7 +36,9 @@ import kotlinx.coroutines.flow.emptyFlow
 @Composable
 fun ActorsTabContent(
     homeUIState: HomeUIState,
-    getSelectedActorDetails: (Int) -> Unit
+    getSelectedActorDetails: (Int) -> Unit,
+    popularActorsListState: LazyListState,
+    trendingActorsListState: LazyListState
 ) {
     // Show progress while data is loading
     ShowProgressIndicator(isLoadingData = homeUIState.isFetchingActors)
@@ -48,13 +52,21 @@ fun ActorsTabContent(
             CategoryTitle(stringResource(R.string.category_actors_popular))
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
             // List row of all popular actors.
-            ItemActorList(homeUIState.popularActorList, getSelectedActorDetails)
+            ItemActorList(
+                actorsList = homeUIState.popularActorList,
+                selectedActor = getSelectedActorDetails,
+                actorsListState = popularActorsListState
+            )
             AppDivider(verticalPadding = 32.dp)
             // Show text for actors category list trending.
             CategoryTitle(stringResource(R.string.category_actors_trending))
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
             // List row of all trending actors.
-            ItemActorList(homeUIState.trendingActorList, getSelectedActorDetails)
+            ItemActorList(
+                actorsList = homeUIState.trendingActorList,
+                selectedActor = getSelectedActorDetails,
+                actorsListState = trendingActorsListState
+            )
         }
     }
 }
@@ -65,9 +77,11 @@ fun ActorsTabContent(
 @Composable
 private fun ItemActorList(
     actorsList: List<Actor>,
-    selectedActor: (Int) -> Unit
+    selectedActor: (Int) -> Unit,
+    actorsListState: LazyListState
 ) {
     LazyRow(
+        state = actorsListState,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
@@ -145,7 +159,9 @@ private fun ActorsTabContentPreview() {
                 upcomingMoviesList = listOf(),
                 nowPlayingMoviesList = emptyFlow()
             ),
-            getSelectedActorDetails = {}
+            getSelectedActorDetails = {},
+            popularActorsListState = rememberLazyListState(),
+            trendingActorsListState = rememberLazyListState()
         )
     }
 }
