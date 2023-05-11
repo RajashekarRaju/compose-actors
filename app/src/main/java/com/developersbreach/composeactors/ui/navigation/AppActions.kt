@@ -13,12 +13,12 @@ class AppActions(
 ) {
 
     // Triggered when user tries to navigate to details of an actor from list with Id.
-    val selectedActor: (Int) -> Unit = { actorId: Int ->
+    val navigateToSelectedActor: (Int) -> Unit = { actorId: Int ->
         navController.navigate("${routes.ACTOR_DETAIL_ROUTE}/$actorId")
     }
 
     // Triggered when user tries to navigate to details of an actor from list with Id.
-    val selectedMovie: (Int) -> Unit = { movieId: Int ->
+    val navigateToSelectedMovie: (Int) -> Unit = { movieId: Int ->
         navController.navigate("${routes.MOVIE_DETAILS_ROUTE}/$movieId")
     }
 

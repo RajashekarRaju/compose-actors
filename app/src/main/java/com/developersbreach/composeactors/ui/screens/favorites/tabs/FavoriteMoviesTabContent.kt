@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.favorites.NoFavoritesFoundUI
@@ -39,7 +40,7 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
  */
 @Composable
 fun FavoriteMoviesTabContent(
-    getSelectedMovieDetails: (Int) -> Unit,
+    navigateToSelectedMovie: (Int) -> Unit,
     favoriteMovies: List<Movie>,
     removeFavoriteMovie: (Movie) -> Unit,
 ) {
@@ -58,7 +59,7 @@ fun FavoriteMoviesTabContent(
         items(favoriteMovies) { movieItem: Movie ->
             ItemFavoriteMovie(
                 movieItem = movieItem,
-                getSelectedMovieDetails = getSelectedMovieDetails,
+                onClickMovie = navigateToSelectedMovie,
                 removeFavoriteMovie = removeFavoriteMovie
             )
         }
@@ -68,7 +69,7 @@ fun FavoriteMoviesTabContent(
 @Composable
 private fun ItemFavoriteMovie(
     movieItem: Movie,
-    getSelectedMovieDetails: (Int) -> Unit,
+    onClickMovie: (Int) -> Unit,
     removeFavoriteMovie: (Movie) -> Unit
 ) {
     Column(
@@ -84,7 +85,7 @@ private fun ItemFavoriteMovie(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .clickable { getSelectedMovieDetails(movieItem.movieId) }
+                .clickable { onClickMovie(movieItem.movieId) }
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -114,13 +115,49 @@ private fun ItemFavoriteMovie(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-private fun FavoriteMoviesTabContentPreview() {
-    ComposeActorsTheme {
+private fun FavoriteMoviesTabContentLightPreview() {
+    ComposeActorsTheme(darkTheme = false) {
         FavoriteMoviesTabContent(
-            getSelectedMovieDetails = {},
-            favoriteMovies = listOf(),
+            navigateToSelectedMovie = {},
+            favoriteMovies = fakeMovieList(),
+            removeFavoriteMovie = {}
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@Composable
+private fun FavoriteMoviesTabContentDarkPreview() {
+    ComposeActorsTheme(darkTheme = true) {
+        FavoriteMoviesTabContent(
+            navigateToSelectedMovie = {},
+            favoriteMovies = fakeMovieList(),
+            removeFavoriteMovie = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun FavoriteMoviesTabContentNoFavoritesLightPreview() {
+    ComposeActorsTheme(darkTheme = false) {
+        FavoriteMoviesTabContent(
+            navigateToSelectedMovie = {},
+            favoriteMovies = emptyList(),
+            removeFavoriteMovie = {}
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@Composable
+private fun FavoriteMoviesTabContentNoFavoritesDarkPreview() {
+    ComposeActorsTheme(darkTheme = true) {
+        FavoriteMoviesTabContent(
+            navigateToSelectedMovie = {},
+            favoriteMovies = emptyList(),
             removeFavoriteMovie = {}
         )
     }

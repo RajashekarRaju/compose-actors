@@ -28,6 +28,7 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
  */
 @Composable
 fun HomeTopAppBar(
+    modifier: Modifier = Modifier,
     navigateToSearch: (SearchType) -> Unit,
     searchType: SearchType
 ) {
@@ -35,7 +36,7 @@ fun HomeTopAppBar(
         content = { HomeTopAppBarContent(navigateToSearch, searchType) },
         backgroundColor = MaterialTheme.colors.background,
         elevation = 0.dp,
-        modifier = Modifier
+        modifier = modifier
             .statusBarsPadding()
             .padding(top = 4.dp, start = 16.dp, end = 16.dp)
     )

@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
@@ -23,7 +24,7 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 @Composable
 fun MovieSearchUI(
     movieList: List<Movie>,
-    selectedMovie: (Int) -> Unit,
+    navigateToSelectedMovie: (Int) -> Unit,
     closeKeyboard: () -> Unit?
 ) {
     LazyColumn(
@@ -31,18 +32,22 @@ fun MovieSearchUI(
         modifier = Modifier.padding(bottom = 48.dp)
     ) {
         items(movieList) { movie ->
-            ItemSearchMovie(movie, selectedMovie, closeKeyboard)
+            ItemSearchMovie(
+                movie = movie,
+                onClickMovie = navigateToSelectedMovie,
+                closeKeyboard = closeKeyboard
+            )
         }
     }
 }
 
 /**
- * @param selectedMovie navigate to actor [ActorDetailsScreen] from user selected movie.
+ * @param onClickMovie navigate to actor [ActorDetailsScreen] from user selected movie.
  */
 @Composable
 private fun ItemSearchMovie(
     movie: Movie,
-    selectedMovie: (Int) -> Unit,
+    onClickMovie: (Int) -> Unit,
     closeKeyboard: () -> Unit?
 ) {
     Text(
@@ -53,20 +58,32 @@ private fun ItemSearchMovie(
             .fillMaxWidth()
             .clickable {
                 closeKeyboard()
-                selectedMovie(movie.movieId)
+                onClickMovie(movie.movieId)
             }
             .padding(horizontal = 20.dp, vertical = 12.dp)
             .wrapContentWidth(Alignment.Start)
     )
 }
 
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF211a18)
 @Composable
-private fun MovieSearchUIPreview() {
-    ComposeActorsTheme {
+private fun MovieSearchUIDarkPreview() {
+    ComposeActorsTheme(darkTheme = true) {
         MovieSearchUI(
-            movieList = listOf(),
-            selectedMovie = {},
+            movieList = fakeMovieList(),
+            navigateToSelectedMovie = {},
+            closeKeyboard = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MovieSearchUILightPreview() {
+    ComposeActorsTheme(darkTheme = false) {
+        MovieSearchUI(
+            movieList = fakeMovieList(),
+            navigateToSelectedMovie = {},
             closeKeyboard = {}
         )
     }

@@ -53,7 +53,7 @@ fun FavoritesTopAppBar(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun FavoritesTopAppBarLightPreview() {
     ComposeActorsTheme(darkTheme = false) {
@@ -61,7 +61,7 @@ private fun FavoritesTopAppBarLightPreview() {
     }
 }
 
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF211a18)
 @Composable
 private fun FavoritesTopAppBarDarkPreview() {
     ComposeActorsTheme(darkTheme = true) {

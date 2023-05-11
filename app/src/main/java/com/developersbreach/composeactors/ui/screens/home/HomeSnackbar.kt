@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.screens.home.composables
+package com.developersbreach.composeactors.ui.screens.home
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Snackbar

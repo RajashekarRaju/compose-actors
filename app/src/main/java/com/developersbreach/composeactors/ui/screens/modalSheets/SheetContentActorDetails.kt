@@ -14,13 +14,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.data.datasource.fake.fakeActorDetail
 import com.developersbreach.composeactors.data.model.ActorDetail
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.SheetHorizontalSeparator
 import com.developersbreach.composeactors.ui.screens.actorDetails.composables.ActorInfoHeader
+import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
 /**
  * Complete modal sheet content for showing actor details instead of navigating to
@@ -111,4 +114,24 @@ private fun ActorBiographyText(
             fontSize = 16.sp
         )
     )
+}
+
+@Preview
+@Composable
+private fun SheetContentActorDetailsLightPreview() {
+    ComposeActorsTheme(darkTheme = false) {
+        SheetContentActorDetails(
+            actor = fakeActorDetail
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun SheetContentActorDetailsDarkPreview() {
+    ComposeActorsTheme(darkTheme = true) {
+        SheetContentActorDetails(
+            actor = fakeActorDetail
+        )
+    }
 }

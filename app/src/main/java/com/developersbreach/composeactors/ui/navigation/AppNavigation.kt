@@ -2,7 +2,6 @@ package com.developersbreach.composeactors.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -10,7 +9,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsViewModel
-import com.developersbreach.composeactors.ui.screens.favorites.FavoriteViewModel
 import com.developersbreach.composeactors.ui.screens.favorites.FavoritesScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeViewModel
@@ -51,13 +49,11 @@ fun AppNavigation(
         composable(
             AppDestinations.HOME_ROUTE
         ) {
-            val homeViewModel = hiltViewModel<HomeViewModel>()
             HomeScreen(
-                selectedActor = actions.selectedActor,
+                navigateToSelectedActor = actions.navigateToSelectedActor,
                 navigateToSearch = actions.navigateToSearch,
                 navigateToFavorite = actions.navigateToFavorite,
-                selectedMovie = actions.selectedMovie,
-                homeViewModel = homeViewModel
+                navigateToSelectedMovie = actions.navigateToSelectedMovie,
             )
         }
 
@@ -72,15 +68,10 @@ fun AppNavigation(
                 navArgument(routes.SEARCH_TYPE) { type = NavType.EnumType(SearchType::class.java) }
             )
         ) {
-            val searchViewModel = hiltViewModel<SearchViewModel>()
-            val selectedIdSearchType = when (searchViewModel.searchType) {
-                SearchType.Actors -> actions.selectedActor
-                SearchType.Movies -> actions.selectedMovie
-            }
             SearchScreen(
-                selectedIdSearchType = selectedIdSearchType,
                 navigateUp = actions.navigateUp,
-                viewModel = searchViewModel
+                navigateToSelectedActor = actions.navigateToSelectedActor,
+                navigateToSelectedMovie = actions.navigateToSelectedMovie,
             )
         }
 
@@ -97,11 +88,9 @@ fun AppNavigation(
                 navArgument(routes.ACTOR_DETAIL_ID_KEY) { type = NavType.IntType }
             )
         ) {
-            val actorDetailsViewModel = hiltViewModel<ActorDetailsViewModel>()
             ActorDetailsScreen(
-                selectedMovie = actions.selectedMovie,
+                navigateToSelectedMovie = actions.navigateToSelectedMovie,
                 navigateUp = actions.navigateUp,
-                viewModel = actorDetailsViewModel
             )
         }
 
@@ -118,23 +107,19 @@ fun AppNavigation(
                 navArgument(routes.MOVIE_DETAILS_ID_KEY) { type = NavType.IntType }
             )
         ) {
-            val viewModel = hiltViewModel<MovieDetailViewModel>()
             MovieDetailScreen(
                 navigateUp = actions.navigateUp,
-                viewModel = viewModel,
-                selectedMovie = actions.selectedMovie
+                navigateToSelectedMovie = actions.navigateToSelectedMovie
             )
         }
 
         composable(
             route = AppDestinations.FAVORITES_ROUTE
         ) {
-            val favoriteViewModel = hiltViewModel<FavoriteViewModel>()
             FavoritesScreen(
                 navigateUp = actions.navigateUp,
-                selectedMovie = actions.selectedMovie,
-                selectedActor = actions.selectedActor,
-                favoriteViewModel = favoriteViewModel
+                navigateToSelectedMovie = actions.navigateToSelectedMovie,
+                navigateToSelectedActor = actions.navigateToSelectedActor,
             )
         }
     }

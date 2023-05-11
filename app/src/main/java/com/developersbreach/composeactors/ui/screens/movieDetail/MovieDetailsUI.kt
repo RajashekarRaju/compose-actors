@@ -1,48 +1,187 @@
 package com.developersbreach.composeactors.ui.screens.movieDetail
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.data.datasource.fake.fakeMovieCastList
+import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
+import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.data.model.BottomSheetType
+import com.developersbreach.composeactors.ui.animations.LayerRevealImage
+import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentActorDetails
+import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
+import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
+import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
+import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToFavoritesButton
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.Job
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieDetailsUI(
+    modifier: Modifier = Modifier,
     uiState: MovieDetailsUIState,
+    actorsSheetUIState: ActorsSheetUIState,
+    movieSheetUIState: MovieSheetUIState,
     navigateUp: () -> Unit,
-    showFab: MutableState<Boolean>,
-    openMovieDetailsBottomSheet: () -> Job,
-    selectBottomSheetCallback: (BottomSheetType) -> Unit
+    selectedBottomSheet: MutableState<BottomSheetType?>,
+    selectBottomSheetCallback: (BottomSheetType) -> Unit,
+    isFavoriteMovie: Boolean,
+    addMovieToFavorites: () -> Unit,
+    removeMovieFromFavorites: () -> Unit,
+    navigateToSelectedMovie: (movieId: Int) -> Unit,
 ) {
-    MovieDetailsContent(
-        uiState = uiState,
-        navigateUp = navigateUp,
-        showFab = showFab,
-        openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
-        selectBottomSheetCallback = selectBottomSheetCallback
+    val state = remember {
+        MutableTransitionState(false).apply {
+            // Start the animation immediately.
+            targetState = true
+        }
+    }
+
+    val modalSheetState = modalBottomSheetState(
+        animationSpec = tween(durationMillis = 300, delayMillis = 50)
     )
+
+    val openMovieDetailsBottomSheet = manageModalBottomSheet(
+        modalSheetState = modalSheetState
+    )
+
+    // This helps us reveal screen content with fadeIn anim once reveal effect is completed.
+    val isLayerRevealAnimationEnded = rememberSaveable { mutableStateOf(false) }
+    // Change button state with respect to scroll changes.
+    val showFab = rememberSaveable { mutableStateOf(true) }
+
+    // Sheet content contains details for the selected movie from list.
+    ModalBottomSheetLayout(
+        sheetState = modalSheetState,
+        scrimColor = Color.Black.copy(alpha = 0.5f),
+        sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+        sheetBackgroundColor = MaterialTheme.colors.background,
+        sheetContent = {
+            GetBottomSheetContent(
+                selectedBottomSheet.value,
+                actorsSheetUIState,
+                movieSheetUIState,
+                navigateToSelectedMovie
+            )
+        },
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .testTag("TestTag:MovieDetailScreen")
+        ) {
+            // Background poster with layer reveal effect
+            LayerRevealImage(uiState.movieData?.poster, isLayerRevealAnimationEnded)
+            // Fade enter animation detail screen once layer reveal completes
+            if (isLayerRevealAnimationEnded.value) {
+                AnimatedVisibility(
+                    visibleState = state,
+                    enter = fadeIn()
+                ) {
+                    // Main details content
+                    MovieDetailsContent(
+                        modifier = modifier,
+                        uiState = uiState,
+                        navigateUp = navigateUp,
+                        showFab = showFab,
+                        openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
+                        selectBottomSheetCallback = selectBottomSheetCallback
+                    )
+                }
+            }
+            // Progress bar - Hidden temporarily, although it works fine cannot have it in current
+            // screen placement since it is on top of reveal animation.
+            // ShowProgressIndicator(isLoadingData = uiState.isFetchingDetails)
+            if (showFab.value) {
+                FloatingAddToFavoritesButton(
+                    isFavorite = isFavoriteMovie,
+                    addToFavorites = addMovieToFavorites,
+                    removeFromFavorites = removeMovieFromFavorites
+                )
+            }
+        }
+    }
 }
 
-@Preview
 @Composable
-private fun MovieDetailsUIPreview() {
-    ComposeActorsTheme {
-        MovieDetailsUI(
-            uiState = MovieDetailsUIState(
-                movieData = null,
-                similarMovies = listOf(),
-                recommendedMovies = listOf(),
-                movieCast = listOf(),
-                isFetchingDetails = false
-            ),
+private fun GetBottomSheetContent(
+    bottomSheetType: BottomSheetType?,
+    sheetUiState: ActorsSheetUIState,
+    movieSheetUIState: MovieSheetUIState,
+    navigateToSelectedMovie: (Int) -> Unit
+) {
+    bottomSheetType?.let { type ->
+        when (type) {
+            BottomSheetType.MovieDetailBottomSheet -> {
+                SheetContentMovieDetails(
+                    movie = movieSheetUIState.selectedMovieDetails,
+                    navigateToSelectedMovie = navigateToSelectedMovie
+                )
+            }
+            BottomSheetType.ActorDetailBottomSheet -> {
+                SheetContentActorDetails(
+                    actor = sheetUiState.selectedActorDetails
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MovieDetailsUILightPreview() {
+    ComposeActorsTheme(darkTheme = false) {
+        MovieDetailsContent(
             navigateUp = {},
-            showFab = rememberSaveable { mutableStateOf(true) },
+            selectBottomSheetCallback = {},
+            showFab = remember { mutableStateOf(true) },
             openMovieDetailsBottomSheet = { Job() },
-            selectBottomSheetCallback = { }
+            uiState = MovieDetailsUIState(
+                movieData = fakeMovieDetail,
+                similarMovies = fakeMovieList(),
+                recommendedMovies = fakeMovieList(),
+                movieCast = fakeMovieCastList(),
+                isFetchingDetails = false
+            )
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@Composable
+private fun MovieDetailsUIDarkPreview() {
+    ComposeActorsTheme(darkTheme = true) {
+        MovieDetailsContent(
+            navigateUp = {},
+            selectBottomSheetCallback = {},
+            showFab = remember { mutableStateOf(true) },
+            openMovieDetailsBottomSheet = { Job() },
+            uiState = MovieDetailsUIState(
+                movieData = fakeMovieDetail,
+                similarMovies = fakeMovieList(),
+                recommendedMovies = fakeMovieList(),
+                movieCast = fakeMovieCastList(),
+                isFetchingDetails = false
+            )
         )
     }
 }
