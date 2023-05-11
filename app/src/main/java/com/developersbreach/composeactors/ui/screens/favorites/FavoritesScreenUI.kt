@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,10 +30,11 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FavoritesScreenUI(
+    navigateUp: () -> Unit,
     favoriteMovies: List<Movie>,
-    selectedMovie: (Int) -> Unit,
+    navigateToSelectedMovie: (Int) -> Unit,
     removeFavoriteMovie: (Movie) -> Unit,
-    selectedActor: (Int) -> Unit,
+    navigateToSelectedActor: (Int) -> Unit,
     favoriteActors: List<FavoriteActor>,
     removeFavoriteActor: (FavoriteActor) -> Unit,
 ) {
@@ -41,30 +44,44 @@ fun FavoritesScreenUI(
         TabItem("Movies")
     )
 
-    Column(
-        Modifier.fillMaxSize()
+    Surface(
+        color = MaterialTheme.colors.background,
     ) {
-        TabsContainer(tabs = favoriteTabs, pagerState = favoritesPagerState)
-        AppDivider(thickness = 1.dp, verticalPadding = 0.dp)
-        HorizontalPager(
-            state = favoritesPagerState,
-            pageCount = favoriteTabs.size,
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-        ) {
-            when (it) {
-                0 -> FavoriteActorsTabContent(
-                    getSelectedActorDetails = selectedActor,
-                    favoriteActors = favoriteActors,
-                    removeFavoriteActor = removeFavoriteActor
-                )
-                1 -> FavoriteMoviesTabContent(
-                    getSelectedMovieDetails = selectedMovie,
-                    favoriteMovies = favoriteMovies,
-                    removeFavoriteMovie = removeFavoriteMovie
-                )
-                2 -> FeatureComingSoonTextUI()
+        Scaffold(
+            topBar = {
+                FavoritesTopAppBar(navigateUp = navigateUp)
+            }
+        ) { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues = paddingValues)
+            ) {
+                TabsContainer(tabs = favoriteTabs, pagerState = favoritesPagerState)
+                AppDivider(thickness = 1.dp, verticalPadding = 0.dp)
+                HorizontalPager(
+                    state = favoritesPagerState,
+                    pageCount = favoriteTabs.size,
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                ) { index ->
+                    when (index) {
+                        0 -> FavoriteActorsTabContent(
+                            navigateToSelectedActor = navigateToSelectedActor,
+                            favoriteActors = favoriteActors,
+                            removeFavoriteActor = removeFavoriteActor
+                        )
+
+                        1 -> FavoriteMoviesTabContent(
+                            navigateToSelectedMovie = navigateToSelectedMovie,
+                            favoriteMovies = favoriteMovies,
+                            removeFavoriteMovie = removeFavoriteMovie
+                        )
+
+                        2 -> FeatureComingSoonTextUI()
+                    }
+                }
             }
         }
     }
@@ -88,15 +105,32 @@ private fun FeatureComingSoonTextUI() {
 
 @Preview
 @Composable
-private fun FavoriteScreenUIPreview() {
-    ComposeActorsTheme {
+private fun FavoriteScreenUILightPreview() {
+    ComposeActorsTheme(darkTheme = false) {
         FavoritesScreenUI(
             favoriteMovies = emptyList(),
-            selectedMovie = {},
+            navigateToSelectedMovie = {},
             removeFavoriteMovie = {},
-            selectedActor = {},
+            navigateToSelectedActor = {},
             favoriteActors = emptyList(),
-            removeFavoriteActor = {}
+            removeFavoriteActor = {},
+            navigateUp = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun FavoriteScreenUIDarkPreview() {
+    ComposeActorsTheme(darkTheme = true) {
+        FavoritesScreenUI(
+            favoriteMovies = emptyList(),
+            navigateToSelectedMovie = {},
+            removeFavoriteMovie = {},
+            navigateToSelectedActor = {},
+            favoriteActors = emptyList(),
+            removeFavoriteActor = {},
+            navigateUp = {}
         )
     }
 }

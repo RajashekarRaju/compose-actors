@@ -22,19 +22,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.model.MovieDetail
 import com.developersbreach.composeactors.ui.components.CircularSeparator
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.MovieGenre
+import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.composeactors.utils.getMovieRuntimeFormatted
 
 /**
  * Content inside modal sheet.
  *
- * @param selectedMovie navigates to selected movie details after clicking the icon button
+ * @param navigateToSelectedMovie navigates to selected movie details after clicking the icon button
  * in modal bottom sheet in cast detail screen.
  *
  * This modal sheet shows few details of selected movie from specific cast instead of directly
@@ -43,7 +46,7 @@ import com.developersbreach.composeactors.utils.getMovieRuntimeFormatted
 @Composable
 fun SheetContentMovieDetails(
     movie: MovieDetail?,
-    selectedMovie: (Int) -> Unit
+    navigateToSelectedMovie: (Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -51,7 +54,7 @@ fun SheetContentMovieDetails(
             .navigationBarsPadding()
     ) {
         Spacer(modifier = Modifier.height(4.dp))
-        HeaderModalSheet(movie, selectedMovie)
+        HeaderModalSheet(movie, navigateToSelectedMovie)
         Spacer(modifier = Modifier.height(4.dp))
         SeparatorSheetTitleHeader()
         Spacer(modifier = Modifier.height(16.dp))
@@ -76,7 +79,7 @@ fun SheetContentMovieDetails(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         ) {
-            MoviePosterImage(movie, selectedMovie)
+            MoviePosterImage(movie, navigateToSelectedMovie)
             MovieOverviewText(movie?.overview.toString())
         }
 
@@ -87,7 +90,7 @@ fun SheetContentMovieDetails(
 @Composable
 private fun HeaderModalSheet(
     movie: MovieDetail?,
-    selectedMovie: (Int) -> Unit
+    onClickMovie: (Int) -> Unit
 ) {
     Row(
         Modifier
@@ -109,7 +112,7 @@ private fun HeaderModalSheet(
         IconButton(
             onClick = {
                 if (movie != null) {
-                    selectedMovie(movie.movieId)
+                    onClickMovie(movie.movieId)
                 }
             },
             modifier = Modifier
@@ -195,4 +198,26 @@ private fun MovieOverviewText(
             fontSize = 16.sp
         )
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun SheetContentMovieDetailsLightPreview() {
+    ComposeActorsTheme(darkTheme = false) {
+        SheetContentMovieDetails(
+            movie = fakeMovieDetail,
+            navigateToSelectedMovie = {}
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@Composable
+private fun SheetContentMovieDetailsDarkPreview() {
+    ComposeActorsTheme(darkTheme = true) {
+        SheetContentMovieDetails(
+            movie = fakeMovieDetail,
+            navigateToSelectedMovie = {}
+        )
+    }
 }

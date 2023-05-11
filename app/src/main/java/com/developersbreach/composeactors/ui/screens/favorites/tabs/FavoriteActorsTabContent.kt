@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.data.datasource.fake.fakeFavoriteActorsList
 import com.developersbreach.composeactors.data.model.FavoriteActor
 import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGenerator
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
@@ -38,7 +39,7 @@ import com.developersbreach.composeactors.utils.getPlaceOfBirth
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FavoriteActorsTabContent(
-    getSelectedActorDetails: (Int) -> Unit,
+    navigateToSelectedActor: (Int) -> Unit,
     favoriteActors: List<FavoriteActor>,
     removeFavoriteActor: (FavoriteActor) -> Unit,
 ) {
@@ -58,7 +59,7 @@ fun FavoriteActorsTabContent(
     ) { currentPage ->
         ItemFavoriteActor(
             actorItem = favoriteActors[currentPage],
-            getSelectedActorDetails = getSelectedActorDetails,
+            onClickActor = navigateToSelectedActor,
             removeFavoriteActor = removeFavoriteActor
         )
     }
@@ -67,7 +68,7 @@ fun FavoriteActorsTabContent(
 @Composable
 private fun ItemFavoriteActor(
     actorItem: FavoriteActor,
-    getSelectedActorDetails: (Int) -> Unit,
+    onClickActor: (Int) -> Unit,
     removeFavoriteActor: (FavoriteActor) -> Unit
 ) {
     Box(
@@ -84,7 +85,7 @@ private fun ItemFavoriteActor(
                 .fillMaxWidth()
                 .height(512.dp)
                 .clickable {
-                    getSelectedActorDetails(actorItem.actorId)
+                    onClickActor(actorItem.actorId)
                 }
         )
 
@@ -148,12 +149,48 @@ private fun ItemFavoriteActor(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-private fun FavoriteActorsTabContentPreview() {
-    ComposeActorsTheme {
+private fun FavoriteActorsTabContentPreviewLightPreview() {
+    ComposeActorsTheme(darkTheme = false) {
         FavoriteActorsTabContent(
-            getSelectedActorDetails = {},
+            navigateToSelectedActor = {},
+            favoriteActors = fakeFavoriteActorsList(),
+            removeFavoriteActor = {}
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@Composable
+private fun FavoriteActorsTabContentPreviewDarkPreview() {
+    ComposeActorsTheme(darkTheme = true) {
+        FavoriteActorsTabContent(
+            navigateToSelectedActor = {},
+            favoriteActors = fakeFavoriteActorsList(),
+            removeFavoriteActor = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun FavoriteActorsTabContentNoFavoritesPreviewLightPreview() {
+    ComposeActorsTheme(darkTheme = false) {
+        FavoriteActorsTabContent(
+            navigateToSelectedActor = {},
+            favoriteActors = emptyList(),
+            removeFavoriteActor = {}
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@Composable
+private fun FavoriteActorsTabContentNoFavoritesPreviewDarkPreview() {
+    ComposeActorsTheme(darkTheme = true) {
+        FavoriteActorsTabContent(
+            navigateToSelectedActor = {},
             favoriteActors = emptyList(),
             removeFavoriteActor = {}
         )

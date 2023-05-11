@@ -2,7 +2,7 @@
 buildscript {
 
     ext {
-        compose_version = '1.4.2'
+        compose_version = '1.4.3'
         kotlin_version = '1.8.10'
     }
 

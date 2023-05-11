@@ -2,12 +2,19 @@ package com.developersbreach.composeactors.ui.screens.home.tabs
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -19,7 +26,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.model.Actor
@@ -29,14 +35,12 @@ import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeUIState
-import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
-import kotlinx.coroutines.flow.emptyFlow
 
 
 @Composable
 fun ActorsTabContent(
     homeUIState: HomeUIState,
-    getSelectedActorDetails: (Int) -> Unit,
+    navigateToSelectedActor: (Int) -> Unit,
     popularActorsListState: LazyListState,
     trendingActorsListState: LazyListState
 ) {
@@ -54,7 +58,7 @@ fun ActorsTabContent(
             // List row of all popular actors.
             ItemActorList(
                 actorsList = homeUIState.popularActorList,
-                selectedActor = getSelectedActorDetails,
+                navigateToSelectedActor = navigateToSelectedActor,
                 actorsListState = popularActorsListState
             )
             AppDivider(verticalPadding = 32.dp)
@@ -64,7 +68,7 @@ fun ActorsTabContent(
             // List row of all trending actors.
             ItemActorList(
                 actorsList = homeUIState.trendingActorList,
-                selectedActor = getSelectedActorDetails,
+                navigateToSelectedActor = navigateToSelectedActor,
                 actorsListState = trendingActorsListState
             )
         }
@@ -77,7 +81,7 @@ fun ActorsTabContent(
 @Composable
 private fun ItemActorList(
     actorsList: List<Actor>,
-    selectedActor: (Int) -> Unit,
+    navigateToSelectedActor: (Int) -> Unit,
     actorsListState: LazyListState
 ) {
     LazyRow(
@@ -91,25 +95,25 @@ private fun ItemActorList(
         ) { actor ->
             ItemActor(
                 actor = actor,
-                selectedActor = selectedActor
+                onClickActor = navigateToSelectedActor
             )
         }
     }
 }
 
 /**
- * @param selectedActor navigate to actor [ActorDetailsScreen] from user selected actor.
+ * @param onClickActor navigate to actor [ActorDetailsScreen] from user selected actor.
  */
 @Composable
 private fun ItemActor(
     actor: Actor,
-    selectedActor: (Int) -> Unit
+    onClickActor: (Int) -> Unit
 ) {
     Card(
         modifier = Modifier
             .width(150.dp)
             .clip(shape = MaterialTheme.shapes.large)
-            .clickable(onClick = { selectedActor(actor.actorId) })
+            .clickable(onClick = { onClickActor(actor.actorId) })
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
@@ -144,24 +148,5 @@ private fun ItemActor(
 
             Spacer(modifier = Modifier.padding(vertical = 12.dp))
         }
-    }
-}
-
-@Preview
-@Composable
-private fun ActorsTabContentPreview() {
-    ComposeActorsTheme {
-        ActorsTabContent(
-            homeUIState = HomeUIState(
-                popularActorList = listOf(),
-                trendingActorList = listOf(),
-                isFetchingActors = false,
-                upcomingMoviesList = listOf(),
-                nowPlayingMoviesList = emptyFlow()
-            ),
-            getSelectedActorDetails = {},
-            popularActorsListState = rememberLazyListState(),
-            trendingActorsListState = rememberLazyListState()
-        )
     }
 }

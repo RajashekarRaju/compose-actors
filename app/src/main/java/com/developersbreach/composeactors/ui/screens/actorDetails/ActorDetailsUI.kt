@@ -6,35 +6,41 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.data.datasource.fake.fakeActorDetail
+import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGenerator
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.screens.actorDetails.composables.ActorBackgroundWithGradientForeground
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
+import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
+import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToFavoritesButton
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
-import kotlinx.coroutines.Job
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun ActorDetailsUI(
     detailUIState: ActorDetailsUIState,
     sheetUIState: ActorDetailsSheetUIState,
-    actorProfileUrl: String,
-    modalSheetState: ModalBottomSheetState,
-    selectedMovie: (Int) -> Unit,
+    navigateToSelectedMovie: (Int) -> Unit,
+    isFavoriteMovie: Boolean,
     navigateUp: () -> Unit,
-    openActorDetailsBottomSheet: () -> Job,
     getSelectedMovieDetails: (Int) -> Unit,
-    showFab: MutableState<Boolean>
+    addActorToFavorites: () -> Unit,
+    removeActorFromFavorites: () -> Unit
 ) {
+    val showFab = rememberSaveable { mutableStateOf(true) }
+    val actorProfileUrl = "${detailUIState.actorData?.profileUrl}"
+    val modalSheetState = modalBottomSheetState()
+    val openActorDetailsBottomSheet = manageModalBottomSheet(
+        modalSheetState = modalSheetState
+    )
 
     ModalBottomSheetLayout(
         sheetState = modalSheetState,
@@ -44,7 +50,7 @@ internal fun ActorDetailsUI(
         sheetContent = {
             SheetContentMovieDetails(
                 movie = sheetUIState.selectedMovieDetails,
-                selectedMovie = selectedMovie
+                navigateToSelectedMovie = navigateToSelectedMovie
             )
         }
     ) {
@@ -75,30 +81,55 @@ internal fun ActorDetailsUI(
                 ShowProgressIndicator(isLoadingData = detailUIState.isFetchingDetails)
             }
         }
+
+        if (showFab.value) {
+            FloatingAddToFavoritesButton(
+                isFavorite = isFavoriteMovie,
+                addToFavorites = addActorToFavorites,
+                removeFromFavorites = removeActorFromFavorites
+            )
+        }
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF211a18)
 @Composable
-fun ActorDetailsUIPreview() {
-    ComposeActorsTheme {
+private fun ActorDetailsUIDarkPreview() {
+    ComposeActorsTheme(darkTheme = true) {
         ActorDetailsUI(
             detailUIState = ActorDetailsUIState(
                 castList = listOf(),
-                actorData = null,
+                actorData = fakeActorDetail,
                 isFetchingDetails = false
             ),
-            sheetUIState = ActorDetailsSheetUIState(
-                selectedMovieDetails = null
-            ),
-            actorProfileUrl = "",
-            modalSheetState = modalBottomSheetState(),
-            selectedMovie = {},
+            sheetUIState = ActorDetailsSheetUIState(fakeMovieDetail),
+            navigateToSelectedMovie = {},
+            isFavoriteMovie = true,
             navigateUp = {},
-            openActorDetailsBottomSheet = { Job() },
             getSelectedMovieDetails = {},
-            showFab = rememberSaveable { mutableStateOf(true) }
+            addActorToFavorites = {},
+            removeActorFromFavorites = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ActorDetailsUILightPreview() {
+    ComposeActorsTheme(darkTheme = false) {
+        ActorDetailsUI(
+            detailUIState = ActorDetailsUIState(
+                castList = listOf(),
+                actorData = fakeActorDetail,
+                isFetchingDetails = false
+            ),
+            sheetUIState = ActorDetailsSheetUIState(fakeMovieDetail),
+            navigateToSelectedMovie = {},
+            isFavoriteMovie = true,
+            navigateUp = {},
+            getSelectedMovieDetails = {},
+            addActorToFavorites = {},
+            removeActorFromFavorites = {}
         )
     }
 }

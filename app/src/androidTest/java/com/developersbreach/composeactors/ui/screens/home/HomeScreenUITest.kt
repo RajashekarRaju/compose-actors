@@ -9,8 +9,10 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.paging.PagingData
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.developersbreach.composeactors.data.model.Actor
-import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.datasource.fake.nowPlayingMoviesList
+import com.developersbreach.composeactors.data.datasource.fake.popularActorList
+import com.developersbreach.composeactors.data.datasource.fake.trendingActorList
+import com.developersbreach.composeactors.data.datasource.fake.upcomingMoviesList
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Rule
@@ -42,8 +44,8 @@ class HomeScreenUITest {
         homeUIState: HomeUIState = mockHomeUIState
     ) {
         HomeScreenUI(
-            selectedActor = selectedActor,
-            selectedMovie = selectedMovie,
+            navigateToSelectedActor = selectedActor,
+            navigateToSelectedMovie = selectedMovie,
             navigateToFavorite = {},
             navigateToSearch = {},
             navigateToSearchBySearchType = navigateToSearchBySearchType,
@@ -151,50 +153,5 @@ class HomeScreenUITest {
             .onNodeWithTag(testTag = "TestTag:HomeTopAppBar")
             .assertExists()
             .performClick()
-    }
-
-    companion object {
-        val popularActorList = listOf(
-            Actor(
-                actorId = 28782,
-                actorName = "Monica Bellucci",
-                profileUrl = "z3sLuRKP7hQVrvSTsqdLjGSldwG.jpg"
-            ),
-            Actor(
-                actorId = 287,
-                actorName = "Brad Pitt",
-                profileUrl = "kU3B75TyRiCgE270EyZnHjfivoq.jpg"
-            )
-        )
-        val trendingActorList = listOf(
-            Actor(
-                actorId = 8784,
-                actorName = "Daniel Craig",
-                profileUrl = "rFuETZeyOAfIqBahOObF7Soq5Dh.jpg"
-            ),
-            Actor(
-                actorId = 1892,
-                actorName = "Matt Damon",
-                profileUrl = "7wbHIn7GziFlJLPl8Zu1XVl24EG.jpg"
-            ),
-        )
-
-        val upcomingMoviesList = listOf(
-            Movie(
-                movieId = 363736, movieName = "Oppenheimer", posterPathUrl = "", bannerUrl = ""
-            ),
-            Movie(
-                movieId = 123434, movieName = "Dune", posterPathUrl = "", bannerUrl = ""
-            )
-        )
-
-        val nowPlayingMoviesList = listOf(
-            Movie(
-                movieId = 157336, movieName = "Interstellar", posterPathUrl = "", bannerUrl = ""
-            ),
-            Movie(
-                movieId = 244786, movieName = "Whiplash", posterPathUrl = "", bannerUrl = ""
-            )
-        )
     }
 }

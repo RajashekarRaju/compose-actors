@@ -89,7 +89,7 @@ class MovieDetailViewModel @Inject constructor(
                     )
                 )
             } else {
-                Timber.e("Id of $movie was null while delete operation.")
+                Timber.e("Id of ${uiState.movieData?.movieId} was null while delete operation.")
             }
         }
     }
