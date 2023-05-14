@@ -23,8 +23,8 @@ buildscript {
 
 plugins {
     id("com.diffplug.spotless") version "6.12.1"
-    id("com.github.ben-manes.versions") version "0.46.0"
-    id("nl.littlerobots.version-catalog-update") version "0.8.0"
+    alias(libs.plugins.com.github.ben.manes.versions)
+    alias(libs.plugins.nl.littlerobots.version.catalog.update)
 }
 
 spotless {
@@ -44,4 +44,18 @@ spotless {
 
     // Disabling warnings and error messages
     // enforceCheck false
+}
+
+tasks.named("dependencyUpdates").configure {
+    def isNonStable = { String version ->
+        def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { keyword -> version.toUpperCase().contains(keyword) }
+        def regex = /^[0-9,.v-]+(-r)?$/
+        return !stableKeyword && !(version ==~ regex)
+    }
+
+    gradleReleaseChannel = "current"
+    revision = "release"
+    rejectVersionIf {
+        isNonStable(it.candidate.version)
+    }
 }
