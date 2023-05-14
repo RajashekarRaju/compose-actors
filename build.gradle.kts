@@ -16,9 +16,9 @@ spotless {
         // spotless:off and spotless:on
         // toggleOffOn()
 
-        target '**/*.kt'
+        target("**/*.kt")
         targetExclude("$buildDir/**/*.kt")
-        targetExclude('bin/**/*.kt')
+        targetExclude("bin/**/*.kt")
         ktlint("0.48.1")
         ktfmt()
     }
@@ -27,16 +27,13 @@ spotless {
     // enforceCheck false
 }
 
-tasks.named("dependencyUpdates").configure {
-    def isNonStable = { String version ->
-        def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { keyword -> version.toUpperCase().contains(keyword) }
-        def regex = /^[0-9,.v-]+(-r)?$/
-        return !stableKeyword && !(version ==~ regex)
+tasks.withType(com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask::class) {
+    fun isStable(version: String): Boolean {
+        val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.uppercase().contains(it) }
+        val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+        return stableKeyword || regex.matches(version)
     }
-
     gradleReleaseChannel = "current"
     revision = "release"
-    rejectVersionIf {
-        isNonStable(it.candidate.version)
-    }
+    rejectVersionIf { !isStable(candidate.version) }
 }
