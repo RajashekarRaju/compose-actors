@@ -3,6 +3,8 @@ androidx-activity = "1.7.1"
 androidx-appcompat = "1.6.1"
 androidx-arch-core = "2.2.0"
 androidx-compose-animation = "1.4.3"
+# @keep
+androidx-compose-compiler = "1.4.2"
 androidx-compose-foundation = "1.4.3"
 androidx-compose-material = "1.4.3"
 androidx-compose-runtime = "1.4.3"
