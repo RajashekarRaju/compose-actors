@@ -2,6 +2,7 @@ package com.developersbreach.composeactors.data.datasource.network
 
 import com.developersbreach.composeactors.data.PagedResponse
 import com.developersbreach.composeactors.data.model.*
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 import org.json.JSONObject
@@ -273,6 +274,29 @@ class JsonRemoteData @Inject constructor(
             total = totalResults,
             page = page
         )
+    }
+
+    fun fetchMovieProvidersJsonData(response: String): MovieProvider? {
+        val movieProvider = MovieProvider(ArrayList())
+        val baseJsonObj = JSONObject(response)
+        val resultsJsonObj = baseJsonObj.getJSONObject("results")
+        val countryCode = Locale.getDefault().country
+        if (resultsJsonObj.has(countryCode)) {
+            val inJsonObj = resultsJsonObj.getJSONObject(countryCode)
+            if (inJsonObj.has("flatrate")) {
+                val flatrateJsonArray = inJsonObj.getJSONArray("flatrate")
+                for (notI: Int in 0 until flatrateJsonArray.length()) {
+                    val jsonObject = flatrateJsonArray.getJSONObject(notI)
+                    val providerId = jsonObject.getInt("provider_id")
+                    val providerName = jsonObject.getString("provider_name")
+                    val logoPathUrl = jsonObject.getString("logo_path")
+                    val logoPath = "${LOW_RES_IMAGE}$logoPathUrl"
+                    movieProvider.flatrate.add(Flatrate(logoPath, providerId, providerName))
+                }
+            }
+            return movieProvider
+        }
+        return null
     }
 
     companion object {

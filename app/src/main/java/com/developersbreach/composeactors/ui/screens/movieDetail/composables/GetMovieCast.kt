@@ -114,7 +114,8 @@ private fun GetMovieCastLightPreview() {
                 similarMovies = listOf(),
                 recommendedMovies = listOf(),
                 movieCast = listOf(),
-                isFetchingDetails = false
+                isFetchingDetails = false,
+                movieProviders = null
             ),
             openMovieDetailsBottomSheet = { Job() },
             selectBottomSheetCallback = { }
@@ -132,7 +133,8 @@ private fun GetMovieCastDarkPreview() {
                 similarMovies = listOf(),
                 recommendedMovies = listOf(),
                 movieCast = listOf(),
-                isFetchingDetails = false
+                isFetchingDetails = false,
+                movieProviders = null
             ),
             openMovieDetailsBottomSheet = { Job() },
             selectBottomSheetCallback = {}
