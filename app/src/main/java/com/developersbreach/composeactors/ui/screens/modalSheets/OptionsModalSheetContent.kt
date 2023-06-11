@@ -46,7 +46,8 @@ fun OptionsModalSheetContent(
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navigateToFavorite:() -> Unit,
     navigateToSearch: () -> Unit,
-    navigateToProfile: () -> Unit
+    navigateToProfile: () -> Unit,
+    navigateToAbout: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -98,7 +99,8 @@ fun OptionsModalSheetContent(
                     option = option,
                     navigateToFavorite = navigateToFavorite,
                     navigateToSearch = navigateToSearch,
-                    navigateToProfile = navigateToProfile
+                    navigateToProfile = navigateToProfile,
+                    navigateToAbout = navigateToAbout
                 )
             }
         }
@@ -110,7 +112,8 @@ private fun ItemOptionRow(
     option: HomeOptionItems,
     navigateToFavorite: () -> Unit,
     navigateToSearch: () -> Unit,
-    navigateToProfile: () -> Unit
+    navigateToProfile: () -> Unit,
+    navigateToAbout: () -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -122,6 +125,7 @@ private fun ItemOptionRow(
                     1 -> navigateToFavorite()
                     2 -> navigateToSearch()
                     3 -> navigateToProfile()
+                    4 -> navigateToAbout()
                 }
             }
             .padding(top = 8.dp, start = 20.dp, end = 20.dp, bottom = 8.dp)
@@ -151,7 +155,8 @@ private fun OptionsModalSheetContentLightPreview() {
             modalSheetSheet = ModalBottomSheetState(ModalBottomSheetValue.Expanded),
             navigateToFavorite = {},
             navigateToSearch = {},
-            navigateToProfile = {}
+            navigateToProfile = {},
+            navigateToAbout = {}
         )
     }
 }
@@ -165,7 +170,8 @@ private fun OptionsModalSheetContentDarkPreview() {
             modalSheetSheet = ModalBottomSheetState(ModalBottomSheetValue.Expanded),
             navigateToFavorite = {},
             navigateToSearch = {},
-            navigateToProfile = {}
+            navigateToProfile = {},
+            navigateToAbout = {}
         )
     }
 }

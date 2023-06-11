@@ -2,7 +2,7 @@
 
 ### Task related to roadmap v0.3.0
 
-- [ ] Hilt will be replaced by removing Koin
+- [ ] Please add your task here
 
 ### Task status
 

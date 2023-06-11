@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.developersbreach.composeactors.ui.screens.about.AboutScreen
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsViewModel
 import com.developersbreach.composeactors.ui.screens.favorites.FavoritesScreen
@@ -54,6 +55,7 @@ fun AppNavigation(
                 navigateToSearch = actions.navigateToSearch,
                 navigateToFavorite = actions.navigateToFavorite,
                 navigateToSelectedMovie = actions.navigateToSelectedMovie,
+                navigateToAbout = actions.navigateToAbout,
             )
         }
 
@@ -120,6 +122,14 @@ fun AppNavigation(
                 navigateUp = actions.navigateUp,
                 navigateToSelectedMovie = actions.navigateToSelectedMovie,
                 navigateToSelectedActor = actions.navigateToSelectedActor,
+            )
+        }
+
+        composable(
+            route = AppDestinations.ABOUT_ROUTE
+        ) {
+            AboutScreen(
+                navigateUp = actions.navigateUp
             )
         }
     }
