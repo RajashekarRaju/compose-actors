@@ -10,6 +10,7 @@ import androidx.compose.animation.core.updateTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.ExperimentalMaterialApi
@@ -32,6 +33,8 @@ import com.developersbreach.composeactors.data.datasource.fake.fakeMovieCastList
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.data.model.BottomSheetType
+import com.developersbreach.composeactors.data.model.Flatrate
+import com.developersbreach.composeactors.data.model.MovieProvider
 import com.developersbreach.composeactors.ui.animations.LayerRevealImage
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentActorDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
@@ -77,14 +80,14 @@ fun MovieDetailsUI(
     // Change button state with respect to scroll changes.
     val showFab = rememberSaveable { mutableStateOf(true) }
     // Remember scroll state to change button state.
-    val showBottomSheetScaffold = rememberSaveable { mutableStateOf(true) }
+    val showBottomSheetScaffold = rememberSaveable { mutableStateOf(!isLayerRevealAnimationEnded.value) }
 
     val bottomSheetPeakValue = if (showBottomSheetScaffold.value) {
-        60.dp
+        72.dp
     } else {
         0.dp
     }
-    val animatedSheetPeekHeight = getAnimatedSheetPeekHeight(bottomSheetPeakValue)
+    val animatedScaffoldSheetPeekHeight = getAnimatedSheetPeekHeight(bottomSheetPeakValue)
 
     // Sheet content contains details for the selected movie from list.
     ModalBottomSheetLayout(
@@ -103,8 +106,9 @@ fun MovieDetailsUI(
     ) {
         val scaffoldState = rememberBottomSheetScaffoldState()
         BottomSheetScaffold(
+            modifier = Modifier.systemBarsPadding(),
             scaffoldState = scaffoldState,
-            sheetPeekHeight = animatedSheetPeekHeight,
+            sheetPeekHeight = animatedScaffoldSheetPeekHeight,
             sheetContent = {
                 SheetContentMovieProviders(
                     movieProvider = uiState.movieProviders,
@@ -146,7 +150,6 @@ private fun getAnimatedSheetPeekHeight(bottomSheetPeakValue: Dp): Dp {
     return animatedSheetPeekHeight
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieDetailsUiContent(
     uiState: MovieDetailsUIState,
@@ -179,16 +182,6 @@ fun MovieDetailsUiContent(
             )
         }
     }
-    // Progress bar - Hidden temporarily, although it works fine cannot have it in current
-    // screen placement since it is on top of reveal animation.
-    // ShowProgressIndicator(isLoadingData = uiState.isFetchingDetails)
-//            if (showFab.value) {
-//                FloatingAddToFavoritesButton(
-//                    isFavorite = isFavoriteMovie,
-//                    addToFavorites = addMovieToFavorites,
-//                    removeFromFavorites = removeMovieFromFavorites
-//                )
-//            }
 }
 
 @Composable
@@ -226,7 +219,9 @@ private fun MovieDetailsUILightPreview() {
                 recommendedMovies = fakeMovieList(),
                 movieCast = fakeMovieCastList(),
                 isFetchingDetails = false,
-                movieProviders = null
+                movieProviders = MovieProvider(
+                    arrayListOf(Flatrate("", 1, ""))
+                )
             ),
             navigateUp = {},
             showFab = remember { mutableStateOf(true) },
@@ -248,7 +243,9 @@ private fun MovieDetailsUIDarkPreview() {
                 recommendedMovies = fakeMovieList(),
                 movieCast = fakeMovieCastList(),
                 isFetchingDetails = false,
-                movieProviders = null
+                movieProviders = MovieProvider(
+                    arrayListOf(Flatrate("", 1, ""))
+                )
             ),
             navigateUp = {},
             showFab = remember { mutableStateOf(true) },

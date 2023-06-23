@@ -25,7 +25,8 @@ import com.developersbreach.composeactors.R
 fun FloatingAddToFavoritesButton(
     isFavorite: Boolean,
     addToFavorites: () -> Unit,
-    removeFromFavorites: () -> Unit
+    removeFromFavorites: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val fabState = remember {
         MutableTransitionState(false).apply {
@@ -35,7 +36,7 @@ fun FloatingAddToFavoritesButton(
     }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
         contentAlignment = Alignment.BottomCenter

@@ -17,7 +17,7 @@ data class MovieDetailsUIState(
     val recommendedMovies: List<Movie> = emptyList(),
     val movieCast: List<Cast> = emptyList(),
     val isFetchingDetails: Boolean = false,
-    val movieProviders: MovieProvider?,
+    val movieProviders: MovieProvider = MovieProvider(ArrayList()),
 )
 
 /**

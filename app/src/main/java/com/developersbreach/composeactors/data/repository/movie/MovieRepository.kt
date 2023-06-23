@@ -45,7 +45,7 @@ class MovieRepository @Inject constructor(
         return databaseDataSource.checkIfMovieIsFavorite(movieId)
     }
 
-    suspend fun getMovieProvidersData(movieId: Int): MovieProvider? {
+    suspend fun getMovieProvidersData(movieId: Int): MovieProvider {
         return networkDataSource.getMovieProvidersData(movieId)
     }
 

@@ -276,7 +276,7 @@ class JsonRemoteData @Inject constructor(
         )
     }
 
-    fun fetchMovieProvidersJsonData(response: String): MovieProvider? {
+    fun fetchMovieProvidersJsonData(response: String): MovieProvider {
         val movieProvider = MovieProvider(ArrayList())
         val baseJsonObj = JSONObject(response)
         val resultsJsonObj = baseJsonObj.getJSONObject("results")
@@ -296,7 +296,7 @@ class JsonRemoteData @Inject constructor(
             }
             return movieProvider
         }
-        return null
+        return MovieProvider(ArrayList())
     }
 
     companion object {

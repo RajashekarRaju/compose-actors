@@ -118,7 +118,7 @@ class NetworkDataSource @Inject constructor(
 
     suspend fun getMovieProvidersData(
         movieId: Int
-    ): MovieProvider? = withContext(Dispatchers.IO) {
+    ): MovieProvider = withContext(Dispatchers.IO) {
         val requestUrl = requestUrls.getMovieProviderUrl(movieId)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchMovieProvidersJsonData(response)

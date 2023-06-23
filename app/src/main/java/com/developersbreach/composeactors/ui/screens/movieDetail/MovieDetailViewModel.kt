@@ -29,12 +29,7 @@ class MovieDetailViewModel @Inject constructor(
 
     private val movieId: Int = checkNotNull(savedStateHandle[MOVIE_DETAILS_ID_KEY])
 
-    var uiState by mutableStateOf(
-        MovieDetailsUIState(
-            movieData = null,
-            movieProviders = null
-        )
-    )
+    var uiState by mutableStateOf(MovieDetailsUIState(movieData = null))
         private set
 
     var sheetUiState by mutableStateOf(ActorsSheetUIState(selectedActorDetails = null))
@@ -55,8 +50,7 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     private suspend fun startFetchingDetails() {
-        uiState =
-            MovieDetailsUIState(isFetchingDetails = true, movieData = null, movieProviders = null)
+        uiState = MovieDetailsUIState(isFetchingDetails = true, movieData = null)
         uiState = MovieDetailsUIState(
             movieData = movieRepository.getSelectedMovieData(movieId),
             similarMovies = movieRepository.getSimilarMoviesByIdData(movieId),
