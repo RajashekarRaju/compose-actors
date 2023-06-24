@@ -23,6 +23,10 @@ class JsonRemoteData @Inject constructor(
         response: String
     ): List<Actor> {
 
+        if (response.isEmpty()) {
+            return emptyList()
+        }
+
         val actorsList: MutableList<Actor> = ArrayList()
         val baseJsonArray = JSONObject(response)
         val actorsJsonArray = baseJsonArray.getJSONArray("results")
@@ -42,6 +46,10 @@ class JsonRemoteData @Inject constructor(
     fun fetchMoviesJsonData(
         response: String
     ): List<Movie> {
+
+        if (response.isEmpty()) {
+            return emptyList()
+        }
 
         val moviesList: MutableList<Movie> = ArrayList()
         val baseJsonArray = JSONObject(response)
@@ -98,6 +106,11 @@ class JsonRemoteData @Inject constructor(
     fun fetchCastDetailsJsonData(
         response: String
     ): List<Movie> {
+
+        if (response.isEmpty()) {
+            return emptyList()
+        }
+
         val movieList: MutableList<Movie> = ArrayList()
         val baseJsonArray = JSONObject(response)
         val movieJsonArray = baseJsonArray.getJSONArray("cast")
@@ -183,6 +196,10 @@ class JsonRemoteData @Inject constructor(
         response: String
     ): List<Movie> {
 
+        if (response.isEmpty()) {
+            return emptyList()
+        }
+
         val movieList: MutableList<Movie> = ArrayList()
         val baseJsonArray = JSONObject(response)
         val actorsJsonArray = baseJsonArray.getJSONArray("results")
@@ -209,6 +226,10 @@ class JsonRemoteData @Inject constructor(
         response: String
     ): List<Cast> {
 
+        if (response.isEmpty()) {
+            return emptyList()
+        }
+
         val castList: MutableList<Cast> = ArrayList()
         val baseJsonArray = JSONObject(response)
         val castJsonArray = baseJsonArray.getJSONArray("cast")
@@ -228,6 +249,10 @@ class JsonRemoteData @Inject constructor(
     fun fetchUpcomingMoviesJsonData(
         response: String
     ): List<Movie> {
+
+        if (response.isEmpty()) {
+            return emptyList()
+        }
 
         val movieList: MutableList<Movie> = ArrayList()
         val baseJsonArray = JSONObject(response)
@@ -250,6 +275,10 @@ class JsonRemoteData @Inject constructor(
     fun fetchNowPlayingMoviesJsonData(
         response: String
     ): PagedResponse<Movie> {
+
+        if (response.isEmpty()) {
+            return PagedResponse(emptyList(), 0, 0)
+        }
 
         val movieList: MutableList<Movie> = ArrayList()
         val baseJsonArray = JSONObject(response)
