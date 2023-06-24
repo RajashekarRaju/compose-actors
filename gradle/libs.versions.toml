@@ -10,6 +10,10 @@ androidx-palette = "1.0.0"
 androidx-room = "2.5.1"
 androidx-test-ext = "1.1.5"
 com-google-dagger = "2.46.1"
+com-google-gms = "4.3.15"
+com-google-firebase = "2.9.6"
+com-google-firebase-analytics = "21.3.0"
+com-google-firebase-cashlytics = "18.3.7"
 kotlin = "1.8.21"
 
 [libraries]
@@ -38,6 +42,8 @@ androidx-test-ext-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.
 com-google-android-material = "com.google.android.material:material:1.9.0"
 com-google-dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "com-google-dagger" }
 com-google-dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "com-google-dagger" }
+com-google-firebase-analytics = "com.google.firebase:firebase-analytics-ktx:21.3.0"
+com-google-firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:18.3.7"
 com-jakewharton-timber = "com.jakewharton.timber:timber:5.0.1"
 io-coil-kt-coil-compose = "io.coil-kt:coil-compose:2.3.0"
 io-mockk = "io.mockk:mockk:1.13.5"
@@ -51,3 +57,5 @@ com-google-dagger-hilt-android = "com.google.dagger.hilt.android:2.46.1"
 nl-littlerobots-version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.0"
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+com-google-gms = { id = "com.google.gms.google-services", version.ref = "com-google-gms" }
+com-google-firebase = { id = "com.google.firebase.crashlytics", version.ref = "com-google-firebase" }
