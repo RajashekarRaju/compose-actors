@@ -2,13 +2,14 @@ package com.developersbreach.composeactors.data.repository.movie
 
 import androidx.lifecycle.LiveData
 import com.developersbreach.composeactors.data.PagedResponse
+import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
+import com.developersbreach.composeactors.data.datasource.network.NetworkDataSource
 import com.developersbreach.composeactors.data.model.Cast
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.MovieDetail
-import javax.inject.Singleton
-import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
-import com.developersbreach.composeactors.data.datasource.network.NetworkDataSource
+import com.developersbreach.composeactors.data.model.MovieProvider
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 class MovieRepository @Inject constructor(
@@ -42,6 +43,10 @@ class MovieRepository @Inject constructor(
 
     fun isFavoriteMovie(movieId: Int): LiveData<Int> {
         return databaseDataSource.checkIfMovieIsFavorite(movieId)
+    }
+
+    suspend fun getMovieProvidersData(movieId: Int): MovieProvider {
+        return networkDataSource.getMovieProvidersData(movieId)
     }
 
     suspend fun addMovieToFavorites(movie: Movie) {

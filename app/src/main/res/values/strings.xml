@@ -30,4 +30,8 @@
     <string name="add_to_favorites_text">Add to favorites</string>
     <string name="remove_from_favorites_text">Remove favorite</string>
 
+    <string name="movie_providers">Movie Providers</string>
+    <string name="stream">Watch providers</string>
+    <string name="no_watch_options">No watch options available!</string>
+
 </resources>
