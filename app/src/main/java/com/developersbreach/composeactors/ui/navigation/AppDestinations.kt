@@ -14,6 +14,8 @@ object AppDestinations {
     // search based on type
     const val SEARCH_TYPE = "searchType"
 
+    const val ABOUT_ROUTE = "about"
+
     // list to details destination
     const val ACTOR_DETAIL_ROUTE = "actor-detail"
     // list to selected actor detail destination

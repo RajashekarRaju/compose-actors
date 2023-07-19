@@ -23,6 +23,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigateToSelectedActor: (Int) -> Unit,
     navigateToSearch: (SearchType) -> Unit,
+    navigateToAbout: () -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
     navigateToFavorite: () -> Unit,
 ) {
@@ -32,6 +33,7 @@ fun HomeScreen(
         modifier = Modifier,
         navigateToFavorite = navigateToFavorite,
         navigateToSearch = navigateToSearch,
+        navigateToAbout = navigateToAbout,
         navigateToSearchBySearchType = navigateToSearchBySearchType,
         navigateToSelectedActor = navigateToSelectedActor,
         navigateToSelectedMovie = navigateToSelectedMovie,

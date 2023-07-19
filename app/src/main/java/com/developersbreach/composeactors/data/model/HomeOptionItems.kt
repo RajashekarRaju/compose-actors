@@ -23,6 +23,11 @@ data class HomeOptionItems(
                 id = 3,
                 title = "Profile",
                 icon = R.drawable.ic_account
+            ),
+            HomeOptionItems(
+                id = 4,
+                title = "About",
+                icon = R.drawable.ic_about
             )
         )
     }

@@ -32,6 +32,11 @@ class AppActions(
         navController.navigate(routes.FAVORITES_ROUTE)
     }
 
+    // Navigates to about screen from home options menu
+    val navigateToAbout: () -> Unit = {
+        navController.navigate(routes.ABOUT_ROUTE)
+    }
+
     // Navigates to previous screen from current screen.
     val navigateUp: () -> Unit = {
         navController.navigateUp()
