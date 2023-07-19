@@ -2,6 +2,7 @@ package com.developersbreach.composeactors.utils
 
 import java.io.IOException
 import java.io.InputStream
+import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
@@ -33,6 +34,8 @@ class NetworkQueryUtils @Inject constructor() {
             }
             scanner.close()
             response
+        } catch (e: Exception) {
+            ""
         } finally {
             urlConnection.disconnect()
         }

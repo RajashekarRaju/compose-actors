@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.org.jetbrains.kotlin.kapt)
     alias(libs.plugins.com.google.dagger.hilt.android)
+    alias(libs.plugins.com.google.gms)
+    alias(libs.plugins.com.google.firebase)
 }
 
 android {
@@ -104,6 +106,8 @@ dependencies {
     // Room
     implementation(libs.androidx.room.room.runtime)
     implementation(libs.androidx.room.room.ktx)
+    implementation(libs.com.google.firebase.analytics)
+    implementation(libs.com.google.firebase.crashlytics)
     kapt(libs.androidx.room.room.compiler)
 
     // hilt
