@@ -1,12 +1,17 @@
 package com.developersbreach.composeactors.data.datasource.network
 
 import com.developersbreach.composeactors.data.PagedResponse
-import com.developersbreach.composeactors.data.model.*
+import com.developersbreach.composeactors.data.model.Actor
+import com.developersbreach.composeactors.data.model.ActorDetail
+import com.developersbreach.composeactors.data.model.Cast
+import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.model.MovieDetail
+import com.developersbreach.composeactors.data.model.MovieProvider
 import com.developersbreach.composeactors.utils.NetworkQueryUtils
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * Functions in this repository executes on an IO-optimized thread pool, makes main-safe.
@@ -109,6 +114,14 @@ class NetworkDataSource @Inject constructor(
         val requestUrl = requestUrls.getUpcomingMoviesUrl()
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchUpcomingMoviesJsonData(response)
+    }
+
+    suspend fun getMovieProvidersData(
+        movieId: Int
+    ): MovieProvider = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getMovieProviderUrl(movieId)
+        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+        jsonData.fetchMovieProvidersJsonData(response)
     }
 
     suspend fun getNowPlayingMoviesData(

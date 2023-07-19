@@ -4,6 +4,7 @@ import com.developersbreach.composeactors.data.model.ActorDetail
 import com.developersbreach.composeactors.data.model.Cast
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.MovieDetail
+import com.developersbreach.composeactors.data.model.MovieProvider
 
 // TODO - create a sealed class to contains the different states
 
@@ -16,6 +17,7 @@ data class MovieDetailsUIState(
     val recommendedMovies: List<Movie> = emptyList(),
     val movieCast: List<Cast> = emptyList(),
     val isFetchingDetails: Boolean = false,
+    val movieProviders: MovieProvider = MovieProvider(ArrayList()),
 )
 
 /**
