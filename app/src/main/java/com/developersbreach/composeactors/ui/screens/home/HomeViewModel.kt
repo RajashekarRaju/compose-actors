@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.repository.actor.ActorRepository
+import com.developersbreach.composeactors.data.repository.user.UserRepository
 import com.developersbreach.composeactors.domain.GetPagedMovies
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +23,8 @@ import timber.log.Timber
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val actorRepository: ActorRepository,
-    private val getPagedMovies: GetPagedMovies
+    private val getPagedMovies: GetPagedMovies,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     var uiState by mutableStateOf(HomeUIState())
@@ -37,11 +39,16 @@ class HomeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             try {
+                setRegion()
                 startFetchingActors()
             } catch (e: IOException) {
                 Timber.e("$e")
             }
         }
+    }
+
+    private fun setRegion() {
+        userRepository.setRegion()
     }
 
     private suspend fun startFetchingActors() {

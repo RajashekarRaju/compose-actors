@@ -1,6 +1,7 @@
 package com.developersbreach.composeactors.data.datasource.network
 
 import com.developersbreach.composeactors.data.PagedResponse
+import com.developersbreach.composeactors.data.datasource.database.PreferenceStoreDatabase
 import com.developersbreach.composeactors.data.model.Actor
 import com.developersbreach.composeactors.data.model.ActorDetail
 import com.developersbreach.composeactors.data.model.Cast
@@ -25,19 +26,20 @@ import kotlinx.coroutines.withContext
 class NetworkDataSource @Inject constructor(
     private val requestUrls: RequestUrls,
     private val jsonData: JsonRemoteData,
-    private val queryUtils: NetworkQueryUtils
+    private val queryUtils: NetworkQueryUtils,
+    private val preferenceStoreDatabase: PreferenceStoreDatabase
 ) {
 
     /*** @return the result of latest list of all popular actors fetched from the network.*/
     suspend fun getPopularActorsData(): List<Actor> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getPopularActorsUrl()
+        val requestUrl = requestUrls.getPopularActorsUrl(preferenceStoreDatabase.getRegion())
         val response: String = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchActorsJsonData(response)
     }
 
     /** @return the result of latest list of all trending actors fetched from the network. */
     suspend fun getTrendingActorsData(): List<Actor> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getTrendingActorsUrl()
+        val requestUrl = requestUrls.getTrendingActorsUrl(preferenceStoreDatabase.getRegion())
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchActorsJsonData(response)
     }
@@ -81,7 +83,7 @@ class NetworkDataSource @Inject constructor(
     suspend fun getSimilarMoviesByIdData(
         movieId: Int
     ): List<Movie> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getSimilarMoviesUrl(movieId)
+        val requestUrl = requestUrls.getSimilarMoviesUrl(movieId, region = preferenceStoreDatabase.getRegion())
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
     }
@@ -93,7 +95,7 @@ class NetworkDataSource @Inject constructor(
     suspend fun getRecommendedMoviesByIdData(
         movieId: Int
     ): List<Movie> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getRecommendedMoviesUrl(movieId)
+        val requestUrl = requestUrls.getRecommendedMoviesUrl(movieId, region = preferenceStoreDatabase.getRegion())
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
     }
@@ -111,7 +113,7 @@ class NetworkDataSource @Inject constructor(
     }
 
     suspend fun getUpcomingMoviesData(): List<Movie> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getUpcomingMoviesUrl()
+        val requestUrl = requestUrls.getUpcomingMoviesUrl(region = preferenceStoreDatabase.getRegion())
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchUpcomingMoviesJsonData(response)
     }
@@ -125,9 +127,9 @@ class NetworkDataSource @Inject constructor(
     }
 
     suspend fun getNowPlayingMoviesData(
-        page: Int
+        page: Int,
     ): PagedResponse<Movie> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getNowPlayingMoviesUrl(page)
+        val requestUrl = requestUrls.getNowPlayingMoviesUrl(page, preferenceStoreDatabase.getRegion())
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchNowPlayingMoviesJsonData(response)
     }
