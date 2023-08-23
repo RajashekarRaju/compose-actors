@@ -28,6 +28,11 @@ data class HomeOptionItems(
                 id = 4,
                 title = "About",
                 icon = R.drawable.ic_about
+            ),
+            HomeOptionItems(
+                id = 5,
+                title = "Region preference",
+                icon = R.drawable.ic_edit_location
             )
         )
     }

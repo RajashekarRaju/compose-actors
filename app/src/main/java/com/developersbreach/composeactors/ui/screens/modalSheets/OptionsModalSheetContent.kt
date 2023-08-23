@@ -44,10 +44,11 @@ import kotlinx.coroutines.launch
 fun OptionsModalSheetContent(
     modalSheetSheet: ModalBottomSheetState,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    navigateToFavorite:() -> Unit,
+    navigateToFavorite: () -> Unit,
     navigateToSearch: () -> Unit,
     navigateToProfile: () -> Unit,
-    navigateToAbout: () -> Unit
+    navigateToAbout: () -> Unit,
+    regionBtnClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -100,7 +101,8 @@ fun OptionsModalSheetContent(
                     navigateToFavorite = navigateToFavorite,
                     navigateToSearch = navigateToSearch,
                     navigateToProfile = navigateToProfile,
-                    navigateToAbout = navigateToAbout
+                    navigateToAbout = navigateToAbout,
+                    regionBtnClick = regionBtnClick
                 )
             }
         }
@@ -113,7 +115,8 @@ private fun ItemOptionRow(
     navigateToFavorite: () -> Unit,
     navigateToSearch: () -> Unit,
     navigateToProfile: () -> Unit,
-    navigateToAbout: () -> Unit
+    navigateToAbout: () -> Unit,
+    regionBtnClick: () -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -126,6 +129,7 @@ private fun ItemOptionRow(
                     2 -> navigateToSearch()
                     3 -> navigateToProfile()
                     4 -> navigateToAbout()
+                    5 -> regionBtnClick()
                 }
             }
             .padding(top = 8.dp, start = 20.dp, end = 20.dp, bottom = 8.dp)
@@ -156,7 +160,8 @@ private fun OptionsModalSheetContentLightPreview() {
             navigateToFavorite = {},
             navigateToSearch = {},
             navigateToProfile = {},
-            navigateToAbout = {}
+            navigateToAbout = {},
+            regionBtnClick = {}
         )
     }
 }
@@ -171,7 +176,8 @@ private fun OptionsModalSheetContentDarkPreview() {
             navigateToFavorite = {},
             navigateToSearch = {},
             navigateToProfile = {},
-            navigateToAbout = {}
+            navigateToAbout = {},
+            regionBtnClick = {}
         )
     }
 }
