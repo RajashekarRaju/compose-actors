@@ -1,7 +1,6 @@
 package com.developersbreach.composeactors.data.datasource.network
 
 import com.developersbreach.composeactors.data.PagedResponse
-import com.developersbreach.composeactors.data.datasource.database.PreferenceStoreDatabase
 import com.developersbreach.composeactors.data.model.Actor
 import com.developersbreach.composeactors.data.model.ActorDetail
 import com.developersbreach.composeactors.data.model.Cast
@@ -26,20 +25,19 @@ import kotlinx.coroutines.withContext
 class NetworkDataSource @Inject constructor(
     private val requestUrls: RequestUrls,
     private val jsonData: JsonRemoteData,
-    private val queryUtils: NetworkQueryUtils,
-    private val preferenceStoreDatabase: PreferenceStoreDatabase
+    private val queryUtils: NetworkQueryUtils
 ) {
 
     /*** @return the result of latest list of all popular actors fetched from the network.*/
-    suspend fun getPopularActorsData(): List<Actor> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getPopularActorsUrl(preferenceStoreDatabase.getRegion())
+    suspend fun getPopularActorsData(region: String?): List<Actor> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getPopularActorsUrl(region)
         val response: String = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchActorsJsonData(response)
     }
 
     /** @return the result of latest list of all trending actors fetched from the network. */
-    suspend fun getTrendingActorsData(): List<Actor> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getTrendingActorsUrl(preferenceStoreDatabase.getRegion())
+    suspend fun getTrendingActorsData(region: String?): List<Actor> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getTrendingActorsUrl(region)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchActorsJsonData(response)
     }
@@ -81,9 +79,10 @@ class NetworkDataSource @Inject constructor(
      * @return the result of list of movies which are based on current movie id.
      */
     suspend fun getSimilarMoviesByIdData(
-        movieId: Int
+        movieId: Int,
+        region: String?
     ): List<Movie> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getSimilarMoviesUrl(movieId, region = preferenceStoreDatabase.getRegion())
+        val requestUrl = requestUrls.getSimilarMoviesUrl(movieId, region = region)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
     }
@@ -93,9 +92,10 @@ class NetworkDataSource @Inject constructor(
      * @return the result of list of movies which are based on current movie id.
      */
     suspend fun getRecommendedMoviesByIdData(
-        movieId: Int
+        movieId: Int,
+        region: String?
     ): List<Movie> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getRecommendedMoviesUrl(movieId, region = preferenceStoreDatabase.getRegion())
+        val requestUrl = requestUrls.getRecommendedMoviesUrl(movieId, region = region)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
     }
@@ -112,8 +112,8 @@ class NetworkDataSource @Inject constructor(
         jsonData.fetchMovieCastByIdJsonData(response)
     }
 
-    suspend fun getUpcomingMoviesData(): List<Movie> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getUpcomingMoviesUrl(region = preferenceStoreDatabase.getRegion())
+    suspend fun getUpcomingMoviesData(region: String?): List<Movie> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getUpcomingMoviesUrl(region = region)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchUpcomingMoviesJsonData(response)
     }
@@ -128,8 +128,9 @@ class NetworkDataSource @Inject constructor(
 
     suspend fun getNowPlayingMoviesData(
         page: Int,
+        region: String?
     ): PagedResponse<Movie> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getNowPlayingMoviesUrl(page, preferenceStoreDatabase.getRegion())
+        val requestUrl = requestUrls.getNowPlayingMoviesUrl(page, region)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchNowPlayingMoviesJsonData(response)
     }

@@ -7,24 +7,26 @@ import com.developersbreach.composeactors.data.model.Actor
 import com.developersbreach.composeactors.data.model.ActorDetail
 import com.developersbreach.composeactors.data.model.FavoriteActor
 import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.repository.user.UserRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ActorRepository @Inject constructor(
     private val networkDataSource: NetworkDataSource,
-    private val databaseDataSource: DatabaseDataSource
+    private val databaseDataSource: DatabaseDataSource,
+    private val userRepository: UserRepository
 ) {
     suspend fun getPopularActorsData(): List<Actor> {
-        return networkDataSource.getPopularActorsData()
+        return networkDataSource.getPopularActorsData(userRepository.getRegion())
     }
 
     suspend fun getTrendingActorsData(): List<Actor> {
-        return networkDataSource.getTrendingActorsData()
+        return networkDataSource.getTrendingActorsData(userRepository.getRegion())
     }
 
     suspend fun getUpcomingMoviesData(): List<Movie> {
-        return networkDataSource.getUpcomingMoviesData()
+        return networkDataSource.getUpcomingMoviesData(userRepository.getRegion())
     }
 
     suspend fun getSelectedActorData(actorInt: Int): ActorDetail {

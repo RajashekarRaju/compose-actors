@@ -33,11 +33,14 @@
     <string name="movie_providers">Movie Providers</string>
     <string name="stream">Watch providers</string>
     <string name="no_watch_options">No watch options available!</string>
-  
+
     <!--  About screen  -->
     <string name="cd_tmdb_api_attribution_logo">Logo of TMDB Api</string>
     <string name="tmdb_api_attribution">
         The data and images displayed in this app are sourced from TMDB Api, a comprehensive movie and TV show database.
     </string>
+    <string name="choose_region">Choose region:</string>
+    <string name="close_pop_up_icon">close pop up icon</string>
+    <string name="region_successfully_changed_to">Region successfully changed to %1$s</string>
 
 </resources>

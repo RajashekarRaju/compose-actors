@@ -258,8 +258,12 @@ class JsonRemoteData @Inject constructor(
         val movieList: MutableList<Movie> = ArrayList()
         val baseJsonArray = JSONObject(response)
         val moviesJsonArray = baseJsonArray.getJSONArray("results")
-
-        for (notI: Int in 0 until 5) {
+        val upcomingMovieCount = if (moviesJsonArray.length() >= 5) {
+            5
+        } else {
+            moviesJsonArray.length()
+        }
+        for (notI: Int in 0 until upcomingMovieCount) {
             val jsonObject = moviesJsonArray.getJSONObject(notI)
             val movieId = jsonObject.getInt("id")
             val originalTitle = jsonObject.getString("original_title")

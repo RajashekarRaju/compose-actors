@@ -8,17 +8,19 @@ import com.developersbreach.composeactors.data.model.Cast
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.MovieDetail
 import com.developersbreach.composeactors.data.model.MovieProvider
+import com.developersbreach.composeactors.data.repository.user.UserRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class MovieRepository @Inject constructor(
     private val networkDataSource: NetworkDataSource,
-    private val databaseDataSource: DatabaseDataSource
+    private val databaseDataSource: DatabaseDataSource,
+    private val userRepository: UserRepository
 ) {
 
     suspend fun getNowPlayingMoviesData(page: Int): PagedResponse<Movie> {
-        return networkDataSource.getNowPlayingMoviesData(page)
+        return networkDataSource.getNowPlayingMoviesData(page, userRepository.getRegion())
     }
 
     suspend fun getSelectedMovieData(movieId: Int): MovieDetail {
@@ -26,11 +28,11 @@ class MovieRepository @Inject constructor(
     }
 
     suspend fun getSimilarMoviesByIdData(movieId: Int): List<Movie> {
-        return networkDataSource.getSimilarMoviesByIdData(movieId)
+        return networkDataSource.getSimilarMoviesByIdData(movieId, userRepository.getRegion())
     }
 
     suspend fun getRecommendedMoviesByIdData(movieId: Int): List<Movie> {
-        return networkDataSource.getRecommendedMoviesByIdData(movieId)
+        return networkDataSource.getRecommendedMoviesByIdData(movieId, userRepository.getRegion())
     }
 
     suspend fun getMovieCastByIdData(movieId: Int): List<Cast> {

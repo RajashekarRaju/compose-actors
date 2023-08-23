@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.home
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,7 +13,6 @@ import com.developersbreach.composeactors.data.repository.user.UserRepository
 import com.developersbreach.composeactors.domain.GetPagedMovies
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -37,18 +37,25 @@ class HomeViewModel @Inject constructor(
     val updateHomeSearchType: LiveData<SearchType> = _updateHomeSearchType
 
     init {
+        setData()
+    }
+
+    private fun setData() {
         viewModelScope.launch {
             try {
-                setRegion()
+                userRepository.setDefaultRegion()
                 startFetchingActors()
-            } catch (e: IOException) {
+            } catch (e: Exception) {
                 Timber.e("$e")
             }
         }
     }
 
-    private fun setRegion() {
-        userRepository.setRegion()
+    fun setRegion(countryCode: String, setRegionSuccessesCallBack: MutableState<Boolean>) {
+        val success = userRepository.setRegion(countryCode, setRegionSuccessesCallBack)
+        if (success) {
+            setData()
+        }
     }
 
     private suspend fun startFetchingActors() {
