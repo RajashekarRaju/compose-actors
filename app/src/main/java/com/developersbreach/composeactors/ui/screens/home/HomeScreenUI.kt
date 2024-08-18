@@ -136,11 +136,13 @@ private fun HomeScreenUI(
 ) {
     val popularActorsListState = rememberLazyListState()
     val trendingActorsListState = rememberLazyListState()
-    val homePagerState = rememberPagerState()
     val homeTabs = listOf(
         TabItem("Actors"),
         TabItem("Movies"),
         TabItem("TV Shows")
+    )
+    val homePagerState = rememberPagerState(
+        pageCount = { homeTabs.size }
     )
 
     Column(
@@ -151,7 +153,6 @@ private fun HomeScreenUI(
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
         HorizontalPager(
             state = homePagerState,
-            pageCount = homeTabs.size
         ) {
             when (it) {
                 0 -> {

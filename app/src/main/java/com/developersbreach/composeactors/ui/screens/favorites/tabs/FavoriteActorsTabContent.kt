@@ -47,12 +47,13 @@ fun FavoriteActorsTabContent(
         NoFavoritesFoundUI()
     }
 
-    val listState = rememberPagerState()
+    val listState = rememberPagerState(
+        pageCount = { favoriteActors.size }
+    )
 
     VerticalPager(
         state = listState,
         modifier = Modifier.fillMaxSize(),
-        pageCount = favoriteActors.size,
         pageSpacing = 24.dp,
         pageSize = PageSize.Fixed(512.dp),
         contentPadding = PaddingValues(top = 24.dp, start = 24.dp, end = 24.dp, bottom = 48.dp),
