@@ -1,6 +1,7 @@
 package com.developersbreach.composeactors.ui.screens.home
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -36,22 +37,27 @@ class HomeScreenUITest {
 
     @Composable
     private fun HomeScreenUIContent(
-        selectedActor: (actorId: Int) -> Unit = { },
-        selectedMovie: (movieId: Int) -> Unit = { },
-        updateSearchType: (searchType: SearchType) -> Unit = {  },
+        navigateToSelectedActor: (actorId: Int) -> Unit = { },
+        navigateToSelectedMovie: (movieId: Int) -> Unit = { },
+        navigateToFavorite: () -> Unit = { },
+        navigateToSearch: (searchType: SearchType) -> Unit = {  },
+        updateHomeSearchType: (searchType: SearchType) -> Unit = {  },
+        navigateToAbout: () -> Unit = {  },
         navigateToSearchBySearchType: SearchType = SearchType.Actors,
         homeSheetUIState: HomeSheetUIState = HomeSheetUIState(),
         homeUIState: HomeUIState = mockHomeUIState
     ) {
         HomeScreenUI(
-            navigateToSelectedActor = selectedActor,
-            navigateToSelectedMovie = selectedMovie,
-            navigateToFavorite = {},
-            navigateToSearch = {},
+            modifier = Modifier,
+            navigateToSelectedActor = navigateToSelectedActor,
+            navigateToSelectedMovie = navigateToSelectedMovie,
+            navigateToFavorite = navigateToFavorite,
+            navigateToSearch = navigateToSearch,
+            navigateToAbout = navigateToAbout,
             navigateToSearchBySearchType = navigateToSearchBySearchType,
             uiState = homeUIState,
             sheetUiState = homeSheetUIState,
-            updateHomeSearchType = updateSearchType,
+            updateHomeSearchType = updateHomeSearchType,
         )
     }
 
@@ -139,7 +145,7 @@ class HomeScreenUITest {
     fun onClickSearchTopAppBar_shouldNavigateToSearchScreen() {
         composeTestRule.setContent {
             HomeScreenUIContent(
-                navigateToSearchBySearchType = SearchType.Actors
+                navigateToSearch = { SearchType.Actors },
             )
         }
 
@@ -151,7 +157,7 @@ class HomeScreenUITest {
 
         composeTestRule
             .onNodeWithTag(testTag = "TestTag:HomeTopAppBar")
-            .assertExists()
+            .assertIsDisplayed()
             .performClick()
     }
 }
