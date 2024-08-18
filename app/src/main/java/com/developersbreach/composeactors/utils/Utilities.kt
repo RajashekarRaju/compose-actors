@@ -60,3 +60,14 @@ fun getMovieRuntimeFormatted(
     val minutes: Int? = runtime?.rem(60)
     return "${hours}h:${minutes}m"
 }
+
+fun getCountryListWithCode(): List<String> {
+    val region = arrayListOf<String>()
+    val isoCountryCodes: Array<String> = Locale.getISOCountries()
+    for (countryCode in isoCountryCodes) {
+        val locale = Locale("", countryCode)
+        val countryName: String = locale.displayCountry
+        region.add("$countryCode,$countryName")
+    }
+    return region
+}
