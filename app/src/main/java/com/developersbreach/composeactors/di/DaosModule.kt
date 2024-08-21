@@ -13,6 +13,7 @@ import dagger.hilt.components.SingletonComponent
 object DaosModule {
 
     @Provides
+    @JvmStatic
     fun providesFavoriteActorsDao(
         database: AppDatabase
     ): FavoriteActorsDao {
@@ -20,6 +21,7 @@ object DaosModule {
     }
 
     @Provides
+    @JvmStatic
     fun providesFavoriteMoviesDao(
         database: AppDatabase
     ): FavoriteMoviesDao {

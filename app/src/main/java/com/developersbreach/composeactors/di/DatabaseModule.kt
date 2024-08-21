@@ -18,6 +18,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
+    @JvmStatic
     fun getDatabaseInstance(
         @ApplicationContext context: Context
     ): AppDatabase {

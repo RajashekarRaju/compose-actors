@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.com.diffplug.spotless)
     alias(libs.plugins.com.github.ben.manes.versions)
     alias(libs.plugins.nl.littlerobots.version.catalog.update)
+    alias(libs.plugins.compose.compiler) apply false
 }
 
 spotless {

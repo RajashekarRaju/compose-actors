@@ -7,15 +7,16 @@ plugins {
     alias(libs.plugins.com.google.dagger.hilt.android)
     alias(libs.plugins.com.google.gms)
     alias(libs.plugins.com.google.firebase)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.developersbreach.composeactors"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 3
         versionName = "0.3.0"
 
@@ -53,10 +54,6 @@ android {
     buildFeatures {
         buildConfig = true
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
 
     packaging {

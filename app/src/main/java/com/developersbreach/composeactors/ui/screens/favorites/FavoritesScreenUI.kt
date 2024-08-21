@@ -38,10 +38,12 @@ fun FavoritesScreenUI(
     favoriteActors: List<FavoriteActor>,
     removeFavoriteActor: (FavoriteActor) -> Unit,
 ) {
-    val favoritesPagerState = rememberPagerState()
     val favoriteTabs = listOf(
         TabItem("Actors"),
         TabItem("Movies")
+    )
+    val favoritesPagerState = rememberPagerState(
+        pageCount = { favoriteTabs.size }
     )
 
     Surface(
@@ -61,7 +63,6 @@ fun FavoritesScreenUI(
                 AppDivider(thickness = 1.dp, verticalPadding = 0.dp)
                 HorizontalPager(
                     state = favoritesPagerState,
-                    pageCount = favoriteTabs.size,
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
