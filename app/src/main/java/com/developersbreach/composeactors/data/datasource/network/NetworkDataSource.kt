@@ -29,15 +29,15 @@ class NetworkDataSource @Inject constructor(
 ) {
 
     /*** @return the result of latest list of all popular actors fetched from the network.*/
-    suspend fun getPopularActorsData(): List<Actor> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getPopularActorsUrl()
+    suspend fun getPopularActorsData(region: String?): List<Actor> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getPopularActorsUrl(region)
         val response: String = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchActorsJsonData(response)
     }
 
     /** @return the result of latest list of all trending actors fetched from the network. */
-    suspend fun getTrendingActorsData(): List<Actor> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getTrendingActorsUrl()
+    suspend fun getTrendingActorsData(region: String?): List<Actor> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getTrendingActorsUrl(region)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchActorsJsonData(response)
     }
@@ -79,9 +79,10 @@ class NetworkDataSource @Inject constructor(
      * @return the result of list of movies which are based on current movie id.
      */
     suspend fun getSimilarMoviesByIdData(
-        movieId: Int
+        movieId: Int,
+        region: String?
     ): List<Movie> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getSimilarMoviesUrl(movieId)
+        val requestUrl = requestUrls.getSimilarMoviesUrl(movieId, region = region)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
     }
@@ -91,9 +92,10 @@ class NetworkDataSource @Inject constructor(
      * @return the result of list of movies which are based on current movie id.
      */
     suspend fun getRecommendedMoviesByIdData(
-        movieId: Int
+        movieId: Int,
+        region: String?
     ): List<Movie> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getRecommendedMoviesUrl(movieId)
+        val requestUrl = requestUrls.getRecommendedMoviesUrl(movieId, region = region)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
     }
@@ -110,8 +112,8 @@ class NetworkDataSource @Inject constructor(
         jsonData.fetchMovieCastByIdJsonData(response)
     }
 
-    suspend fun getUpcomingMoviesData(): List<Movie> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getUpcomingMoviesUrl()
+    suspend fun getUpcomingMoviesData(region: String?): List<Movie> = withContext(Dispatchers.IO) {
+        val requestUrl = requestUrls.getUpcomingMoviesUrl(region = region)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchUpcomingMoviesJsonData(response)
     }
@@ -125,9 +127,10 @@ class NetworkDataSource @Inject constructor(
     }
 
     suspend fun getNowPlayingMoviesData(
-        page: Int
+        page: Int,
+        region: String?
     ): PagedResponse<Movie> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getNowPlayingMoviesUrl(page)
+        val requestUrl = requestUrls.getNowPlayingMoviesUrl(page, region)
         val response = queryUtils.getResponseFromHttpUrl(requestUrl)
         jsonData.fetchNowPlayingMoviesJsonData(response)
     }

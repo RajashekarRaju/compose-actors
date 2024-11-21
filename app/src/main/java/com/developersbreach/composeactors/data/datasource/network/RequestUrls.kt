@@ -12,13 +12,13 @@ import javax.inject.Singleton
 class RequestUrls @Inject constructor() {
 
     // https://api.themoviedb.org/3/person/popular?api_key=API_KEY
-    fun getPopularActorsUrl(): URL {
-        return URL("${BASE_URL}person/popular?$API_KEY")
+    fun getPopularActorsUrl(region: String?): URL {
+        return URL("${BASE_URL}person/popular?$API_KEY&region=$region")
     }
 
     // https://api.themoviedb.org/3/trending/person/week?api_key=API_KEY
-    fun getTrendingActorsUrl(): URL {
-        return URL("${BASE_URL}trending/person/week?$API_KEY")
+    fun getTrendingActorsUrl(region: String?): URL {
+        return URL("${BASE_URL}trending/person/week?$API_KEY&region=$region")
     }
 
     // https://api.themoviedb.org/3/person/3233?api_key=API_KEY
@@ -59,17 +59,19 @@ class RequestUrls @Inject constructor() {
     // https://api.themoviedb.org/3/movie/{movie_id}/recommendations?api_key=API_KEY&page=1
     fun getRecommendedMoviesUrl(
         movieId: Int,
-        page: Int = 1
+        page: Int = 1,
+        region: String?
     ): URL {
-        return URL("${BASE_URL}movie/$movieId/recommendations?$API_KEY&page=$page")
+        return URL("${BASE_URL}movie/$movieId/recommendations?$API_KEY&page=$page&region=$region")
     }
 
     // https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key=API_KEY&page=1
     fun getSimilarMoviesUrl(
         movieId: Int,
-        page: Int = 1
+        page: Int = 1,
+        region: String?
     ): URL {
-        return URL("${BASE_URL}movie/$movieId/similar?$API_KEY&page=$page")
+        return URL("${BASE_URL}movie/$movieId/similar?$API_KEY&page=$page&region=$region")
     }
 
     // 299536
@@ -97,9 +99,10 @@ class RequestUrls @Inject constructor() {
 
     // https://api.themoviedb.org/3/movie/upcoming?api_key=API_KEY&page=1
     fun getUpcomingMoviesUrl(
-        page: Int = 1
+        page: Int = 1,
+        region: String?
     ): URL {
-        return URL("${BASE_URL}movie/upcoming?$API_KEY&page=$page")
+        return URL("${BASE_URL}movie/upcoming?$API_KEY&page=$page&region=$region")
     }
 
     // https://api.themoviedb.org/3/movie/{movie_id}/watch/providers?api_key
@@ -111,9 +114,10 @@ class RequestUrls @Inject constructor() {
 
     // https://api.themoviedb.org/3/movie/now_playing?api_key=API_KEY&page=1
     fun getNowPlayingMoviesUrl(
-        page: Int
+        page: Int,
+        region: String?
     ): URL {
-        return URL("${BASE_URL}movie/now_playing?$API_KEY&page=$page")
+        return URL("${BASE_URL}movie/now_playing?$API_KEY&page=$page&region=${region}")
     }
 
     companion object {

@@ -20,6 +20,9 @@ import androidx.compose.material.Surface
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -31,6 +34,7 @@ import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
+import com.developersbreach.composeactors.ui.components.RegionEditDialog
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
 import com.developersbreach.composeactors.ui.screens.home.tabs.ActorsTabContent
@@ -51,6 +55,7 @@ fun HomeScreenUI(
     navigateToSearchBySearchType: SearchType,
     navigateToSelectedActor: (Int) -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
+    onRegionSelect: (String, String) -> Unit,
     uiState: HomeUIState,
     sheetUiState: HomeSheetUIState,
     updateHomeSearchType: (SearchType) -> Unit
@@ -62,6 +67,19 @@ fun HomeScreenUI(
         animationSpec = tween(durationMillis = 500),
         skipHalfExpanded = true
     )
+    val popupState = remember { mutableStateOf(false) }
+
+    val regionBtnClick = {
+        popupState.value = true
+    }
+
+    RegionEditDialog(popupState = popupState, onRegionSelect = onRegionSelect)
+
+    if (popupState.value) {
+        LaunchedEffect(popupState) {
+            modalSheetState.hide()
+        }
+    }
 
     Surface(
         color = MaterialTheme.colors.background,
@@ -79,7 +97,8 @@ fun HomeScreenUI(
                     navigateToFavorite = navigateToFavorite,
                     navigateToSearch = { navigateToSearch(SearchType.Movies) },
                     navigateToProfile = { },
-                    navigateToAbout = navigateToAbout
+                    navigateToAbout = navigateToAbout,
+                    regionBtnClick = regionBtnClick
                 )
             },
         ) {
