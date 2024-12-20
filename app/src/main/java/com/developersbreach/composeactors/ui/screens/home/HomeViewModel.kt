@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.developersbreach.composeactors.data.repository.actor.ActorRepository
 import com.developersbreach.composeactors.domain.GetPagedMovies
 import com.developersbreach.composeactors.ui.screens.search.SearchType
@@ -51,7 +52,7 @@ class HomeViewModel @Inject constructor(
             trendingActorList = actorRepository.getTrendingActorsData(),
             isFetchingActors = false,
             upcomingMoviesList = actorRepository.getUpcomingMoviesData(),
-            nowPlayingMoviesList = getPagedMovies(viewModelScope)
+            nowPlayingMoviesList = getPagedMovies().cachedIn(viewModelScope)
         )
     }
 

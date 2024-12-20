@@ -5,9 +5,9 @@ import com.developersbreach.composeactors.data.PagedResponse
 import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
 import com.developersbreach.composeactors.data.datasource.network.NetworkDataSource
 import com.developersbreach.composeactors.data.model.Cast
+import com.developersbreach.composeactors.data.model.Flatrate
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.MovieDetail
-import com.developersbreach.composeactors.data.model.MovieProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -45,7 +45,7 @@ class MovieRepository @Inject constructor(
         return databaseDataSource.checkIfMovieIsFavorite(movieId)
     }
 
-    suspend fun getMovieProvidersData(movieId: Int): MovieProvider {
+    suspend fun getMovieProvidersData(movieId: Int): List<Flatrate> {
         return networkDataSource.getMovieProvidersData(movieId)
     }
 

@@ -14,16 +14,14 @@ class GetPagedMovies @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
 
-    operator fun invoke(
-        viewModelScope: CoroutineScope
-    ): Flow<PagingData<Movie>> {
+    operator fun invoke(): Flow<PagingData<Movie>> {
         return Pager(
             config = PagingConfig(pageSize = PAGE_SIZE),
             initialKey = INITIAL_PAGE_KEY,
             pagingSourceFactory = {
                 MoviesPagingSource(movieRepository)
             }
-        ).flow.cachedIn(viewModelScope)
+        ).flow
     }
 
     companion object {

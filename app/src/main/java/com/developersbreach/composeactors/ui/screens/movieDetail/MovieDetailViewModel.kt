@@ -69,8 +69,8 @@ class MovieDetailViewModel @Inject constructor(
                     Movie(
                         movieId = movie.movieId,
                         movieName = movie.movieTitle,
-                        posterPathUrl = movie.poster,
-                        bannerUrl = movie.banner,
+                        posterPath = movie.poster,
+                        backdropPath = movie.banner,
                     )
                 )
             }
@@ -85,8 +85,8 @@ class MovieDetailViewModel @Inject constructor(
                     Movie(
                         movieId = movie.movieId,
                         movieName = movie.movieTitle,
-                        posterPathUrl = movie.poster,
-                        bannerUrl = movie.banner,
+                        posterPath = movie.poster,
+                        backdropPath = movie.banner,
                     )
                 )
             } else {

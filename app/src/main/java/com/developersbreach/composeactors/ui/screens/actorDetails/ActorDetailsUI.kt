@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.data.datasource.fake.fakeActorDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
+import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGenerator
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.screens.actorDetails.composables.ActorBackgroundWithGradientForeground
@@ -98,7 +99,7 @@ private fun ActorDetailsUIDarkPreview() {
     ComposeActorsTheme(darkTheme = true) {
         ActorDetailsUI(
             detailUIState = ActorDetailsUIState(
-                castList = listOf(),
+                castList = fakeMovieList(),
                 actorData = fakeActorDetail,
                 isFetchingDetails = false
             ),
@@ -119,7 +120,7 @@ private fun ActorDetailsUILightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         ActorDetailsUI(
             detailUIState = ActorDetailsUIState(
-                castList = listOf(),
+                castList = fakeMovieList(),
                 actorData = fakeActorDetail,
                 isFetchingDetails = false
             ),

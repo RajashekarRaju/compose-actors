@@ -3,17 +3,23 @@ package com.developersbreach.composeactors.data.model
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import com.developersbreach.composeactors.data.datasource.database.entity.FavoriteActorsEntity
+import com.developersbreach.composeactors.utils.HIGH_RES_IMAGE
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Immutable
+@Serializable
 data class ActorDetail(
-    @Stable val actorId: Int,
-    val actorName: String,
-    val profileUrl: String,
-    val biography: String,
-    val dateOfBirth: String,
-    val placeOfBirth: String,
-    val popularity: Double
-)
+    @SerialName("id") @Stable val actorId: Int,
+    @SerialName("name") val actorName: String,
+    @SerialName("profile_path") private val profilePath: String?,
+    @SerialName("biography") val biography: String,
+    @SerialName("birthday") val dateOfBirth: String?,
+    @SerialName("place_of_birth") val placeOfBirth: String?,
+    @SerialName("popularity") val popularity: Double
+) {
+    val profileUrl: String = "$HIGH_RES_IMAGE$profilePath"
+}
 
 fun ActorDetail.toFavoriteActor() = FavoriteActor(
     actorId = this.actorId,

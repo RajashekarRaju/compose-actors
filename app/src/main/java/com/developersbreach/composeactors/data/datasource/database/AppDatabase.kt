@@ -10,8 +10,8 @@ import com.developersbreach.composeactors.data.datasource.database.entity.Favori
 
 @Database(
     entities = [FavoriteActorsEntity::class, FavoriteMoviesEntity::class],
-    version = 3,
-    exportSchema = false
+    version = 4,
+    exportSchema = false,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract val favoriteActorsDao: FavoriteActorsDao
