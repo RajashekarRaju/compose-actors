@@ -2,6 +2,8 @@ package com.developersbreach.composeactors.data.datasource.network
 
 import com.developersbreach.composeactors.utils.TmdbApiKey
 import java.net.URL
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -39,14 +41,16 @@ class RequestUrls @Inject constructor() {
     fun getSearchActorsUrl(
         query: String
     ): URL {
-        return URL("${BASE_URL}search/person?$API_KEY&query=$query")
+        val encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8.toString())
+        return URL("${BASE_URL}search/person?$API_KEY&query=$encodedQuery")
     }
 
     // https://api.themoviedb.org/3/search/movie?api_key=API_KEY&query=$thor
     fun getSearchMoviesUrl(
         query: String
     ): URL {
-        return URL("${BASE_URL}search/movie?$API_KEY&query=$query")
+        val encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8.toString())
+        return URL("${BASE_URL}search/movie?$API_KEY&query=$encodedQuery")
     }
 
     // https://api.themoviedb.org/3/movie/{movie_id}?api_key=API_KEY
