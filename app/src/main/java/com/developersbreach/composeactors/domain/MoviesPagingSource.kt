@@ -26,7 +26,7 @@ class MoviesPagingSource(
             )
 
             val nextKey = when {
-                (params.loadSize * (currentPageNumber + 1)) < movies.total -> currentPageNumber + 1
+                (params.loadSize * (currentPageNumber + 1)) < movies.totalPages -> currentPageNumber + 1
                 else -> null
             }
 

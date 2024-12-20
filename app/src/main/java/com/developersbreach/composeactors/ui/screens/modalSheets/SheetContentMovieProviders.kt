@@ -22,14 +22,13 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.model.Flatrate
-import com.developersbreach.composeactors.data.model.MovieProvider
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.SheetHorizontalSeparator
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToFavoritesButton
 
 @Composable
 fun SheetContentMovieProviders(
-    movieProvider: MovieProvider,
+    movieProvider: List<Flatrate>,
     isFavoriteMovie: Boolean,
     addMovieToFavorites: () -> Unit,
     removeMovieFromFavorites: () -> Unit
@@ -49,9 +48,9 @@ fun SheetContentMovieProviders(
             }
         )
 
-        if (movieProvider.flatrate.isNotEmpty()) {
+        if (movieProvider.isNotEmpty()) {
             Streaming(
-                flatrate = movieProvider.flatrate,
+                flatrate = movieProvider,
                 modifier = Modifier.constrainAs(streaming) {
                     top.linkTo(header.bottom, margin = 16.dp)
                     start.linkTo(parent.start, margin = 24.dp)
@@ -99,7 +98,7 @@ fun NoStreaming(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Streaming(flatrate: ArrayList<Flatrate>, modifier: Modifier = Modifier) {
+fun Streaming(flatrate: List<Flatrate>, modifier: Modifier = Modifier) {
     LazyRow(
         modifier = modifier
             .fillMaxWidth()
@@ -107,7 +106,7 @@ fun Streaming(flatrate: ArrayList<Flatrate>, modifier: Modifier = Modifier) {
     ) {
         items(flatrate) { flatrate ->
             LoadNetworkImage(
-                imageUrl = flatrate.logo_path,
+                imageUrl = flatrate.logo,
                 contentDescription = "",
                 shape = MaterialTheme.shapes.large,
                 showAnimProgress = false,

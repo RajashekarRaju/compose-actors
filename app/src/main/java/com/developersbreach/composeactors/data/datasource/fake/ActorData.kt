@@ -50,12 +50,12 @@ val popularActorList = listOf(
     Actor(
         actorId = 28782,
         actorName = "Monica Bellucci",
-        profileUrl = "z3sLuRKP7hQVrvSTsqdLjGSldwG.jpg"
+        profilePath = "z3sLuRKP7hQVrvSTsqdLjGSldwG.jpg"
     ),
     Actor(
         actorId = 287,
         actorName = "Brad Pitt",
-        profileUrl = "kU3B75TyRiCgE270EyZnHjfivoq.jpg"
+        profilePath = "kU3B75TyRiCgE270EyZnHjfivoq.jpg"
     )
 )
 
@@ -63,19 +63,19 @@ val trendingActorList = listOf(
     Actor(
         actorId = 8784,
         actorName = "Daniel Craig",
-        profileUrl = "rFuETZeyOAfIqBahOObF7Soq5Dh.jpg"
+        profilePath = "rFuETZeyOAfIqBahOObF7Soq5Dh.jpg"
     ),
     Actor(
         actorId = 1892,
         actorName = "Matt Damon",
-        profileUrl = "7wbHIn7GziFlJLPl8Zu1XVl24EG.jpg"
+        profilePath = "7wbHIn7GziFlJLPl8Zu1XVl24EG.jpg"
     ),
 )
 
 val fakeActorDetail = ActorDetail(
     actorId = 28782,
     actorName = "Monica Bellucci",
-    profileUrl = "z3sLuRKP7hQVrvSTsqdLjGSldwG.jpg",
+    profilePath = "z3sLuRKP7hQVrvSTsqdLjGSldwG.jpg",
     biography = "This is fake biography for the actor added here to see how the actual preview looks in the screen so don't get any serious about this.",
     dateOfBirth = "59",
     placeOfBirth = "Italy",

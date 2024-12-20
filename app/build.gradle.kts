@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.com.google.gms)
     alias(libs.plugins.com.google.firebase)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.serialization)
 }
 
 android {
@@ -115,6 +116,15 @@ dependencies {
     // Paging
     implementation(libs.androidx.paging.paging.compose)
     implementation(libs.androidx.paging.paging.runtime.ktx)
+
+    implementation(platform(libs.ktor.bom))
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.client.serialization)
+
+    implementation(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.androidx.compose.ui.ui.test.junit4)
     testImplementation(libs.io.mockk)

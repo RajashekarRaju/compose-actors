@@ -6,5 +6,5 @@ data class FavoriteActor(
     @Stable val actorId: Int,
     val actorName: String,
     val profileUrl: String,
-    val placeOfBirth: String
+    val placeOfBirth: String?
 )

@@ -1,9 +1,9 @@
 [versions]
-androidx-activity = "1.9.1"
+androidx-activity = "1.9.3"
 androidx-appcompat = "1.7.0"
 androidx-hilt = "1.2.0"
-androidx-lifecycle = "2.8.4"
-androidx-navigation = "2.7.7"
+androidx-lifecycle = "2.8.7"
+androidx-navigation = "2.8.5"
 androidx-palette = "1.0.0"
 androidx-room = "2.6.1"
 androidx-test-ext = "1.2.1"
@@ -11,6 +11,8 @@ com-google-dagger = "2.46.1"
 com-google-gms = "4.4.2"
 com-google-firebase = "3.0.2"
 kotlin = "2.0.0"
+kotlinx-coroutines-core = "1.9.0"
+ktor-bom = "3.0.1"
 
 [libraries]
 androidx-activity-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
@@ -19,17 +21,17 @@ androidx-compose-bom = "androidx.compose:compose-bom:2024.06.00"
 androidx-compose-material = { module = "androidx.compose.material:material" }
 androidx-compose-runtime-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui" }
-androidx-compose-ui-ui-test-junit4 = "androidx.compose.ui:ui-test-junit4:1.6.8"
+androidx-compose-ui-ui-test-junit4 = "androidx.compose.ui:ui-test-junit4:1.7.6"
 androidx-compose-ui-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 androidx-compose-ui-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-androidx-constraintlayout-constraintlayout-compose = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+androidx-constraintlayout-constraintlayout-compose = "androidx.constraintlayout:constraintlayout-compose:1.1.0"
 androidx-core-core-ktx = "androidx.core:core-ktx:1.13.1"
 androidx-hilt-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
 androidx-lifecycle-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-navigation-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
-androidx-paging-paging-compose = "androidx.paging:paging-compose:3.3.2"
-androidx-paging-paging-runtime-ktx = "androidx.paging:paging-runtime-ktx:3.3.2"
+androidx-paging-paging-compose = "androidx.paging:paging-compose:3.3.5"
+androidx-paging-paging-runtime-ktx = "androidx.paging:paging-runtime-ktx:3.3.5"
 androidx-palette-palette-ktx = { module = "androidx.palette:palette-ktx", version.ref = "androidx-palette" }
 androidx-room-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-room-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
@@ -38,12 +40,19 @@ androidx-test-ext-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.
 com-google-android-material = "com.google.android.material:material:1.12.0"
 com-google-dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "com-google-dagger" }
 com-google-dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "com-google-dagger" }
-com-google-firebase-analytics = "com.google.firebase:firebase-analytics-ktx:22.0.2"
-com-google-firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:19.0.3"
+com-google-firebase-analytics = "com.google.firebase:firebase-analytics-ktx:22.1.2"
+com-google-firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:19.3.0"
 com-jakewharton-timber = "com.jakewharton.timber:timber:5.0.1"
 io-coil-kt-coil-compose = "io.coil-kt:coil-compose:2.6.0"
 io-mockk = "io.mockk:mockk:1.13.5"
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
+ktor-bom = { module = "io.ktor:ktor-bom", version.ref = "ktor-bom" }
+ktor-client-android = { module = "io.ktor:ktor-client-android" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging" }
+ktor-client-serialization = { module = "io.ktor:ktor-client-serialization" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 
 [plugins]
 com-android-application = "com.android.application:8.5.2"
@@ -53,6 +62,7 @@ com-google-dagger-hilt-android = "com.google.dagger.hilt.android:2.46.1"
 nl-littlerobots-version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.0"
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 com-google-gms = { id = "com.google.gms.google-services", version.ref = "com-google-gms" }
 com-google-firebase = { id = "com.google.firebase.crashlytics", version.ref = "com-google-firebase" }

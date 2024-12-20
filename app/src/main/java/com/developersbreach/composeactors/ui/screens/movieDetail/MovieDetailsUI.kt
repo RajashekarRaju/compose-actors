@@ -34,7 +34,6 @@ import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.data.model.Flatrate
-import com.developersbreach.composeactors.data.model.MovieProvider
 import com.developersbreach.composeactors.ui.animations.LayerRevealImage
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentActorDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
@@ -219,9 +218,7 @@ private fun MovieDetailsUILightPreview() {
                 recommendedMovies = fakeMovieList(),
                 movieCast = fakeMovieCastList(),
                 isFetchingDetails = false,
-                movieProviders = MovieProvider(
-                    arrayListOf(Flatrate("", 1, ""))
-                )
+                movieProviders = listOf(Flatrate("", 1, ""))
             ),
             navigateUp = {},
             showFab = remember { mutableStateOf(true) },
@@ -243,9 +240,7 @@ private fun MovieDetailsUIDarkPreview() {
                 recommendedMovies = fakeMovieList(),
                 movieCast = fakeMovieCastList(),
                 isFetchingDetails = false,
-                movieProviders = MovieProvider(
-                    arrayListOf(Flatrate("", 1, ""))
-                )
+                movieProviders = listOf(Flatrate("", 1, ""))
             ),
             navigateUp = {},
             showFab = remember { mutableStateOf(true) },

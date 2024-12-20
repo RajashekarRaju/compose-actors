@@ -3,13 +3,26 @@ package com.developersbreach.composeactors.data.model
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import com.developersbreach.composeactors.data.datasource.database.entity.FavoriteMoviesEntity
+import com.developersbreach.composeactors.utils.HIGH_RES_IMAGE
+import com.developersbreach.composeactors.utils.LOW_RES_IMAGE
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Immutable
+@Serializable
 data class Movie(
-    @Stable val movieId: Int,
-    val movieName: String,
-    val posterPathUrl: String,
-    val bannerUrl: String
+    @SerialName("id") @Stable val movieId: Int,
+    @SerialName("original_title") val movieName: String,
+    @SerialName("poster_path") private val posterPath: String?,
+    @SerialName("backdrop_path") private val backdropPath: String?
+) {
+    val posterPathUrl: String = "${LOW_RES_IMAGE}$posterPath"
+    val bannerUrl: String = "${HIGH_RES_IMAGE}$backdropPath"
+}
+
+@Serializable
+data class MoviesResponse(
+    @SerialName("cast") val movies: List<Movie>,
 )
 
 fun Movie.movieAsDatabaseModel(): FavoriteMoviesEntity {
@@ -26,8 +39,8 @@ fun List<FavoriteMoviesEntity>.movieAsDomainModel(): List<Movie> {
         Movie(
             movieId = it.movieId,
             movieName = it.movieName,
-            posterPathUrl = it.moviePosterUrl,
-            bannerUrl = it.movieBanner
+            posterPath = it.moviePosterUrl,
+            backdropPath = it.movieBanner
         )
     }
 }

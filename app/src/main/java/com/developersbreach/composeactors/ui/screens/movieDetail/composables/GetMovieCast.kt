@@ -29,7 +29,6 @@ import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.data.model.Cast
 import com.developersbreach.composeactors.data.model.Flatrate
-import com.developersbreach.composeactors.data.model.MovieProvider
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailsUIState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
@@ -117,9 +116,7 @@ private fun GetMovieCastLightPreview() {
                 recommendedMovies = listOf(),
                 movieCast = listOf(),
                 isFetchingDetails = false,
-                movieProviders = MovieProvider(
-                    arrayListOf(Flatrate("", 1, ""))
-                )
+                movieProviders = listOf(Flatrate("", 1, ""))
             ),
             openMovieDetailsBottomSheet = { Job() },
             selectBottomSheetCallback = { }
@@ -138,9 +135,7 @@ private fun GetMovieCastDarkPreview() {
                 recommendedMovies = listOf(),
                 movieCast = listOf(),
                 isFetchingDetails = false,
-                movieProviders = MovieProvider(
-                    arrayListOf(Flatrate("", 1, ""))
-                )
+                movieProviders = listOf(Flatrate("", 1, ""))
             ),
             openMovieDetailsBottomSheet = { Job() },
             selectBottomSheetCallback = {}

@@ -4,10 +4,14 @@ import com.developersbreach.composeactors.data.PagedResponse
 import com.developersbreach.composeactors.data.model.Actor
 import com.developersbreach.composeactors.data.model.ActorDetail
 import com.developersbreach.composeactors.data.model.Cast
+import com.developersbreach.composeactors.data.model.CastResponse
+import com.developersbreach.composeactors.data.model.Flatrate
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.MovieDetail
-import com.developersbreach.composeactors.data.model.MovieProvider
-import com.developersbreach.composeactors.utils.NetworkQueryUtils
+import com.developersbreach.composeactors.data.model.MovieProvidersResponse
+import com.developersbreach.composeactors.data.model.MoviesResponse
+import com.developersbreach.composeactors.utils.HttpRequestHandler
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
@@ -24,22 +28,19 @@ import kotlinx.coroutines.withContext
 @Singleton
 class NetworkDataSource @Inject constructor(
     private val requestUrls: RequestUrls,
-    private val jsonData: JsonRemoteData,
-    private val queryUtils: NetworkQueryUtils
+    private val requestHandler: HttpRequestHandler
 ) {
 
     /*** @return the result of latest list of all popular actors fetched from the network.*/
     suspend fun getPopularActorsData(): List<Actor> = withContext(Dispatchers.IO) {
         val requestUrl = requestUrls.getPopularActorsUrl()
-        val response: String = queryUtils.getResponseFromHttpUrl(requestUrl)
-        jsonData.fetchActorsJsonData(response)
+        requestHandler.getPagedResponse<Actor>(requestUrl).data
     }
 
     /** @return the result of latest list of all trending actors fetched from the network. */
     suspend fun getTrendingActorsData(): List<Actor> = withContext(Dispatchers.IO) {
         val requestUrl = requestUrls.getTrendingActorsUrl()
-        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-        jsonData.fetchActorsJsonData(response)
+        requestHandler.getPagedResponse<Actor>(requestUrl).data
     }
 
     /**
@@ -50,8 +51,7 @@ class NetworkDataSource @Inject constructor(
         actorId: Int
     ): ActorDetail = withContext(Dispatchers.IO) {
         val requestUrl = requestUrls.getActorDetailsUrl(actorId)
-        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-        jsonData.fetchActorDetailsJsonData(response)
+        requestHandler.getResponse(requestUrl)
     }
 
     /**
@@ -62,16 +62,14 @@ class NetworkDataSource @Inject constructor(
         actorId: Int
     ): List<Movie> = withContext(Dispatchers.IO) {
         val requestUrl = requestUrls.getCastDetailsUrl(actorId)
-        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-        jsonData.fetchCastDetailsJsonData(response)
+        requestHandler.getResponse<MoviesResponse>(requestUrl).movies
     }
 
     suspend fun getSelectedMovieData(
         movieId: Int
     ): MovieDetail = withContext(Dispatchers.IO) {
         val requestUrl = requestUrls.getMovieDetailsUrl(movieId)
-        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-        jsonData.fetchMovieDetailsJsonData(response)
+        requestHandler.getResponse(requestUrl)
     }
 
     /**
@@ -82,8 +80,7 @@ class NetworkDataSource @Inject constructor(
         movieId: Int
     ): List<Movie> = withContext(Dispatchers.IO) {
         val requestUrl = requestUrls.getSimilarMoviesUrl(movieId)
-        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-        jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
+        requestHandler.getPagedResponse<Movie>(requestUrl).data
     }
 
     /**
@@ -94,8 +91,7 @@ class NetworkDataSource @Inject constructor(
         movieId: Int
     ): List<Movie> = withContext(Dispatchers.IO) {
         val requestUrl = requestUrls.getRecommendedMoviesUrl(movieId)
-        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-        jsonData.fetchSimilarAndRecommendedMoviesJsonData(response)
+        requestHandler.getPagedResponse<Movie>(requestUrl).data
     }
 
     /**
@@ -104,32 +100,32 @@ class NetworkDataSource @Inject constructor(
      */
     suspend fun getMovieCastByIdData(
         movieId: Int
-    ): List<Cast> = withContext(Dispatchers.IO) {
-        val requestUrl = requestUrls.getMovieCastUrl(movieId)
-        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-        jsonData.fetchMovieCastByIdJsonData(response)
+    ): List<Cast> {
+        return withContext(Dispatchers.IO) {
+            val requestUrl = requestUrls.getMovieCastUrl(movieId)
+            requestHandler.getResponse<CastResponse>(requestUrl).cast
+        }
     }
 
     suspend fun getUpcomingMoviesData(): List<Movie> = withContext(Dispatchers.IO) {
         val requestUrl = requestUrls.getUpcomingMoviesUrl()
-        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-        jsonData.fetchUpcomingMoviesJsonData(response)
+        requestHandler.getPagedResponse<Movie>(requestUrl).data
     }
 
     suspend fun getMovieProvidersData(
         movieId: Int
-    ): MovieProvider = withContext(Dispatchers.IO) {
+    ): List<Flatrate> = withContext(Dispatchers.IO) {
         val requestUrl = requestUrls.getMovieProviderUrl(movieId)
-        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-        jsonData.fetchMovieProvidersJsonData(response)
+        val response: MovieProvidersResponse = requestHandler.getResponse(requestUrl)
+        val countryCode = Locale.getDefault().country
+        response.results[countryCode]?.flatrate ?: emptyList()
     }
 
     suspend fun getNowPlayingMoviesData(
         page: Int
     ): PagedResponse<Movie> = withContext(Dispatchers.IO) {
         val requestUrl = requestUrls.getNowPlayingMoviesUrl(page)
-        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-        jsonData.fetchNowPlayingMoviesJsonData(response)
+        requestHandler.getResponse(requestUrl)
     }
 
     /**
@@ -140,16 +136,14 @@ class NetworkDataSource @Inject constructor(
         query: String
     ): List<Actor> = withContext(Dispatchers.IO) {
         val requestUrl = requestUrls.getSearchActorsUrl(query)
-        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-        jsonData.fetchActorsJsonData(response)
+        requestHandler.getPagedResponse<Actor>(requestUrl).data
     }
 
     suspend fun getSearchableMoviesData(
         query: String
     ): List<Movie> = withContext(Dispatchers.IO) {
         val requestUrl = requestUrls.getSearchMoviesUrl(query)
-        val response = queryUtils.getResponseFromHttpUrl(requestUrl)
-        jsonData.fetchMoviesJsonData(response)
+        requestHandler.getPagedResponse<Movie>(requestUrl).data
     }
 
     suspend fun getMovieTrailerUrl(
@@ -157,7 +151,7 @@ class NetworkDataSource @Inject constructor(
     ) {
         withContext(Dispatchers.IO) {
             val requestUrl = requestUrls.getMovieTrailerUrl(movieId)
-            val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+            // val response = requestHandler.getResponseFromHttpUrl(requestUrl)
 
             // Watching trailer for movies needs to implemented
             // Planned for v0.5.0
@@ -169,7 +163,7 @@ class NetworkDataSource @Inject constructor(
     ) {
         withContext(Dispatchers.IO) {
             val requestUrl = requestUrls.buildMovieTrailerThumbnail(trailerId)
-            val response = queryUtils.getResponseFromHttpUrl(requestUrl)
+            // val response = requestHandler.getResponseFromHttpUrl(requestUrl)
 
             // Watching trailer for movies needs to implemented
             // Planned for v0.5.0
