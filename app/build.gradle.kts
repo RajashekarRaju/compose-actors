@@ -3,8 +3,8 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
-    alias(libs.plugins.org.jetbrains.kotlin.kapt)
-    alias(libs.plugins.com.google.dagger.hilt.android)
+    alias(libs.plugins.com.google.ksp)
+    id("dagger.hilt.android.plugin")
     alias(libs.plugins.com.google.gms)
     alias(libs.plugins.com.google.firebase)
     alias(libs.plugins.compose.compiler)
@@ -106,12 +106,13 @@ dependencies {
     implementation(libs.androidx.room.room.ktx)
     implementation(libs.com.google.firebase.analytics)
     implementation(libs.com.google.firebase.crashlytics)
-    kapt(libs.androidx.room.room.compiler)
+    ksp(libs.androidx.room.room.compiler)
 
     // hilt
     implementation(libs.com.google.dagger.hilt.android)
     implementation(libs.androidx.hilt.hilt.navigation.compose)
-    kapt(libs.com.google.dagger.hilt.android.compiler)
+    ksp(libs.com.google.dagger.hilt.android.compiler)
+    ksp(libs.hilt.androidx.compiler)
 
     // Paging
     implementation(libs.androidx.paging.paging.compose)

@@ -7,10 +7,10 @@ androidx-navigation = "2.8.5"
 androidx-palette = "1.0.0"
 androidx-room = "2.6.1"
 androidx-test-ext = "1.2.1"
-com-google-dagger = "2.46.1"
+com-google-dagger = "2.53.1"
 com-google-gms = "4.4.2"
 com-google-firebase = "3.0.2"
-kotlin = "2.0.0"
+kotlin = "2.0.21"
 kotlinx-coroutines-core = "1.9.0"
 ktor-bom = "3.0.1"
 
@@ -39,6 +39,8 @@ androidx-room-room-runtime = { module = "androidx.room:room-runtime", version.re
 androidx-test-ext-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "androidx-test-ext" }
 com-google-android-material = "com.google.android.material:material:1.12.0"
 com-google-dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "com-google-dagger" }
+hilt-androidx-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx-hilt" }
+hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "com-google-dagger" }
 com-google-dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "com-google-dagger" }
 com-google-firebase-analytics = "com.google.firebase:firebase-analytics-ktx:22.1.2"
 com-google-firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:19.3.0"
@@ -55,14 +57,13 @@ ktor-client-serialization = { module = "io.ktor:ktor-client-serialization" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 
 [plugins]
-com-android-application = "com.android.application:8.5.2"
+com-android-application = "com.android.application:8.7.3"
 com-diffplug-spotless = "com.diffplug.spotless:6.18.0"
 com-github-ben-manes-versions = "com.github.ben-manes.versions:0.46.0"
-com-google-dagger-hilt-android = "com.google.dagger.hilt.android:2.46.1"
 nl-littlerobots-version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.0"
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+com-google-ksp = "com.google.devtools.ksp:2.0.21-1.0.27"
 com-google-gms = { id = "com.google.gms.google-services", version.ref = "com-google-gms" }
 com-google-firebase = { id = "com.google.firebase.crashlytics", version.ref = "com-google-firebase" }
