@@ -2,6 +2,7 @@ package com.developersbreach.composeactors.ui.components
 
 import androidx.annotation.FloatRange
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -52,7 +53,7 @@ fun Modifier.verticalGradientScrim(
         }
     }
 
-    var height by remember { mutableStateOf(0f) }
+    var height by remember { mutableFloatStateOf(0f) }
     val brush = remember(color, numStops, startYPercentage, endYPercentage, height) {
         Brush.verticalGradient(
             colors = colors,
