@@ -1,8 +1,8 @@
-package com.developersbreach.composeactors.data.datasource.database.dao
+package com.developersbreach.composeactors.core.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.developersbreach.composeactors.data.datasource.database.entity.FavoriteActorsEntity
+import com.developersbreach.composeactors.core.database.entity.FavoriteActorsEntity
 
 @Dao
 interface FavoriteActorsDao {

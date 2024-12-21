@@ -2,7 +2,7 @@ package com.developersbreach.composeactors.di
 
 import android.content.Context
 import androidx.room.Room
-import com.developersbreach.composeactors.data.datasource.database.AppDatabase
+import com.developersbreach.composeactors.core.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

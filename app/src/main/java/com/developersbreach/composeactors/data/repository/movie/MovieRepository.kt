@@ -1,7 +1,7 @@
 package com.developersbreach.composeactors.data.repository.movie
 
 import androidx.lifecycle.LiveData
-import com.developersbreach.composeactors.data.PagedResponse
+import com.developersbreach.composeactors.core.network.PagedResponse
 import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
 import com.developersbreach.composeactors.data.datasource.network.NetworkDataSource
 import com.developersbreach.composeactors.data.model.Cast

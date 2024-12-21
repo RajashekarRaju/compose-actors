@@ -2,6 +2,7 @@ package com.developersbreach.composeactors.data.datasource.database
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
+import com.developersbreach.composeactors.core.database.AppDatabase
 import com.developersbreach.composeactors.data.model.FavoriteActor
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.actorAsDatabaseModel

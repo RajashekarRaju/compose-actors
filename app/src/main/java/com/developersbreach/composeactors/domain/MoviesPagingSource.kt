@@ -2,7 +2,7 @@ package com.developersbreach.composeactors.domain
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.developersbreach.composeactors.data.PagedResponse
+import com.developersbreach.composeactors.core.network.PagedResponse
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.repository.movie.MovieRepository
 

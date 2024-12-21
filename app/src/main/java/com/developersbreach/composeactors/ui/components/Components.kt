@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.utils.TmdbApiKey
+import com.developersbreach.composeactors.core.network.TmdbApiKey
 import com.developersbreach.composeactors.utils.NetworkManager
 import com.developersbreach.composeactors.utils.isTmdbApiKeyNotValid
 import kotlinx.coroutines.CoroutineScope

@@ -1,6 +1,5 @@
-package com.developersbreach.composeactors.utils
+package com.developersbreach.composeactors.core.network
 
-import com.developersbreach.composeactors.data.PagedResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get

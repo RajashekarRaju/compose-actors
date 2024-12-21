@@ -1,6 +1,6 @@
 package com.developersbreach.composeactors.data.datasource.network
 
-import com.developersbreach.composeactors.utils.TmdbApiKey
+import com.developersbreach.composeactors.core.network.TmdbApiKey
 import java.net.URL
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets

@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.data
+package com.developersbreach.composeactors.core.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

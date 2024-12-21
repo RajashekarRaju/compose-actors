@@ -1,6 +1,6 @@
 package com.developersbreach.composeactors.data.datasource.network
 
-import com.developersbreach.composeactors.data.PagedResponse
+import com.developersbreach.composeactors.core.network.PagedResponse
 import com.developersbreach.composeactors.data.model.Actor
 import com.developersbreach.composeactors.data.model.ActorDetail
 import com.developersbreach.composeactors.data.model.Cast
@@ -10,7 +10,7 @@ import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.MovieDetail
 import com.developersbreach.composeactors.data.model.MovieProvidersResponse
 import com.developersbreach.composeactors.data.model.MoviesResponse
-import com.developersbreach.composeactors.utils.HttpRequestHandler
+import com.developersbreach.composeactors.core.network.HttpRequestHandler
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton

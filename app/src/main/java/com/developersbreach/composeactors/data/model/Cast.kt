@@ -2,7 +2,7 @@ package com.developersbreach.composeactors.data.model
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
-import com.developersbreach.composeactors.utils.LOW_RES_IMAGE
+import com.developersbreach.composeactors.core.network.LOW_RES_IMAGE
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

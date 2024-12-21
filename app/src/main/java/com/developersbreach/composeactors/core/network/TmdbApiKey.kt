@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.utils
+package com.developersbreach.composeactors.core.network
 
 /**
  * Add your own TMDB_API key here.
@@ -7,8 +7,4 @@ package com.developersbreach.composeactors.utils
  */
 object TmdbApiKey {
     const val TMDB_API_KEY = ""
-}
-
-fun isTmdbApiKeyNotValid(): Boolean {
-    return TmdbApiKey.TMDB_API_KEY.isEmpty()
 }
