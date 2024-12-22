@@ -1,10 +1,10 @@
-package com.developersbreach.composeactors.domain
+package com.developersbreach.composeactors.data.movie.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.developersbreach.composeactors.core.network.PagedResponse
 import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.data.repository.movie.MovieRepository
+import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 
 class MoviesPagingSource(
     private val movieRepository: MovieRepository
@@ -21,7 +21,7 @@ class MoviesPagingSource(
         return try {
             val currentPageNumber = params.key ?: 1
 
-            val movies: PagedResponse<Movie> = movieRepository.getNowPlayingMoviesData(
+            val movies: PagedResponse<Movie> = movieRepository.getNowPlayingMovies(
                 page = currentPageNumber
             )
 

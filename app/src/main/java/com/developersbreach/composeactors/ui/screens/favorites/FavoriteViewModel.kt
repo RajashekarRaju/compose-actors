@@ -5,32 +5,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.model.FavoriteActor
 import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.data.repository.actor.ActorRepository
-import com.developersbreach.composeactors.data.repository.movie.MovieRepository
-import com.developersbreach.composeactors.domain.useCase.RemoveMovieFromFavoritesUseCase
+import com.developersbreach.composeactors.data.movie.repository.MovieRepository
+import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
-    movieRepository: MovieRepository,
-    private val actorRepository: ActorRepository,
-    private val removeMovieFromFavoritesUseCase: RemoveMovieFromFavoritesUseCase,
+    private val movieRepository: MovieRepository,
+    private val personRepository: PersonRepository,
 ) : ViewModel() {
 
     val favoriteMovies: LiveData<List<Movie>> = movieRepository.getAllFavoriteMovies()
-    val favoriteActors: LiveData<List<FavoriteActor>> = actorRepository.getAllFavoriteActors()
+    val favoriteActors: LiveData<List<FavoriteActor>> = personRepository.getAllFavoritePersons()
 
     fun removeMovieFromFavorites(movie: Movie) {
         viewModelScope.launch {
-            removeMovieFromFavoritesUseCase.invoke(movie)
+            movieRepository.deleteSelectedFavoriteMovie(movie)
         }
     }
 
     fun removeActorFromFavorites(favoriteActor: FavoriteActor) {
         viewModelScope.launch {
-            actorRepository.deleteSelectedFavoriteActor(favoriteActor)
+            personRepository.deleteSelectedFavoritePerson(favoriteActor)
         }
     }
 }

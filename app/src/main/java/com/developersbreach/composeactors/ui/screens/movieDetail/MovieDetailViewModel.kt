@@ -9,9 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.MovieDetail
-import com.developersbreach.composeactors.data.repository.actor.ActorRepository
-import com.developersbreach.composeactors.data.repository.movie.MovieRepository
-import com.developersbreach.composeactors.domain.useCase.RemoveMovieFromFavoritesUseCase
+import com.developersbreach.composeactors.data.movie.repository.MovieRepository
+import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.ui.navigation.AppDestinations.MOVIE_DETAILS_ID_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.IOException
@@ -23,8 +22,7 @@ import timber.log.Timber
 class MovieDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val movieRepository: MovieRepository,
-    private val actorRepository: ActorRepository,
-    private val removeMovieFromFavoritesUseCase: RemoveMovieFromFavoritesUseCase,
+    private val personRepository: PersonRepository,
 ) : ViewModel() {
 
     private val movieId: Int = checkNotNull(savedStateHandle[MOVIE_DETAILS_ID_KEY])
@@ -52,11 +50,11 @@ class MovieDetailViewModel @Inject constructor(
     private suspend fun startFetchingDetails() {
         uiState = MovieDetailsUIState(isFetchingDetails = true, movieData = null)
         uiState = MovieDetailsUIState(
-            movieData = movieRepository.getSelectedMovieData(movieId),
-            similarMovies = movieRepository.getSimilarMoviesByIdData(movieId),
-            recommendedMovies = movieRepository.getRecommendedMoviesByIdData(movieId),
-            movieCast = movieRepository.getMovieCastByIdData(movieId),
-            movieProviders = movieRepository.getMovieProvidersData(movieId),
+            movieData = movieRepository.getMovieDetails(movieId),
+            similarMovies = movieRepository.getSimilarMovies(movieId),
+            recommendedMovies = movieRepository.getRecommendedMovies(movieId),
+            movieCast = movieRepository.getMovieCast(movieId),
+            movieProviders = movieRepository.getMovieProviders(movieId),
             isFetchingDetails = false
         )
     }
@@ -81,7 +79,7 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             val movie: MovieDetail? = uiState.movieData
             if (movie != null) {
-                removeMovieFromFavoritesUseCase(
+                movieRepository.deleteSelectedFavoriteMovie(
                     Movie(
                         movieId = movie.movieId,
                         movieName = movie.movieTitle,
@@ -106,7 +104,7 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 if (actorId != null) {
-                    val actorsData = actorRepository.getSelectedActorData(actorId)
+                    val actorsData = personRepository.getPersonDetails(actorId)
                     sheetUiState = ActorsSheetUIState(selectedActorDetails = actorsData)
                 }
             } catch (e: IOException) {
@@ -121,7 +119,7 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 movieId?.let { id ->
-                    val movieData = movieRepository.getSelectedMovieData(id)
+                    val movieData = movieRepository.getMovieDetails(id)
                     movieSheetUiState = MovieSheetUIState(selectedMovieDetails = movieData)
                 }
             } catch (e: IOException) {

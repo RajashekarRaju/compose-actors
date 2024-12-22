@@ -1,13 +1,12 @@
-package com.developersbreach.composeactors.domain
+package com.developersbreach.composeactors.domain.movie
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.data.repository.movie.MovieRepository
+import com.developersbreach.composeactors.data.movie.paging.MoviesPagingSource
+import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
 class GetPagedMovies @Inject constructor(

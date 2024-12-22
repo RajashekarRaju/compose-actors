@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.repository.search.SearchRepository
+import com.developersbreach.composeactors.data.search.repository.SearchRepository
 import com.developersbreach.composeactors.ui.navigation.AppDestinations.SEARCH_TYPE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

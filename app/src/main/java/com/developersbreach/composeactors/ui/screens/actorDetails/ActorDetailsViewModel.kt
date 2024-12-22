@@ -9,9 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.model.ActorDetail
 import com.developersbreach.composeactors.data.model.toFavoriteActor
-import com.developersbreach.composeactors.data.repository.actor.ActorRepository
-import com.developersbreach.composeactors.data.repository.movie.MovieRepository
-import com.developersbreach.composeactors.domain.useCase.RemoveActorsFromFavoritesUseCase
+import com.developersbreach.composeactors.data.movie.repository.MovieRepository
+import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.ui.navigation.AppDestinations.ACTOR_DETAIL_ID_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.IOException
@@ -26,8 +25,7 @@ import timber.log.Timber
 class ActorDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val movieRepository: MovieRepository,
-    private val actorRepository: ActorRepository,
-    private val removeActorsFromFavoritesUseCase: RemoveActorsFromFavoritesUseCase
+    private val personRepository: PersonRepository,
 ) : ViewModel() {
 
     private val actorId: Int = checkNotNull(savedStateHandle[ACTOR_DETAIL_ID_KEY])
@@ -38,7 +36,7 @@ class ActorDetailsViewModel @Inject constructor(
     var sheetUIState by mutableStateOf(ActorDetailsSheetUIState())
         private set
 
-    val isFavoriteMovie: LiveData<Int> = actorRepository.isFavoriteActor(actorId)
+    val isFavoriteMovie: LiveData<Int> = personRepository.isFavoritePerson(actorId)
 
     init {
         viewModelScope.launch {
@@ -52,8 +50,8 @@ class ActorDetailsViewModel @Inject constructor(
 
     private suspend fun startFetchingDetails() {
         detailUIState = ActorDetailsUIState(isFetchingDetails = true, actorData = null)
-        val actorData = actorRepository.getSelectedActorData(actorId)
-        val castData = actorRepository.getCastData(actorId)
+        val actorData = personRepository.getPersonDetails(actorId)
+        val castData = personRepository.getCastDetails(actorId)
         detailUIState = ActorDetailsUIState(
             castList = castData,
             actorData = actorData,
@@ -72,7 +70,7 @@ class ActorDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 movieId?.let { id ->
-                    val movieData = movieRepository.getSelectedMovieData(id)
+                    val movieData = movieRepository.getMovieDetails(id)
                     sheetUIState = ActorDetailsSheetUIState(selectedMovieDetails = movieData)
                 }
             } catch (e: IOException) {
@@ -85,7 +83,7 @@ class ActorDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             val actor: ActorDetail? = detailUIState.actorData
             if (actor != null) {
-                actorRepository.addActorsToFavorite(
+                personRepository.addPersonToFavorite(
                     actor.toFavoriteActor()
                 )
             } else {
@@ -98,7 +96,7 @@ class ActorDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             val actor: ActorDetail? = detailUIState.actorData
             if (actor != null) {
-                removeActorsFromFavoritesUseCase(
+                personRepository.deleteSelectedFavoritePerson(
                     actor.toFavoriteActor()
                 )
             } else {

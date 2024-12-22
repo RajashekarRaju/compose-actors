@@ -14,7 +14,6 @@ import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-
 @Singleton
 class DatabaseDataSource @Inject constructor(
     private val database: AppDatabase
@@ -22,7 +21,6 @@ class DatabaseDataSource @Inject constructor(
 
     fun getAllFavoriteMovies(): LiveData<List<Movie>> {
         val allFavoriteMovies = database.favoriteMoviesDao.getAllFavoriteMovies()
-        // Change to distinct until changed
         return allFavoriteMovies.map { favEntityList ->
             favEntityList.movieAsDomainModel()
         }
@@ -30,7 +28,6 @@ class DatabaseDataSource @Inject constructor(
 
     fun getAllFavoriteActors(): LiveData<List<FavoriteActor>> {
         val allFavoriteActors = database.favoriteActorsDao.getAllFavoriteActors()
-        // Change to distinct until changed
         return allFavoriteActors.map { favEntityList ->
             favEntityList.actorAsDomainModel()
         }
