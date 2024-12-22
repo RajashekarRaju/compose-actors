@@ -18,12 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.data.model.FavoriteActor
+import com.developersbreach.composeactors.data.model.FavoritePerson
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
-import com.developersbreach.composeactors.ui.screens.favorites.tabs.FavoriteActorsTabContent
+import com.developersbreach.composeactors.ui.screens.favorites.tabs.FavoritePersonsTabContent
 import com.developersbreach.composeactors.ui.screens.favorites.tabs.FavoriteMoviesTabContent
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
@@ -34,9 +34,9 @@ fun FavoritesScreenUI(
     favoriteMovies: List<Movie>,
     navigateToSelectedMovie: (Int) -> Unit,
     removeFavoriteMovie: (Movie) -> Unit,
-    navigateToSelectedActor: (Int) -> Unit,
-    favoriteActors: List<FavoriteActor>,
-    removeFavoriteActor: (FavoriteActor) -> Unit,
+    navigateToSelectedPerson: (Int) -> Unit,
+    favoritePeople: List<FavoritePerson>,
+    removeFavoritePerson: (FavoritePerson) -> Unit,
 ) {
     val favoriteTabs = listOf(
         TabItem("Actors"),
@@ -68,10 +68,10 @@ fun FavoritesScreenUI(
                         .fillMaxWidth()
                 ) { index ->
                     when (index) {
-                        0 -> FavoriteActorsTabContent(
-                            navigateToSelectedActor = navigateToSelectedActor,
-                            favoriteActors = favoriteActors,
-                            removeFavoriteActor = removeFavoriteActor
+                        0 -> FavoritePersonsTabContent(
+                            navigateToSelectedPerson = navigateToSelectedPerson,
+                            favoritePeople = favoritePeople,
+                            removeFavoritePerson = removeFavoritePerson
                         )
 
                         1 -> FavoriteMoviesTabContent(
@@ -112,9 +112,9 @@ private fun FavoriteScreenUILightPreview() {
             favoriteMovies = emptyList(),
             navigateToSelectedMovie = {},
             removeFavoriteMovie = {},
-            navigateToSelectedActor = {},
-            favoriteActors = emptyList(),
-            removeFavoriteActor = {},
+            navigateToSelectedPerson = {},
+            favoritePeople = emptyList(),
+            removeFavoritePerson = {},
             navigateUp = {}
         )
     }
@@ -128,9 +128,9 @@ private fun FavoriteScreenUIDarkPreview() {
             favoriteMovies = emptyList(),
             navigateToSelectedMovie = {},
             removeFavoriteMovie = {},
-            navigateToSelectedActor = {},
-            favoriteActors = emptyList(),
-            removeFavoriteActor = {},
+            navigateToSelectedPerson = {},
+            favoritePeople = emptyList(),
+            removeFavoritePerson = {},
             navigateUp = {}
         )
     }

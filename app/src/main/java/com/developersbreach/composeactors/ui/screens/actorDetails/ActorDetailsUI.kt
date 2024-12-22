@@ -12,7 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.data.datasource.fake.fakeActorDetail
+import com.developersbreach.composeactors.data.datasource.fake.fakePersonDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGenerator
@@ -66,7 +66,7 @@ internal fun ActorDetailsUI(
                     // Custom top app bar
                     ActorDetailsTopAppBar(
                         navigateUp = navigateUp,
-                        title = "${detailUIState.actorData?.actorName}"
+                        title = "${detailUIState.actorData?.personName}"
                     )
 
                     // Main details content
@@ -100,7 +100,7 @@ private fun ActorDetailsUIDarkPreview() {
         ActorDetailsUI(
             detailUIState = ActorDetailsUIState(
                 castList = fakeMovieList(),
-                actorData = fakeActorDetail,
+                actorData = fakePersonDetail,
                 isFetchingDetails = false
             ),
             sheetUIState = ActorDetailsSheetUIState(fakeMovieDetail),
@@ -121,7 +121,7 @@ private fun ActorDetailsUILightPreview() {
         ActorDetailsUI(
             detailUIState = ActorDetailsUIState(
                 castList = fakeMovieList(),
-                actorData = fakeActorDetail,
+                actorData = fakePersonDetail,
                 isFetchingDetails = false
             ),
             sheetUIState = ActorDetailsSheetUIState(fakeMovieDetail),

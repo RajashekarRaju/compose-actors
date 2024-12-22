@@ -144,9 +144,9 @@ private fun MoviesTabContentPreview() {
     ComposeActorsTheme {
         MoviesTabContent(
             homeUIState = HomeUIState(
-                popularActorList = listOf(),
-                trendingActorList = listOf(),
-                isFetchingActors = false,
+                popularPersonList = listOf(),
+                trendingPersonList = listOf(),
+                isFetchingPersons = false,
                 upcomingMoviesList = listOf(),
                 nowPlayingMoviesList = emptyFlow()
             ),

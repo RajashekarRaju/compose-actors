@@ -19,7 +19,7 @@ object AppDestinations {
     // list to details destination
     const val ACTOR_DETAIL_ROUTE = "actor-detail"
     // list to selected actor detail destination
-    const val ACTOR_DETAIL_ID_KEY = "actorId"
+    const val ACTOR_DETAIL_ID_KEY = "personId"
 
     // destination for searching actors
     const val MOVIE_DETAILS_ROUTE = "movie-detail"

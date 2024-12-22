@@ -33,11 +33,11 @@ class SearchViewModel @Inject constructor(
     fun performQuery(searchQuery: String) {
         viewModelScope.launch {
             when (searchType) {
-                SearchType.Actors -> {
+                SearchType.Persons -> {
                     uiState = SearchUIState.ActorSearch(isSearchingResults = true)
                     val searchData = searchRepository.getSearchableActorsData(searchQuery)
                     uiState = (uiState as SearchUIState.ActorSearch).copy(
-                        actorList = searchData,
+                        personList = searchData,
                         isSearchingResults = false
                     )
                 }

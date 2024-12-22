@@ -39,7 +39,7 @@ fun GetRelatedMovies(
                     .size(100.dp, 150.dp)
                     .clickable {
                         selectBottomSheetCallback(BottomSheetType.MovieDetailBottomSheet.apply {
-                            movieOrActorId = movie.movieId
+                            movieOrPersonId = movie.movieId
                         })
                         openMovieDetailsBottomSheet()
                     }

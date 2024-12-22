@@ -2,9 +2,9 @@ package com.developersbreach.composeactors.data.person.repository
 
 import androidx.lifecycle.LiveData
 import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
-import com.developersbreach.composeactors.data.model.Actor
-import com.developersbreach.composeactors.data.model.ActorDetail
-import com.developersbreach.composeactors.data.model.FavoriteActor
+import com.developersbreach.composeactors.data.model.Person
+import com.developersbreach.composeactors.data.model.PersonDetail
+import com.developersbreach.composeactors.data.model.FavoritePerson
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.person.remote.PersonApi
 import javax.inject.Inject
@@ -18,35 +18,35 @@ class PersonRepositoryImpl @Inject constructor(
     private val databaseDataSource: DatabaseDataSource
 ) : PersonRepository {
 
-    override suspend fun getPopularPersons(): List<Actor> = withContext(Dispatchers.IO) {
+    override suspend fun getPopularPersons(): List<Person> = withContext(Dispatchers.IO) {
         personApi.getPopularPersons().data
     }
 
-    override suspend fun getTrendingPersons(): List<Actor> = withContext(Dispatchers.IO) {
+    override suspend fun getTrendingPersons(): List<Person> = withContext(Dispatchers.IO) {
         personApi.getTrendingPersons().data
     }
 
-    override suspend fun getPersonDetails(actorId: Int): ActorDetail = withContext(Dispatchers.IO) {
-        personApi.getPersonDetails(actorId)
+    override suspend fun getPersonDetails(personId: Int): PersonDetail = withContext(Dispatchers.IO) {
+        personApi.getPersonDetails(personId)
     }
 
-    override suspend fun getCastDetails(actorId: Int): List<Movie> = withContext(Dispatchers.IO) {
-        personApi.getCastDetails(actorId).movies
+    override suspend fun getCastDetails(personId: Int): List<Movie> = withContext(Dispatchers.IO) {
+        personApi.getCastDetails(personId).movies
     }
 
-    override fun isFavoritePerson(actorId: Int): LiveData<Int> {
-        return databaseDataSource.checkIfActorIsFavorite(actorId)
+    override fun isFavoritePerson(personId: Int): LiveData<Int> {
+        return databaseDataSource.checkIfPersonIsFavorite(personId)
     }
 
-    override suspend fun addPersonToFavorite(favoriteActor: FavoriteActor) {
-        databaseDataSource.addActorToFavorites(favoriteActor)
+    override suspend fun addPersonToFavorite(favoritePerson: FavoritePerson) {
+        databaseDataSource.addPersonToFavorites(favoritePerson)
     }
 
-    override suspend fun deleteSelectedFavoritePerson(favoriteActor: FavoriteActor) {
-        databaseDataSource.deleteSelectedFavoriteActor(favoriteActor)
+    override suspend fun deleteSelectedFavoritePerson(favoritePerson: FavoritePerson) {
+        databaseDataSource.deleteSelectedFavoritePerson(favoritePerson)
     }
 
-    override fun getAllFavoritePersons(): LiveData<List<FavoriteActor>> {
-        return databaseDataSource.getAllFavoriteActors()
+    override fun getAllFavoritePersons(): LiveData<List<FavoritePerson>> {
+        return databaseDataSource.getAllFavoritePersons()
     }
 }

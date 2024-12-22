@@ -3,10 +3,10 @@ package com.developersbreach.composeactors.data.datasource.database
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.developersbreach.composeactors.core.database.AppDatabase
-import com.developersbreach.composeactors.data.model.FavoriteActor
+import com.developersbreach.composeactors.data.model.FavoritePerson
 import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.data.model.actorAsDatabaseModel
-import com.developersbreach.composeactors.data.model.actorAsDomainModel
+import com.developersbreach.composeactors.data.model.personAsDatabaseModel
+import com.developersbreach.composeactors.data.model.personAsDomainModel
 import com.developersbreach.composeactors.data.model.movieAsDatabaseModel
 import com.developersbreach.composeactors.data.model.movieAsDomainModel
 import javax.inject.Inject
@@ -26,10 +26,10 @@ class DatabaseDataSource @Inject constructor(
         }
     }
 
-    fun getAllFavoriteActors(): LiveData<List<FavoriteActor>> {
-        val allFavoriteActors = database.favoriteActorsDao.getAllFavoriteActors()
-        return allFavoriteActors.map { favEntityList ->
-            favEntityList.actorAsDomainModel()
+    fun getAllFavoritePersons(): LiveData<List<FavoritePerson>> {
+        val allFavoritePersons = database.favoritePersonsDao.getAllFavoritePersons()
+        return allFavoritePersons.map { favEntityList ->
+            favEntityList.personAsDomainModel()
         }
     }
 
@@ -37,9 +37,9 @@ class DatabaseDataSource @Inject constructor(
         movieId: Int
     ) = database.favoriteMoviesDao.checkIfMovieIsFavorite(movieId)
 
-    fun checkIfActorIsFavorite(
-        actorId: Int
-    ) = database.favoriteActorsDao.checkIfActorIsFavorite(actorId)
+    fun checkIfPersonIsFavorite(
+        personId: Int
+    ) = database.favoritePersonsDao.checkIfPersonIsFavorite(personId)
 
     suspend fun addMovieToFavorites(
         movie: Movie
@@ -49,11 +49,11 @@ class DatabaseDataSource @Inject constructor(
         }
     }
 
-    suspend fun addActorToFavorites(
-        favoriteActor: FavoriteActor
+    suspend fun addPersonToFavorites(
+        favoritePerson: FavoritePerson
     ) = withContext(Dispatchers.IO) {
-        with(favoriteActor.actorAsDatabaseModel()) {
-            database.favoriteActorsDao.addActorToFavorites(favoriteActorsEntity = this)
+        with(favoritePerson.personAsDatabaseModel()) {
+            database.favoritePersonsDao.addPersonToFavorites(favoritePersonsEntity = this)
         }
     }
 
@@ -65,11 +65,11 @@ class DatabaseDataSource @Inject constructor(
         }
     }
 
-    suspend fun deleteSelectedFavoriteActor(
-        favoriteActor: FavoriteActor
+    suspend fun deleteSelectedFavoritePerson(
+        favoritePerson: FavoritePerson
     ) = withContext(Dispatchers.IO) {
-        with(favoriteActor.actorAsDatabaseModel()) {
-            database.favoriteActorsDao.deleteSelectedFavoriteActor(favoriteActorsEntity = this)
+        with(favoritePerson.personAsDatabaseModel()) {
+            database.favoritePersonsDao.deleteSelectedFavoritePerson(favoritePersonsEntity = this)
         }
     }
 }

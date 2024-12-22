@@ -46,7 +46,7 @@ fun GetMovieCast(
     ) {
         items(
             items = uiState.movieCast,
-            key = { it.actorId }
+            key = { it.personId }
         ) { cast ->
             ItemCast(
                 cast = cast,
@@ -72,7 +72,7 @@ private fun ItemCast(
             .clickable {
                 openMovieDetailsBottomSheet()
                 selectBottomSheetCallback(BottomSheetType.ActorDetailBottomSheet.apply {
-                    movieOrActorId = cast.actorId
+                    movieOrPersonId = cast.personId
                 })
             }
     ) {

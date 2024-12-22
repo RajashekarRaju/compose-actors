@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 @Immutable
 @Serializable
 data class Cast(
-    @SerialName("id") @Stable val actorId: Int,
+    @SerialName("id") @Stable val personId: Int,
     @SerialName("name") val castName: String,
     @SerialName("profile_path") private val profilePath: String?
 ) {

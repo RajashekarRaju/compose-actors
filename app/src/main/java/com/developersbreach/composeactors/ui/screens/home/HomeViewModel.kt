@@ -48,11 +48,11 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun startFetchingActors() {
-        uiState = HomeUIState(isFetchingActors = true)
+        uiState = HomeUIState(isFetchingPersons = true)
         uiState = HomeUIState(
-            popularActorList = personRepository.getPopularPersons(),
-            trendingActorList = personRepository.getTrendingPersons(),
-            isFetchingActors = false,
+            popularPersonList = personRepository.getPopularPersons(),
+            trendingPersonList = personRepository.getTrendingPersons(),
+            isFetchingPersons = false,
             upcomingMoviesList = movieRepository.getUpcomingMovies(),
             nowPlayingMoviesList = getPagedMovies().cachedIn(viewModelScope)
         )
@@ -60,7 +60,7 @@ class HomeViewModel @Inject constructor(
 
     fun updateHomeSearchType(searchType: SearchType) {
         when (searchType) {
-            SearchType.Actors -> _updateHomeSearchType.value = SearchType.Actors
+            SearchType.Persons -> _updateHomeSearchType.value = SearchType.Persons
             SearchType.Movies -> _updateHomeSearchType.value = SearchType.Movies
         }
     }

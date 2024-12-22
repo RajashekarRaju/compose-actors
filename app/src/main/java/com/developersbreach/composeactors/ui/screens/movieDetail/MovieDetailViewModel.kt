@@ -30,7 +30,7 @@ class MovieDetailViewModel @Inject constructor(
     var uiState by mutableStateOf(MovieDetailsUIState(movieData = null))
         private set
 
-    var sheetUiState by mutableStateOf(ActorsSheetUIState(selectedActorDetails = null))
+    var sheetUiState by mutableStateOf(ActorsSheetUIState(selectedPersonDetails = null))
         private set
 
     var movieSheetUiState by mutableStateOf(MovieSheetUIState(selectedMovieDetails = null))
@@ -94,18 +94,18 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     /**
-     * @param actorId for querying selected actor details.
+     * @param personId for querying selected actor details.
      * This function will be triggered only when user clicks any actor items.
      * Updates the data values to show in modal sheet.
      */
-    fun getSelectedActorDetails(
-        actorId: Int?
+    fun getSelectedPersonDetails(
+        personId: Int?
     ) {
         viewModelScope.launch {
             try {
-                if (actorId != null) {
-                    val actorsData = personRepository.getPersonDetails(actorId)
-                    sheetUiState = ActorsSheetUIState(selectedActorDetails = actorsData)
+                if (personId != null) {
+                    val actorsData = personRepository.getPersonDetails(personId)
+                    sheetUiState = ActorsSheetUIState(selectedPersonDetails = actorsData)
                 }
             } catch (e: IOException) {
                 Timber.e("$e")

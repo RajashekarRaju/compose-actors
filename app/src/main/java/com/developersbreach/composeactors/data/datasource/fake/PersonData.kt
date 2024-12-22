@@ -1,11 +1,11 @@
 package com.developersbreach.composeactors.data.datasource.fake
 
-import com.developersbreach.composeactors.data.model.Actor
-import com.developersbreach.composeactors.data.model.ActorDetail
+import com.developersbreach.composeactors.data.model.Person
+import com.developersbreach.composeactors.data.model.PersonDetail
 import com.developersbreach.composeactors.data.model.Cast
-import com.developersbreach.composeactors.data.model.FavoriteActor
+import com.developersbreach.composeactors.data.model.FavoritePerson
 
-private val actorsData = listOf(
+private val personsData = listOf(
     "John travolta",
     "Samuel L Jackson",
     "Uma Thurman",
@@ -22,59 +22,59 @@ private val actorsData = listOf(
     "Sophia Lillis",
 )
 
-fun fakeActorsList(): MutableList<Actor> {
-    val actors = mutableListOf<Actor>()
-    actorsData.forEachIndexed { index, name ->
-        actors.add(Actor(index, name, ""))
+fun fakePersonsList(): MutableList<Person> {
+    val persons = mutableListOf<Person>()
+    personsData.forEachIndexed { index, name ->
+        persons.add(Person(index, name, ""))
     }
-    return actors
+    return persons
 }
 
-fun fakeFavoriteActorsList(): MutableList<FavoriteActor> {
-    val actors = mutableListOf<FavoriteActor>()
-    actorsData.forEachIndexed { index, name ->
-        actors.add(FavoriteActor(index, name, "", "Berlin"))
+fun fakeFavoritePersonsList(): MutableList<FavoritePerson> {
+    val actors = mutableListOf<FavoritePerson>()
+    personsData.forEachIndexed { index, name ->
+        actors.add(FavoritePerson(index, name, "", "Berlin"))
     }
     return actors
 }
 
 fun fakeMovieCastList(): MutableList<Cast> {
     val cast = mutableListOf<Cast>()
-    actorsData.forEachIndexed { index, name ->
+    personsData.forEachIndexed { index, name ->
         cast.add(Cast(index, name, ""))
     }
     return cast
 }
 
-val popularActorList = listOf(
-    Actor(
-        actorId = 28782,
-        actorName = "Monica Bellucci",
+val popularPersonLists = listOf(
+    Person(
+        personId = 28782,
+        personName = "Monica Bellucci",
         profilePath = "z3sLuRKP7hQVrvSTsqdLjGSldwG.jpg"
     ),
-    Actor(
-        actorId = 287,
-        actorName = "Brad Pitt",
+    Person(
+        personId = 287,
+        personName = "Brad Pitt",
         profilePath = "kU3B75TyRiCgE270EyZnHjfivoq.jpg"
     )
 )
 
-val trendingActorList = listOf(
-    Actor(
-        actorId = 8784,
-        actorName = "Daniel Craig",
+val trendingPersonLists = listOf(
+    Person(
+        personId = 8784,
+        personName = "Daniel Craig",
         profilePath = "rFuETZeyOAfIqBahOObF7Soq5Dh.jpg"
     ),
-    Actor(
-        actorId = 1892,
-        actorName = "Matt Damon",
+    Person(
+        personId = 1892,
+        personName = "Matt Damon",
         profilePath = "7wbHIn7GziFlJLPl8Zu1XVl24EG.jpg"
     ),
 )
 
-val fakeActorDetail = ActorDetail(
-    actorId = 28782,
-    actorName = "Monica Bellucci",
+val fakePersonDetail = PersonDetail(
+    personId = 28782,
+    personName = "Monica Bellucci",
     profilePath = "z3sLuRKP7hQVrvSTsqdLjGSldwG.jpg",
     biography = "This is fake biography for the actor added here to see how the actual preview looks in the screen so don't get any serious about this.",
     dateOfBirth = "59",

@@ -1,6 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.movieDetail
 
-import com.developersbreach.composeactors.data.model.ActorDetail
+import com.developersbreach.composeactors.data.model.PersonDetail
 import com.developersbreach.composeactors.data.model.Cast
 import com.developersbreach.composeactors.data.model.Flatrate
 import com.developersbreach.composeactors.data.model.Movie
@@ -24,7 +24,7 @@ data class MovieDetailsUIState(
  * Models the UI state for the SheetContentActorDetails modal sheet.
  */
 data class ActorsSheetUIState(
-    val selectedActorDetails: ActorDetail? = null
+    val selectedPersonDetails: PersonDetail? = null
 )
 
 data class MovieSheetUIState(

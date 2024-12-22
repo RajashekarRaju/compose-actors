@@ -11,8 +11,8 @@ import androidx.compose.ui.test.performClick
 import androidx.paging.PagingData
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.developersbreach.composeactors.data.datasource.fake.nowPlayingMoviesList
-import com.developersbreach.composeactors.data.datasource.fake.popularActorList
-import com.developersbreach.composeactors.data.datasource.fake.trendingActorList
+import com.developersbreach.composeactors.data.datasource.fake.popularPersonLists
+import com.developersbreach.composeactors.data.datasource.fake.trendingPersonLists
 import com.developersbreach.composeactors.data.datasource.fake.upcomingMoviesList
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import kotlinx.coroutines.flow.flowOf
@@ -28,28 +28,28 @@ class HomeScreenUITest {
     val composeTestRule = createComposeRule()
 
     private val mockHomeUIState: HomeUIState = HomeUIState(
-        popularActorList = popularActorList,
-        trendingActorList = trendingActorList,
-        isFetchingActors = false,
+        popularPersonList = popularPersonLists,
+        trendingPersonList = trendingPersonLists,
+        isFetchingPersons = false,
         upcomingMoviesList = upcomingMoviesList,
         nowPlayingMoviesList = flowOf(PagingData.from(nowPlayingMoviesList))
     )
 
     @Composable
     private fun HomeScreenUIContent(
-        navigateToSelectedActor: (actorId: Int) -> Unit = { },
+        navigateToSelectedPerson: (personId: Int) -> Unit = { },
         navigateToSelectedMovie: (movieId: Int) -> Unit = { },
         navigateToFavorite: () -> Unit = { },
         navigateToSearch: (searchType: SearchType) -> Unit = {  },
         updateHomeSearchType: (searchType: SearchType) -> Unit = {  },
         navigateToAbout: () -> Unit = {  },
-        navigateToSearchBySearchType: SearchType = SearchType.Actors,
+        navigateToSearchBySearchType: SearchType = SearchType.Persons,
         homeSheetUIState: HomeSheetUIState = HomeSheetUIState(),
         homeUIState: HomeUIState = mockHomeUIState
     ) {
         HomeScreenUI(
             modifier = Modifier,
-            navigateToSelectedActor = navigateToSelectedActor,
+            navigateToSelectedPerson = navigateToSelectedPerson,
             navigateToSelectedMovie = navigateToSelectedMovie,
             navigateToFavorite = navigateToFavorite,
             navigateToSearch = navigateToSearch,
@@ -145,7 +145,7 @@ class HomeScreenUITest {
     fun onClickSearchTopAppBar_shouldNavigateToSearchScreen() {
         composeTestRule.setContent {
             HomeScreenUIContent(
-                navigateToSearch = { SearchType.Actors },
+                navigateToSearch = { SearchType.Persons },
             )
         }
 

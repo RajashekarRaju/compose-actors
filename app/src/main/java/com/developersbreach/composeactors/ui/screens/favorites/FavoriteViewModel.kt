@@ -3,7 +3,7 @@ package com.developersbreach.composeactors.ui.screens.favorites
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.model.FavoriteActor
+import com.developersbreach.composeactors.data.model.FavoritePerson
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
@@ -18,7 +18,7 @@ class FavoriteViewModel @Inject constructor(
 ) : ViewModel() {
 
     val favoriteMovies: LiveData<List<Movie>> = movieRepository.getAllFavoriteMovies()
-    val favoriteActors: LiveData<List<FavoriteActor>> = personRepository.getAllFavoritePersons()
+    val favoritePersons: LiveData<List<FavoritePerson>> = personRepository.getAllFavoritePersons()
 
     fun removeMovieFromFavorites(movie: Movie) {
         viewModelScope.launch {
@@ -26,9 +26,9 @@ class FavoriteViewModel @Inject constructor(
         }
     }
 
-    fun removeActorFromFavorites(favoriteActor: FavoriteActor) {
+    fun removePersonFromFavorites(favoritePerson: FavoritePerson) {
         viewModelScope.launch {
-            personRepository.deleteSelectedFavoritePerson(favoriteActor)
+            personRepository.deleteSelectedFavoritePerson(favoritePerson)
         }
     }
 }

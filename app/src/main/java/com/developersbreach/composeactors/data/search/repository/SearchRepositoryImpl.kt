@@ -1,6 +1,6 @@
 package com.developersbreach.composeactors.data.search.repository
 
-import com.developersbreach.composeactors.data.model.Actor
+import com.developersbreach.composeactors.data.model.Person
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.search.remote.SearchApi
 import javax.inject.Inject
@@ -15,7 +15,7 @@ class SearchRepositoryImpl @Inject constructor(
 
     override suspend fun getSearchableActorsData(
         query: String
-    ): List<Actor> = withContext(Dispatchers.IO) {
+    ): List<Person> = withContext(Dispatchers.IO) {
         searchApi.getSearchableActorsData(query).data
     }
 

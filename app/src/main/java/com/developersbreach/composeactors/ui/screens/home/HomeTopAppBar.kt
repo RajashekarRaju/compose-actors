@@ -85,7 +85,7 @@ private fun SearchBarPreview() {
     ComposeActorsTheme(darkTheme = true) {
         HomeTopAppBarContent(
             navigateToSearch = { },
-            searchType = SearchType.Actors
+            searchType = SearchType.Persons
         )
     }
 }

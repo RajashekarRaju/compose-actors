@@ -200,7 +200,7 @@ private fun GetBottomSheetContent(
             }
             BottomSheetType.ActorDetailBottomSheet -> {
                 SheetContentActorDetails(
-                    actor = sheetUiState.selectedActorDetails
+                    actor = sheetUiState.selectedPersonDetails
                 )
             }
         }

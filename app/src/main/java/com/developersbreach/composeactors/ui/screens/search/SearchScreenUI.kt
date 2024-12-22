@@ -14,7 +14,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.data.datasource.fake.fakeActorsList
+import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
 import com.developersbreach.composeactors.ui.components.ShowSearchProgress
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
@@ -52,12 +52,12 @@ fun SearchScreenUI(
                 when (uiState) {
                     is SearchUIState.ActorSearch -> {
                         // Show progress while search is happening
-                        val isLoadingData = !uiState.isSearchingResults && uiState.actorList.isEmpty()
+                        val isLoadingData = !uiState.isSearchingResults && uiState.personList.isEmpty()
                         ShowSearchProgress(isLoadingData)
                         // Main content for this screen
-                        ActorSearchUI(
-                            actorsList = uiState.actorList,
-                            navigateToSelectedActor = navigateToSearchBySearchType,
+                        PersonSearchUI(
+                            persons = uiState.personList,
+                            navigateToSelectedPerson = navigateToSearchBySearchType,
                             closeKeyboard = closeKeyboard
                         )
                     }
@@ -88,7 +88,7 @@ private fun SearchScreenUIDarkPreview() {
             searchHint = stringResource(R.string.hint_search_query_actors),
             onSearchQueryChange = {},
             uiState = SearchUIState.ActorSearch(
-                actorList = fakeActorsList(),
+                personList = fakePersonsList(),
                 isSearchingResults = false
             )
         )
@@ -105,7 +105,7 @@ private fun SearchScreenUILightPreview() {
             searchHint = stringResource(R.string.hint_search_query_actors),
             onSearchQueryChange = {},
             uiState = SearchUIState.ActorSearch(
-                actorList = fakeActorsList(),
+                personList = fakePersonsList(),
                 isSearchingResults = false
             )
         )

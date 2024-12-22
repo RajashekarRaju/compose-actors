@@ -51,7 +51,7 @@ fun AppNavigation(
             AppDestinations.HOME_ROUTE
         ) {
             HomeScreen(
-                navigateToSelectedActor = actions.navigateToSelectedActor,
+                navigateToSelectedPerson = actions.navigateToSelectedPerson,
                 navigateToSearch = actions.navigateToSearch,
                 navigateToFavorite = actions.navigateToFavorite,
                 navigateToSelectedMovie = actions.navigateToSelectedMovie,
@@ -72,7 +72,7 @@ fun AppNavigation(
         ) {
             SearchScreen(
                 navigateUp = actions.navigateUp,
-                navigateToSelectedActor = actions.navigateToSelectedActor,
+                navigateToSelectedPerson = actions.navigateToSelectedPerson,
                 navigateToSelectedMovie = actions.navigateToSelectedMovie,
             )
         }
@@ -121,7 +121,7 @@ fun AppNavigation(
             FavoritesScreen(
                 navigateUp = actions.navigateUp,
                 navigateToSelectedMovie = actions.navigateToSelectedMovie,
-                navigateToSelectedActor = actions.navigateToSelectedActor,
+                navigateToSelectedPerson = actions.navigateToSelectedPerson,
             )
         }
 

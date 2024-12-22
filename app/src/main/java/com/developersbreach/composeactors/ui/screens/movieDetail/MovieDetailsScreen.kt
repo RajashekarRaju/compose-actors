@@ -54,10 +54,10 @@ private fun setBottomSheetCallBack(
 ) = { bottomSheetType: BottomSheetType ->
     when (bottomSheetType) {
         BottomSheetType.MovieDetailBottomSheet -> {
-            viewModel.getSelectedMovieDetails(bottomSheetType.movieOrActorId)
+            viewModel.getSelectedMovieDetails(bottomSheetType.movieOrPersonId)
         }
         BottomSheetType.ActorDetailBottomSheet -> {
-            viewModel.getSelectedActorDetails(bottomSheetType.movieOrActorId)
+            viewModel.getSelectedPersonDetails(bottomSheetType.movieOrPersonId)
         }
     }
     selectedBottomSheet.value = bottomSheetType

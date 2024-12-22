@@ -1,6 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.actorDetails
 
-import com.developersbreach.composeactors.data.model.ActorDetail
+import com.developersbreach.composeactors.data.model.PersonDetail
 import com.developersbreach.composeactors.data.model.Movie
 import com.developersbreach.composeactors.data.model.MovieDetail
 
@@ -11,7 +11,7 @@ import com.developersbreach.composeactors.data.model.MovieDetail
  */
 data class ActorDetailsUIState(
     val castList: List<Movie> = listOf(),
-    val actorData: ActorDetail? = null,
+    val actorData: PersonDetail? = null,
     val isFetchingDetails: Boolean = false,
 )
 

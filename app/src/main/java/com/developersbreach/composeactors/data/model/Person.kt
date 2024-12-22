@@ -8,9 +8,9 @@ import kotlinx.serialization.Serializable
 
 @Immutable
 @Serializable
-data class Actor(
-    @SerialName("id") @Stable val actorId: Int,
-    @SerialName("name") val actorName: String,
+data class Person(
+    @SerialName("id") @Stable val personId: Int,
+    @SerialName("name") val personName: String,
     @SerialName("profile_path") private val profilePath: String?
 ) {
     val profileUrl: String = "$LOW_RES_IMAGE$profilePath"

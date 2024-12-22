@@ -1,6 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.search
 
-import com.developersbreach.composeactors.data.model.Actor
+import com.developersbreach.composeactors.data.model.Person
 import com.developersbreach.composeactors.data.model.Movie
 
 /**
@@ -14,7 +14,7 @@ sealed class SearchUIState {
     ): SearchUIState()
 
     data class ActorSearch(
-        val actorList: List<Actor> = listOf(),
+        val personList: List<Person> = listOf(),
         val isSearchingResults: Boolean = false,
     ): SearchUIState()
 }
