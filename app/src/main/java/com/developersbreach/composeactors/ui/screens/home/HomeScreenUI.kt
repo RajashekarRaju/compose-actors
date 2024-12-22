@@ -25,7 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.data.datasource.fake.fakeActorsList
+import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
@@ -33,7 +33,7 @@ import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
-import com.developersbreach.composeactors.ui.screens.home.tabs.ActorsTabContent
+import com.developersbreach.composeactors.ui.screens.home.tabs.PersonsTabContent
 import com.developersbreach.composeactors.ui.screens.home.tabs.MoviesTabContent
 import com.developersbreach.composeactors.ui.screens.home.tabs.TvShowsTabContent
 import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
@@ -49,7 +49,7 @@ fun HomeScreenUI(
     navigateToSearch: (SearchType) -> Unit,
     navigateToAbout: () -> Unit,
     navigateToSearchBySearchType: SearchType,
-    navigateToSelectedActor: (Int) -> Unit,
+    navigateToSelectedPerson: (Int) -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
     uiState: HomeUIState,
     sheetUiState: HomeSheetUIState,
@@ -107,7 +107,7 @@ fun HomeScreenUI(
                 ) {
                     // Main content for this screen
                     HomeScreenUI(
-                        navigateToSelectedActor = navigateToSelectedActor,
+                        navigateToSelectedPerson = navigateToSelectedPerson,
                         homeUIState = uiState,
                         homeSheetUIState = sheetUiState,
                         navigateToSelectedMovie = navigateToSelectedMovie,
@@ -128,14 +128,14 @@ fun HomeScreenUI(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HomeScreenUI(
-    navigateToSelectedActor: (Int) -> Unit,
+    navigateToSelectedPerson: (Int) -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
     homeUIState: HomeUIState,
     homeSheetUIState: HomeSheetUIState,
     updateSearchType: (navigateToSearchByType: SearchType) -> Unit
 ) {
-    val popularActorsListState = rememberLazyListState()
-    val trendingActorsListState = rememberLazyListState()
+    val popularPersonsListState = rememberLazyListState()
+    val trendingPersonsListState = rememberLazyListState()
     val homeTabs = listOf(
         TabItem("Actors"),
         TabItem("Movies"),
@@ -156,12 +156,12 @@ private fun HomeScreenUI(
         ) {
             when (it) {
                 0 -> {
-                    updateSearchType(SearchType.Actors)
-                    ActorsTabContent(
+                    updateSearchType(SearchType.Persons)
+                    PersonsTabContent(
                         homeUIState = homeUIState,
-                        navigateToSelectedActor = navigateToSelectedActor,
-                        popularActorsListState = popularActorsListState,
-                        trendingActorsListState = trendingActorsListState
+                        navigateToSelectedPerson = navigateToSelectedPerson,
+                        popularPersonsListState = popularPersonsListState,
+                        trendingPersonsListState = trendingPersonsListState
                     )
                 }
 
@@ -189,14 +189,14 @@ private fun HomeScreenUI(
 private fun HomeScreenUILightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         HomeScreenUI(
-            navigateToSelectedActor = {},
+            navigateToSelectedPerson = {},
             navigateToSelectedMovie = {},
             homeSheetUIState = HomeSheetUIState(fakeMovieDetail),
             updateSearchType = {},
             homeUIState = HomeUIState(
-                popularActorList = fakeActorsList(),
-                trendingActorList = fakeActorsList(),
-                isFetchingActors = false,
+                popularPersonList = fakePersonsList(),
+                trendingPersonList = fakePersonsList(),
+                isFetchingPersons = false,
                 upcomingMoviesList = fakeMovieList(),
                 nowPlayingMoviesList = flow { fakeMovieList() }
             ),
@@ -209,14 +209,14 @@ private fun HomeScreenUILightPreview() {
 private fun HomeScreenUIDarkPreview() {
     ComposeActorsTheme(darkTheme = true) {
         HomeScreenUI(
-            navigateToSelectedActor = {},
+            navigateToSelectedPerson = {},
             navigateToSelectedMovie = {},
             homeSheetUIState = HomeSheetUIState(fakeMovieDetail),
             updateSearchType = {},
             homeUIState = HomeUIState(
-                popularActorList = fakeActorsList(),
-                trendingActorList = fakeActorsList(),
-                isFetchingActors = false,
+                popularPersonList = fakePersonsList(),
+                trendingPersonList = fakePersonsList(),
+                isFetchingPersons = false,
                 upcomingMoviesList = fakeMovieList(),
                 nowPlayingMoviesList = flow { fakeMovieList() }
             ),

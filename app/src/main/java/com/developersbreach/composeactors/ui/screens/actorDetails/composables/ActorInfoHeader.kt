@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.data.model.ActorDetail
+import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.ui.animations.borderRevealAnimation
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.composeactors.utils.calculateAge
@@ -34,7 +34,7 @@ import com.developersbreach.composeactors.utils.getPopularity
  */
 @Composable
 internal fun ActorInfoHeader(
-    actorData: ActorDetail?
+    actorData: PersonDetail?
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
@@ -154,9 +154,9 @@ private fun ActorInfoHeaderSubtitle(
 private fun ActorInfoHeaderPreview() {
     ComposeActorsTheme {
         ActorInfoHeader(
-            actorData = ActorDetail(
-                actorId = 1,
-                actorName = "Kate WinsletKate Winslet",
+            actorData = PersonDetail(
+                personId = 1,
+                personName = "Kate WinsletKate Winslet",
                 profilePath = "",
                 biography = "Kate Elizabeth Winslet CBE born 5 October 1975 is an English actress. Known for her work in independent films, particularly period dramas, and for her portrayals of headstrong and complicated women, she has received numerous accolades, including an Academy Award, a Grammy Award, two Primetime Emmy Awards, three BAFTA Awards, and five Golden Globe Awards. Time magazine named Winslet one of the 100 most influential people in the world in 2009 and 2021. She was appointed Commander of the Order of the British Empire (CBE) in 2012.",
                 dateOfBirth = "47",

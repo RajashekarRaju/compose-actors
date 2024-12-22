@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.utils
 
+import com.developersbreach.composeactors.core.network.TmdbApiKey
 import java.util.*
 
 /**
@@ -59,4 +60,8 @@ fun getMovieRuntimeFormatted(
     val hours: Int? = runtime?.div(60)
     val minutes: Int? = runtime?.rem(60)
     return "${hours}h:${minutes}m"
+}
+
+fun isTmdbApiKeyNotValid(): Boolean {
+    return TmdbApiKey.TMDB_API_KEY.isEmpty()
 }

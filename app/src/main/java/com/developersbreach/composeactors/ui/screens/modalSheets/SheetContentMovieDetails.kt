@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
-import com.developersbreach.composeactors.data.model.MovieDetail
+import com.developersbreach.composeactors.data.movie.model.MovieDetail
 import com.developersbreach.composeactors.ui.components.CircularSeparator
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.MovieGenre

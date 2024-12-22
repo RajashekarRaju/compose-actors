@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.repository.search.SearchRepository
+import com.developersbreach.composeactors.data.search.repository.SearchRepository
 import com.developersbreach.composeactors.ui.navigation.AppDestinations.SEARCH_TYPE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -33,11 +33,11 @@ class SearchViewModel @Inject constructor(
     fun performQuery(searchQuery: String) {
         viewModelScope.launch {
             when (searchType) {
-                SearchType.Actors -> {
+                SearchType.Persons -> {
                     uiState = SearchUIState.ActorSearch(isSearchingResults = true)
                     val searchData = searchRepository.getSearchableActorsData(searchQuery)
                     uiState = (uiState as SearchUIState.ActorSearch).copy(
-                        actorList = searchData,
+                        personList = searchData,
                         isSearchingResults = false
                     )
                 }

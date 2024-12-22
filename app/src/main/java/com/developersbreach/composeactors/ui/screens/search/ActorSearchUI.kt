@@ -13,52 +13,45 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.data.datasource.fake.fakeActorsList
-import com.developersbreach.composeactors.data.model.Actor
-import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
+import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
+import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
-/**
- * @param actorsList searchable results row list elements of [Actor]
- */
 @Composable
-fun ActorSearchUI(
-    actorsList: List<Actor>,
-    navigateToSelectedActor: (Int) -> Unit,
+fun PersonSearchUI(
+    persons: List<Person>,
+    navigateToSelectedPerson: (Int) -> Unit,
     closeKeyboard: () -> Unit?
 ) {
     LazyColumn(
         // This padding helps avoid content going behind the navigation bars.
         modifier = Modifier.padding(bottom = 48.dp)
     ) {
-        items(actorsList) { actor ->
-            ItemSearchActor(
-                actor = actor,
-                onClickActor = navigateToSelectedActor,
+        items(persons) {
+            ItemSearchPerson(
+                person = it,
+                onClickPerson = navigateToSelectedPerson,
                 closeKeyboard = closeKeyboard
             )
         }
     }
 }
 
-/**
- * @param onClickActor navigate to actor [ActorDetailsScreen] from user selected actor.
- */
 @Composable
-private fun ItemSearchActor(
-    actor: Actor,
-    onClickActor: (Int) -> Unit,
+private fun ItemSearchPerson(
+    person: Person,
+    onClickPerson: (Int) -> Unit,
     closeKeyboard: () -> Unit?
 ) {
     Text(
-        text = actor.actorName,
+        text = person.personName,
         style = MaterialTheme.typography.h6,
         color = MaterialTheme.colors.onBackground,
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
                 closeKeyboard()
-                onClickActor(actor.actorId)
+                onClickPerson(person.personId)
             }
             .padding(horizontal = 20.dp, vertical = 12.dp)
             .wrapContentWidth(Alignment.Start)
@@ -67,11 +60,11 @@ private fun ItemSearchActor(
 
 @Preview(showBackground = true, backgroundColor = 0xFF211a18)
 @Composable
-private fun ActorSearchUIDarkPreview() {
+private fun PersonSearchUIDarkPreview() {
     ComposeActorsTheme(darkTheme = true) {
-        ActorSearchUI(
-            actorsList = fakeActorsList(),
-            navigateToSelectedActor = {},
+        PersonSearchUI(
+            persons = fakePersonsList(),
+            navigateToSelectedPerson = {},
             closeKeyboard = {}
         )
     }
@@ -79,11 +72,11 @@ private fun ActorSearchUIDarkPreview() {
 
 @Preview(showBackground = true)
 @Composable
-private fun ActorSearchUILightPreview() {
+private fun PersonSearchUILightPreview() {
     ComposeActorsTheme(darkTheme = false) {
-        ActorSearchUI(
-            actorsList = fakeActorsList(),
-            navigateToSelectedActor = {},
+        PersonSearchUI(
+            persons = fakePersonsList(),
+            navigateToSelectedPerson = {},
             closeKeyboard = {}
         )
     }

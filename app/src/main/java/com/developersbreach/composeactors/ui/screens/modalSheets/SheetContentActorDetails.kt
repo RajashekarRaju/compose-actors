@@ -18,8 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.data.datasource.fake.fakeActorDetail
-import com.developersbreach.composeactors.data.model.ActorDetail
+import com.developersbreach.composeactors.data.datasource.fake.fakePersonDetail
+import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.SheetHorizontalSeparator
 import com.developersbreach.composeactors.ui.screens.actorDetails.composables.ActorInfoHeader
@@ -32,7 +32,7 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SheetContentActorDetails(
-    actor: ActorDetail?,
+    actor: PersonDetail?,
 ) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -54,7 +54,7 @@ fun SheetContentActorDetails(
                 Spacer(modifier = Modifier.height(24.dp))
                 ActorProfileImage(actor?.profileUrl)
                 Spacer(modifier = Modifier.height(16.dp))
-                ActorNameText(actor?.actorName.toString())
+                ActorNameText(actor?.personName.toString())
                 Spacer(modifier = Modifier.height(16.dp))
                 ActorInfoHeader(actorData = actor)
                 Spacer(modifier = Modifier.height(8.dp))
@@ -121,7 +121,7 @@ private fun ActorBiographyText(
 private fun SheetContentActorDetailsLightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         SheetContentActorDetails(
-            actor = fakeActorDetail
+            actor = fakePersonDetail
         )
     }
 }
@@ -131,7 +131,7 @@ private fun SheetContentActorDetailsLightPreview() {
 private fun SheetContentActorDetailsDarkPreview() {
     ComposeActorsTheme(darkTheme = true) {
         SheetContentActorDetails(
-            actor = fakeActorDetail
+            actor = fakePersonDetail
         )
     }
 }

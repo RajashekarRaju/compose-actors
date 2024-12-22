@@ -28,7 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.data.model.Actor
+import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
@@ -38,82 +38,77 @@ import com.developersbreach.composeactors.ui.screens.home.HomeUIState
 
 
 @Composable
-fun ActorsTabContent(
+fun PersonsTabContent(
     homeUIState: HomeUIState,
-    navigateToSelectedActor: (Int) -> Unit,
-    popularActorsListState: LazyListState,
-    trendingActorsListState: LazyListState
+    navigateToSelectedPerson: (Int) -> Unit,
+    popularPersonsListState: LazyListState,
+    trendingPersonsListState: LazyListState
 ) {
-    // Show progress while data is loading
-    ShowProgressIndicator(isLoadingData = homeUIState.isFetchingActors)
+    ShowProgressIndicator(isLoadingData = homeUIState.isFetchingPersons)
 
     LazyColumn(
         contentPadding = PaddingValues(vertical = 16.dp),
         modifier = Modifier.fillMaxSize()
     ) {
-        // Show text for home category list popular.
         item {
             CategoryTitle(stringResource(R.string.category_actors_popular))
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
-            // List row of all popular actors.
-            ItemActorList(
-                actorsList = homeUIState.popularActorList,
-                navigateToSelectedActor = navigateToSelectedActor,
-                actorsListState = popularActorsListState
+            PersonsList(
+                personsList = homeUIState.popularPersonList,
+                navigateToSelectedPerson = navigateToSelectedPerson,
+                personsListState = popularPersonsListState
             )
             AppDivider(verticalPadding = 32.dp)
-            // Show text for actors category list trending.
             CategoryTitle(stringResource(R.string.category_actors_trending))
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
-            // List row of all trending actors.
-            ItemActorList(
-                actorsList = homeUIState.trendingActorList,
-                navigateToSelectedActor = navigateToSelectedActor,
-                actorsListState = trendingActorsListState
+            PersonsList(
+                personsList = homeUIState.trendingPersonList,
+                navigateToSelectedPerson = navigateToSelectedPerson,
+                personsListState = trendingPersonsListState
             )
         }
     }
 }
 
 /**
- * @param actorsList row list elements of [Actor]
+ * @param personsList row list elements of [Person]
  */
 @Composable
-private fun ItemActorList(
-    actorsList: List<Actor>,
-    navigateToSelectedActor: (Int) -> Unit,
-    actorsListState: LazyListState
+private fun PersonsList(
+    personsList: List<Person>,
+    navigateToSelectedPerson: (Int) -> Unit,
+    personsListState: LazyListState
 ) {
     LazyRow(
-        state = actorsListState,
+        state = personsListState,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         items(
-            items = actorsList,
-            key = { it.actorId }
-        ) { actor ->
-            ItemActor(
-                actor = actor,
-                onClickActor = navigateToSelectedActor
+            items = personsList,
+            key = { it.personId }
+        ) { person ->
+            ItemPerson(
+                person = person,
+                onClickPerson = navigateToSelectedPerson
             )
         }
     }
 }
 
 /**
- * @param onClickActor navigate to actor [ActorDetailsScreen] from user selected actor.
+ * @param onClickPerson navigate to person [ActorDetailsScreen] from user selected person.
  */
 @Composable
-private fun ItemActor(
-    actor: Actor,
-    onClickActor: (Int) -> Unit
+private fun ItemPerson(
+    person: Person,
+    onClickPerson: (Int) -> Unit
 ) {
     Card(
         modifier = Modifier
             .width(150.dp)
             .clip(shape = MaterialTheme.shapes.large)
-            .clickable(onClick = { onClickActor(actor.actorId) })
+            .clickable(onClick = { onClickPerson(person.personId) })
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
@@ -121,7 +116,7 @@ private fun ItemActor(
             Spacer(modifier = Modifier.padding(vertical = 12.dp))
 
             LoadNetworkImage(
-                imageUrl = actor.profileUrl,
+                imageUrl = person.profileUrl,
                 contentDescription = stringResource(R.string.cd_actor_image),
                 shape = CircleShape,
                 modifier = Modifier
@@ -136,7 +131,7 @@ private fun ItemActor(
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
 
             Text(
-                text = actor.actorName,
+                text = person.personName,
                 style = MaterialTheme.typography.subtitle1,
                 textAlign = TextAlign.Center,
                 maxLines = 1,

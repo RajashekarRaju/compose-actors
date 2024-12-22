@@ -8,8 +8,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.developersbreach.composeactors.data.repository.actor.ActorRepository
-import com.developersbreach.composeactors.domain.GetPagedMovies
+import com.developersbreach.composeactors.data.movie.repository.MovieRepository
+import com.developersbreach.composeactors.data.person.repository.PersonRepository
+import com.developersbreach.composeactors.domain.movie.GetPagedMovies
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.IOException
@@ -22,7 +23,8 @@ import timber.log.Timber
  */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val actorRepository: ActorRepository,
+    private val personRepository: PersonRepository,
+    private val movieRepository: MovieRepository,
     private val getPagedMovies: GetPagedMovies
 ) : ViewModel() {
 
@@ -46,19 +48,19 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun startFetchingActors() {
-        uiState = HomeUIState(isFetchingActors = true)
+        uiState = HomeUIState(isFetchingPersons = true)
         uiState = HomeUIState(
-            popularActorList = actorRepository.getPopularActorsData(),
-            trendingActorList = actorRepository.getTrendingActorsData(),
-            isFetchingActors = false,
-            upcomingMoviesList = actorRepository.getUpcomingMoviesData(),
+            popularPersonList = personRepository.getPopularPersons(),
+            trendingPersonList = personRepository.getTrendingPersons(),
+            isFetchingPersons = false,
+            upcomingMoviesList = movieRepository.getUpcomingMovies(),
             nowPlayingMoviesList = getPagedMovies().cachedIn(viewModelScope)
         )
     }
 
     fun updateHomeSearchType(searchType: SearchType) {
         when (searchType) {
-            SearchType.Actors -> _updateHomeSearchType.value = SearchType.Actors
+            SearchType.Persons -> _updateHomeSearchType.value = SearchType.Persons
             SearchType.Movies -> _updateHomeSearchType.value = SearchType.Movies
         }
     }

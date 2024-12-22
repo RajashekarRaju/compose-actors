@@ -1,8 +1,8 @@
 package com.developersbreach.composeactors.di
 
-import com.developersbreach.composeactors.data.datasource.database.AppDatabase
-import com.developersbreach.composeactors.data.datasource.database.dao.FavoriteActorsDao
-import com.developersbreach.composeactors.data.datasource.database.dao.FavoriteMoviesDao
+import com.developersbreach.composeactors.core.database.AppDatabase
+import com.developersbreach.composeactors.core.database.dao.FavoritePersonsDao
+import com.developersbreach.composeactors.core.database.dao.FavoriteMoviesDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,10 +14,10 @@ object DaosModule {
 
     @Provides
     @JvmStatic
-    fun providesFavoriteActorsDao(
+    fun providesFavoritePersonsDao(
         database: AppDatabase
-    ): FavoriteActorsDao {
-        return database.favoriteActorsDao
+    ): FavoritePersonsDao {
+        return database.favoritePersonsDao
     }
 
     @Provides

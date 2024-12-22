@@ -7,11 +7,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.model.ActorDetail
-import com.developersbreach.composeactors.data.model.toFavoriteActor
-import com.developersbreach.composeactors.data.repository.actor.ActorRepository
-import com.developersbreach.composeactors.data.repository.movie.MovieRepository
-import com.developersbreach.composeactors.domain.useCase.RemoveActorsFromFavoritesUseCase
+import com.developersbreach.composeactors.data.person.model.PersonDetail
+import com.developersbreach.composeactors.data.person.model.toFavoritePerson
+import com.developersbreach.composeactors.data.movie.repository.MovieRepository
+import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.ui.navigation.AppDestinations.ACTOR_DETAIL_ID_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.IOException
@@ -26,11 +25,10 @@ import timber.log.Timber
 class ActorDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val movieRepository: MovieRepository,
-    private val actorRepository: ActorRepository,
-    private val removeActorsFromFavoritesUseCase: RemoveActorsFromFavoritesUseCase
+    private val personRepository: PersonRepository,
 ) : ViewModel() {
 
-    private val actorId: Int = checkNotNull(savedStateHandle[ACTOR_DETAIL_ID_KEY])
+    private val personId: Int = checkNotNull(savedStateHandle[ACTOR_DETAIL_ID_KEY])
 
     var detailUIState by mutableStateOf(ActorDetailsUIState(actorData = null))
         private set
@@ -38,7 +36,7 @@ class ActorDetailsViewModel @Inject constructor(
     var sheetUIState by mutableStateOf(ActorDetailsSheetUIState())
         private set
 
-    val isFavoriteMovie: LiveData<Int> = actorRepository.isFavoriteActor(actorId)
+    val isFavoriteMovie: LiveData<Int> = personRepository.isFavoritePerson(personId)
 
     init {
         viewModelScope.launch {
@@ -52,8 +50,8 @@ class ActorDetailsViewModel @Inject constructor(
 
     private suspend fun startFetchingDetails() {
         detailUIState = ActorDetailsUIState(isFetchingDetails = true, actorData = null)
-        val actorData = actorRepository.getSelectedActorData(actorId)
-        val castData = actorRepository.getCastData(actorId)
+        val actorData = personRepository.getPersonDetails(personId)
+        val castData = personRepository.getCastDetails(personId)
         detailUIState = ActorDetailsUIState(
             castList = castData,
             actorData = actorData,
@@ -72,7 +70,7 @@ class ActorDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 movieId?.let { id ->
-                    val movieData = movieRepository.getSelectedMovieData(id)
+                    val movieData = movieRepository.getMovieDetails(id)
                     sheetUIState = ActorDetailsSheetUIState(selectedMovieDetails = movieData)
                 }
             } catch (e: IOException) {
@@ -83,10 +81,10 @@ class ActorDetailsViewModel @Inject constructor(
 
     fun addActorToFavorites() {
         viewModelScope.launch {
-            val actor: ActorDetail? = detailUIState.actorData
+            val actor: PersonDetail? = detailUIState.actorData
             if (actor != null) {
-                actorRepository.addActorsToFavorite(
-                    actor.toFavoriteActor()
+                personRepository.addPersonToFavorite(
+                    actor.toFavoritePerson()
                 )
             } else {
                 Timber.e("Id of ${actor} was null while adding to favorite operation.")
@@ -96,10 +94,10 @@ class ActorDetailsViewModel @Inject constructor(
 
     fun removeActorFromFavorites() {
         viewModelScope.launch {
-            val actor: ActorDetail? = detailUIState.actorData
+            val actor: PersonDetail? = detailUIState.actorData
             if (actor != null) {
-                removeActorsFromFavoritesUseCase(
-                    actor.toFavoriteActor()
+                personRepository.deleteSelectedFavoritePerson(
+                    actor.toFavoritePerson()
                 )
             } else {
                 Timber.e("Id of ${actor} was null while delete operation.")

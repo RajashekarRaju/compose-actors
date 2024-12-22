@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.data.model.BottomSheetType
-import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.ui.screens.movieDetail.BottomSheetType
+import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import kotlinx.coroutines.Job
 
@@ -39,7 +39,7 @@ fun GetRelatedMovies(
                     .size(100.dp, 150.dp)
                     .clickable {
                         selectBottomSheetCallback(BottomSheetType.MovieDetailBottomSheet.apply {
-                            movieOrActorId = movie.movieId
+                            movieOrPersonId = movie.movieId
                         })
                         openMovieDetailsBottomSheet()
                     }

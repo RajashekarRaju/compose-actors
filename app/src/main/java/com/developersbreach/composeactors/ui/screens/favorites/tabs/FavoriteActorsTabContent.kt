@@ -27,8 +27,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.data.datasource.fake.fakeFavoriteActorsList
-import com.developersbreach.composeactors.data.model.FavoriteActor
+import com.developersbreach.composeactors.data.datasource.fake.fakeFavoritePersonsList
+import com.developersbreach.composeactors.data.person.model.FavoritePerson
 import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGenerator
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.verticalGradientScrim
@@ -38,17 +38,17 @@ import com.developersbreach.composeactors.utils.getPlaceOfBirth
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun FavoriteActorsTabContent(
-    navigateToSelectedActor: (Int) -> Unit,
-    favoriteActors: List<FavoriteActor>,
-    removeFavoriteActor: (FavoriteActor) -> Unit,
+fun FavoritePersonsTabContent(
+    navigateToSelectedPerson: (Int) -> Unit,
+    favoritePeople: List<FavoritePerson>,
+    removeFavoritePerson: (FavoritePerson) -> Unit,
 ) {
-    if (favoriteActors.isEmpty()) {
+    if (favoritePeople.isEmpty()) {
         NoFavoritesFoundUI()
     }
 
     val listState = rememberPagerState(
-        pageCount = { favoriteActors.size }
+        pageCount = { favoritePeople.size }
     )
 
     VerticalPager(
@@ -58,19 +58,19 @@ fun FavoriteActorsTabContent(
         pageSize = PageSize.Fixed(512.dp),
         contentPadding = PaddingValues(top = 24.dp, start = 24.dp, end = 24.dp, bottom = 48.dp),
     ) { currentPage ->
-        ItemFavoriteActor(
-            actorItem = favoriteActors[currentPage],
-            onClickActor = navigateToSelectedActor,
-            removeFavoriteActor = removeFavoriteActor
+        ItemFavoritePerson(
+            item = favoritePeople[currentPage],
+            onClickPerson = navigateToSelectedPerson,
+            removeFavoritePerson = removeFavoritePerson
         )
     }
 }
 
 @Composable
-private fun ItemFavoriteActor(
-    actorItem: FavoriteActor,
-    onClickActor: (Int) -> Unit,
-    removeFavoriteActor: (FavoriteActor) -> Unit
+private fun ItemFavoritePerson(
+    item: FavoritePerson,
+    onClickPerson: (Int) -> Unit,
+    removeFavoritePerson: (FavoritePerson) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -78,7 +78,7 @@ private fun ItemFavoriteActor(
             .clip(MaterialTheme.shapes.large)
     ) {
         LoadNetworkImage(
-            imageUrl = actorItem.profileUrl,
+            imageUrl = item.profileUrl,
             contentDescription = "Actor Image",
             shape = RectangleShape,
             showAnimProgress = false,
@@ -86,12 +86,12 @@ private fun ItemFavoriteActor(
                 .fillMaxWidth()
                 .height(512.dp)
                 .clickable {
-                    onClickActor(actorItem.actorId)
+                    onClickPerson(item.personId)
                 }
         )
 
         ImageBackgroundThemeGenerator(
-            imageUrl = actorItem.profileUrl,
+            imageUrl = item.profileUrl,
             backgroundColor = MaterialTheme.colors.primary
         ) {
             Box(
@@ -108,7 +108,7 @@ private fun ItemFavoriteActor(
         }
 
         ImageBackgroundThemeGenerator(
-            imageUrl = actorItem.profileUrl,
+            imageUrl = item.profileUrl,
             backgroundColor = MaterialTheme.colors.onSurface
         ) {
             Row(
@@ -122,21 +122,21 @@ private fun ItemFavoriteActor(
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
-                        text = actorItem.actorName,
+                        text = item.personName,
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.onPrimary,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
 
                     Text(
-                        text = "${getPlaceOfBirth(actorItem.placeOfBirth)}",
+                        text = "${getPlaceOfBirth(item.placeOfBirth)}",
                         style = MaterialTheme.typography.subtitle1,
                         color = MaterialTheme.colors.onPrimary,
                     )
                 }
 
                 IconButton(
-                    onClick = { removeFavoriteActor(actorItem) },
+                    onClick = { removeFavoritePerson(item) },
                     modifier = Modifier
                 ) {
                     Icon(
@@ -152,36 +152,36 @@ private fun ItemFavoriteActor(
 
 @Preview(showBackground = true)
 @Composable
-private fun FavoriteActorsTabContentPreviewLightPreview() {
+private fun FavoritePersonsTabContentPreviewLightPreview() {
     ComposeActorsTheme(darkTheme = false) {
-        FavoriteActorsTabContent(
-            navigateToSelectedActor = {},
-            favoriteActors = fakeFavoriteActorsList(),
-            removeFavoriteActor = {}
+        FavoritePersonsTabContent(
+            navigateToSelectedPerson = {},
+            favoritePeople = fakeFavoritePersonsList(),
+            removeFavoritePerson = {}
         )
     }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFF211a18)
 @Composable
-private fun FavoriteActorsTabContentPreviewDarkPreview() {
+private fun FavoritePersonsTabContentPreviewDarkPreview() {
     ComposeActorsTheme(darkTheme = true) {
-        FavoriteActorsTabContent(
-            navigateToSelectedActor = {},
-            favoriteActors = fakeFavoriteActorsList(),
-            removeFavoriteActor = {}
+        FavoritePersonsTabContent(
+            navigateToSelectedPerson = {},
+            favoritePeople = fakeFavoritePersonsList(),
+            removeFavoritePerson = {}
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun FavoriteActorsTabContentNoFavoritesPreviewLightPreview() {
+private fun FavoritePersonsTabContentNoFavoritesPreviewLightPreview() {
     ComposeActorsTheme(darkTheme = false) {
-        FavoriteActorsTabContent(
-            navigateToSelectedActor = {},
-            favoriteActors = emptyList(),
-            removeFavoriteActor = {}
+        FavoritePersonsTabContent(
+            navigateToSelectedPerson = {},
+            favoritePeople = emptyList(),
+            removeFavoritePerson = {}
         )
     }
 }
@@ -190,10 +190,10 @@ private fun FavoriteActorsTabContentNoFavoritesPreviewLightPreview() {
 @Composable
 private fun FavoriteActorsTabContentNoFavoritesPreviewDarkPreview() {
     ComposeActorsTheme(darkTheme = true) {
-        FavoriteActorsTabContent(
-            navigateToSelectedActor = {},
-            favoriteActors = emptyList(),
-            removeFavoriteActor = {}
+        FavoritePersonsTabContent(
+            navigateToSelectedPerson = {},
+            favoritePeople = emptyList(),
+            removeFavoritePerson = {}
         )
     }
 }

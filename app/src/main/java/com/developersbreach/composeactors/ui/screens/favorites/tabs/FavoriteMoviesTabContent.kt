@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
-import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.favorites.NoFavoritesFoundUI
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme

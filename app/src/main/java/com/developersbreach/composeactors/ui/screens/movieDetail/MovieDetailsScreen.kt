@@ -7,7 +7,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 
@@ -54,10 +53,10 @@ private fun setBottomSheetCallBack(
 ) = { bottomSheetType: BottomSheetType ->
     when (bottomSheetType) {
         BottomSheetType.MovieDetailBottomSheet -> {
-            viewModel.getSelectedMovieDetails(bottomSheetType.movieOrActorId)
+            viewModel.getSelectedMovieDetails(bottomSheetType.movieOrPersonId)
         }
         BottomSheetType.ActorDetailBottomSheet -> {
-            viewModel.getSelectedActorDetails(bottomSheetType.movieOrActorId)
+            viewModel.getSelectedPersonDetails(bottomSheetType.movieOrPersonId)
         }
     }
     selectedBottomSheet.value = bottomSheetType
