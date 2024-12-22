@@ -28,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.datasource.fake.fakeFavoritePersonsList
-import com.developersbreach.composeactors.data.model.FavoritePerson
+import com.developersbreach.composeactors.data.person.model.FavoritePerson
 import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGenerator
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.verticalGradientScrim

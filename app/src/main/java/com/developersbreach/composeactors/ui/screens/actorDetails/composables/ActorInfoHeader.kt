@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.data.model.PersonDetail
+import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.ui.animations.borderRevealAnimation
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.composeactors.utils.calculateAge

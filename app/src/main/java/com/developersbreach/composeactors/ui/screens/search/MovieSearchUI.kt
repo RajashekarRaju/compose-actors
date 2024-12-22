@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
-import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 

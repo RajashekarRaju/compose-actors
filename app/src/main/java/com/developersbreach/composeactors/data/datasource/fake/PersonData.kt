@@ -1,9 +1,9 @@
 package com.developersbreach.composeactors.data.datasource.fake
 
-import com.developersbreach.composeactors.data.model.Person
-import com.developersbreach.composeactors.data.model.PersonDetail
-import com.developersbreach.composeactors.data.model.Cast
-import com.developersbreach.composeactors.data.model.FavoritePerson
+import com.developersbreach.composeactors.data.person.model.Person
+import com.developersbreach.composeactors.data.person.model.PersonDetail
+import com.developersbreach.composeactors.data.movie.model.Cast
+import com.developersbreach.composeactors.data.person.model.FavoritePerson
 
 private val personsData = listOf(
     "John travolta",

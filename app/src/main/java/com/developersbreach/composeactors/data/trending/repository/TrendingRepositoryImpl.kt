@@ -1,6 +1,6 @@
 package com.developersbreach.composeactors.data.trending.repository
 
-import com.developersbreach.composeactors.data.model.Person
+import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.data.trending.remote.TrendingApi
 import javax.inject.Inject
 import javax.inject.Singleton

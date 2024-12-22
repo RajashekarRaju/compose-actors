@@ -3,7 +3,7 @@ package com.developersbreach.composeactors.domain.movie
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.movie.paging.MoviesPagingSource
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import javax.inject.Inject

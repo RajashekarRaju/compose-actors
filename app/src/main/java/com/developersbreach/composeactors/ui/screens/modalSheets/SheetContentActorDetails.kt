@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonDetail
-import com.developersbreach.composeactors.data.model.PersonDetail
+import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.SheetHorizontalSeparator
 import com.developersbreach.composeactors.ui.screens.actorDetails.composables.ActorInfoHeader

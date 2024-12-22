@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.data.model.FavoritePerson
-import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.person.model.FavoritePerson
+import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer

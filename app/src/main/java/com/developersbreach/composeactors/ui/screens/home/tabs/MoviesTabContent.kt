@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.itemsPaging

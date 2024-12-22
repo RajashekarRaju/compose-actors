@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.data.model
+package com.developersbreach.composeactors.data.person.model
 
 import androidx.compose.runtime.Stable
 

@@ -7,7 +7,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 

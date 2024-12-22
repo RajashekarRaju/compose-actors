@@ -1,9 +1,9 @@
 package com.developersbreach.composeactors.data.datasource.fake
 
-import com.developersbreach.composeactors.data.model.Genre
-import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.data.model.MovieDetail
-import com.developersbreach.composeactors.data.model.ProductionCompanies
+import com.developersbreach.composeactors.data.movie.model.Genre
+import com.developersbreach.composeactors.data.movie.model.Movie
+import com.developersbreach.composeactors.data.movie.model.MovieDetail
+import com.developersbreach.composeactors.data.movie.model.ProductionCompanies
 
 fun fakeMovieList(): MutableList<Movie> {
     val movies = mutableListOf<Movie>()

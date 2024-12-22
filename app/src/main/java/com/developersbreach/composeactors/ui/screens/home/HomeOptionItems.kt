@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.data.model
+package com.developersbreach.composeactors.ui.screens.home
 
 import com.developersbreach.composeactors.R
 

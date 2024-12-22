@@ -32,8 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieCastList
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
-import com.developersbreach.composeactors.data.model.BottomSheetType
-import com.developersbreach.composeactors.data.model.Flatrate
+import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.composeactors.ui.animations.LayerRevealImage
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentActorDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails

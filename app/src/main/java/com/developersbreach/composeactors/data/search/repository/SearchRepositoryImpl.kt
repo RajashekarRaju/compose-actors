@@ -1,7 +1,7 @@
 package com.developersbreach.composeactors.data.search.repository
 
-import com.developersbreach.composeactors.data.model.Person
-import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.person.model.Person
+import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.search.remote.SearchApi
 import javax.inject.Inject
 import javax.inject.Singleton

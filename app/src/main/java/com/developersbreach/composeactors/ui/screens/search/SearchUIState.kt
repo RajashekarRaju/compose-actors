@@ -1,7 +1,7 @@
 package com.developersbreach.composeactors.ui.screens.search
 
-import com.developersbreach.composeactors.data.model.Person
-import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.person.model.Person
+import com.developersbreach.composeactors.data.movie.model.Movie
 
 /**
  * UI state for the [SearchScreen] screen.

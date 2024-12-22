@@ -1,10 +1,10 @@
 package com.developersbreach.composeactors.ui.screens.movieDetail
 
-import com.developersbreach.composeactors.data.model.PersonDetail
-import com.developersbreach.composeactors.data.model.Cast
-import com.developersbreach.composeactors.data.model.Flatrate
-import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.data.model.MovieDetail
+import com.developersbreach.composeactors.data.person.model.PersonDetail
+import com.developersbreach.composeactors.data.movie.model.Cast
+import com.developersbreach.composeactors.data.movie.model.Flatrate
+import com.developersbreach.composeactors.data.movie.model.Movie
+import com.developersbreach.composeactors.data.movie.model.MovieDetail
 
 // TODO - create a sealed class to contains the different states
 

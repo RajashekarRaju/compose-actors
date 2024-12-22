@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.data.model.Genre
+import com.developersbreach.composeactors.data.movie.model.Genre
 
 @Composable
 fun MovieGenre(

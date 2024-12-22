@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.model.PersonDetail
-import com.developersbreach.composeactors.data.model.toFavoritePerson
+import com.developersbreach.composeactors.data.person.model.PersonDetail
+import com.developersbreach.composeactors.data.person.model.toFavoritePerson
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.ui.navigation.AppDestinations.ACTOR_DETAIL_ID_KEY

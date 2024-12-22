@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.data.model
+package com.developersbreach.composeactors.data.movie.model
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable

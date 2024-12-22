@@ -1,9 +1,9 @@
 package com.developersbreach.composeactors.ui.screens.home
 
 import androidx.paging.PagingData
-import com.developersbreach.composeactors.data.model.Person
-import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.data.model.MovieDetail
+import com.developersbreach.composeactors.data.person.model.Person
+import com.developersbreach.composeactors.data.movie.model.Movie
+import com.developersbreach.composeactors.data.movie.model.MovieDetail
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow

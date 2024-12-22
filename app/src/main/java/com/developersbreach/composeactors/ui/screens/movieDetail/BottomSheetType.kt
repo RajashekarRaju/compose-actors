@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.data.model
+package com.developersbreach.composeactors.ui.screens.movieDetail
 
 enum class BottomSheetType(var movieOrPersonId: Int? = null) {
     MovieDetailBottomSheet(movieOrPersonId = null),

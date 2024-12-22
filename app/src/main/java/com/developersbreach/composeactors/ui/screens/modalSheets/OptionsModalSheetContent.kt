@@ -34,7 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.data.model.HomeOptionItems
+import com.developersbreach.composeactors.ui.screens.home.HomeOptionItems
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -94,7 +94,7 @@ fun OptionsModalSheetContent(
             verticalArrangement = Arrangement.spacedBy(2.dp),
             contentPadding = PaddingValues(horizontal = 4.dp)
         ) {
-            items(HomeOptionItems.homeOptions) {option ->
+            items(HomeOptionItems.homeOptions) { option ->
                 ItemOptionRow(
                     option = option,
                     navigateToFavorite = navigateToFavorite,

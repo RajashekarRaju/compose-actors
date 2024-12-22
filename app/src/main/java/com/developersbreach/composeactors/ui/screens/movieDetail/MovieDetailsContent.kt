@@ -15,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.data.model.BottomSheetType
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.GetMovieCast
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.GetRelatedMovies

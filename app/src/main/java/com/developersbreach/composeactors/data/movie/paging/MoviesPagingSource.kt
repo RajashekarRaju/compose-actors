@@ -3,7 +3,7 @@ package com.developersbreach.composeactors.data.movie.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.developersbreach.composeactors.core.network.PagedResponse
-import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 
 class MoviesPagingSource(

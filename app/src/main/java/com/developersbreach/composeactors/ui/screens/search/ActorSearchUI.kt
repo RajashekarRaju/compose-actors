@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
-import com.developersbreach.composeactors.data.model.Person
+import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
 @Composable

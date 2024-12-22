@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.data.model.MovieDetail
+import com.developersbreach.composeactors.data.movie.model.Movie
+import com.developersbreach.composeactors.data.movie.model.MovieDetail
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.ui.navigation.AppDestinations.MOVIE_DETAILS_ID_KEY

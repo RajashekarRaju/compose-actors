@@ -3,11 +3,11 @@ package com.developersbreach.composeactors.data.movie.repository
 import androidx.lifecycle.LiveData
 import com.developersbreach.composeactors.core.network.PagedResponse
 import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
-import com.developersbreach.composeactors.data.model.Cast
-import com.developersbreach.composeactors.data.model.Flatrate
-import com.developersbreach.composeactors.data.model.Movie
-import com.developersbreach.composeactors.data.model.MovieDetail
-import com.developersbreach.composeactors.data.model.MovieProvidersResponse
+import com.developersbreach.composeactors.data.movie.model.Cast
+import com.developersbreach.composeactors.data.movie.model.Flatrate
+import com.developersbreach.composeactors.data.movie.model.Movie
+import com.developersbreach.composeactors.data.movie.model.MovieDetail
+import com.developersbreach.composeactors.data.movie.model.MovieProvidersResponse
 import com.developersbreach.composeactors.data.movie.remote.MovieApi
 import java.util.*
 import javax.inject.Inject
