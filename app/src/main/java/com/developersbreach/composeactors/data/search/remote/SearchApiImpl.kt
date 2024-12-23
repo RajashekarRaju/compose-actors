@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.data.search.remote
 
+import arrow.core.Either
 import com.developersbreach.composeactors.core.network.BaseUrlProvider
 import com.developersbreach.composeactors.core.network.HttpRequestHandler
 import com.developersbreach.composeactors.core.network.PagedResponse
@@ -17,7 +18,7 @@ class SearchApiImpl @Inject constructor(
     // search/person?api_key=API_KEY&query=$pacino
     override suspend fun getSearchableActorsData(
         query: String
-    ): PagedResponse<Person> {
+    ): Either<Throwable, PagedResponse<Person>> {
         return requestHandler.getPagedResponse<Person>(
             URL("${BASE_URL}search/person?${API_KEY}&query=${query.toEncodedQuery()}")
         )
@@ -26,7 +27,7 @@ class SearchApiImpl @Inject constructor(
     // search/movie?api_key=API_KEY&query=$thor
     override suspend fun getSearchableMoviesData(
         query: String
-    ): PagedResponse<Movie> {
+    ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
             URL("${BASE_URL}search/movie?${API_KEY}&query=${query.toEncodedQuery()}")
         )

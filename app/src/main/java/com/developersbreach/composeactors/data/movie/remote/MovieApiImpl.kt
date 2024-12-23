@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.data.movie.remote
 
+import arrow.core.Either
 import com.developersbreach.composeactors.core.network.BaseUrlProvider
 import com.developersbreach.composeactors.core.network.HttpRequestHandler
 import com.developersbreach.composeactors.core.network.PagedResponse
@@ -19,7 +20,7 @@ class MovieApiImpl @Inject constructor(
     // movie/now_playing?api_key=API_KEY&page=1
     override suspend fun getNowPlayingMovies(
         page: Int
-    ): PagedResponse<Movie> {
+    ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
             URL("${BASE_URL}movie/now_playing?${API_KEY}&page=$page")
         )
@@ -28,7 +29,7 @@ class MovieApiImpl @Inject constructor(
     // movie/upcoming?api_key=API_KEY&page=1
     override suspend fun getUpcomingMovies(
         page: Int
-    ): PagedResponse<Movie> {
+    ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
             URL("${BASE_URL}movie/upcoming?${API_KEY}&page=$page")
         )
@@ -37,7 +38,7 @@ class MovieApiImpl @Inject constructor(
     // movie/{movie_id}?api_key=API_KEY
     override suspend fun getMovieDetails(
         movieId: Int
-    ): MovieDetail {
+    ): Either<Throwable, MovieDetail> {
         return requestHandler.getResponse<MovieDetail>(
             URL("${BASE_URL}movie/$movieId?${API_KEY}")
         )
@@ -47,7 +48,7 @@ class MovieApiImpl @Inject constructor(
     override suspend fun getSimilarMovies(
         movieId: Int,
         page: Int
-    ): PagedResponse<Movie> {
+    ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
             URL("${BASE_URL}movie/$movieId/similar?${API_KEY}&page=$page")
         )
@@ -57,7 +58,7 @@ class MovieApiImpl @Inject constructor(
     override suspend fun getRecommendedMovies(
         movieId: Int,
         page: Int
-    ): PagedResponse<Movie> {
+    ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
             URL("${BASE_URL}movie/$movieId/recommendations?${API_KEY}&page=$page")
         )
@@ -66,7 +67,7 @@ class MovieApiImpl @Inject constructor(
     // movie/{movie_id}/credits?api_key=API_KEY - 299536
     override suspend fun getMovieCast(
         movieId: Int
-    ): CastResponse {
+    ): Either<Throwable, CastResponse> {
         return requestHandler.getResponse<CastResponse>(
             URL("${BASE_URL}movie/$movieId/credits?${API_KEY}")
         )
@@ -75,7 +76,7 @@ class MovieApiImpl @Inject constructor(
     // movie/{movie_id}/watch/providers?api_key
     override suspend fun getMovieProviders(
         movieId: Int
-    ): MovieProvidersResponse {
+    ): Either<Throwable, MovieProvidersResponse> {
         return requestHandler.getResponse<MovieProvidersResponse>(
             URL("${BASE_URL}movie/$movieId/watch/providers?${API_KEY}")
         )

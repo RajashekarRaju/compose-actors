@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.data.trending.remote
 
+import arrow.core.Either
 import com.developersbreach.composeactors.core.network.BaseUrlProvider
 import com.developersbreach.composeactors.core.network.HttpRequestHandler
 import com.developersbreach.composeactors.core.network.PagedResponse
@@ -14,7 +15,7 @@ class TrendingApiImpl @Inject constructor(
 ) : TrendingApi, BaseUrlProvider() {
 
     // trending/person/week?api_key=API_KEY
-    override suspend fun getTrendingActors(): PagedResponse<Person> {
+    override suspend fun getTrendingActors(): Either<Throwable, PagedResponse<Person>> {
         return requestHandler.getPagedResponse<Person>(
             URL("${BASE_URL}trending/person/week?${API_KEY}")
         )
