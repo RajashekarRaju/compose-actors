@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.search.repository.SearchRepository
+import com.developersbreach.composeactors.ui.components.UiState
 import com.developersbreach.composeactors.ui.navigation.AppDestinations.SEARCH_TYPE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -23,7 +24,7 @@ class SearchViewModel @Inject constructor(
 
     val searchType: SearchType = checkNotNull(savedStateHandle[SEARCH_TYPE])
 
-    var uiState: SearchUIState by mutableStateOf(SearchUIState.ActorSearch())
+    var uiState: UiState<SearchDataType> by mutableStateOf(UiState.Success(ActorSearch()))
         private set
 
     /**
@@ -34,19 +35,21 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             when (searchType) {
                 SearchType.Persons -> {
-                    uiState = SearchUIState.ActorSearch(isSearchingResults = true)
-                    val searchData = searchRepository.getSearchableActorsData(searchQuery)
-                    uiState = (uiState as SearchUIState.ActorSearch).copy(
-                        personList = searchData,
-                        isSearchingResults = false
+                    uiState = UiState.Success(ActorSearch(isSearchingResults = true))
+                    uiState = searchRepository.getSearchableActorsData(
+                        query = searchQuery
+                    ).fold(
+                        ifLeft = { UiState.Error(it) },
+                        ifRight = { UiState.Success(ActorSearch(it, false)) }
                     )
                 }
                 SearchType.Movies -> {
-                    uiState = SearchUIState.MovieSearch(isSearchingResults = true)
-                    val searchData = searchRepository.getSearchableMoviesData(searchQuery)
-                    uiState = (uiState as SearchUIState.MovieSearch).copy(
-                        movieList = searchData,
-                        isSearchingResults = false
+                    uiState = UiState.Success(MovieSearch(isSearchingResults = true))
+                    uiState = searchRepository.getSearchableMoviesData(
+                        query = searchQuery
+                    ).fold(
+                        ifLeft = { UiState.Error(it) },
+                        ifRight = { UiState.Success(MovieSearch(it, false)) }
                     )
                 }
             }

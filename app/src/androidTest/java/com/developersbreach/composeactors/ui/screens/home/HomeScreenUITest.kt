@@ -27,7 +27,7 @@ class HomeScreenUITest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val mockHomeUIState: HomeUIState = HomeUIState(
+    private val mockHomeUIState: HomeData = HomeData(
         popularPersonList = popularPersonLists,
         trendingPersonList = trendingPersonLists,
         isFetchingPersons = false,
@@ -45,7 +45,7 @@ class HomeScreenUITest {
         navigateToAbout: () -> Unit = {  },
         navigateToSearchBySearchType: SearchType = SearchType.Persons,
         homeSheetUIState: HomeSheetUIState = HomeSheetUIState(),
-        homeUIState: HomeUIState = mockHomeUIState
+        data: HomeData = mockHomeUIState
     ) {
         HomeScreenUI(
             modifier = Modifier,
@@ -55,7 +55,7 @@ class HomeScreenUITest {
             navigateToSearch = navigateToSearch,
             navigateToAbout = navigateToAbout,
             navigateToSearchBySearchType = navigateToSearchBySearchType,
-            uiState = homeUIState,
+            data = data,
             sheetUiState = homeSheetUIState,
             updateHomeSearchType = updateHomeSearchType,
         )

@@ -7,24 +7,14 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
-import com.developersbreach.composeactors.ui.screens.home.HomeScreen
+import com.developersbreach.composeactors.ui.components.UiStateHandler
 
-
-/**
- * Screen shows details for the selected movie.
- * This destination can be accessed from [HomeScreen] & [ActorDetailsScreen].
- */
 @Composable
 fun MovieDetailScreen(
     viewModel: MovieDetailViewModel = hiltViewModel(),
     navigateToSelectedMovie: (Int) -> Unit,
     navigateUp: () -> Unit
 ) {
-    val uiState = viewModel.uiState
-    val actorsSheetUIState = viewModel.sheetUiState
-    val movieSheetUIState = viewModel.movieSheetUiState
-
     val movieId by viewModel.isFavoriteMovie.observeAsState()
 
     val selectedBottomSheet = remember {
@@ -33,18 +23,22 @@ fun MovieDetailScreen(
 
     val selectBottomSheetCallback = setBottomSheetCallBack(viewModel, selectedBottomSheet)
 
-    MovieDetailsUI(
-        uiState = uiState,
-        actorsSheetUIState = actorsSheetUIState,
-        movieSheetUIState = movieSheetUIState,
-        navigateUp = navigateUp,
-        selectedBottomSheet = selectedBottomSheet,
-        selectBottomSheetCallback = selectBottomSheetCallback,
-        isFavoriteMovie = movieId != 0 && movieId != null,
-        addMovieToFavorites = { viewModel.addMovieToFavorites() },
-        removeMovieFromFavorites = { viewModel.removeMovieFromFavorites() },
-        navigateToSelectedMovie = navigateToSelectedMovie
-    )
+    UiStateHandler(
+        uiState = viewModel.uiState
+    ) { data ->
+        MovieDetailsUI(
+            data = data,
+            actorsSheetUIState = viewModel.sheetUiState,
+            movieSheetUIState = viewModel.movieSheetUiState,
+            navigateUp = navigateUp,
+            selectedBottomSheet = selectedBottomSheet,
+            selectBottomSheetCallback = selectBottomSheetCallback,
+            isFavoriteMovie = movieId != 0 && movieId != null,
+            addMovieToFavorites = { viewModel.addMovieToFavorites(data.movieData) },
+            removeMovieFromFavorites = { viewModel.removeMovieFromFavorites(data.movieData) },
+            navigateToSelectedMovie = navigateToSelectedMovie
+        )
+    }
 }
 
 private fun setBottomSheetCallBack(

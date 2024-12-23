@@ -47,7 +47,7 @@ import kotlinx.coroutines.Job
 @Composable
 fun MovieDetailsUI(
     modifier: Modifier = Modifier,
-    uiState: MovieDetailsUIState,
+    data: MovieDetailsData,
     actorsSheetUIState: ActorsSheetUIState,
     movieSheetUIState: MovieSheetUIState,
     navigateUp: () -> Unit,
@@ -109,7 +109,7 @@ fun MovieDetailsUI(
             sheetPeekHeight = animatedScaffoldSheetPeekHeight,
             sheetContent = {
                 SheetContentMovieProviders(
-                    movieProvider = uiState.movieProviders,
+                    movieProvider = data.movieProviders,
                     isFavoriteMovie = isFavoriteMovie,
                     addMovieToFavorites = addMovieToFavorites,
                     removeMovieFromFavorites = removeMovieFromFavorites,
@@ -122,7 +122,7 @@ fun MovieDetailsUI(
                     .testTag("TestTag:MovieDetailScreen")
             ) {
                 MovieDetailsUiContent(
-                    uiState = uiState,
+                    data = data,
                     isLayerRevealAnimationEnded = isLayerRevealAnimationEnded,
                     state = state,
                     modifier = modifier,
@@ -150,7 +150,7 @@ private fun getAnimatedSheetPeekHeight(bottomSheetPeakValue: Dp): Dp {
 
 @Composable
 fun MovieDetailsUiContent(
-    uiState: MovieDetailsUIState,
+    data: MovieDetailsData,
     isLayerRevealAnimationEnded: MutableState<Boolean>,
     state: MutableTransitionState<Boolean>,
     modifier: Modifier,
@@ -161,7 +161,7 @@ fun MovieDetailsUiContent(
     showBottomSheetScaffold: MutableState<Boolean>
 ) {
     // Background poster with layer reveal effect
-    LayerRevealImage(uiState.movieData?.poster, isLayerRevealAnimationEnded)
+    LayerRevealImage(data.movieData?.poster, isLayerRevealAnimationEnded)
     // Fade enter animation detail screen once layer reveal completes
     if (isLayerRevealAnimationEnded.value) {
         AnimatedVisibility(
@@ -171,7 +171,7 @@ fun MovieDetailsUiContent(
             // Main details content
             MovieDetailsContent(
                 modifier = modifier,
-                uiState = uiState,
+                data = data,
                 navigateUp = navigateUp,
                 showFab = showFab,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
@@ -211,7 +211,7 @@ private fun GetBottomSheetContent(
 private fun MovieDetailsUILightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         MovieDetailsContent(
-            uiState = MovieDetailsUIState(
+            data = MovieDetailsData(
                 movieData = fakeMovieDetail,
                 similarMovies = fakeMovieList(),
                 recommendedMovies = fakeMovieList(),
@@ -233,7 +233,7 @@ private fun MovieDetailsUILightPreview() {
 private fun MovieDetailsUIDarkPreview() {
     ComposeActorsTheme(darkTheme = true) {
         MovieDetailsContent(
-            uiState = MovieDetailsUIState(
+            data = MovieDetailsData(
                 movieData = fakeMovieDetail,
                 similarMovies = fakeMovieList(),
                 recommendedMovies = fakeMovieList(),

@@ -27,7 +27,7 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun ActorDetailsUI(
-    detailUIState: ActorDetailsUIState,
+    data: ActorDetailsData,
     sheetUIState: ActorDetailsSheetUIState,
     navigateToSelectedMovie: (Int) -> Unit,
     isFavoriteMovie: Boolean,
@@ -37,7 +37,7 @@ internal fun ActorDetailsUI(
     removeActorFromFavorites: () -> Unit
 ) {
     val showFab = rememberSaveable { mutableStateOf(true) }
-    val actorProfileUrl = "${detailUIState.actorData?.profileUrl}"
+    val actorProfileUrl = "${data.actorData?.profileUrl}"
     val modalSheetState = modalBottomSheetState()
     val openActorDetailsBottomSheet = manageModalBottomSheet(
         modalSheetState = modalSheetState
@@ -66,20 +66,20 @@ internal fun ActorDetailsUI(
                     // Custom top app bar
                     ActorDetailsTopAppBar(
                         navigateUp = navigateUp,
-                        title = "${detailUIState.actorData?.personName}"
+                        title = "${data.actorData?.personName}"
                     )
 
                     // Main details content
                     ActorDetailsContent(
                         navigateUp = navigateUp,
-                        detailUIState = detailUIState,
+                        data = data,
                         openActorDetailsBottomSheet = openActorDetailsBottomSheet,
                         getSelectedMovieDetails = getSelectedMovieDetails,
                         showFab = showFab
                     )
                 }
                 // Progress bar
-                ShowProgressIndicator(isLoadingData = detailUIState.isFetchingDetails)
+                ShowProgressIndicator(isLoadingData = data.isFetchingDetails)
             }
         }
 
@@ -98,7 +98,7 @@ internal fun ActorDetailsUI(
 private fun ActorDetailsUIDarkPreview() {
     ComposeActorsTheme(darkTheme = true) {
         ActorDetailsUI(
-            detailUIState = ActorDetailsUIState(
+            data = ActorDetailsData(
                 castList = fakeMovieList(),
                 actorData = fakePersonDetail,
                 isFetchingDetails = false
@@ -119,7 +119,7 @@ private fun ActorDetailsUIDarkPreview() {
 private fun ActorDetailsUILightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         ActorDetailsUI(
-            detailUIState = ActorDetailsUIState(
+            data = ActorDetailsData(
                 castList = fakeMovieList(),
                 actorData = fakePersonDetail,
                 isFetchingDetails = false

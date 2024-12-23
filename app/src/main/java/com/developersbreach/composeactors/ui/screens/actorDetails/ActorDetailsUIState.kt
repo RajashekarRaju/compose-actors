@@ -4,20 +4,12 @@ import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.movie.model.MovieDetail
 
-// TODO - create a sealed class to contains the different states
-
-/**
- * Models the UI state for the [ActorDetailsScreen] screen.
- */
-data class ActorDetailsUIState(
+data class ActorDetailsData(
     val castList: List<Movie> = listOf(),
     val actorData: PersonDetail? = null,
     val isFetchingDetails: Boolean = false,
 )
 
-/**
- * Models the UI state for the SheetContentMovieDetails modal sheet.
- */
 data class ActorDetailsSheetUIState(
     val selectedMovieDetails: MovieDetail? = null
 )

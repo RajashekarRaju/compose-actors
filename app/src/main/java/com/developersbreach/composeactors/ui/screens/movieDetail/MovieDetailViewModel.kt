@@ -7,13 +7,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import arrow.core.raise.either
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.movie.model.MovieDetail
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
+import com.developersbreach.composeactors.ui.components.UiState
 import com.developersbreach.composeactors.ui.navigation.AppDestinations.MOVIE_DETAILS_ID_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -27,7 +28,7 @@ class MovieDetailViewModel @Inject constructor(
 
     private val movieId: Int = checkNotNull(savedStateHandle[MOVIE_DETAILS_ID_KEY])
 
-    var uiState by mutableStateOf(MovieDetailsUIState(movieData = null))
+    var uiState: UiState<MovieDetailsData> by mutableStateOf(UiState.Loading)
         private set
 
     var sheetUiState by mutableStateOf(ActorsSheetUIState(selectedPersonDetails = null))
@@ -39,92 +40,96 @@ class MovieDetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            try {
-                startFetchingDetails()
-            } catch (e: IOException) {
-                Timber.e("$e")
-            }
+            startFetchingDetails()
         }
     }
 
     private suspend fun startFetchingDetails() {
-        uiState = MovieDetailsUIState(isFetchingDetails = true, movieData = null)
-        uiState = MovieDetailsUIState(
-            movieData = movieRepository.getMovieDetails(movieId),
-            similarMovies = movieRepository.getSimilarMovies(movieId),
-            recommendedMovies = movieRepository.getRecommendedMovies(movieId),
-            movieCast = movieRepository.getMovieCast(movieId),
-            movieProviders = movieRepository.getMovieProviders(movieId),
-            isFetchingDetails = false
+        uiState = UiState.Success(MovieDetailsData(isFetchingDetails = true))
+        either {
+            MovieDetailsData(
+                movieData = movieRepository.getMovieDetails(movieId).bind(),
+                similarMovies = movieRepository.getSimilarMovies(movieId).bind(),
+                recommendedMovies = movieRepository.getRecommendedMovies(movieId).bind(),
+                movieCast = movieRepository.getMovieCast(movieId).bind(),
+                movieProviders = movieRepository.getMovieProviders(movieId).bind(),
+                isFetchingDetails = false
+            )
+        }.fold(
+            ifLeft = { uiState = UiState.Error(it) },
+            ifRight = { uiState = UiState.Success(it) }
         )
     }
 
-    fun addMovieToFavorites() {
+    fun addMovieToFavorites(
+        movie: MovieDetail?
+    ) {
+        if (movie == null) {
+            Timber.e("Failed to addMovieToFavorites, since movie was null")
+            return
+        }
         viewModelScope.launch {
-            val movie: MovieDetail? = uiState.movieData
-            if (movie != null) {
-                movieRepository.addMovieToFavorites(
-                    Movie(
-                        movieId = movie.movieId,
-                        movieName = movie.movieTitle,
-                        posterPath = movie.poster,
-                        backdropPath = movie.banner,
-                    )
+            movieRepository.addMovieToFavorites(
+                Movie(
+                    movieId = movie.movieId,
+                    movieName = movie.movieTitle,
+                    posterPath = movie.poster,
+                    backdropPath = movie.banner,
                 )
-            }
+            )
         }
     }
 
-    fun removeMovieFromFavorites() {
+    fun removeMovieFromFavorites(
+        movie: MovieDetail?
+    ) {
+        if (movie == null) {
+            Timber.e("Failed to removeMovieFromFavorites, since movie was null")
+            return
+        }
         viewModelScope.launch {
-            val movie: MovieDetail? = uiState.movieData
-            if (movie != null) {
-                movieRepository.deleteSelectedFavoriteMovie(
-                    Movie(
-                        movieId = movie.movieId,
-                        movieName = movie.movieTitle,
-                        posterPath = movie.poster,
-                        backdropPath = movie.banner,
-                    )
+            movieRepository.deleteSelectedFavoriteMovie(
+                Movie(
+                    movieId = movie.movieId,
+                    movieName = movie.movieTitle,
+                    posterPath = movie.poster,
+                    backdropPath = movie.banner,
                 )
-            } else {
-                Timber.e("Id of ${uiState.movieData?.movieId} was null while delete operation.")
-            }
+            )
         }
     }
 
-    /**
-     * @param personId for querying selected actor details.
-     * This function will be triggered only when user clicks any actor items.
-     * Updates the data values to show in modal sheet.
-     */
     fun getSelectedPersonDetails(
         personId: Int?
     ) {
+        if (personId == null) {
+            Timber.e("Failed to getSelectedPersonDetails, since id was null")
+            return
+        }
         viewModelScope.launch {
-            try {
-                if (personId != null) {
-                    val actorsData = personRepository.getPersonDetails(personId)
-                    sheetUiState = ActorsSheetUIState(selectedPersonDetails = actorsData)
-                }
-            } catch (e: IOException) {
-                Timber.e("$e")
-            }
+            personRepository.getPersonDetails(
+                personId = personId
+            ).fold(
+                ifLeft = { uiState = UiState.Error(it) },
+                ifRight = { sheetUiState = ActorsSheetUIState(it) }
+            )
         }
     }
 
     fun getSelectedMovieDetails(
         movieId: Int?
     ) {
+        if (movieId == null) {
+            Timber.e("Failed to getSelectedMovieDetails, since id was null")
+            return
+        }
         viewModelScope.launch {
-            try {
-                movieId?.let { id ->
-                    val movieData = movieRepository.getMovieDetails(id)
-                    movieSheetUiState = MovieSheetUIState(selectedMovieDetails = movieData)
-                }
-            } catch (e: IOException) {
-                Timber.e("$e")
-            }
+            movieRepository.getMovieDetails(
+                movieId = movieId
+            ).fold(
+                ifLeft = { uiState = UiState.Error(it) },
+                ifRight = { movieSheetUiState = MovieSheetUIState(selectedMovieDetails = it) }
+            )
         }
     }
 }

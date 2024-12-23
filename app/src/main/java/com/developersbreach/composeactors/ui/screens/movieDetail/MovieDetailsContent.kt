@@ -27,14 +27,14 @@ import kotlinx.coroutines.Job
 @Composable
 fun MovieDetailsContent(
     modifier: Modifier = Modifier,
-    uiState: MovieDetailsUIState,
+    data: MovieDetailsData,
     navigateUp: () -> Unit,
     showFab: MutableState<Boolean>,
     openMovieDetailsBottomSheet: () -> Job,
     selectBottomSheetCallback: (BottomSheetType) -> Unit,
     showBottomSheetScaffold: MutableState<Boolean>,
 ) {
-    val movieData = uiState.movieData
+    val movieData = data.movieData
     val listState = rememberLazyListState()
 
     // Change top bar background color on user scrolls, to make foreground details visible.
@@ -74,21 +74,21 @@ fun MovieDetailsContent(
             CategoryTitle(title = "Cast", alpha = 1f)
             Spacer(modifier = Modifier.height(16.dp))
             GetMovieCast(
-                uiState = uiState,
+                data = data,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
                 selectBottomSheetCallback = selectBottomSheetCallback
             )
             Spacer(modifier = Modifier.height(24.dp))
             CategoryTitle(title = "Similar", alpha = 1f)
             GetRelatedMovies(
-                movieList = uiState.similarMovies,
+                movieList = data.similarMovies,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
                 selectBottomSheetCallback = selectBottomSheetCallback
             )
             Spacer(modifier = Modifier.height(12.dp))
             CategoryTitle(title = "Recommended", alpha = 1f)
             GetRelatedMovies(
-                movieList = uiState.recommendedMovies,
+                movieList = data.recommendedMovies,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
                 selectBottomSheetCallback = selectBottomSheetCallback
             )
