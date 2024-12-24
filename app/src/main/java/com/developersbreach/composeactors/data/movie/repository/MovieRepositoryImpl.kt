@@ -1,13 +1,13 @@
 package com.developersbreach.composeactors.data.movie.repository
 
 import androidx.lifecycle.LiveData
+import arrow.core.Either
 import com.developersbreach.composeactors.core.network.PagedResponse
 import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
 import com.developersbreach.composeactors.data.movie.model.Cast
 import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.movie.model.MovieDetail
-import com.developersbreach.composeactors.data.movie.model.MovieProvidersResponse
 import com.developersbreach.composeactors.data.movie.remote.MovieApi
 import java.util.*
 import javax.inject.Inject
@@ -23,48 +23,58 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getNowPlayingMovies(
         page: Int
-    ): PagedResponse<Movie> = withContext(Dispatchers.IO) {
+    ): Either<Throwable, PagedResponse<Movie>> = withContext(Dispatchers.IO) {
         movieApi.getNowPlayingMovies(page)
     }
 
     override suspend fun getUpcomingMovies(
         page: Int
-    ): List<Movie> = withContext(Dispatchers.IO) {
-        movieApi.getUpcomingMovies(page).data
+    ): Either<Throwable, List<Movie>> = withContext(Dispatchers.IO) {
+        movieApi.getUpcomingMovies(page).map {
+            it.data
+        }
     }
 
     override suspend fun getMovieDetails(
         movieId: Int
-    ): MovieDetail = withContext(Dispatchers.IO) {
+    ): Either<Throwable, MovieDetail> = withContext(Dispatchers.IO) {
         movieApi.getMovieDetails(movieId)
     }
 
     override suspend fun getSimilarMovies(
         movieId: Int,
         page: Int
-    ): List<Movie> = withContext(Dispatchers.IO) {
-        movieApi.getSimilarMovies(movieId, page).data
+    ): Either<Throwable, List<Movie>> = withContext(Dispatchers.IO) {
+        movieApi.getSimilarMovies(movieId, page).map {
+            it.data
+        }
     }
 
     override suspend fun getRecommendedMovies(
         movieId: Int,
         page: Int
-    ): List<Movie> = withContext(Dispatchers.IO) {
-        movieApi.getRecommendedMovies(movieId, page).data
+    ): Either<Throwable, List<Movie>> = withContext(Dispatchers.IO) {
+        movieApi.getRecommendedMovies(movieId, page).map {
+            it.data
+        }
     }
 
     override suspend fun getMovieCast(
         movieId: Int
-    ): List<Cast> = withContext(Dispatchers.IO) {
-        movieApi.getMovieCast(movieId).cast
+    ): Either<Throwable, List<Cast>> = withContext(Dispatchers.IO) {
+        movieApi.getMovieCast(movieId).map {
+            it.cast
+        }
     }
 
     override suspend fun getMovieProviders(
         movieId: Int
-    ): List<Flatrate> = withContext(Dispatchers.IO) {
-        val response: MovieProvidersResponse = movieApi.getMovieProviders(movieId)
-        val countryCode = Locale.getDefault().country
-        response.results[countryCode]?.flatrate ?: emptyList()
+    ): Either<Throwable, List<Flatrate>> = withContext(Dispatchers.IO) {
+        val response = movieApi.getMovieProviders(movieId)
+        response.map {
+            val countryCode = Locale.getDefault().country
+            it.results[countryCode]?.flatrate ?: emptyList()
+        }
     }
 
     override fun getAllFavoriteMovies(): LiveData<List<Movie>> {

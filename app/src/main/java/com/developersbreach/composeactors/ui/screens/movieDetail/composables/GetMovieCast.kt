@@ -30,13 +30,13 @@ import com.developersbreach.composeactors.ui.screens.movieDetail.BottomSheetType
 import com.developersbreach.composeactors.data.movie.model.Cast
 import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailsUIState
+import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailsData
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.Job
 
 @Composable
 fun GetMovieCast(
-    uiState: MovieDetailsUIState,
+    data: MovieDetailsData,
     openMovieDetailsBottomSheet: () -> Job,
     selectBottomSheetCallback: (BottomSheetType) -> Unit
 ) {
@@ -45,12 +45,12 @@ fun GetMovieCast(
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         items(
-            items = uiState.movieCast,
+            items = data.movieCast,
             key = { it.personId }
         ) { cast ->
             ItemCast(
                 cast = cast,
-                movieDetailsUIState = uiState,
+                data = data,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
                 selectBottomSheetCallback = selectBottomSheetCallback
             )
@@ -61,7 +61,7 @@ fun GetMovieCast(
 @Composable
 private fun ItemCast(
     cast: Cast,
-    movieDetailsUIState: MovieDetailsUIState,
+    data: MovieDetailsData,
     openMovieDetailsBottomSheet: () -> Job,
     selectBottomSheetCallback: (BottomSheetType) -> Unit
 ) {
@@ -110,7 +110,7 @@ private fun ItemCast(
 private fun GetMovieCastLightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         GetMovieCast(
-            uiState = MovieDetailsUIState(
+            data = MovieDetailsData(
                 movieData = fakeMovieDetail,
                 similarMovies = listOf(),
                 recommendedMovies = listOf(),
@@ -129,7 +129,7 @@ private fun GetMovieCastLightPreview() {
 private fun GetMovieCastDarkPreview() {
     ComposeActorsTheme(darkTheme = true) {
         GetMovieCast(
-            uiState = MovieDetailsUIState(
+            data = MovieDetailsData(
                 movieData = fakeMovieDetail,
                 similarMovies = listOf(),
                 recommendedMovies = listOf(),

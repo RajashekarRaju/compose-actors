@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.core.network
 
+import arrow.core.Either
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -11,21 +12,21 @@ import javax.inject.Singleton
 class HttpRequestHandler @Inject constructor(
     val client: HttpClient,
 ) {
-    suspend inline fun <reified T> getResponse(url: URL): T {
+    suspend inline fun <reified T> getResponse(url: URL): Either<Throwable, T> {
         return try {
-            client.get(url).body<T>()
+            Either.Right(client.get(url).body<T>())
         } catch (e: Exception) {
             e.printStackTrace()
-            throw e
+            Either.Left(e)
         }
     }
 
-    suspend inline fun <reified T> getPagedResponse(url: URL): PagedResponse<T> {
+    suspend inline fun <reified T> getPagedResponse(url: URL): Either<Throwable, PagedResponse<T>> {
         return try {
-            client.get(url).body<PagedResponse<T>>()
+            Either.Right(client.get(url).body<PagedResponse<T>>())
         } catch (e: Exception) {
             e.printStackTrace()
-            throw e
+            Either.Left(e)
         }
     }
 }

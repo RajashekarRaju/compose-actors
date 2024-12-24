@@ -27,18 +27,18 @@ import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.itemsPaging
+import com.developersbreach.composeactors.ui.screens.home.HomeData
 import com.developersbreach.composeactors.ui.screens.home.HomeSheetUIState
-import com.developersbreach.composeactors.ui.screens.home.HomeUIState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.flow.emptyFlow
 
 @Composable
 fun MoviesTabContent(
-    homeUIState: HomeUIState,
+    data: HomeData,
     navigateToSelectedMovie: (Int) -> Unit,
     homeSheetUIState: HomeSheetUIState,
 ) {
-    val nowPlayingMovies = homeUIState.nowPlayingMoviesList.collectAsLazyPagingItems()
+    val nowPlayingMovies = data.nowPlayingMoviesList.collectAsLazyPagingItems()
 
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
@@ -61,7 +61,7 @@ fun MoviesTabContent(
             span = { GridItemSpan(3) },
             content = {
                 UpcomingMovies(
-                    homeUIState = homeUIState,
+                    data = data,
                     navigateToSelectedMovie = navigateToSelectedMovie,
                     modifier = Modifier
                         .height(140.dp)
@@ -90,7 +90,7 @@ fun MoviesTabContent(
 
 @Composable
 private fun UpcomingMovies(
-    homeUIState: HomeUIState,
+    data: HomeData,
     navigateToSelectedMovie: (Int) -> Unit,
     modifier: Modifier
 ) {
@@ -100,7 +100,7 @@ private fun UpcomingMovies(
         modifier = Modifier.fillMaxWidth()
     ) {
         items(
-            items = homeUIState.upcomingMoviesList,
+            items = data.upcomingMoviesList,
             key = { it.movieId }
         ) { movieItem ->
             LoadNetworkImage(
@@ -143,7 +143,7 @@ private fun LazyGridScope.nowPlayingMovies(
 private fun MoviesTabContentPreview() {
     ComposeActorsTheme {
         MoviesTabContent(
-            homeUIState = HomeUIState(
+            data = HomeData(
                 popularPersonList = listOf(),
                 trendingPersonList = listOf(),
                 isFetchingPersons = false,

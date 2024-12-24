@@ -108,6 +108,9 @@ dependencies {
     implementation(libs.com.google.firebase.crashlytics)
     ksp(libs.androidx.room.room.compiler)
 
+    implementation(libs.arrow.core)
+    implementation(libs.arrow.fx.coroutines)
+
     // hilt
     implementation(libs.com.google.dagger.hilt.android)
     implementation(libs.androidx.hilt.hilt.navigation.compose)

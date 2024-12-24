@@ -19,12 +19,12 @@ import kotlinx.coroutines.Job
 @Composable
 internal fun ActorDetailsContent(
     navigateUp: () -> Unit,
-    detailUIState: ActorDetailsUIState,
+    data: ActorDetailsData,
     openActorDetailsBottomSheet: () -> Job,
     getSelectedMovieDetails: (Int) -> Unit,
     showFab: MutableState<Boolean>
 ) {
-    val actorData = detailUIState.actorData
+    val actorData = data.actorData
     val listState = rememberLazyListState()
 
     /** Sticky actor details content */
@@ -44,7 +44,7 @@ internal fun ActorDetailsContent(
         }
         item {
             ActorCastedMovies(
-                detailUIState,
+                data,
                 openActorDetailsBottomSheet,
                 getSelectedMovieDetails
             )

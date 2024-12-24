@@ -17,7 +17,7 @@ import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsUIState
+import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsData
 import kotlinx.coroutines.Job
 
 /**
@@ -25,11 +25,11 @@ import kotlinx.coroutines.Job
  */
 @Composable
 internal fun ActorCastedMovies(
-    detailUIState: ActorDetailsUIState,
+    data: ActorDetailsData,
     openActorDetailsBottomSheet: () -> Job,
     getSelectedMovieDetails: (Int) -> Unit
 ) {
-    val cast: List<Movie> = detailUIState.castList
+    val cast: List<Movie> = data.castList
 
     Row(
         verticalAlignment = Alignment.CenterVertically

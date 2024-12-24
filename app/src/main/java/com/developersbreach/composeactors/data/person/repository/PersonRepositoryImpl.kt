@@ -1,6 +1,7 @@
 package com.developersbreach.composeactors.data.person.repository
 
 import androidx.lifecycle.LiveData
+import arrow.core.Either
 import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
 import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.data.person.model.PersonDetail
@@ -18,20 +19,30 @@ class PersonRepositoryImpl @Inject constructor(
     private val databaseDataSource: DatabaseDataSource
 ) : PersonRepository {
 
-    override suspend fun getPopularPersons(): List<Person> = withContext(Dispatchers.IO) {
-        personApi.getPopularPersons().data
+    override suspend fun getPopularPersons(): Either<Throwable, List<Person>> = withContext(Dispatchers.IO) {
+        personApi.getPopularPersons().map {
+            it.data
+        }
     }
 
-    override suspend fun getTrendingPersons(): List<Person> = withContext(Dispatchers.IO) {
-        personApi.getTrendingPersons().data
+    override suspend fun getTrendingPersons(): Either<Throwable, List<Person>> = withContext(Dispatchers.IO) {
+        personApi.getTrendingPersons().map {
+            it.data
+        }
     }
 
-    override suspend fun getPersonDetails(personId: Int): PersonDetail = withContext(Dispatchers.IO) {
+    override suspend fun getPersonDetails(
+        personId: Int
+    ): Either<Throwable, PersonDetail> = withContext(Dispatchers.IO) {
         personApi.getPersonDetails(personId)
     }
 
-    override suspend fun getCastDetails(personId: Int): List<Movie> = withContext(Dispatchers.IO) {
-        personApi.getCastDetails(personId).movies
+    override suspend fun getCastDetails(
+        personId: Int
+    ): Either<Throwable, List<Movie>> = withContext(Dispatchers.IO) {
+        personApi.getCastDetails(personId).map {
+            it.movies
+        }
     }
 
     override fun isFavoritePerson(personId: Int): LiveData<Int> {

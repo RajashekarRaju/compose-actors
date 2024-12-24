@@ -8,9 +8,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import arrow.core.raise.either
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.domain.movie.GetPagedMovies
+import com.developersbreach.composeactors.ui.components.UiState
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.IOException
@@ -28,7 +30,7 @@ class HomeViewModel @Inject constructor(
     private val getPagedMovies: GetPagedMovies
 ) : ViewModel() {
 
-    var uiState by mutableStateOf(HomeUIState())
+    var uiState: UiState<HomeData> by mutableStateOf(UiState.Loading)
         private set
 
     var sheetUiState by mutableStateOf(HomeSheetUIState())
@@ -48,13 +50,18 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun startFetchingActors() {
-        uiState = HomeUIState(isFetchingPersons = true)
-        uiState = HomeUIState(
-            popularPersonList = personRepository.getPopularPersons(),
-            trendingPersonList = personRepository.getTrendingPersons(),
-            isFetchingPersons = false,
-            upcomingMoviesList = movieRepository.getUpcomingMovies(),
-            nowPlayingMoviesList = getPagedMovies().cachedIn(viewModelScope)
+        uiState = UiState.Success(HomeData(isFetchingPersons = true))
+        uiState = either {
+            HomeData(
+                popularPersonList = personRepository.getPopularPersons().bind(),
+                trendingPersonList = personRepository.getTrendingPersons().bind(),
+                isFetchingPersons = false,
+                upcomingMoviesList = movieRepository.getUpcomingMovies().bind(),
+                nowPlayingMoviesList = getPagedMovies().cachedIn(viewModelScope)
+            )
+        }.fold(
+            ifLeft = { UiState.Error(it) },
+            ifRight = { UiState.Success(it) },
         )
     }
 

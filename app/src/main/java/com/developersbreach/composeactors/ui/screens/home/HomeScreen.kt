@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.developersbreach.composeactors.ui.components.UiStateHandler
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 
 @Composable
@@ -18,18 +19,22 @@ fun HomeScreen(
 ) {
     val navigateToSearchBySearchType by viewModel.updateHomeSearchType.observeAsState(SearchType.Persons)
 
-    HomeScreenUI(
-        modifier = Modifier,
-        navigateToFavorite = navigateToFavorite,
-        navigateToSearch = navigateToSearch,
-        navigateToAbout = navigateToAbout,
-        navigateToSearchBySearchType = navigateToSearchBySearchType,
-        navigateToSelectedPerson = navigateToSelectedPerson,
-        navigateToSelectedMovie = navigateToSelectedMovie,
-        uiState = viewModel.uiState,
-        sheetUiState = viewModel.sheetUiState,
-        updateHomeSearchType = { searchType: SearchType ->
-            viewModel.updateHomeSearchType(searchType)
-        }
-    )
+    UiStateHandler(
+        uiState = viewModel.uiState
+    ) { data ->
+        HomeScreenUI(
+            modifier = Modifier,
+            navigateToFavorite = navigateToFavorite,
+            navigateToSearch = navigateToSearch,
+            navigateToAbout = navigateToAbout,
+            navigateToSearchBySearchType = navigateToSearchBySearchType,
+            navigateToSelectedPerson = navigateToSelectedPerson,
+            navigateToSelectedMovie = navigateToSelectedMovie,
+            data = data,
+            sheetUiState = viewModel.sheetUiState,
+            updateHomeSearchType = { searchType: SearchType ->
+                viewModel.updateHomeSearchType(searchType)
+            }
+        )
+    }
 }

@@ -34,17 +34,17 @@ import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
-import com.developersbreach.composeactors.ui.screens.home.HomeUIState
+import com.developersbreach.composeactors.ui.screens.home.HomeData
 
 
 @Composable
 fun PersonsTabContent(
-    homeUIState: HomeUIState,
+    data: HomeData,
     navigateToSelectedPerson: (Int) -> Unit,
     popularPersonsListState: LazyListState,
     trendingPersonsListState: LazyListState
 ) {
-    ShowProgressIndicator(isLoadingData = homeUIState.isFetchingPersons)
+    ShowProgressIndicator(isLoadingData = data.isFetchingPersons)
 
     LazyColumn(
         contentPadding = PaddingValues(vertical = 16.dp),
@@ -54,7 +54,7 @@ fun PersonsTabContent(
             CategoryTitle(stringResource(R.string.category_actors_popular))
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
             PersonsList(
-                personsList = homeUIState.popularPersonList,
+                personsList = data.popularPersonList,
                 navigateToSelectedPerson = navigateToSelectedPerson,
                 personsListState = popularPersonsListState
             )
@@ -62,7 +62,7 @@ fun PersonsTabContent(
             CategoryTitle(stringResource(R.string.category_actors_trending))
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
             PersonsList(
-                personsList = homeUIState.trendingPersonList,
+                personsList = data.trendingPersonList,
                 navigateToSelectedPerson = navigateToSelectedPerson,
                 personsListState = trendingPersonsListState
             )

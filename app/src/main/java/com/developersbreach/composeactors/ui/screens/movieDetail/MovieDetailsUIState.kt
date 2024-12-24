@@ -6,13 +6,8 @@ import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.movie.model.MovieDetail
 
-// TODO - create a sealed class to contains the different states
-
-/**
- * Models the UI state for the [MovieDetailScreen] screen.
- */
-data class MovieDetailsUIState(
-    val movieData: MovieDetail?,
+data class MovieDetailsData(
+    val movieData: MovieDetail? = null,
     val similarMovies: List<Movie> = emptyList(),
     val recommendedMovies: List<Movie> = emptyList(),
     val movieCast: List<Cast> = emptyList(),
@@ -20,9 +15,6 @@ data class MovieDetailsUIState(
     val movieProviders: List<Flatrate> = emptyList(),
 )
 
-/**
- * Models the UI state for the SheetContentActorDetails modal sheet.
- */
 data class ActorsSheetUIState(
     val selectedPersonDetails: PersonDetail? = null
 )

@@ -51,7 +51,7 @@ fun HomeScreenUI(
     navigateToSearchBySearchType: SearchType,
     navigateToSelectedPerson: (Int) -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
-    uiState: HomeUIState,
+    data: HomeData,
     sheetUiState: HomeSheetUIState,
     updateHomeSearchType: (SearchType) -> Unit
 ) {
@@ -108,7 +108,7 @@ fun HomeScreenUI(
                     // Main content for this screen
                     HomeScreenUI(
                         navigateToSelectedPerson = navigateToSelectedPerson,
-                        homeUIState = uiState,
+                        data = data,
                         homeSheetUIState = sheetUiState,
                         navigateToSelectedMovie = navigateToSelectedMovie,
                         updateSearchType = updateHomeSearchType
@@ -130,7 +130,7 @@ fun HomeScreenUI(
 private fun HomeScreenUI(
     navigateToSelectedPerson: (Int) -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
-    homeUIState: HomeUIState,
+    data: HomeData,
     homeSheetUIState: HomeSheetUIState,
     updateSearchType: (navigateToSearchByType: SearchType) -> Unit
 ) {
@@ -158,7 +158,7 @@ private fun HomeScreenUI(
                 0 -> {
                     updateSearchType(SearchType.Persons)
                     PersonsTabContent(
-                        homeUIState = homeUIState,
+                        data = data,
                         navigateToSelectedPerson = navigateToSelectedPerson,
                         popularPersonsListState = popularPersonsListState,
                         trendingPersonsListState = trendingPersonsListState
@@ -168,7 +168,7 @@ private fun HomeScreenUI(
                 1 -> {
                     updateSearchType(SearchType.Movies)
                     MoviesTabContent(
-                        homeUIState = homeUIState,
+                        data = data,
                         homeSheetUIState = homeSheetUIState,
                         navigateToSelectedMovie = navigateToSelectedMovie
                     )
@@ -193,7 +193,7 @@ private fun HomeScreenUILightPreview() {
             navigateToSelectedMovie = {},
             homeSheetUIState = HomeSheetUIState(fakeMovieDetail),
             updateSearchType = {},
-            homeUIState = HomeUIState(
+            data = HomeData(
                 popularPersonList = fakePersonsList(),
                 trendingPersonList = fakePersonsList(),
                 isFetchingPersons = false,
@@ -213,7 +213,7 @@ private fun HomeScreenUIDarkPreview() {
             navigateToSelectedMovie = {},
             homeSheetUIState = HomeSheetUIState(fakeMovieDetail),
             updateSearchType = {},
-            homeUIState = HomeUIState(
+            data = HomeData(
                 popularPersonList = fakePersonsList(),
                 trendingPersonList = fakePersonsList(),
                 isFetchingPersons = false,

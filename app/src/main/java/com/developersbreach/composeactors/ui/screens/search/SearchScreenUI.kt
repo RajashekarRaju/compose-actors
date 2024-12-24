@@ -25,7 +25,7 @@ fun SearchScreenUI(
     navigateToSearchBySearchType: (Int) -> Unit,
     searchHint: String,
     onSearchQueryChange: (query: String) -> Unit,
-    uiState: SearchUIState,
+    data: SearchDataType,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val closeKeyboard = {
@@ -49,25 +49,25 @@ fun SearchScreenUI(
             Box(
                 modifier = Modifier.padding(paddingValues)
             ) {
-                when (uiState) {
-                    is SearchUIState.ActorSearch -> {
+                when (data) {
+                    is ActorSearch -> {
                         // Show progress while search is happening
-                        val isLoadingData = !uiState.isSearchingResults && uiState.personList.isEmpty()
+                        val isLoadingData = !data.isSearchingResults && data.personList.isEmpty()
                         ShowSearchProgress(isLoadingData)
                         // Main content for this screen
                         PersonSearchUI(
-                            persons = uiState.personList,
+                            persons = data.personList,
                             navigateToSelectedPerson = navigateToSearchBySearchType,
                             closeKeyboard = closeKeyboard
                         )
                     }
-                    is SearchUIState.MovieSearch -> {
+                    is MovieSearch -> {
                         // Show progress while search is happening
-                        val isLoadingData = !uiState.isSearchingResults && uiState.movieList.isEmpty()
+                        val isLoadingData = !data.isSearchingResults && data.movieList.isEmpty()
                         ShowSearchProgress(isLoadingData)
                         // Main content for this screen
                         MovieSearchUI(
-                            movieList = uiState.movieList,
+                            movieList = data.movieList,
                             navigateToSelectedMovie = navigateToSearchBySearchType,
                             closeKeyboard = closeKeyboard
                         )
@@ -87,7 +87,7 @@ private fun SearchScreenUIDarkPreview() {
             navigateToSearchBySearchType = {},
             searchHint = stringResource(R.string.hint_search_query_actors),
             onSearchQueryChange = {},
-            uiState = SearchUIState.ActorSearch(
+            data = ActorSearch(
                 personList = fakePersonsList(),
                 isSearchingResults = false
             )
@@ -104,7 +104,7 @@ private fun SearchScreenUILightPreview() {
             navigateToSearchBySearchType = {},
             searchHint = stringResource(R.string.hint_search_query_actors),
             onSearchQueryChange = {},
-            uiState = SearchUIState.ActorSearch(
+            data = ActorSearch(
                 personList = fakePersonsList(),
                 isSearchingResults = false
             )
