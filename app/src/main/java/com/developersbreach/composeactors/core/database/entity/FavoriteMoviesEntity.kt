@@ -4,6 +4,7 @@ import androidx.compose.runtime.Stable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.developersbreach.composeactors.data.movie.model.Movie
 
 @Entity(tableName = "favorite_movies_table")
 data class FavoriteMoviesEntity(
@@ -22,3 +23,14 @@ data class FavoriteMoviesEntity(
     @ColumnInfo(name = "column_movie_banner")
     val movieBanner: String?
 )
+
+fun List<FavoriteMoviesEntity>.movieAsDomainModel(): List<Movie> {
+    return map {
+        Movie(
+            movieId = it.movieId,
+            movieName = it.movieName,
+            posterPath = it.moviePosterUrl,
+            backdropPath = it.movieBanner
+        )
+    }
+}
