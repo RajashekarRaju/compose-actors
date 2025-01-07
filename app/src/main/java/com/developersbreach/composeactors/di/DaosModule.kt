@@ -3,6 +3,7 @@ package com.developersbreach.composeactors.di
 import com.developersbreach.composeactors.core.database.AppDatabase
 import com.developersbreach.composeactors.core.database.dao.FavoritePersonsDao
 import com.developersbreach.composeactors.core.database.dao.FavoriteMoviesDao
+import com.developersbreach.composeactors.core.database.dao.PersonDetailsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,5 +27,13 @@ object DaosModule {
         database: AppDatabase
     ): FavoriteMoviesDao {
         return database.favoriteMoviesDao
+    }
+
+    @Provides
+    @JvmStatic
+    fun providesPersonDetailsDao(
+        database: AppDatabase
+    ): PersonDetailsDao {
+        return database.personDetailsDao
     }
 }

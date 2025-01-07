@@ -2,7 +2,9 @@ package com.developersbreach.composeactors.data.datasource.database
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
+import arrow.core.Either
 import com.developersbreach.composeactors.core.database.AppDatabase
+import com.developersbreach.composeactors.core.database.entity.PersonDetailEntity
 import com.developersbreach.composeactors.core.database.entity.movieAsDomainModel
 import com.developersbreach.composeactors.core.database.entity.toFavoritePersons
 import com.developersbreach.composeactors.data.person.model.FavoritePerson
@@ -72,6 +74,20 @@ class DatabaseDataSource @Inject constructor(
     ) = withContext(Dispatchers.IO) {
         with(favoritePerson.FavoritePersonsEntity()) {
             database.favoritePersonsDao.deleteSelectedFavoritePerson(favoritePersonsEntity = this)
+        }
+    }
+
+    suspend fun addPersonDetail(
+        personDetail: PersonDetail
+    ) {
+        database.personDetailsDao.insertPersonDetail(personDetail.toEntity())
+    }
+
+    suspend fun getPersonDetail(
+        personId: Int
+    ): Either<Throwable, PersonDetailEntity?> {
+        return Either.catch {
+            database.personDetailsDao.getPersonDetail(personId)
         }
     }
 }
