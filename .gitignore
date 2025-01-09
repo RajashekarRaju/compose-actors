@@ -13,3 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+/misc.xml
+/.idea/appInsightsSettings.xml
+/.idea/deploymentTargetSelector.xml
+/.idea/runConfigurations.xml

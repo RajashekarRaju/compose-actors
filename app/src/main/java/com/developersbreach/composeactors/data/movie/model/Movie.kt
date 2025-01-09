@@ -33,14 +33,3 @@ fun Movie.movieAsDatabaseModel(): FavoriteMoviesEntity {
         movieBanner = this.bannerUrl
     )
 }
-
-fun List<FavoriteMoviesEntity>.movieAsDomainModel(): List<Movie> {
-    return map {
-        Movie(
-            movieId = it.movieId,
-            movieName = it.movieName,
-            posterPath = it.moviePosterUrl,
-            backdropPath = it.movieBanner
-        )
-    }
-}

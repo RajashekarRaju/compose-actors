@@ -2,13 +2,17 @@ package com.developersbreach.composeactors.data.datasource.database
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
+import arrow.core.Either
 import com.developersbreach.composeactors.core.database.AppDatabase
+import com.developersbreach.composeactors.core.database.entity.PersonDetailEntity
+import com.developersbreach.composeactors.core.database.entity.movieAsDomainModel
+import com.developersbreach.composeactors.core.database.entity.toFavoritePersons
 import com.developersbreach.composeactors.data.person.model.FavoritePerson
 import com.developersbreach.composeactors.data.movie.model.Movie
-import com.developersbreach.composeactors.data.person.model.personAsDatabaseModel
-import com.developersbreach.composeactors.data.person.model.personAsDomainModel
+import com.developersbreach.composeactors.data.person.model.FavoritePersonsEntity
 import com.developersbreach.composeactors.data.movie.model.movieAsDatabaseModel
-import com.developersbreach.composeactors.data.movie.model.movieAsDomainModel
+import com.developersbreach.composeactors.data.person.model.PersonDetail
+import com.developersbreach.composeactors.data.person.model.toEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +33,7 @@ class DatabaseDataSource @Inject constructor(
     fun getAllFavoritePersons(): LiveData<List<FavoritePerson>> {
         val allFavoritePersons = database.favoritePersonsDao.getAllFavoritePersons()
         return allFavoritePersons.map { favEntityList ->
-            favEntityList.personAsDomainModel()
+            favEntityList.toFavoritePersons()
         }
     }
 
@@ -52,7 +56,7 @@ class DatabaseDataSource @Inject constructor(
     suspend fun addPersonToFavorites(
         favoritePerson: FavoritePerson
     ) = withContext(Dispatchers.IO) {
-        with(favoritePerson.personAsDatabaseModel()) {
+        with(favoritePerson.FavoritePersonsEntity()) {
             database.favoritePersonsDao.addPersonToFavorites(favoritePersonsEntity = this)
         }
     }
@@ -68,8 +72,22 @@ class DatabaseDataSource @Inject constructor(
     suspend fun deleteSelectedFavoritePerson(
         favoritePerson: FavoritePerson
     ) = withContext(Dispatchers.IO) {
-        with(favoritePerson.personAsDatabaseModel()) {
+        with(favoritePerson.FavoritePersonsEntity()) {
             database.favoritePersonsDao.deleteSelectedFavoritePerson(favoritePersonsEntity = this)
+        }
+    }
+
+    suspend fun addPersonDetail(
+        personDetail: PersonDetail
+    ) {
+        database.personDetailsDao.insertPersonDetail(personDetail.toEntity())
+    }
+
+    suspend fun getPersonDetail(
+        personId: Int
+    ): Either<Throwable, PersonDetailEntity?> {
+        return Either.catch {
+            database.personDetailsDao.getPersonDetail(personId)
         }
     }
 }

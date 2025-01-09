@@ -4,6 +4,7 @@ import androidx.compose.runtime.Stable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.developersbreach.composeactors.data.person.model.FavoritePerson
 
 @Entity(tableName = "favorite_persons_table")
 data class FavoritePersonsEntity(
@@ -22,3 +23,14 @@ data class FavoritePersonsEntity(
     @ColumnInfo(name = "column_person_placeOfBirth")
     val personPlaceOfBirth: String?
 )
+
+fun List<FavoritePersonsEntity>.toFavoritePersons(): List<FavoritePerson> {
+    return map {
+        FavoritePerson(
+            personId = it.personId,
+            personName = it.personName,
+            profileUrl = it.personProfileUrl,
+            placeOfBirth = it.personPlaceOfBirth
+        )
+    }
+}

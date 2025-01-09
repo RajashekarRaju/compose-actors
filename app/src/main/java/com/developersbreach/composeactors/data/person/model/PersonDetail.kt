@@ -2,7 +2,7 @@ package com.developersbreach.composeactors.data.person.model
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
-import com.developersbreach.composeactors.core.database.entity.FavoritePersonsEntity
+import com.developersbreach.composeactors.core.database.entity.PersonDetailEntity
 import com.developersbreach.composeactors.core.network.HIGH_RES_IMAGE
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -28,22 +28,14 @@ fun PersonDetail.toFavoritePerson() = FavoritePerson(
     placeOfBirth = this.placeOfBirth
 )
 
-fun FavoritePerson.personAsDatabaseModel(): FavoritePersonsEntity {
-    return FavoritePersonsEntity(
-        personId = this.personId,
-        personName = this.personName,
-        personProfileUrl = this.profileUrl,
-        personPlaceOfBirth = this.placeOfBirth
+fun PersonDetail.toEntity(): PersonDetailEntity {
+    return PersonDetailEntity(
+        personId = personId,
+        personName = personName,
+        profilePath = profileUrl,
+        biography = biography,
+        dateOfBirth = dateOfBirth,
+        placeOfBirth = placeOfBirth,
+        popularity = popularity
     )
-}
-
-fun List<FavoritePersonsEntity>.personAsDomainModel(): List<FavoritePerson> {
-    return map {
-        FavoritePerson(
-            personId = it.personId,
-            personName = it.personName,
-            profileUrl = it.personProfileUrl,
-            placeOfBirth = it.personPlaceOfBirth
-        )
-    }
 }

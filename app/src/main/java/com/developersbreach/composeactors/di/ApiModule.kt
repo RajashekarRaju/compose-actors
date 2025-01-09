@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.di
 
+import com.developersbreach.composeactors.core.cache.CacheManager
 import com.developersbreach.composeactors.core.network.HttpRequestHandler
 import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
 import com.developersbreach.composeactors.data.movie.remote.MovieApi
@@ -89,8 +90,9 @@ object ApiModule {
     @Singleton
     fun providePersonRepository(
         personApi: PersonApi,
-        databaseDataSource: DatabaseDataSource
+        databaseDataSource: DatabaseDataSource,
+        cacheManager: CacheManager,
     ): PersonRepository {
-        return PersonRepositoryImpl(personApi, databaseDataSource)
+        return PersonRepositoryImpl(personApi, databaseDataSource, cacheManager)
     }
 }
