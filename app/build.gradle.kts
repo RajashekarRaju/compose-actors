@@ -72,6 +72,7 @@ android {
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(platform(libs.kotlin.bom))
+    implementation(project(":design-system"))
 
     implementation(libs.androidx.core.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -132,6 +133,7 @@ dependencies {
 
     testImplementation(libs.androidx.compose.ui.ui.test.junit4)
     testImplementation(libs.io.mockk)
+    testImplementation(libs.konsist)
 
     androidTestImplementation(libs.androidx.test.ext.junit.ktx)
     androidTestImplementation(libs.androidx.compose.ui.ui.test.junit4)

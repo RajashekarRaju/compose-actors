@@ -2,7 +2,10 @@ package com.developersbreach.composeactors.ui.components
 
 import android.content.Context
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.Text
 import androidx.compose.material.ripple.RippleAlpha
 import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.runtime.Composable
@@ -73,19 +76,6 @@ fun ApiKeyMissingShowSnackbar(
             context.getString(R.string.missing_api_key_snackbar_message)
         )
     }
-}
-
-@Composable
-fun AppDivider(
-    verticalPadding: Dp,
-    thickness: Dp = 1.dp
-) {
-    Divider(
-        color = MaterialTheme.colors.onBackground.copy(alpha = 0.1f),
-        thickness = thickness,
-        startIndent = 0.dp,
-        modifier = Modifier.padding(vertical = verticalPadding)
-    )
 }
 
 /**

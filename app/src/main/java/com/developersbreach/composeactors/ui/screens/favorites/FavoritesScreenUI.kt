@@ -20,12 +20,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.data.person.model.FavoritePerson
 import com.developersbreach.composeactors.data.movie.model.Movie
-import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
 import com.developersbreach.composeactors.ui.screens.favorites.tabs.FavoritePersonsTabContent
 import com.developersbreach.composeactors.ui.screens.favorites.tabs.FavoriteMoviesTabContent
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaDivider
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -60,7 +60,11 @@ fun FavoritesScreenUI(
                     .padding(paddingValues = paddingValues)
             ) {
                 TabsContainer(tabs = favoriteTabs, pagerState = favoritesPagerState)
-                AppDivider(thickness = 1.dp, verticalPadding = 0.dp)
+                CaDivider(
+                    thickness = 1.dp,
+                    modifier = Modifier.padding(vertical = 0.dp),
+                    colorAlpha = 0.1f
+                )
                 HorizontalPager(
                     state = favoritesPagerState,
                     modifier = Modifier

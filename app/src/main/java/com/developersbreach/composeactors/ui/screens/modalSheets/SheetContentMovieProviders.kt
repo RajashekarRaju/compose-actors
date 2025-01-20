@@ -10,20 +10,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.movie.model.Flatrate
+import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.components.SheetHorizontalSeparator
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToFavoritesButton
 
 @Composable
@@ -129,7 +132,12 @@ private fun HeaderModalSheet(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            SheetHorizontalSeparator()
+            CaDivider(
+                thickness = 4.dp,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(percent = 100))
+                    .width(48.dp)
+            )
         }
         Spacer(modifier = Modifier.height(14.dp))
         Text(
