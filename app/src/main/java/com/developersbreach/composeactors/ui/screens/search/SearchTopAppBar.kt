@@ -35,11 +35,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.KeyboardState
 import com.developersbreach.composeactors.ui.components.closeKeyboardAndNavigateUp
 import com.developersbreach.composeactors.ui.components.getCurrentKeyboardState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaDivider
 
 /**
  * @param navigateUp Navigates to previous screen.
@@ -170,7 +170,10 @@ fun SearchAppBar(
         )
 
         // Divides content and search bar with line.
-        AppDivider(verticalPadding = 0.dp)
+        CaDivider(
+            modifier = Modifier,
+            colorAlpha = 0.1f
+        )
     }
 }
 

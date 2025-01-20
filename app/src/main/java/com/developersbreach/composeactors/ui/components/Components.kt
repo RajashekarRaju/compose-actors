@@ -75,19 +75,6 @@ fun ApiKeyMissingShowSnackbar(
     }
 }
 
-@Composable
-fun AppDivider(
-    verticalPadding: Dp,
-    thickness: Dp = 1.dp
-) {
-    Divider(
-        color = MaterialTheme.colors.onBackground.copy(alpha = 0.1f),
-        thickness = thickness,
-        startIndent = 0.dp,
-        modifier = Modifier.padding(vertical = verticalPadding)
-    )
-}
-
 /**
  * @param title commonly used text in all screens to show title or header for category.
  */
