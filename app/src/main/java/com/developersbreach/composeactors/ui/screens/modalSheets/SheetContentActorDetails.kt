@@ -6,11 +6,13 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -20,8 +22,8 @@ import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonDetail
 import com.developersbreach.composeactors.data.person.model.PersonDetail
+import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.components.SheetHorizontalSeparator
 import com.developersbreach.composeactors.ui.screens.actorDetails.composables.ActorInfoHeader
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
@@ -50,7 +52,12 @@ fun SheetContentActorDetails(
                     .background(color = MaterialTheme.colors.background)
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
-                SheetHorizontalSeparator()
+                CaDivider(
+                    thickness = 4.dp,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(percent = 100))
+                        .width(48.dp)
+                )
                 Spacer(modifier = Modifier.height(24.dp))
                 ActorProfileImage(actor?.profileUrl)
                 Spacer(modifier = Modifier.height(16.dp))

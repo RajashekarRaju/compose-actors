@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -33,6 +32,7 @@ import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.MovieGenre
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.composeactors.utils.getMovieRuntimeFormatted
+import com.developersbreach.designsystem.components.CaDivider
 
 /**
  * Content inside modal sheet.
@@ -130,7 +130,7 @@ private fun HeaderModalSheet(
 
 @Composable
 private fun SeparatorSheetTitleHeader() {
-    Divider(
+    CaDivider(
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colors.onSurface.copy(alpha = 0.50f),
         thickness = 0.50.dp
