@@ -11,6 +11,7 @@ arrow = "2.0.0"
 com-google-dagger = "2.53.1"
 com-google-gms = "4.4.2"
 com-google-firebase = "3.0.2"
+konsist = "0.17.3"
 kotlin = "2.0.21"
 kotlinx-coroutines-core = "1.9.0"
 ktor-bom = "3.0.1"
@@ -51,6 +52,7 @@ com-google-firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:
 com-jakewharton-timber = "com.jakewharton.timber:timber:5.0.1"
 io-coil-kt-coil-compose = "io.coil-kt:coil-compose:2.6.0"
 io-mockk = "io.mockk:mockk:1.13.5"
+konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
 ktor-bom = { module = "io.ktor:ktor-bom", version.ref = "ktor-bom" }

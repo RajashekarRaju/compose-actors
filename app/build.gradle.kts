@@ -133,6 +133,7 @@ dependencies {
 
     testImplementation(libs.androidx.compose.ui.ui.test.junit4)
     testImplementation(libs.io.mockk)
+    testImplementation(libs.konsist)
 
     androidTestImplementation(libs.androidx.test.ext.junit.ktx)
     androidTestImplementation(libs.androidx.compose.ui.ui.test.junit4)
