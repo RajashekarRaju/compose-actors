@@ -72,6 +72,7 @@ android {
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(platform(libs.kotlin.bom))
+    implementation(project(":design-system"))
 
     implementation(libs.androidx.core.core.ktx)
     implementation(libs.androidx.appcompat)
