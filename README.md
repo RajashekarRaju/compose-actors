@@ -86,6 +86,7 @@ Android app built with `Jetpack Compose` shows actors information fetched from T
 You may install and try to understand the code better, but make sure you provide your own Tmdb api
 key for data to show up in directory `/utils/ApiKey.kt`.
 
+<!-- Screen Description and Preview Section
 ### Release - v0.1.0
 
 | Screen | Preview |
@@ -95,6 +96,7 @@ key for data to show up in directory `/utils/ApiKey.kt`.
 | **Search Screen**<br><br> • Shows list of actors based on user submitted query.<br> • Animatable shapes infinitely repeatable.<br> • Has it's own ViewModel to manage it's ui state.<br> • TextField contained in TopAppBar completely transparent.<br> • Navigates to Detail screen with castId clicking any cast item.<br> • Screen and animation state changes on search began.<br> • Handles query & value changes correctly to fetch results.<br> • Draw Arc/Line on canvas & animate to shape shift like search icon.<br> • Different colors for animatables for both light/dark theme. | <img src="assets/search_dark_gif.gif" alt="Search screen preview" width="180" /> |
 |        |                                                                                  |
 | **Detail Screen**<br><br> • Shows user selected actor from other screens.<br> • Has it's own ViewModel to manage it's ui state.<br> • Reveal effect animation added to few composables.<br> • CircularProgressIndicator will be shown untill data is fetched.<br> • Image fetching with Coil, manages state error/placeholder.<br> • Background image with gradient foreground effect.<br> • Draws dynamic color behind system bars. | <img src="assets/detail_dark_gif.gif" alt="Detail screen preview" width="180" /> |
+-->
 
 ## :mag: Search Animation
 
@@ -103,7 +105,6 @@ key for data to show up in directory `/utils/ApiKey.kt`.
 val animateCircle = remember { Animatable(0f) }.apply {
     AnimateShapeInfinitely(this)
 }
-
 @Composable
 fun AnimateShapeInfinitely(
     // shape which will be animated infinitely.
@@ -192,7 +193,7 @@ fun DrawCircleOnCanvas(
 }
 ```
 
-## :mobile_phone_off: Offline state
+## :mobile_phone_off: No API state
 
 | Dark | Light |
 | :--: | :---: |
@@ -364,7 +365,7 @@ LoadNetworkImage(
 
 ## :art: App Theme
 
-### :rainbow: Material Design 3.
+### :rainbow: Material Design 2.
 Followed theming and color practices from Material Theme Builder Web Tool.
 Learn more [here](https://material-foundation.github.io/material-theme-builder/)
 
