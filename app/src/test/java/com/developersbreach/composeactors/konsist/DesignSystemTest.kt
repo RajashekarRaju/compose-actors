@@ -21,7 +21,7 @@ class DesignSystemTest {
         checkNoDirectUsageExceptDesignSystem(
             materialComponent = "androidx.compose.material.Divider",
             excludePaths = arrayOf(
-                "designsystem\\components\\Divider.kt"
+                "design-system/src/main/java/com/developersbreach/designsystem/components/Divider.kt"
             )
         )
     }
