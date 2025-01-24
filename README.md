@@ -193,7 +193,7 @@ fun DrawCircleOnCanvas(
 }
 ```
 
-## :mobile_phone_off: No API state
+## :mobile_phone_off: No TMDB_API_KEY provided state
 
 | Dark | Light |
 | :--: | :---: |
