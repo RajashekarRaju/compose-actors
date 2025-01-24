@@ -43,7 +43,7 @@
 
 | Actors | Movies | Favorites |
 | :----: | :----: | :-------: |
-| <img src="/assets/img_home_tab_actors.png" width="200"/> | <img src="/assets/img_home_tab_movie.png" width="200" /> | <img src="/assets/img_home_tab_favorites_empty.png" width="200" /> |
+| <img src="/assets/img_home_tab_actors.png" width="200"/> | <img src="/assets/img_home_tab_movies.png" width="200" /> | <img src="/assets/img_movies_tab_favorites.png" width="200" /> |
 
 ### Modal bottom sheets
 
@@ -55,7 +55,7 @@
 
 | Add to favorites | Favorites | Details |
 | :--------------: | :-------: | :-----: |
-| <img src="/assets/img_movie_detail_screen_1.png" width="200"/> | <img src="/assets/img_home_tab_favorites.png" width="200" /> | <img src="/assets/img_movie_detail_screen_2.png" width="200" /> |
+| <img src="/assets/img_movie_favorites_sheet_new.png" width="200"/> | <img src="/assets/img_movies_tab_favorites.png" width="200" /> | <img src="/assets/img_movie_detail_screen_2.png" width="200" /> |
 
 ### Voice search actors
 
@@ -86,6 +86,7 @@ Android app built with `Jetpack Compose` shows actors information fetched from T
 You may install and try to understand the code better, but make sure you provide your own Tmdb api
 key for data to show up in directory `/utils/ApiKey.kt`.
 
+<!-- #Screen description and preview
 ### Release - v0.1.0
 
 | Screen | Preview |
@@ -95,6 +96,7 @@ key for data to show up in directory `/utils/ApiKey.kt`.
 | **Search Screen**<br><br> • Shows list of actors based on user submitted query.<br> • Animatable shapes infinitely repeatable.<br> • Has it's own ViewModel to manage it's ui state.<br> • TextField contained in TopAppBar completely transparent.<br> • Navigates to Detail screen with castId clicking any cast item.<br> • Screen and animation state changes on search began.<br> • Handles query & value changes correctly to fetch results.<br> • Draw Arc/Line on canvas & animate to shape shift like search icon.<br> • Different colors for animatables for both light/dark theme. | <img src="assets/search_dark_gif.gif" alt="Search screen preview" width="180" /> |
 |        |                                                                                  |
 | **Detail Screen**<br><br> • Shows user selected actor from other screens.<br> • Has it's own ViewModel to manage it's ui state.<br> • Reveal effect animation added to few composables.<br> • CircularProgressIndicator will be shown untill data is fetched.<br> • Image fetching with Coil, manages state error/placeholder.<br> • Background image with gradient foreground effect.<br> • Draws dynamic color behind system bars. | <img src="assets/detail_dark_gif.gif" alt="Detail screen preview" width="180" /> |
+-->
 
 ## :mag: Search Animation
 
@@ -309,6 +311,7 @@ NavHost(
 }
 ```
 
+<!--
 ## :hammer: Structure
 
 | :file_folder: data | :file_folder: navigation | :file_folder: repository | :file_folder: root |
@@ -322,6 +325,57 @@ NavHost(
 | :file_folder: home | :file_folder: details | :file_folder: search | :file_folder: components | :file_folder: theme |
 | :-|:-|:-|:-|:- |
 | :page_facing_up: HomeScreen.kt<br> :page_facing_up: HomeViewModel.kt<br> | :page_facing_up: DetailsScreen.kt<br> :page_facing_up: DetailsViewModel.kt | :page_facing_up: SearchScreen.kt<br> :page_facing_up: SearchViewModel.kt<br> :page_facing_up: AnimatedSearch.kt | :page_facing_up: AppBars.kt<br> :page_facing_up: Components.kt<br> :page_facing_up: NetworkImage.kt<br> :page_facing_up: Progress.kt | :page_facing_up: Color.kt<br> :page_facing_up: Shape.kt<br> :page_facing_up: Theme.kt<br> :page_facing_up: Type.kt |
+-->
+
+```bash
+root
+├── core
+│   ├── cache
+│   ├── database
+│   │   ├── dao
+│   │   └── entity
+│   └── network
+├── data
+│   ├── datasource
+│   │   ├── database
+│   │   └── fake
+│   ├── movie
+│   │   ├── model
+│   │   ├── paging
+│   │   ├── remote
+│   │   └── repository
+│   ├── person
+│   │   ├── model
+│   │   ├── remote
+│   │   └── repository
+│   ├── search
+│   │   ├── remote
+│   │   └── repository
+│   ├── thumbnail
+│   │   └── remote
+│   └── trending
+│       ├── remote
+│       └── repository
+├── di
+├── ui
+│   ├── animation
+│   ├── navigation
+│   ├── screen
+│   │   ├── about
+│   │   ├── aboutDetails
+│   │   ├── favorites
+│   │   ├── home
+│   │   ├── modalSheets
+│   │   ├── movieDetail
+│   │   └── search
+│   ├── components
+│   └── theme
+├── utils
+└── domain
+    └── movie
+├── MainActivity.kt
+└── Application.kt
+```
 
 ## :cyclone: Image loading with Coil
 
@@ -414,7 +468,7 @@ val DarkColorPalette = darkColors(
 
 | Home | Search | Detail |
 | :--: | :----: | :----: |
-| <img src="assets/img_home_dark.png" alt="Home Dark" width="200" /> <br> <img src="assets/img_home_light.png" alt="Home Light" width="200" /> | <img src="assets/img_search_state_dark.png" alt="Search Dark" width="200" /> <br> <img src="assets/img_search_state_light.png" alt="Search Light" width="200" /> | <img src="assets/img_detail_adele_dark.png" alt="Detail Dark" width="200" /> <br> <img src="assets/img_detail_adele_light.png" alt="Detail Light" width="200" /> |
+| <img src="assets/img_home_dark.png" alt="Home Dark" width="200" /> <br> <img src="assets/img_home_light.png" alt="Home Light" width="200" /> | <img src="assets/img_search_state_dark.png" alt="Search Dark" width="200" /> <br> <img src="assets/img_search_state_light.png" alt="Search Light" width="200" /> | <img src="assets/img_detail_dark.png" alt="Detail Dark" width="200" /> <br> <img src="assets/img_detail_light.png" alt="Detail Light" width="200" /> |
 
 ## :pencil: Blog
 
