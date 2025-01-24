@@ -43,7 +43,7 @@
 
 | Actors | Movies | Favorites |
 | :----: | :----: | :-------: |
-| <img src="/assets/img_home_tab_actors.png" width="200"/> | <img src="/assets/img_home_tab_movie.png" width="200" /> | <img src="/assets/img_home_tab_favorites_empty.png" width="200" /> |
+| <img src="/assets/img_home_tab_actors.png" width="200"/> | <img src="/assets/img_home_tab_movies.png" width="200" /> | <img src="/assets/img_movies_tab_favorites.png" width="200" /> |
 
 ### Modal bottom sheets
 
@@ -55,7 +55,7 @@
 
 | Add to favorites | Favorites | Details |
 | :--------------: | :-------: | :-----: |
-| <img src="/assets/img_movie_detail_screen_1.png" width="200"/> | <img src="/assets/img_home_tab_favorites.png" width="200" /> | <img src="/assets/img_movie_detail_screen_2.png" width="200" /> |
+| <img src="/assets/img_movie_favorites_sheet_new.png" width="200"/> | <img src="/assets/img_movies_tab_favorites.png" width="200" /> | <img src="/assets/img_movie_detail_screen_2.png" width="200" /> |
 
 ### Voice search actors
 
@@ -415,7 +415,7 @@ val DarkColorPalette = darkColors(
 
 | Home | Search | Detail |
 | :--: | :----: | :----: |
-| <img src="assets/img_home_dark.png" alt="Home Dark" width="200" /> <br> <img src="assets/img_home_light.png" alt="Home Light" width="200" /> | <img src="assets/img_search_state_dark.png" alt="Search Dark" width="200" /> <br> <img src="assets/img_search_state_light.png" alt="Search Light" width="200" /> | <img src="assets/img_detail_adele_dark.png" alt="Detail Dark" width="200" /> <br> <img src="assets/img_detail_adele_light.png" alt="Detail Light" width="200" /> |
+| <img src="assets/img_home_dark.png" alt="Home Dark" width="200" /> <br> <img src="assets/img_home_light.png" alt="Home Light" width="200" /> | <img src="assets/img_search_state_dark.png" alt="Search Dark" width="200" /> <br> <img src="assets/img_search_state_light.png" alt="Search Light" width="200" /> | <img src="assets/img_detail_dark.png" alt="Detail Dark" width="200" /> <br> <img src="assets/img_detail_light.png" alt="Detail Light" width="200" /> |
 
 ## :pencil: Blog
 
