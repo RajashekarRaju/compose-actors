@@ -311,7 +311,7 @@ NavHost(
 ```
 
 ## :hammer: Structure
-
+<!--
 | :file_folder: data | :file_folder: navigation | :file_folder: repository | :file_folder: root |
 | :-|:-|:-|:- |
 | :page_facing_up: NetworkDataSource.kt<br> :page_facing_up: JsonRemoteData.kt<br> :page_facing_up: Urls.kt | :page_facing_up: AppActions.kt<br> :page_facing_up: AppDestinations.kt<br> :page_facing_up: AppNavigation.kt | :page_facing_up: AppRepository.kt | :page_facing_up: MainActivity.kt<br> :page_facing_up: Application.kt |
@@ -323,6 +323,57 @@ NavHost(
 | :file_folder: home | :file_folder: details | :file_folder: search | :file_folder: components | :file_folder: theme |
 | :-|:-|:-|:-|:- |
 | :page_facing_up: HomeScreen.kt<br> :page_facing_up: HomeViewModel.kt<br> | :page_facing_up: DetailsScreen.kt<br> :page_facing_up: DetailsViewModel.kt | :page_facing_up: SearchScreen.kt<br> :page_facing_up: SearchViewModel.kt<br> :page_facing_up: AnimatedSearch.kt | :page_facing_up: AppBars.kt<br> :page_facing_up: Components.kt<br> :page_facing_up: NetworkImage.kt<br> :page_facing_up: Progress.kt | :page_facing_up: Color.kt<br> :page_facing_up: Shape.kt<br> :page_facing_up: Theme.kt<br> :page_facing_up: Type.kt |
+-->
+
+```bash
+root
+├── core
+│   ├── cache
+│   ├── database
+│   │   ├── dao
+│   │   └── entity
+│   └── network
+├── data
+│   ├── datasource
+│   │   ├── database
+│   │   └── fake
+│   ├── movie
+│   │   ├── model
+│   │   ├── paging
+│   │   ├── remote
+│   │   └── repository
+│   ├── person
+│   │   ├── model
+│   │   ├── remote
+│   │   └── repository
+│   ├── search
+│   │   ├── remote
+│   │   └── repository
+│   ├── thumbnail
+│   │   └── remote
+│   └── trending
+│       ├── remote
+│       └── repository
+├── di
+├── ui
+│   ├── animation
+│   ├── navigation
+│   ├── screen
+│   │   ├── about
+│   │   ├── aboutDetails
+│   │   ├── favorites
+│   │   ├── home
+│   │   ├── modalSheets
+│   │   ├── movieDetail
+│   │   └── search
+│   ├── components
+│   └── theme
+├── utils
+└── domain
+    └── movie
+├── MainActivity.kt
+└── Application.kt
+```
 
 ## :cyclone: Image loading with Coil
 
