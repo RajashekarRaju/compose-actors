@@ -43,7 +43,7 @@
 
 | Actors | Movies | Favorites |
 | :----: | :----: | :-------: |
-| <img src="/assets/img_home_tab_actors.png" width="200"/> | <img src="/assets/img_home_tab_movie.png" width="200" /> | <img src="/assets/img_home_tab_favorites_empty.png" width="200" /> |
+| <img src="/assets/img_home_tab_actors.png" width="200"/> | <img src="/assets/img_home_tab_movies.png" width="200" /> | <img src="/assets/img_movies_tab_favorites.png" width="200" /> |
 
 ### Modal bottom sheets
 
@@ -55,7 +55,7 @@
 
 | Add to favorites | Favorites | Details |
 | :--------------: | :-------: | :-----: |
-| <img src="/assets/img_movie_detail_screen_1.png" width="200"/> | <img src="/assets/img_home_tab_favorites.png" width="200" /> | <img src="/assets/img_movie_detail_screen_2.png" width="200" /> |
+| <img src="/assets/img_movie_favorites_sheet_new.png" width="200"/> | <img src="/assets/img_movies_tab_favorites.png" width="200" /> | <img src="/assets/img_movie_detail_screen_2.png" width="200" /> |
 
 ### Voice search actors
 
@@ -311,7 +311,7 @@ NavHost(
 ```
 
 ## :hammer: Structure
-
+<!--
 | :file_folder: data | :file_folder: navigation | :file_folder: repository | :file_folder: root |
 | :-|:-|:-|:- |
 | :page_facing_up: NetworkDataSource.kt<br> :page_facing_up: JsonRemoteData.kt<br> :page_facing_up: Urls.kt | :page_facing_up: AppActions.kt<br> :page_facing_up: AppDestinations.kt<br> :page_facing_up: AppNavigation.kt | :page_facing_up: AppRepository.kt | :page_facing_up: MainActivity.kt<br> :page_facing_up: Application.kt |
@@ -323,6 +323,45 @@ NavHost(
 | :file_folder: home | :file_folder: details | :file_folder: search | :file_folder: components | :file_folder: theme |
 | :-|:-|:-|:-|:- |
 | :page_facing_up: HomeScreen.kt<br> :page_facing_up: HomeViewModel.kt<br> | :page_facing_up: DetailsScreen.kt<br> :page_facing_up: DetailsViewModel.kt | :page_facing_up: SearchScreen.kt<br> :page_facing_up: SearchViewModel.kt<br> :page_facing_up: AnimatedSearch.kt | :page_facing_up: AppBars.kt<br> :page_facing_up: Components.kt<br> :page_facing_up: NetworkImage.kt<br> :page_facing_up: Progress.kt | :page_facing_up: Color.kt<br> :page_facing_up: Shape.kt<br> :page_facing_up: Theme.kt<br> :page_facing_up: Type.kt |
+-->
+
+```bash
+root
+├── core
+│   ├── cache
+│   ├── database
+│   └── network
+├── data
+│   ├── datasource
+│   │   ├── database
+│   │   └── mocks
+│   ├── feature_1
+│   │   ├── model
+│   │   ├── paging
+│   │   ├── remote
+│   │   └── repository
+│   ├── feature_n
+│   │   ├── model
+│   │   ├── remote
+│   │   └── repository
+├── di
+│   ├── module_1 
+│   └── module_n 
+├── ui
+│   ├── animation
+│   ├── navigation
+│   ├── screen
+│   │   ├── feature_1
+│   │   └── feature_n
+│   ├── components
+│   └── theme
+├── utils
+├── domain
+|   ├── feature_1
+|   └── feature_n
+├── MainActivity.kt
+└── Application.kt
+```
 
 ## :cyclone: Image loading with Coil
 
@@ -415,7 +454,7 @@ val DarkColorPalette = darkColors(
 
 | Home | Search | Detail |
 | :--: | :----: | :----: |
-| <img src="assets/img_home_dark.png" alt="Home Dark" width="200" /> <br> <img src="assets/img_home_light.png" alt="Home Light" width="200" /> | <img src="assets/img_search_state_dark.png" alt="Search Dark" width="200" /> <br> <img src="assets/img_search_state_light.png" alt="Search Light" width="200" /> | <img src="assets/img_detail_adele_dark.png" alt="Detail Dark" width="200" /> <br> <img src="assets/img_detail_adele_light.png" alt="Detail Light" width="200" /> |
+| <img src="assets/img_home_dark.png" alt="Home Dark" width="200" /> <br> <img src="assets/img_home_light.png" alt="Home Light" width="200" /> | <img src="assets/img_search_state_dark.png" alt="Search Dark" width="200" /> <br> <img src="assets/img_search_state_light.png" alt="Search Light" width="200" /> | <img src="assets/img_detail_dark.png" alt="Detail Dark" width="200" /> <br> <img src="assets/img_detail_light.png" alt="Detail Light" width="200" /> |
 
 ## :pencil: Blog
 
