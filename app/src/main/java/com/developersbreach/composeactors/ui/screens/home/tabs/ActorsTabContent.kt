@@ -29,12 +29,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.person.model.Person
-import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeData
+import com.developersbreach.designsystem.components.CaDivider
 
 
 @Composable
@@ -58,7 +58,10 @@ fun PersonsTabContent(
                 navigateToSelectedPerson = navigateToSelectedPerson,
                 personsListState = popularPersonsListState
             )
-            AppDivider(verticalPadding = 32.dp)
+            CaDivider(
+                modifier = Modifier.padding(vertical = 32.dp),
+                colorAlpha = 1f
+            )
             CategoryTitle(stringResource(R.string.category_actors_trending))
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
             PersonsList(

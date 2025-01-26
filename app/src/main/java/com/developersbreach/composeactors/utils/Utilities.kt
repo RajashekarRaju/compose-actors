@@ -1,7 +1,7 @@
 package com.developersbreach.composeactors.utils
 
+import android.icu.util.Calendar
 import com.developersbreach.composeactors.core.network.TmdbApiKey
-import java.util.*
 
 /**
  * @param dateOfBirth received in "dd-mm-yyyy" format. Gets rid of day and month to read year.

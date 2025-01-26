@@ -29,7 +29,6 @@ import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
-import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
@@ -39,6 +38,7 @@ import com.developersbreach.composeactors.ui.screens.home.tabs.TvShowsTabContent
 import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaDivider
 import kotlinx.coroutines.flow.flow
 
 @Composable
@@ -149,7 +149,11 @@ private fun HomeScreenUI(
         Modifier.fillMaxSize()
     ) {
         TabsContainer(tabs = homeTabs, pagerState = homePagerState)
-        AppDivider(thickness = 1.dp, verticalPadding = 0.dp)
+        CaDivider(
+            thickness = 1.dp,
+            modifier = Modifier.padding(vertical = 0.dp),
+            colorAlpha = 0.1f
+        )
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
         HorizontalPager(
             state = homePagerState,
