@@ -5,7 +5,6 @@
 - [x] Let users search for movies directly just like searching for actors.
 - [x] Hilt will be replaced by removing Koin.
 - [x] Restructure packages and files by introducing new source files.
-- [ ] ~Replace every Spacer composable used in code with various custom AppSpacer.~
 - [x] Separate the ViewModel param from Screen and UI composables to see previews for all screens.
 - [x] Break composables into smaller for previewing.
 - [x] Separate composables into Screen and UI to separated ViewModel usage and previewing for all screens.
@@ -13,7 +12,16 @@
 - [x] Add bottom sheet to home screen to support navigation for various screens.
 - [x] Implement paging to upcoming lazy list movies in home tab.
 - [x] Setup project dependencies, resources for initial testing, write simple test. 
-- [ ] Write tests for app navigation for all composable destinations.
+- [x] Configure spotless check, add initial link rules
+- [x] Show movie detail sheet for recommended and similar movies in Movie details screen
+- [x] Feature - show watch providers for movies
+- [x] Migrate network operations from HttpURLConnection to Ktor
+- [x] Move from kapt to ksp
+- [x] Restructure project architecture, improve testability, separated classes to packages by features
+- [x] Implement simple cache mechanism with LruCache
+- [x] Adopted Arrow based error handling and unify UiState across all screens
+- [x] Configured konsist and initial tests for design system components usages
+- [x] Project modularization for design system.
 
 ## Roadmap v0.4.0
 ### Rename app from Compose actors -> Compose Entertainer.
@@ -23,6 +31,7 @@
 - [ ] Enabled adding seasons to favorites.
 - [ ] Move favorites section from home tab to new place (Restructure all screen flows).
 - [ ] Collapsable TopBars, BottomBars, Scroll effects, new animations.
+- [ ] Write tests for app navigation for all composable destinations.
 
 ![AppBanner](/assets/banner.png)
 
