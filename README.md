@@ -1,52 +1,25 @@
 # Compose Actors :dancer:
 
-## Roadmap v0.3.0
+![AppBanner](/assets/banner.png)
 
-- [x] Let users search for movies directly just like searching for actors.
-- [x] Hilt will be replaced by removing Koin.
-- [x] Restructure packages and files by introducing new source files.
-- [x] Separate the ViewModel param from Screen and UI composables to see previews for all screens.
-- [x] Break composables into smaller for previewing.
-- [x] Separate composables into Screen and UI to separated ViewModel usage and previewing for all screens.
-- [x] Add feature for adding actors to favorites like movies.
-- [x] Add bottom sheet to home screen to support navigation for various screens.
-- [x] Implement paging to upcoming lazy list movies in home tab.
-- [x] Setup project dependencies, resources for initial testing, write simple test. 
-- [x] Configure spotless check, add initial link rules
-- [x] Show movie detail sheet for recommended and similar movies in Movie details screen
-- [x] Feature - show watch providers for movies
-- [x] Migrate network operations from HttpURLConnection to Ktor
-- [x] Move from kapt to ksp
-- [x] Restructure project architecture, improve testability, separated classes to packages by features
-- [x] Implement simple cache mechanism with LruCache
-- [x] Adopted Arrow based error handling and unify UiState across all screens
-- [x] Configured konsist and initial tests for design system components usages
-- [x] Project modularization for design system.
+## Download the APK
+Access the latest APK for Compose Actors from the link below.
 
-## Roadmap v0.4.0
-### Rename app from Compose actors -> Compose Entertainer.
+[![Get APK](https://img.shields.io/badge/Get%20APK-maroon?style=for-the-badge&logo=android&logoColor=white)](https://github.com/RajashekarRaju/compose-actors/releases/download/v0.3.0/app-release-v0.3.0.apk)
 
+## Current Roadmap v0.4.0
+
+- [ ] Move material design components and dependencies to separate design-system module
+- [ ] Extend Konsist tests for all design system component usages.
+- [ ] Introduce common preview annotations for composables.
 - [ ] Add new feature seasons or series information to app.
 - [ ] Include seasons in home tabs navigation.
-- [ ] Enabled adding seasons to favorites.
+- [ ] Allow adding seasons to favorites.
 - [ ] Move favorites section from home tab to new place (Restructure all screen flows).
 - [ ] Collapsable TopBars, BottomBars, Scroll effects, new animations.
 - [ ] Write tests for app navigation for all composable destinations.
 
-![AppBanner](/assets/banner.png)
-
-### New release - v0.2.0
-
-- [x] Add DI with Koin.
-- [x] Modal bottom sheets & Bottom sheets.
-- [x] Migrate to compose insets from accompanist.
-- [x] Add new movie details screen, made changes to actors details screen.
-- [x] Improved search functionality, added voice search, handled keyboard changes.
-- [x] New feature to add Movie to favorites.
-- [x] Add new database repository layer for favorites.
-- [x] Add tabs in Home screen with actors/movies/favorites categories.
-
-## V2 Previews
+## V3 Previews
 
 ### Home Tabs
 
@@ -109,215 +82,13 @@ key for data to show up in directory `/utils/ApiKey.kt`.
 
 ## :mag: Search Animation
 
-```kotlin
-// Simple progressive circle looking animation
-val animateCircle = remember { Animatable(0f) }.apply {
-    AnimateShapeInfinitely(this)
-}
-@Composable
-fun AnimateShapeInfinitely(
-    // shape which will be animated infinitely.
-    animateShape: Animatable<Float, AnimationVector1D>,
-    // final float state to be animated.
-    targetValue: Float = 1f,
-    // duration took for animating once.
-    durationMillis: Int = 1000
-) {
-    LaunchedEffect(animateShape) {
-        animateShape.animateTo(
-            targetValue = targetValue,
-            animationSpec = infiniteRepeatable(
-                animation = tween(durationMillis, LinearEasing),
-                repeatMode = RepeatMode.Restart
-            )
-        )
-    }
-}
-```
-
-Although I couldn't fully achieve the desired result as I imagined, I've settled for this current
-state for now.
-
 <img src="assets/search_anim.gif" alt="Offline Dark" />
-
-Calling the function once will draw a circle, in my example I have drawn it thrice with differnt colors, radius and scales.
-
-```kotlin
-DrawCircleOnCanvas(
-    scale = scaleInfiniteTransition(targetValue = 2f, durationMillis = 600),
-    color = circleColor,
-    radiusRatio = 4f
-)
-```
-
-I have kept all initial states of 3 circles to 0f to make end result much smoother.<br>
-Random or uneven gaps between initial/target/durationMillis will make end animation look more abrupt and aggressively pushing it's bounds.
-
-```kotlin
-@Composable
-private fun scaleInfiniteTransition(
-    initialValue: Float = 0f,
-    targetValue: Float,
-    durationMillis: Int,
-): Float {
-    val infiniteTransition = rememberInfiniteTransition()
-    val scale: Float by infiniteTransition.animateFloat(
-        initialValue = initialValue,
-        targetValue = targetValue,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse
-        )
-    )
-    return scale
-}
-```
-
-```kotlin
-@Composable
-fun DrawCircleOnCanvas(
-    scale: Float,
-    color: Color,
-    radiusRatio: Float
-) {
-    Canvas(
-        modifier = Modifier
-            .fillMaxSize()
-            .graphicsLayer {
-                scaleX = scale
-                scaleY = scale
-            }
-    ) {
-        val canvasWidth = size.width
-        val canvasHeight = size.height
-        drawCircle(
-            color = color,
-            center = Offset(
-                x = canvasWidth / 2,
-                y = canvasHeight / 2
-            ),
-            radius = size.minDimension / radiusRatio,
-        )
-    }
-}
-```
 
 ## :mobile_phone_off: No TMDB_API_KEY provided state
 
 | Dark | Light |
 | :--: | :---: |
 | <img src="assets/offline_dark.gif" alt="Offline Dark" width="200" /> | <img src="assets/offline_light.gif" alt="Offline Light" width="200" /> |
-
-Show a Snackbar message with `SnackbarHostState`.
-
-```kotlin
-if (!isOnline) {
-    LaunchedEffect(scope) {
-        scope.launch {
-            scaffoldState.snackbarHostState.showSnackbar(
-                message = context.getString(R.string.offline_snackbar_message),
-                duration = SnackbarDuration.Indefinite
-            )
-        }
-    }
-}
-```
-
-### ViewModels
-
-All screens have their own ViewModels for managing the ui state.
-
-```kotlin
-class HomeViewModel(
-    application: Application,
-    private val repository: AppRepository
-) : AndroidViewModel(application) {
-
-    // Holds the state for values in HomeViewState
-    var uiState by mutableStateOf(HomeViewState())
-        private set
-
-    init {
-        // Update the values in uiState from all data sources.
-        viewModelScope.launch {
-            uiState = HomeViewState(isFetchingActors = true)
-            val popularActorsList = repository.getPopularActorsData()
-            val trendingActorsList = repository.getTrendingActorsData()
-            uiState = HomeViewState(
-                popularActorList = popularActorsList,
-                trendingActorList = trendingActorsList,
-                isFetchingActors = false
-            )
-        }
-    }
-}
-```
-
-Model for UI state of the screen.
-
-```kotlin
-data class HomeViewState(
-    var popularActorList: List<Actor> = emptyList(),
-    var trendingActorList: List<Actor> = emptyList(),
-    val isFetchingActors: Boolean = false,
-)
-```
-
-ViewModel used in a screen-level composable.
-
-```kotlin
-@Composable
-fun HomeScreen(
-    viewModel: HomeViewModel
-) {
-    val uiState = viewModel.uiState
-    Box {
-        ScreenContent(uiState.popularActorList)
-    }
-}
-```
-
-### Repository
-
-All ViewModels have access to repository which has single instance.
-
-```kotlin
-class AppRepository {
-
-    private val networkDataSource by lazy { NetworkDataSource() }
-
-    suspend fun getPopularActorsData(): List<Actor> {
-        val listData: List<Actor>
-        withContext(Dispatchers.IO) {
-            listData = networkDataSource.getPopularActors()
-        }
-        return listData
-    }
-}
-```
-
-Instantiated repository will be passed to all ViewModels.
-
-```kotlin
-val repository = (application as ComposeActorsApp).repository
-
-NavHost(
-    navController = navController,
-    startDestination = startDestination
-) {
-    composable(
-        "Destination Route"
-    ) {
-        HomeScreen(
-            viewModel = viewModel(
-                factory = HomeViewModel.provideFactory(
-                    application, repository
-                )
-            )
-        )
-    }
-}
-```
 
 ## :hammer: Structure
 <!--
@@ -370,45 +141,6 @@ root
 |   └── feature_n
 ├── MainActivity.kt
 └── Application.kt
-```
-
-## :cyclone: Image loading with Coil
-
-Reusable composable used in all screens to load image from an Url.
-
-```kotlin
-@Composable
-fun LoadNetworkImage(
-    imageUrl: String,
-    contentDescription: String,
-    modifier: Modifier,
-    shape: Shape
-) {
-    Image(
-        painter = rememberImagePainter(
-            data = imageUrl,
-            builder = {
-                placeholder(R.drawable.animated_progress)
-                error(R.drawable.ic_image_not_available)
-            }),
-        contentDescription = contentDescription,
-        contentScale = ContentScale.Crop,
-        modifier = modifier
-            .clip(shape)
-            .background(color = MaterialTheme.colors.surface)
-    )
-}
-```
-
-Then we will just call the composable anywhere in app screens.
-
-```kotlin
-LoadNetworkImage(
-    imageUrl = "https://image_url",
-    contentDescription = stringResource(R.string.cd_movie_poster),
-    modifier = Modifier.size(100.dp, 150.dp),
-    shape = MaterialTheme.shapes.medium,
-)
 ```
 
 ## :art: App Theme
