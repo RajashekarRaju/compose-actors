@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.com.google.firebase)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.screenshot)
 }
 
 android {
@@ -45,7 +46,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
+    experimentalProperties["android.experimental.enableScreenshotTest"] = true
     kotlinOptions {
         jvmTarget = "1.8"
         // To mark experimental features api
@@ -139,6 +140,8 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.ui.test.junit4)
 
     debugImplementation(libs.androidx.compose.ui.ui.test.manifest)
+
+    screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).configureEach {
