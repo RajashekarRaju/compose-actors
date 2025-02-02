@@ -33,7 +33,8 @@ class DesignSystemTest {
         Konsist.scopeFromProject()
             .files
             .filter { file ->
-                excludePaths.all { !file.path.contains(it) }
+                val normalizedFilePath = file.path.replace("\\", "/").lowercase()
+                excludePaths.none { normalizedFilePath.contains(it.replace("\\", "/").lowercase()) }
             }
             .flatMap { file ->
                 file.imports.filter { it.name == materialComponent }.map { file }
