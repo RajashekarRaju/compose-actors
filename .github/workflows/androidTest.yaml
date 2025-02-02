@@ -23,15 +23,18 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
       - name: Cache Gradle dependencies
         uses: actions/cache@v2
         with:
           path: ~/.gradle/caches
           key: gradle-cache-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
           restore-keys: gradle-cache-${{ runner.os }}-
-
-      - name: Run local tests
-        run: ./gradlew testDebug --stacktrace
 
       - name: Cache AVD
         uses: actions/cache@v3
@@ -43,20 +46,18 @@ jobs:
           key: avd-cache-${{ runner.os }}-${{ hashFiles('**/*.avd') }}
           restore-keys: avd-cache-${{ runner.os }}-
 
-      - name: Create AVD and generate snapshot for caching and Run androidTest
+      - name: Create Android Virtual Device and run all tests
         uses: reactivecircus/android-emulator-runner@v2
-        continue-on-error: true
-        env:
-          ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 500
+        id: testing
         with:
           api-level: 29
-          emulator-build: 7425822
+          target: google_apis
+          arch: x86_64
           force-avd-creation: true
           emulator-options: -wipe-data -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: false
           script: |
-            echo "Generated AVD snapshot for caching."
-            ./gradlew connectedCheck
+            ./gradlew testDebugUnitTest validateDebugScreenshotTest connectedDebugAndroidTest --stacktrace
 
       - name: Upload Failing Test Report Log
         if: steps.testing.outcome != 'success'
