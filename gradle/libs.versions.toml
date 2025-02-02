@@ -66,7 +66,6 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 
 [plugins]
 com-android-application = "com.android.application:8.7.3"
-com-diffplug-spotless = "com.diffplug.spotless:6.18.0"
 com-github-ben-manes-versions = "com.github.ben-manes.versions:0.46.0"
 nl-littlerobots-version-catalog-update = "nl.littlerobots.version-catalog-update:0.8.0"
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
