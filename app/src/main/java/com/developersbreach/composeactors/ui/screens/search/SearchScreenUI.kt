@@ -97,7 +97,7 @@ private fun SearchScreenUIDarkPreview() {
 
 @Preview(showBackground = true)
 @Composable
-private fun SearchScreenUILightPreview() {
+fun SearchScreenUILightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         SearchScreenUI(
             navigateUp = {},
