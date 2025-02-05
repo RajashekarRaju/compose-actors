@@ -208,7 +208,7 @@ private fun GetBottomSheetContent(
 
 @Preview(showBackground = true)
 @Composable
-private fun MovieDetailsUILightPreview() {
+fun MovieDetailsUILightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         MovieDetailsContent(
             data = MovieDetailsData(

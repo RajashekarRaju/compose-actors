@@ -132,7 +132,7 @@ private fun ActorBiographyText(
 
 @Preview
 @Composable
-private fun SheetContentActorDetailsLightPreview() {
+fun SheetContentActorDetailsLightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         SheetContentActorDetails(
             actor = fakePersonDetail

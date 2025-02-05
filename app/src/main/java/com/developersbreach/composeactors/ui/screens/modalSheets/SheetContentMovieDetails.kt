@@ -202,7 +202,7 @@ private fun MovieOverviewText(
 
 @Preview(showBackground = true)
 @Composable
-private fun SheetContentMovieDetailsLightPreview() {
+fun SheetContentMovieDetailsLightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         SheetContentMovieDetails(
             movie = fakeMovieDetail,
