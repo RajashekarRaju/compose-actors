@@ -80,7 +80,7 @@ fun AboutScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun AboutScreenLightPreview() {
+fun AboutScreenLightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         AboutScreen { }
     }

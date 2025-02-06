@@ -110,7 +110,7 @@ private fun FeatureComingSoonTextUI() {
 
 @Preview
 @Composable
-private fun FavoriteScreenUILightPreview() {
+fun FavoriteScreenUILightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         FavoritesScreenUI(
             favoriteMovies = emptyList(),

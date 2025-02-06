@@ -149,7 +149,7 @@ private fun ItemOptionRow(
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-private fun OptionsModalSheetContentLightPreview() {
+fun OptionsModalSheetContentLightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         OptionsModalSheetContent(
             modalSheetSheet = ModalBottomSheetState(ModalBottomSheetValue.Expanded),

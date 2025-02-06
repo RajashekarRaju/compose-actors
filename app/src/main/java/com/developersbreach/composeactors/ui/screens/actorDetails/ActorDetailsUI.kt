@@ -116,7 +116,7 @@ private fun ActorDetailsUIDarkPreview() {
 
 @Preview(showBackground = true)
 @Composable
-private fun ActorDetailsUILightPreview() {
+fun ActorDetailsUILightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         ActorDetailsUI(
             data = ActorDetailsData(
