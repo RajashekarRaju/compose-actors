@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -32,6 +31,7 @@ import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.favorites.NoFavoritesFoundUI
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaIconButton
 
 
 /**
@@ -101,16 +101,17 @@ private fun ItemFavoriteMovie(
                 lineHeight = 20.sp,
                 modifier = Modifier.weight(0.8f)
             )
-            IconButton(
+            CaIconButton(
                 onClick = { removeFavoriteMovie(movieItem) },
-                modifier = Modifier.weight(0.1f)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_favorite),
-                    contentDescription = null,
-                    tint = MaterialTheme.colors.primary
-                )
-            }
+                modifier = Modifier.weight(0.1f),
+                content = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_favorite),
+                        contentDescription = null,
+                        tint = MaterialTheme.colors.primary
+                    )
+                }
+            )
         }
     }
 }

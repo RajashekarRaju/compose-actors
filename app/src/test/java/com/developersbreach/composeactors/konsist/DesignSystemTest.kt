@@ -17,6 +17,26 @@ import org.junit.Test
 class DesignSystemTest {
 
     @Test
+    fun `no direct usage of androidx compose iconbutton should be allowed except designSystem`() {
+        checkNoDirectUsageExceptDesignSystem(
+            materialComponent = "androidx.compose.material.IconButton",
+            excludePaths = arrayOf(
+                "design-system/src/main/java/com/developersbreach/designsystem/components/IconButton.kt"
+            )
+        )
+    }
+
+    @Test
+    fun `no direct usage of androidx compose scaffold should be allowed except designSystem`() {
+        checkNoDirectUsageExceptDesignSystem(
+            materialComponent = "androidx.compose.material.Scaffold",
+            excludePaths = arrayOf(
+                "design-system/src/main/java/com/developersbreach/designsystem/components/Scaffold.kt"
+            )
+        )
+    }
+
+    @Test
     fun `no direct usage of androidx compose divider should be allowed except designSystem`() {
         checkNoDirectUsageExceptDesignSystem(
             materialComponent = "androidx.compose.material.Divider",

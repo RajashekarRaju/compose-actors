@@ -15,7 +15,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
@@ -31,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.designsystem.components.CaIconButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -59,7 +59,7 @@ fun HomeBottomBar(
                 modifier = Modifier.fillMaxHeight(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(
+                CaIconButton(
                     onClick = {
                         coroutineScope.launch {
                             modalSheetSheet.show()
@@ -67,15 +67,15 @@ fun HomeBottomBar(
                     },
                     modifier = Modifier
                         .padding(start = 16.dp)
-                        .size(28.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_arrow_up),
-                        contentDescription = "",
-                        tint = MaterialTheme.colors.onBackground
-                    )
-                }
-
+                        .size(28.dp),
+                    content = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_arrow_up),
+                            contentDescription = "",
+                            tint = MaterialTheme.colors.onBackground
+                        )
+                    }
+                )
                 Text(
                     text = stringResource(id = R.string.app_name),
                     color = MaterialTheme.colors.onBackground,
