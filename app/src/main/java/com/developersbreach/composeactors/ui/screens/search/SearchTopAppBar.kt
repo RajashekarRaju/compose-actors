@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -117,13 +116,9 @@ fun SearchAppBar(
                             keyboardState = keyboardState
                         )
                     },
-                    content = {
-                        Icon(
-                            imageVector = Icons.Rounded.ArrowBack,
-                            tint = MaterialTheme.colors.onBackground,
-                            contentDescription = stringResource(id = R.string.cd_search_icon)
-                        )
-                    }
+                    imageVector = Icons.Rounded.ArrowBack,
+                    tint = MaterialTheme.colors.onBackground,
+                    contentDescription = stringResource(id = R.string.cd_search_icon)
                 )
             },
             trailingIcon = {
@@ -134,14 +129,9 @@ fun SearchAppBar(
                             closeKeyboard()
                         },
                         modifier = Modifier,
-                        content = {
-                            Icon(
-                                imageVector = Icons.Rounded.Clear,
-                                tint = MaterialTheme.colors.onBackground,
-                                contentDescription = stringResource(id = R.string.cd_clear_icon)
-                            )
-                        }
-
+                        imageVector = Icons.Rounded.Clear,
+                        tint = MaterialTheme.colors.onBackground,
+                        contentDescription = stringResource(id = R.string.cd_clear_icon)
                     )
                 } else {
                     CaIconButton(
@@ -150,13 +140,9 @@ fun SearchAppBar(
                             // This starts the activity and populates the intent with the speech text.
                             resultLauncher.launch(createLaunchSpeechRecognitionIntent)
                         },
-                        content = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_mic),
-                                tint = MaterialTheme.colors.onBackground,
-                                contentDescription = "",
-                            )
-                        }
+                        painter = painterResource(id = R.drawable.ic_mic),
+                        tint = MaterialTheme.colors.onBackground,
+                        contentDescription = "",
                     )
                 }
             },

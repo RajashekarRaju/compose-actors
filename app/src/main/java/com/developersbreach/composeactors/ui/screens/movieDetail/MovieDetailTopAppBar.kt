@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -47,13 +46,9 @@ fun MovieDetailTopAppBar(
         CaIconButton(
             onClick = navigateUp,
             modifier = Modifier.padding(start = 4.dp),
-            content = {
-                Icon(
-                    imageVector = Icons.Rounded.ArrowBack,
-                    tint = MaterialTheme.colors.onBackground,
-                    contentDescription = stringResource(id = R.string.cd_up_button)
-                )
-            }
+            imageVector = Icons.Rounded.ArrowBack,
+            tint = MaterialTheme.colors.onBackground,
+            contentDescription = stringResource(id = R.string.cd_up_button)
         )
         Text(
             text = "$title",

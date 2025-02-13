@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -138,13 +137,9 @@ private fun ItemFavoritePerson(
                 CaIconButton(
                     onClick = { removeFavoritePerson(item) },
                     modifier = Modifier,
-                    content = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_favorite),
-                            contentDescription = null,
-                            tint = MaterialTheme.colors.primary
-                        )
-                    }
+                    painter = painterResource(id = R.drawable.ic_favorite),
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.primary
                 )
             }
         }

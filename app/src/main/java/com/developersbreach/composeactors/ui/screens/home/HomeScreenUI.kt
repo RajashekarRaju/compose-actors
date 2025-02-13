@@ -189,7 +189,7 @@ private fun HomeScreenUI(
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeScreenUILightPreview() {
+fun HomeScreenUILightPreview() {
     ComposeActorsTheme(darkTheme = false) {
         HomeScreenUI(
             navigateToSelectedPerson = {},

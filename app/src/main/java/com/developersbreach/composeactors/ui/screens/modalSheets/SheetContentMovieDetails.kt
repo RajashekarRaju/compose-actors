@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -118,13 +117,9 @@ private fun HeaderModalSheet(
             modifier = Modifier
                 .weight(2f)
                 .align(alignment = Alignment.CenterVertically),
-            content = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_chevron_right),
-                    tint = MaterialTheme.colors.onSurface.copy(alpha = 0.75f),
-                    contentDescription = ""
-                )
-            }
+            painter = painterResource(id = R.drawable.ic_chevron_right),
+            tint = MaterialTheme.colors.onSurface.copy(alpha = 0.75f),
+            contentDescription = ""
         )
     }
 }

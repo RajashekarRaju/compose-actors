@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -36,13 +35,9 @@ internal fun ActorDetailsTopAppBar(
         CaIconButton(
             onClick = navigateUp,
             modifier = Modifier.align(alignment = Alignment.CenterStart),
-            content = {
-                Icon(
-                    imageVector = Icons.Rounded.ArrowBack,
-                    tint = MaterialTheme.colors.onBackground,
-                    contentDescription = stringResource(id = R.string.cd_up_button)
-                )
-            }
+            imageVector = Icons.Rounded.ArrowBack,
+            tint = MaterialTheme.colors.onBackground,
+            contentDescription = stringResource(id = R.string.cd_up_button)
         )
 
         Text(

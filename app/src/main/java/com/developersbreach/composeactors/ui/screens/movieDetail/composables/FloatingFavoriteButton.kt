@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExtendedFloatingActionButton
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -20,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.designsystem.components.CaIcon
 
 @Composable
 fun FloatingAddToFavoritesButton(
@@ -52,7 +52,7 @@ fun FloatingAddToFavoritesButton(
                 }
             },
             icon = {
-                Icon(
+                CaIcon(
                     contentDescription = "",
                     tint = MaterialTheme.colors.onPrimary,
                     imageVector = if (isFavorite) {

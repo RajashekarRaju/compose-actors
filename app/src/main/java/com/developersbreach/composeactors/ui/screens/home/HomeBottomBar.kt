@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
@@ -68,13 +67,9 @@ fun HomeBottomBar(
                     modifier = Modifier
                         .padding(start = 16.dp)
                         .size(28.dp),
-                    content = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_arrow_up),
-                            contentDescription = "",
-                            tint = MaterialTheme.colors.onBackground
-                        )
-                    }
+                    painter = painterResource(id = R.drawable.ic_arrow_up),
+                    contentDescription = "",
+                    tint = MaterialTheme.colors.onBackground
                 )
                 Text(
                     text = stringResource(id = R.string.app_name),
