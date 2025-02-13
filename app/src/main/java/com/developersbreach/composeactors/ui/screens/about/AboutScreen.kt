@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaScaffold
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
@@ -35,7 +35,8 @@ fun AboutScreen(
     Surface(
         color = MaterialTheme.colors.background,
     ) {
-        Scaffold(
+        CaScaffold(
+            modifier = Modifier,
             topBar = {
                 AboutTopAppBar(navigateUp = navigateUp)
             },

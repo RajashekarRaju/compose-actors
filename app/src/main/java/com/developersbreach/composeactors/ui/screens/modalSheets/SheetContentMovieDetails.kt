@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -33,6 +31,7 @@ import com.developersbreach.composeactors.ui.screens.movieDetail.composables.Mov
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.composeactors.utils.getMovieRuntimeFormatted
 import com.developersbreach.designsystem.components.CaDivider
+import com.developersbreach.designsystem.components.CaIconButton
 
 /**
  * Content inside modal sheet.
@@ -109,7 +108,7 @@ private fun HeaderModalSheet(
         )
 
         // On clicking this icon triggers detail screen navigation with movie Id.
-        IconButton(
+        CaIconButton(
             onClick = {
                 if (movie != null) {
                     onClickMovie(movie.movieId)
@@ -117,14 +116,11 @@ private fun HeaderModalSheet(
             },
             modifier = Modifier
                 .weight(2f)
-                .align(alignment = Alignment.CenterVertically)
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_chevron_right),
-                tint = MaterialTheme.colors.onSurface.copy(alpha = 0.75f),
-                contentDescription = ""
-            )
-        }
+                .align(alignment = Alignment.CenterVertically),
+            painter = painterResource(id = R.drawable.ic_chevron_right),
+            tint = MaterialTheme.colors.onSurface.copy(alpha = 0.75f),
+            contentDescription = ""
+        )
     }
 }
 

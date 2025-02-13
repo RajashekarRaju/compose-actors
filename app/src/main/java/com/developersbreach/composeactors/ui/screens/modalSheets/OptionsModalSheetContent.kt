@@ -18,8 +18,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
@@ -36,6 +34,8 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.screens.home.HomeOptionItems
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaIcon
+import com.developersbreach.designsystem.components.CaIconButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -63,20 +63,17 @@ fun OptionsModalSheetContent(
                 .fillMaxWidth()
                 .padding(start = 20.dp)
         ) {
-            IconButton(
+            CaIconButton(
                 modifier = Modifier.size(28.dp),
                 onClick = {
                     coroutineScope.launch {
                         modalSheetSheet.hide()
                     }
-                }
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_down),
-                    contentDescription = "",
-                    tint = MaterialTheme.colors.onBackground
-                )
-            }
+                },
+                painter = painterResource(id = R.drawable.ic_arrow_down),
+                contentDescription = "",
+                tint = MaterialTheme.colors.onBackground
+            )
 
             Spacer(modifier = Modifier.width(20.dp))
 
@@ -130,7 +127,7 @@ private fun ItemOptionRow(
             }
             .padding(top = 8.dp, start = 20.dp, end = 20.dp, bottom = 8.dp)
     ) {
-        Icon(
+        CaIcon(
             painter = painterResource(id = option.icon),
             contentDescription = "",
             tint = MaterialTheme.colors.onBackground.copy(alpha = 0.75f)

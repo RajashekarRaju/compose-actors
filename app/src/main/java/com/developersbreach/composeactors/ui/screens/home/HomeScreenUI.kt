@@ -15,7 +15,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
@@ -39,6 +38,7 @@ import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalShe
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaDivider
+import com.developersbreach.designsystem.components.CaScaffold
 import kotlinx.coroutines.flow.flow
 
 @Composable
@@ -83,10 +83,9 @@ fun HomeScreenUI(
                 )
             },
         ) {
-            Scaffold(
-                // attach snackbar host state to the scaffold
+            CaScaffold(
+                modifier = Modifier,
                 scaffoldState = scaffoldState,
-                // Custom AppBar contains fake search bar.
                 topBar = {
                     HomeTopAppBar(
                         modifier = Modifier.testTag("TestTag:HomeTopAppBar"),
@@ -99,28 +98,28 @@ fun HomeScreenUI(
                         modalSheetSheet = modalSheetState
                     )
                 },
-                // Host for custom snackbar
-                snackbarHost = { HomeSnackbar(it) }
-            ) { paddingValues ->
-                Box(
-                    modifier = modifier.padding(paddingValues = paddingValues)
-                ) {
-                    // Main content for this screen
-                    HomeScreenUI(
-                        navigateToSelectedPerson = navigateToSelectedPerson,
-                        data = data,
-                        homeSheetUIState = sheetUiState,
-                        navigateToSelectedMovie = navigateToSelectedMovie,
-                        updateSearchType = updateHomeSearchType
-                    )
+                snackbarHost = { HomeSnackbar(it) },
+                content = {
+                    Box(
+                        modifier = modifier.padding(paddingValues = it)
+                    ) {
+                        // Main content for this screen
+                        HomeScreenUI(
+                            navigateToSelectedPerson = navigateToSelectedPerson,
+                            data = data,
+                            homeSheetUIState = sheetUiState,
+                            navigateToSelectedMovie = navigateToSelectedMovie,
+                            updateSearchType = updateHomeSearchType
+                        )
 
-                    // Perform network check and show snackbar if offline
-                    IfOfflineShowSnackbar(scaffoldState)
+                        // Perform network check and show snackbar if offline
+                        IfOfflineShowSnackbar(scaffoldState)
 
-                    // If Api key is missing, show a SnackBar.
-                    ApiKeyMissingShowSnackbar(scaffoldState)
+                        // If Api key is missing, show a SnackBar.
+                        ApiKeyMissingShowSnackbar(scaffoldState)
+                    }
                 }
-            }
+            )
         }
     }
 }

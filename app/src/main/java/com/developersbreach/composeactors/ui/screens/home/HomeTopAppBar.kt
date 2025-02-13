@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -25,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaIcon
 
 /**
  * Appbar contains [HomeTopAppBarContent] which does not perform search query directly.
@@ -66,7 +66,7 @@ private fun HomeTopAppBarContent(
     ) {
         Spacer(modifier = Modifier.padding(horizontal = 8.dp))
 
-        Icon(
+        CaIcon(
             imageVector = Icons.Default.Search,
             contentDescription = stringResource(R.string.cd_search_icon),
             tint = MaterialTheme.colors.onSurface,

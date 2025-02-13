@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -35,6 +33,7 @@ import com.developersbreach.composeactors.ui.components.verticalGradientScrim
 import com.developersbreach.composeactors.ui.screens.favorites.NoFavoritesFoundUI
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.composeactors.utils.getPlaceOfBirth
+import com.developersbreach.designsystem.components.CaIconButton
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -135,16 +134,13 @@ private fun ItemFavoritePerson(
                     )
                 }
 
-                IconButton(
+                CaIconButton(
                     onClick = { removeFavoritePerson(item) },
-                    modifier = Modifier
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_favorite),
-                        contentDescription = null,
-                        tint = MaterialTheme.colors.primary
-                    )
-                }
+                    modifier = Modifier,
+                    painter = painterResource(id = R.drawable.ic_favorite),
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.primary
+                )
             }
         }
     }

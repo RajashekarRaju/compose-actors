@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -40,6 +38,7 @@ import com.developersbreach.composeactors.ui.components.closeKeyboardAndNavigate
 import com.developersbreach.composeactors.ui.components.getCurrentKeyboardState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaDivider
+import com.developersbreach.designsystem.components.CaIconButton
 
 /**
  * @param navigateUp Navigates to previous screen.
@@ -108,7 +107,7 @@ fun SearchAppBar(
                 }
             },
             leadingIcon = {
-                IconButton(
+                CaIconButton(
                     modifier = Modifier.padding(start = 4.dp),
                     onClick = {
                         closeKeyboardAndNavigateUp(
@@ -116,42 +115,35 @@ fun SearchAppBar(
                             closeKeyboard = closeKeyboard,
                             keyboardState = keyboardState
                         )
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.ArrowBack,
-                        tint = MaterialTheme.colors.onBackground,
-                        contentDescription = stringResource(id = R.string.cd_search_icon)
-                    )
-                }
+                    },
+                    imageVector = Icons.Rounded.ArrowBack,
+                    tint = MaterialTheme.colors.onBackground,
+                    contentDescription = stringResource(id = R.string.cd_search_icon)
+                )
             },
             trailingIcon = {
                 if (showClearQueryIcon) {
-                    IconButton(
+                    CaIconButton(
                         onClick = {
                             query = ""
                             closeKeyboard()
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Clear,
-                            tint = MaterialTheme.colors.onBackground,
-                            contentDescription = stringResource(id = R.string.cd_clear_icon)
-                        )
-                    }
+                        },
+                        modifier = Modifier,
+                        imageVector = Icons.Rounded.Clear,
+                        tint = MaterialTheme.colors.onBackground,
+                        contentDescription = stringResource(id = R.string.cd_clear_icon)
+                    )
                 } else {
-                    IconButton(
+                    CaIconButton(
+                        modifier = Modifier,
                         onClick = {
                             // This starts the activity and populates the intent with the speech text.
                             resultLauncher.launch(createLaunchSpeechRecognitionIntent)
-                        }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_mic),
-                            tint = MaterialTheme.colors.onBackground,
-                            contentDescription = "",
-                        )
-                    }
+                        },
+                        painter = painterResource(id = R.drawable.ic_mic),
+                        tint = MaterialTheme.colors.onBackground,
+                        contentDescription = "",
+                    )
                 }
             },
             placeholder = { Text(text = searchHint) },
