@@ -17,6 +17,16 @@ import org.junit.Test
 class DesignSystemTest {
 
     @Test
+    fun `no direct usage of androidx compose image should be allowed except designSystem`() {
+        checkNoDirectUsageExceptDesignSystem(
+            materialComponent = "androidx.compose.foundation.Image",
+            excludePaths = arrayOf(
+                "design-system/src/main/java/com/developersbreach/designsystem/components/Image.kt"
+            )
+        )
+    }
+
+    @Test
     fun `no direct usage of androidx compose icon should be allowed except designSystem`() {
         checkNoDirectUsageExceptDesignSystem(
             materialComponent = "androidx.compose.material.Icon",

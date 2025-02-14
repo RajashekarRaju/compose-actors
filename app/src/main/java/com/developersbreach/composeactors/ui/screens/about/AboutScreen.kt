@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.screens.about
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaImage
 import com.developersbreach.designsystem.components.CaScaffold
 
 @OptIn(ExperimentalTextApi::class)
@@ -47,7 +47,7 @@ fun AboutScreen(
                         .fillMaxSize()
                         .padding(paddingValues = paddingValues)
                 ) {
-                    Image(
+                    CaImage(
                         painter = painterResource(id = R.drawable.ic_tmdb_logo),
                         contentDescription = stringResource(id = R.string.cd_tmdb_api_attribution_logo),
                         modifier = Modifier
@@ -55,7 +55,6 @@ fun AboutScreen(
                             .fillMaxWidth()
                             .wrapContentHeight()
                     )
-
                     Text(
                         text = stringResource(id = R.string.tmdb_api_attribution),
                         modifier = Modifier.padding(horizontal = 40.dp),
