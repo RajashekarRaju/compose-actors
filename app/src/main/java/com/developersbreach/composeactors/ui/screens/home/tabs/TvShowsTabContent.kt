@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.screens.home.tabs
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.screens.home.HomeSheetUIState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaImage
 
 @Composable
 fun TvShowsTabContent(
@@ -30,12 +30,11 @@ fun TvShowsTabContent(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
+            CaImage(
                 painter = painterResource(id = R.drawable.ic_tv_show),
                 contentDescription = "",
                 modifier = Modifier.size(240.dp)
             )
-
             Text(
                 text = "Feature Coming Soon",
                 style = MaterialTheme.typography.h6,

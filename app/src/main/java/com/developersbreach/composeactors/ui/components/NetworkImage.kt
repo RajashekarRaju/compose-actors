@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -11,6 +10,7 @@ import androidx.compose.ui.layout.ContentScale
 import coil.compose.rememberImagePainter
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
+import com.developersbreach.designsystem.components.CaImage
 
 /**
  * Reusable composable used in all screens to load image.
@@ -29,7 +29,7 @@ fun LoadNetworkImage(
     shape: Shape,
     showAnimProgress: Boolean = true
 ) {
-    Image(
+    CaImage(
         painter = rememberImagePainter(
             data = imageUrl,
             builder = {

@@ -15,7 +15,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Surface
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -39,6 +38,7 @@ import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.designsystem.components.CaScaffold
+import com.developersbreach.designsystem.components.CaSurface
 import kotlinx.coroutines.flow.flow
 
 @Composable
@@ -63,65 +63,66 @@ fun HomeScreenUI(
         skipHalfExpanded = true
     )
 
-    Surface(
+    CaSurface(
         color = MaterialTheme.colors.background,
-        modifier = modifier
-    ) {
-        // TODO Replace ModalSheet with BottomSheetScaffold
-        ModalBottomSheetLayout(
-            sheetState = modalSheetState,
-            scrimColor = Color.Black.copy(alpha = 0.5f),
-            sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-            sheetBackgroundColor = MaterialTheme.colors.background,
-            sheetContent = {
-                OptionsModalSheetContent(
-                    modalSheetSheet = modalSheetState,
-                    navigateToFavorite = navigateToFavorite,
-                    navigateToSearch = { navigateToSearch(SearchType.Movies) },
-                    navigateToProfile = { },
-                    navigateToAbout = navigateToAbout
-                )
-            },
-        ) {
-            CaScaffold(
-                modifier = Modifier,
-                scaffoldState = scaffoldState,
-                topBar = {
-                    HomeTopAppBar(
-                        modifier = Modifier.testTag("TestTag:HomeTopAppBar"),
-                        navigateToSearch = navigateToSearch,
-                        searchType = navigateToSearchBySearchType
+        modifier = modifier,
+        content = {
+            // TODO Replace ModalSheet with BottomSheetScaffold
+            ModalBottomSheetLayout(
+                sheetState = modalSheetState,
+                scrimColor = Color.Black.copy(alpha = 0.5f),
+                sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+                sheetBackgroundColor = MaterialTheme.colors.background,
+                sheetContent = {
+                    OptionsModalSheetContent(
+                        modalSheetSheet = modalSheetState,
+                        navigateToFavorite = navigateToFavorite,
+                        navigateToSearch = { navigateToSearch(SearchType.Movies) },
+                        navigateToProfile = { },
+                        navigateToAbout = navigateToAbout
                     )
                 },
-                bottomBar = {
-                    HomeBottomBar(
-                        modalSheetSheet = modalSheetState
-                    )
-                },
-                snackbarHost = { HomeSnackbar(it) },
-                content = {
-                    Box(
-                        modifier = modifier.padding(paddingValues = it)
-                    ) {
-                        // Main content for this screen
-                        HomeScreenUI(
-                            navigateToSelectedPerson = navigateToSelectedPerson,
-                            data = data,
-                            homeSheetUIState = sheetUiState,
-                            navigateToSelectedMovie = navigateToSelectedMovie,
-                            updateSearchType = updateHomeSearchType
+            ) {
+                CaScaffold(
+                    modifier = Modifier,
+                    scaffoldState = scaffoldState,
+                    topBar = {
+                        HomeTopAppBar(
+                            modifier = Modifier.testTag("TestTag:HomeTopAppBar"),
+                            navigateToSearch = navigateToSearch,
+                            searchType = navigateToSearchBySearchType
                         )
+                    },
+                    bottomBar = {
+                        HomeBottomBar(
+                            modalSheetSheet = modalSheetState
+                        )
+                    },
+                    snackbarHost = { HomeSnackbar(it) },
+                    content = {
+                        Box(
+                            modifier = modifier.padding(paddingValues = it)
+                        ) {
+                            // Main content for this screen
+                            HomeScreenUI(
+                                navigateToSelectedPerson = navigateToSelectedPerson,
+                                data = data,
+                                homeSheetUIState = sheetUiState,
+                                navigateToSelectedMovie = navigateToSelectedMovie,
+                                updateSearchType = updateHomeSearchType
+                            )
 
-                        // Perform network check and show snackbar if offline
-                        IfOfflineShowSnackbar(scaffoldState)
+                            // Perform network check and show snackbar if offline
+                            IfOfflineShowSnackbar(scaffoldState)
 
-                        // If Api key is missing, show a SnackBar.
-                        ApiKeyMissingShowSnackbar(scaffoldState)
+                            // If Api key is missing, show a SnackBar.
+                            ApiKeyMissingShowSnackbar(scaffoldState)
+                        }
                     }
-                }
-            )
+                )
+            }
         }
-    }
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)

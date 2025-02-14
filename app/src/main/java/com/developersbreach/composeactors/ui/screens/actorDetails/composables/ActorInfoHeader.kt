@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.screens.actorDetails.composables
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +24,7 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.composeactors.utils.calculateAge
 import com.developersbreach.composeactors.utils.getPlaceOfBirth
 import com.developersbreach.composeactors.utils.getPopularity
+import com.developersbreach.designsystem.components.CaImage
 
 /**
  * Row with 3 elements which shows actor details just below actor image.
@@ -121,8 +121,8 @@ private fun CountryInfo(
         Box(
             modifier = Modifier.borderRevealAnimation()
         ) {
-            Image(
-                painterResource(id = R.drawable.ic_globe),
+            CaImage(
+                painter = painterResource(id = R.drawable.ic_globe),
                 contentDescription = stringResource(R.string.cd_place_of_birth_icon),
                 colorFilter = ColorFilter.tint(color = MaterialTheme.colors.onSurface),
                 modifier = Modifier

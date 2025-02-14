@@ -3,7 +3,6 @@ package com.developersbreach.composeactors.ui.screens.search
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -17,6 +16,7 @@ import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
 import com.developersbreach.composeactors.ui.components.ShowSearchProgress
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaScaffold
+import com.developersbreach.designsystem.components.CaSurface
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -31,54 +31,54 @@ fun SearchScreenUI(
     val closeKeyboard = {
         keyboardController?.hide()
     }
-
-    Surface(
+    CaSurface(
         color = MaterialTheme.colors.background,
-        modifier = Modifier.semantics { testTag = "TestTag:SearchScreen" }
-    ) {
-        CaScaffold(
-            modifier = Modifier,
-            topBar = {
-                SearchAppBar(
-                    navigateUp = navigateUp,
-                    onQueryChange = onSearchQueryChange,
-                    searchHint = searchHint,
-                    closeKeyboard = closeKeyboard
-                )
-            },
-            content = {paddingValues ->
-                Box(
-                    modifier = Modifier.padding(paddingValues)
-                ) {
-                    when (data) {
-                        is ActorSearch -> {
-                            // Show progress while search is happening
-                            val isLoadingData = !data.isSearchingResults && data.personList.isEmpty()
-                            ShowSearchProgress(isLoadingData)
-                            // Main content for this screen
-                            PersonSearchUI(
-                                persons = data.personList,
-                                navigateToSelectedPerson = navigateToSearchBySearchType,
-                                closeKeyboard = closeKeyboard
-                            )
-                        }
-                        is MovieSearch -> {
-                            // Show progress while search is happening
-                            val isLoadingData = !data.isSearchingResults && data.movieList.isEmpty()
-                            ShowSearchProgress(isLoadingData)
-                            // Main content for this screen
-                            MovieSearchUI(
-                                movieList = data.movieList,
-                                navigateToSelectedMovie = navigateToSearchBySearchType,
-                                closeKeyboard = closeKeyboard
-                            )
+        modifier = Modifier.semantics { testTag = "TestTag:SearchScreen" },
+        content = {
+            CaScaffold(
+                modifier = Modifier,
+                topBar = {
+                    SearchAppBar(
+                        navigateUp = navigateUp,
+                        onQueryChange = onSearchQueryChange,
+                        searchHint = searchHint,
+                        closeKeyboard = closeKeyboard
+                    )
+                },
+                content = {paddingValues ->
+                    Box(
+                        modifier = Modifier.padding(paddingValues)
+                    ) {
+                        when (data) {
+                            is ActorSearch -> {
+                                // Show progress while search is happening
+                                val isLoadingData = !data.isSearchingResults && data.personList.isEmpty()
+                                ShowSearchProgress(isLoadingData)
+                                // Main content for this screen
+                                PersonSearchUI(
+                                    persons = data.personList,
+                                    navigateToSelectedPerson = navigateToSearchBySearchType,
+                                    closeKeyboard = closeKeyboard
+                                )
+                            }
+                            is MovieSearch -> {
+                                // Show progress while search is happening
+                                val isLoadingData = !data.isSearchingResults && data.movieList.isEmpty()
+                                ShowSearchProgress(isLoadingData)
+                                // Main content for this screen
+                                MovieSearchUI(
+                                    movieList = data.movieList,
+                                    navigateToSelectedMovie = navigateToSearchBySearchType,
+                                    closeKeyboard = closeKeyboard
+                                )
+                            }
                         }
                     }
-                }
 
-            }
-        )
-    }
+                }
+            )
+        }
+    )
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFF211a18)

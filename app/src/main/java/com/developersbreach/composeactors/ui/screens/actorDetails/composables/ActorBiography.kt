@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.screens.actorDetails.composables
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.verticalGradientScrim
+import com.developersbreach.designsystem.components.CaImage
 
 /**
  * @param biography shows paragraph with gradient background drawn from image.
@@ -47,14 +47,13 @@ internal fun ActorBiography(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
+            CaImage(
                 painter = painterResource(id = R.drawable.ic_biography),
                 contentDescription = stringResource(id = R.string.cd_biography_icon),
                 colorFilter = ColorFilter.tint(color = MaterialTheme.colors.onSurface),
                 alpha = 0.5f,
                 modifier = Modifier.size(36.dp),
             )
-
             CategoryTitle(
                 title = stringResource(R.string.cast_biography_title)
             )

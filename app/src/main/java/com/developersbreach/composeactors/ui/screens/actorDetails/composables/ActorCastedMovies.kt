@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.screens.actorDetails.composables
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,6 +21,7 @@ import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsData
+import com.developersbreach.designsystem.components.CaImage
 import kotlinx.coroutines.Job
 
 /**
@@ -38,7 +38,7 @@ internal fun ActorCastedMovies(
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
+        CaImage(
             painter = painterResource(id = R.drawable.ic_movies_cast),
             contentDescription = stringResource(R.string.cd_cast_icon),
             colorFilter = ColorFilter.tint(color = MaterialTheme.colors.onSurface),
@@ -47,7 +47,6 @@ internal fun ActorCastedMovies(
                 .padding(start = 12.dp)
                 .size(36.dp)
         )
-
         CategoryTitle(
             title = stringResource(R.string.cast_movie_title)
         )

@@ -26,16 +26,3 @@ fun CaScaffold(
         content = { content(it) }
     )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
