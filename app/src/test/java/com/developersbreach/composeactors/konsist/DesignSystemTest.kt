@@ -17,6 +17,16 @@ import org.junit.Test
 class DesignSystemTest {
 
     @Test
+    fun `no direct usage of androidx compose surface should be allowed except designSystem`() {
+        checkNoDirectUsageExceptDesignSystem(
+            materialComponent = "androidx.compose.material.Surface",
+            excludePaths = arrayOf(
+                "design-system/src/main/java/com/developersbreach/designsystem/components/Surface.kt"
+            )
+        )
+    }
+
+    @Test
     fun `no direct usage of androidx compose card should be allowed except designSystem`() {
         checkNoDirectUsageExceptDesignSystem(
             materialComponent = "androidx.compose.material.Card",

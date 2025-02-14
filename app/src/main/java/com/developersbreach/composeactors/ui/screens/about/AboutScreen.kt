@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,56 +25,59 @@ import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaImage
 import com.developersbreach.designsystem.components.CaScaffold
+import com.developersbreach.designsystem.components.CaSurface
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
 fun AboutScreen(
     navigateUp: () -> Unit
 ) {
-    Surface(
+
+    CaSurface(
         color = MaterialTheme.colors.background,
-    ) {
-        CaScaffold(
-            modifier = Modifier,
-            topBar = {
-                AboutTopAppBar(navigateUp = navigateUp)
-            },
-            content = { paddingValues ->
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues = paddingValues)
-                ) {
-                    CaImage(
-                        painter = painterResource(id = R.drawable.ic_tmdb_logo),
-                        contentDescription = stringResource(id = R.string.cd_tmdb_api_attribution_logo),
-                        modifier = Modifier
-                            .padding(80.dp)
-                            .fillMaxWidth()
-                            .wrapContentHeight()
-                    )
-                    Text(
-                        text = stringResource(id = R.string.tmdb_api_attribution),
-                        modifier = Modifier.padding(horizontal = 40.dp),
-                        style = TextStyle(
-                            lineHeight = 24.sp,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 20.sp,
-                            textAlign = TextAlign.Center,
-                            brush = Brush.linearGradient(
-                                listOf(
-                                    Color(0xFF90CEA1),
-                                    Color(0xFF3CBEC9),
-                                    Color(0xFF00B3E5)
+        content = {
+                CaScaffold(
+                    modifier = Modifier,
+                    topBar = {
+                        AboutTopAppBar(navigateUp = navigateUp)
+                    },
+                    content = { paddingValues ->
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(paddingValues = paddingValues)
+                        ) {
+                            CaImage(
+                                painter = painterResource(id = R.drawable.ic_tmdb_logo),
+                                contentDescription = stringResource(id = R.string.cd_tmdb_api_attribution_logo),
+                                modifier = Modifier
+                                    .padding(80.dp)
+                                    .fillMaxWidth()
+                                    .wrapContentHeight()
+                            )
+                            Text(
+                                text = stringResource(id = R.string.tmdb_api_attribution),
+                                modifier = Modifier.padding(horizontal = 40.dp),
+                                style = TextStyle(
+                                    lineHeight = 24.sp,
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = 20.sp,
+                                    textAlign = TextAlign.Center,
+                                    brush = Brush.linearGradient(
+                                        listOf(
+                                            Color(0xFF90CEA1),
+                                            Color(0xFF3CBEC9),
+                                            Color(0xFF00B3E5)
+                                        )
+                                    )
                                 )
                             )
-                        )
-                    )
-                }
-            }
-        )
-    }
+                        }
+                    }
+                )
+        }
+    )
 }
 
 @Preview(showBackground = true)
