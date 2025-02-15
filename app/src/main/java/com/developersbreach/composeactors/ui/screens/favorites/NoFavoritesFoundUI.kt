@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.screens.favorites
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaImage
 
 @Composable
 fun NoFavoritesFoundUI() {
@@ -27,12 +27,11 @@ fun NoFavoritesFoundUI() {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
+            CaImage(
                 painter = painterResource(id = R.drawable.ic_no_favorites),
                 contentDescription = "",
                 modifier = Modifier.padding(horizontal = 24.dp)
             )
-
             Text(
                 text = stringResource(R.string.no_favorites_found_message),
                 style = MaterialTheme.typography.h6,

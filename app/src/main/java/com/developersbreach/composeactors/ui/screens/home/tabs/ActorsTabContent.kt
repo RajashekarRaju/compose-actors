@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +33,7 @@ import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeData
+import com.developersbreach.designsystem.components.CaCard
 import com.developersbreach.designsystem.components.CaDivider
 
 
@@ -107,44 +107,47 @@ private fun ItemPerson(
     person: Person,
     onClickPerson: (Int) -> Unit
 ) {
-    Card(
+
+    CaCard(
         modifier = Modifier
             .width(150.dp)
             .clip(shape = MaterialTheme.shapes.large)
-            .clickable(onClick = { onClickPerson(person.personId) })
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.padding(vertical = 12.dp))
+            .clickable(onClick = { onClickPerson(person.personId) }),
+        content = {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.padding(vertical = 12.dp))
 
-            LoadNetworkImage(
-                imageUrl = person.profileUrl,
-                contentDescription = stringResource(R.string.cd_actor_image),
-                shape = CircleShape,
-                modifier = Modifier
-                    .size(120.dp)
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colors.onSurface,
-                        shape = CircleShape
-                    )
-            )
+                LoadNetworkImage(
+                    imageUrl = person.profileUrl,
+                    contentDescription = stringResource(R.string.cd_actor_image),
+                    shape = CircleShape,
+                    modifier = Modifier
+                        .size(120.dp)
+                        .border(
+                            width = 1.dp,
+                            color = MaterialTheme.colors.onSurface,
+                            shape = CircleShape
+                        )
+                )
 
-            Spacer(modifier = Modifier.padding(vertical = 8.dp))
+                Spacer(modifier = Modifier.padding(vertical = 8.dp))
 
-            Text(
-                text = person.personName,
-                style = MaterialTheme.typography.subtitle1,
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
-            )
+                Text(
+                    text = person.personName,
+                    style = MaterialTheme.typography.subtitle1,
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                )
 
-            Spacer(modifier = Modifier.padding(vertical = 12.dp))
+                Spacer(modifier = Modifier.padding(vertical = 12.dp))
+            }
         }
-    }
+
+    )
 }

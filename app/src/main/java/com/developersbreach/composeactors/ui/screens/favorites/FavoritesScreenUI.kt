@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,6 +25,7 @@ import com.developersbreach.composeactors.ui.screens.favorites.tabs.FavoriteMovi
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.designsystem.components.CaScaffold
+import com.developersbreach.designsystem.components.CaSurface
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -46,52 +46,53 @@ fun FavoritesScreenUI(
         pageCount = { favoriteTabs.size }
     )
 
-    Surface(
+    CaSurface(
         color = MaterialTheme.colors.background,
-    ) {
-        CaScaffold(
-            modifier = Modifier,
-            topBar = {
-                FavoritesTopAppBar(navigateUp = navigateUp)
-            },
-            content = { paddingValues ->
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues = paddingValues)
-                ) {
-                    TabsContainer(tabs = favoriteTabs, pagerState = favoritesPagerState)
-                    CaDivider(
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(vertical = 0.dp),
-                        colorAlpha = 0.1f
-                    )
-                    HorizontalPager(
-                        state = favoritesPagerState,
+        content = {
+            CaScaffold(
+                modifier = Modifier,
+                topBar = {
+                    FavoritesTopAppBar(navigateUp = navigateUp)
+                },
+                content = { paddingValues ->
+                    Column(
                         modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth()
-                    ) { index ->
-                        when (index) {
-                            0 -> FavoritePersonsTabContent(
-                                navigateToSelectedPerson = navigateToSelectedPerson,
-                                favoritePeople = favoritePeople,
-                                removeFavoritePerson = removeFavoritePerson
-                            )
+                            .fillMaxSize()
+                            .padding(paddingValues = paddingValues)
+                    ) {
+                        TabsContainer(tabs = favoriteTabs, pagerState = favoritesPagerState)
+                        CaDivider(
+                            thickness = 1.dp,
+                            modifier = Modifier.padding(vertical = 0.dp),
+                            colorAlpha = 0.1f
+                        )
+                        HorizontalPager(
+                            state = favoritesPagerState,
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth()
+                        ) { index ->
+                            when (index) {
+                                0 -> FavoritePersonsTabContent(
+                                    navigateToSelectedPerson = navigateToSelectedPerson,
+                                    favoritePeople = favoritePeople,
+                                    removeFavoritePerson = removeFavoritePerson
+                                )
 
-                            1 -> FavoriteMoviesTabContent(
-                                navigateToSelectedMovie = navigateToSelectedMovie,
-                                favoriteMovies = favoriteMovies,
-                                removeFavoriteMovie = removeFavoriteMovie
-                            )
+                                1 -> FavoriteMoviesTabContent(
+                                    navigateToSelectedMovie = navigateToSelectedMovie,
+                                    favoriteMovies = favoriteMovies,
+                                    removeFavoriteMovie = removeFavoriteMovie
+                                )
 
-                            2 -> FeatureComingSoonTextUI()
+                                2 -> FeatureComingSoonTextUI()
+                            }
                         }
                     }
                 }
-            }
-        )
-    }
+            )
+        }
+    )
 }
 
 @Composable
