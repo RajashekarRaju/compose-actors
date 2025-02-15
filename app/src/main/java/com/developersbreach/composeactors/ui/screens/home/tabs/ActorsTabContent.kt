@@ -107,7 +107,6 @@ private fun ItemPerson(
     person: Person,
     onClickPerson: (Int) -> Unit
 ) {
-
     CaCard(
         modifier = Modifier
             .width(150.dp)
@@ -148,6 +147,5 @@ private fun ItemPerson(
                 Spacer(modifier = Modifier.padding(vertical = 12.dp))
             }
         }
-
     )
 }
