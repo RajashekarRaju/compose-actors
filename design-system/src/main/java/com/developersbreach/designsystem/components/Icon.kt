@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 @Composable
 fun CaIcon(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     imageVector: ImageVector,
     contentDescription: String?,
     iconModifier: Modifier = Modifier,
@@ -26,7 +26,7 @@ fun CaIcon(
 
 @Composable
 fun CaIcon(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     painter: Painter,
     contentDescription: String?,
     iconModifier: Modifier = Modifier,

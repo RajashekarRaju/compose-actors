@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun CaDivider(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     color: Color = MaterialTheme.colors.onBackground,
     thickness: Dp = 1.dp,
     startIndent: Dp = 0.dp,
