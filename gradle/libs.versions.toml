@@ -1,16 +1,16 @@
 [versions]
-androidx-activity = "1.9.3"
+androidx-activity = "1.10.0"
 androidx-appcompat = "1.7.0"
 androidx-hilt = "1.2.0"
 androidx-lifecycle = "2.8.7"
-androidx-navigation = "2.8.5"
+androidx-navigation = "2.8.7"
 androidx-palette = "1.0.0"
 androidx-room = "2.6.1"
 androidx-test-ext = "1.2.1"
 arrow = "2.0.0"
 com-google-dagger = "2.53.1"
 com-google-gms = "4.4.2"
-com-google-firebase = "3.0.2"
+com-google-firebase = "3.0.3"
 konsist = "0.17.3"
 kotlin = "2.0.21"
 kotlinx-coroutines-core = "1.9.0"
@@ -21,21 +21,22 @@ screenshot = "0.0.1-alpha07"
 [libraries]
 androidx-activity-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
-androidx-compose-bom = "androidx.compose:compose-bom:2024.06.00"
+androidx-compose-bom = "androidx.compose:compose-bom:2025.02.00"
 androidx-compose-material = { module = "androidx.compose.material:material" }
+androidx-compose-material-icons-extended = "androidx.compose.material:material-icons-extended:1.7.8"
 androidx-compose-runtime-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui" }
-androidx-compose-ui-ui-test-junit4 = "androidx.compose.ui:ui-test-junit4:1.7.6"
+androidx-compose-ui-ui-test-junit4 = "androidx.compose.ui:ui-test-junit4:1.7.8"
 androidx-compose-ui-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 androidx-compose-ui-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-constraintlayout-constraintlayout-compose = "androidx.constraintlayout:constraintlayout-compose:1.1.0"
-androidx-core-core-ktx = "androidx.core:core-ktx:1.13.1"
+androidx-core-core-ktx = "androidx.core:core-ktx:1.15.0"
 androidx-hilt-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
 androidx-lifecycle-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-navigation-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
-androidx-paging-paging-compose = "androidx.paging:paging-compose:3.3.5"
-androidx-paging-paging-runtime-ktx = "androidx.paging:paging-runtime-ktx:3.3.5"
+androidx-paging-paging-compose = "androidx.paging:paging-compose:3.3.6"
+androidx-paging-paging-runtime-ktx = "androidx.paging:paging-runtime-ktx:3.3.6"
 androidx-palette-palette-ktx = { module = "androidx.palette:palette-ktx", version.ref = "androidx-palette" }
 androidx-room-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-room-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
@@ -48,8 +49,8 @@ com-google-dagger-hilt-android = { module = "com.google.dagger:hilt-android", ve
 hilt-androidx-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx-hilt" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "com-google-dagger" }
 com-google-dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "com-google-dagger" }
-com-google-firebase-analytics = "com.google.firebase:firebase-analytics-ktx:22.1.2"
-com-google-firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:19.3.0"
+com-google-firebase-analytics = "com.google.firebase:firebase-analytics-ktx:22.2.0"
+com-google-firebase-crashlytics = "com.google.firebase:firebase-crashlytics-ktx:19.4.0"
 com-jakewharton-timber = "com.jakewharton.timber:timber:5.0.1"
 io-coil-kt-coil-compose = "io.coil-kt:coil-compose:2.6.0"
 io-mockk = "io.mockk:mockk:1.13.5"

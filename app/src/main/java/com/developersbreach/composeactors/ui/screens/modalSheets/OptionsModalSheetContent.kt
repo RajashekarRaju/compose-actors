@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
@@ -27,6 +26,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,7 +39,6 @@ import com.developersbreach.designsystem.components.CaIconButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun OptionsModalSheetContent(
     modalSheetSheet: ModalBottomSheetState,
@@ -143,32 +142,32 @@ private fun ItemOptionRow(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun OptionsModalSheetContentPreview() {
+    OptionsModalSheetContent(
+        navigateToFavorite = {},
+        navigateToSearch = {},
+        navigateToProfile = {},
+        navigateToAbout = {},
+        modalSheetSheet = ModalBottomSheetState(
+            initialValue = ModalBottomSheetValue.Expanded,
+            density = LocalDensity.current
+        ),
+    )
+}
+
 @Preview
 @Composable
 fun OptionsModalSheetContentLightPreview() {
     ComposeActorsTheme(darkTheme = false) {
-        OptionsModalSheetContent(
-            modalSheetSheet = ModalBottomSheetState(ModalBottomSheetValue.Expanded),
-            navigateToFavorite = {},
-            navigateToSearch = {},
-            navigateToProfile = {},
-            navigateToAbout = {}
-        )
+        OptionsModalSheetContentPreview()
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
 private fun OptionsModalSheetContentDarkPreview() {
     ComposeActorsTheme(darkTheme = true) {
-        OptionsModalSheetContent(
-            modalSheetSheet = ModalBottomSheetState(ModalBottomSheetValue.Expanded),
-            navigateToFavorite = {},
-            navigateToSearch = {},
-            navigateToProfile = {},
-            navigateToAbout = {}
-        )
+        OptionsModalSheetContentPreview()
     }
 }
