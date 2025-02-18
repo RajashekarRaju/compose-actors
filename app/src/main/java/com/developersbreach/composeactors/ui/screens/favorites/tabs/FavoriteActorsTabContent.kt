@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.screens.favorites.tabs
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,7 +34,6 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.composeactors.utils.getPlaceOfBirth
 import com.developersbreach.designsystem.components.CaIconButton
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FavoritePersonsTabContent(
     navigateToSelectedPerson: (Int) -> Unit,

@@ -1,7 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.home
 
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -125,7 +124,6 @@ fun HomeScreenUI(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HomeScreenUI(
     navigateToSelectedPerson: (Int) -> Unit,

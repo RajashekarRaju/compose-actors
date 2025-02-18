@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +33,7 @@ fun FavoritesTopAppBar(
             modifier = Modifier
                 .padding(start = 4.dp)
                 .align(Alignment.CenterStart),
-            imageVector = Icons.Rounded.ArrowBack,
+            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
             tint = MaterialTheme.colors.onBackground,
             contentDescription = stringResource(id = R.string.cd_up_button)
         )

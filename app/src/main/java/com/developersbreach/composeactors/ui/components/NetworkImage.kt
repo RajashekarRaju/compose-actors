@@ -7,7 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
-import coil.compose.rememberImagePainter
+import androidx.compose.ui.platform.LocalContext
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.designsystem.components.CaImage
@@ -29,15 +31,18 @@ fun LoadNetworkImage(
     shape: Shape,
     showAnimProgress: Boolean = true
 ) {
+    val imageRequest: ImageRequest = ImageRequest.Builder(LocalContext.current)
+        .data(data = imageUrl)
+        .apply(block = fun ImageRequest.Builder.() {
+            if (showAnimProgress) {
+                placeholder(R.drawable.animated_progress)
+                error(R.drawable.ic_image_not_available)
+            }
+        })
+        .build()
+
     CaImage(
-        painter = rememberImagePainter(
-            data = imageUrl,
-            builder = {
-                if (showAnimProgress) {
-                    placeholder(R.drawable.animated_progress)
-                    error(R.drawable.ic_image_not_available)
-                }
-            }),
+        painter = rememberAsyncImagePainter(model = imageRequest),
         contentDescription = contentDescription,
         contentScale = ContentScale.Crop,
         modifier = modifier
