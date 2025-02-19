@@ -1,7 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.home
 
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +10,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
@@ -42,7 +40,6 @@ import com.developersbreach.designsystem.components.CaSurface
 import kotlinx.coroutines.flow.flow
 
 @Composable
-@OptIn(ExperimentalMaterialApi::class)
 fun HomeScreenUI(
     modifier: Modifier = Modifier,
     navigateToFavorite: () -> Unit,
@@ -55,7 +52,6 @@ fun HomeScreenUI(
     sheetUiState: HomeSheetUIState,
     updateHomeSearchType: (SearchType) -> Unit
 ) {
-    // Remember state of scaffold to manage snackbar
     val scaffoldState = rememberScaffoldState()
     val modalSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -125,7 +121,6 @@ fun HomeScreenUI(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HomeScreenUI(
     navigateToSelectedPerson: (Int) -> Unit,

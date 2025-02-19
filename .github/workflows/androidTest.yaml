@@ -30,7 +30,7 @@ jobs:
           sudo udevadm trigger --name-match=kvm
 
       - name: Cache Gradle dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
           key: gradle-cache-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
