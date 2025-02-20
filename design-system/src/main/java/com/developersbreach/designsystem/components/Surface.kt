@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.Color
 
 @Composable
 fun CaSurface(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
     color: Color = MaterialTheme.colors.surface,
     ) {
