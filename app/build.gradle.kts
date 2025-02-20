@@ -13,7 +13,7 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.developersbreach.composeactors"
@@ -80,6 +80,7 @@ dependencies {
     implementation(libs.com.google.android.material)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.ui.ui.tooling.preview)
     implementation(libs.androidx.compose.ui.ui.tooling)
     implementation(libs.androidx.activity.activity.compose)

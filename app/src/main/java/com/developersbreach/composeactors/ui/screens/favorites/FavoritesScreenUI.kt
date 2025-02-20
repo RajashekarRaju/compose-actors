@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.screens.favorites
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,7 +26,6 @@ import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.designsystem.components.CaScaffold
 import com.developersbreach.designsystem.components.CaSurface
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FavoritesScreenUI(
     navigateUp: () -> Unit,

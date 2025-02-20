@@ -3,7 +3,6 @@ package com.developersbreach.composeactors.ui.screens.actorDetails
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.runtime.Composable
@@ -24,7 +23,6 @@ import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomShee
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToFavoritesButton
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun ActorDetailsUI(
     data: ActorDetailsData,

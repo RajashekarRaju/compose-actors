@@ -6,8 +6,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
-import androidx.compose.material.ripple.RippleAlpha
-import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -101,19 +99,5 @@ fun CategoryTitle(
                 bottom = bottomPadding
             )
             .alpha(alpha)
-    )
-}
-
-object TransparentRippleTheme : RippleTheme {
-
-    @Composable
-    override fun defaultColor(): Color = Color.Transparent
-
-    @Composable
-    override fun rippleAlpha() = RippleAlpha(
-        draggedAlpha = 0.0f,
-        focusedAlpha = 0.0f,
-        hoveredAlpha = 0.0f,
-        pressedAlpha = 0.0f,
     )
 }

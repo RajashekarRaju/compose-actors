@@ -17,7 +17,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -116,7 +116,7 @@ fun SearchAppBar(
                             keyboardState = keyboardState
                         )
                     },
-                    imageVector = Icons.Rounded.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                     tint = MaterialTheme.colors.onBackground,
                     contentDescription = stringResource(id = R.string.cd_search_icon)
                 )

@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.rememberBottomSheetScaffoldState
@@ -42,8 +41,6 @@ import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomShee
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.Job
 
-
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieDetailsUI(
     modifier: Modifier = Modifier,

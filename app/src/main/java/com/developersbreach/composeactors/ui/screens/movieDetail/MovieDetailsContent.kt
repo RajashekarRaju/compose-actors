@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -23,7 +22,7 @@ import com.developersbreach.composeactors.ui.screens.movieDetail.composables.Mov
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.MovieGenre
 import kotlinx.coroutines.Job
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieDetailsContent(
     modifier: Modifier = Modifier,
