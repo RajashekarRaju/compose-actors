@@ -17,6 +17,16 @@ import org.junit.Test
 class DesignSystemTest {
 
     @Test
+    fun `no direct usage of androidx compose textField should be allowed except designSystem`() {
+        checkNoDirectUsageExceptDesignSystem(
+            materialComponent = "androidx.compose.material.TextField",
+            excludePaths = arrayOf(
+                "design-system/src/main/java/com/developersbreach/designsystem/components/TextField.kt"
+            )
+        )
+    }
+
+    @Test
     fun `no direct usage of androidx compose snackbar should be allowed except designSystem`() {
         checkNoDirectUsageExceptDesignSystem(
             materialComponent = "androidx.compose.material.Snackbar",
