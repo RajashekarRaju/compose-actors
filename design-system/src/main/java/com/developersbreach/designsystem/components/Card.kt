@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Shape
 
 @Composable
 fun CaCard(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     shape: Shape = MaterialTheme.shapes.medium,
     backgroundColor: Color = MaterialTheme.colors.surface,
     content: @Composable () -> Unit

@@ -109,6 +109,7 @@ fun SearchAppBar(
             leadingIcon = {
                 CaIconButton(
                     modifier = Modifier.padding(start = 4.dp),
+                    iconModifier = Modifier,
                     onClick = {
                         closeKeyboardAndNavigateUp(
                             navigateUp = navigateUp,
@@ -129,6 +130,7 @@ fun SearchAppBar(
                             closeKeyboard()
                         },
                         modifier = Modifier,
+                        iconModifier = Modifier,
                         imageVector = Icons.Rounded.Clear,
                         tint = MaterialTheme.colors.onBackground,
                         contentDescription = stringResource(id = R.string.cd_clear_icon)
@@ -136,6 +138,7 @@ fun SearchAppBar(
                 } else {
                     CaIconButton(
                         modifier = Modifier,
+                        iconModifier = Modifier,
                         onClick = {
                             // This starts the activity and populates the intent with the speech text.
                             resultLauncher.launch(createLaunchSpeechRecognitionIntent)

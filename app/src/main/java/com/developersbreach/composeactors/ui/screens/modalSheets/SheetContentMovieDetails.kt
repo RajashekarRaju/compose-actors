@@ -117,6 +117,7 @@ private fun HeaderModalSheet(
             modifier = Modifier
                 .weight(2f)
                 .align(alignment = Alignment.CenterVertically),
+            iconModifier = Modifier,
             painter = painterResource(id = R.drawable.ic_chevron_right),
             tint = MaterialTheme.colors.onSurface.copy(alpha = 0.75f),
             contentDescription = ""

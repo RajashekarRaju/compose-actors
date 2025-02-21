@@ -33,6 +33,7 @@ fun AboutTopAppBar(
             modifier = Modifier
                 .padding(start = 4.dp)
                 .align(Alignment.CenterStart),
+            iconModifier = Modifier,
             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
             tint = MaterialTheme.colors.onBackground,
             contentDescription = stringResource(id = R.string.cd_up_button)

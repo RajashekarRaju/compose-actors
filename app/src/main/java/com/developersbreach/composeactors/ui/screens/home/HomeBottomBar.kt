@@ -65,6 +65,7 @@ fun HomeBottomBar(
                     modifier = Modifier
                         .padding(start = 16.dp)
                         .size(28.dp),
+                    iconModifier = Modifier,
                     painter = painterResource(id = R.drawable.ic_arrow_up),
                     contentDescription = "",
                     tint = MaterialTheme.colors.onBackground

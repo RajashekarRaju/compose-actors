@@ -35,6 +35,7 @@ internal fun ActorDetailsTopAppBar(
         CaIconButton(
             onClick = navigateUp,
             modifier = Modifier.align(alignment = Alignment.CenterStart),
+            iconModifier = Modifier,
             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
             tint = MaterialTheme.colors.onBackground,
             contentDescription = stringResource(id = R.string.cd_up_button)

@@ -53,6 +53,7 @@ fun FloatingAddToFavoritesButton(
             },
             icon = {
                 CaIcon(
+                    modifier = Modifier,
                     contentDescription = "",
                     tint = MaterialTheme.colors.onPrimary,
                     imageVector = if (isFavorite) {

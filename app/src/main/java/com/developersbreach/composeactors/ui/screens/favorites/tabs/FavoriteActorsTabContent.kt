@@ -133,6 +133,7 @@ private fun ItemFavoritePerson(
                 }
 
                 CaIconButton(
+                    iconModifier = Modifier,
                     onClick = { removeFavoritePerson(item) },
                     modifier = Modifier,
                     painter = painterResource(id = R.drawable.ic_favorite),
