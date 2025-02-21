@@ -46,6 +46,7 @@ fun MovieDetailTopAppBar(
         CaIconButton(
             onClick = navigateUp,
             modifier = Modifier.padding(start = 4.dp),
+            iconModifier = Modifier,
             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
             tint = MaterialTheme.colors.onBackground,
             contentDescription = stringResource(id = R.string.cd_up_button)

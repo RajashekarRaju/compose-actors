@@ -46,6 +46,7 @@ fun FavoritesScreenUI(
 
     CaSurface(
         color = MaterialTheme.colors.background,
+        modifier = Modifier,
         content = {
             CaScaffold(
                 modifier = Modifier,

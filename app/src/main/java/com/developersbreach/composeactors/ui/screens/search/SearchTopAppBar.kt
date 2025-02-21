@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -39,6 +38,7 @@ import com.developersbreach.composeactors.ui.components.getCurrentKeyboardState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.designsystem.components.CaIconButton
+import com.developersbreach.designsystem.components.CaTextField
 
 /**
  * @param navigateUp Navigates to previous screen.
@@ -95,7 +95,7 @@ fun SearchAppBar(
         // This Spacer avoids colliding content with app bar by matching the height of status bar.
         Spacer(Modifier.statusBarsPadding())
 
-        TextField(
+        CaTextField(
             value = query,
             onValueChange = { newQuery ->
                 // If user makes changes to text, immediately updated it.
@@ -109,6 +109,7 @@ fun SearchAppBar(
             leadingIcon = {
                 CaIconButton(
                     modifier = Modifier.padding(start = 4.dp),
+                    iconModifier = Modifier,
                     onClick = {
                         closeKeyboardAndNavigateUp(
                             navigateUp = navigateUp,
@@ -129,6 +130,7 @@ fun SearchAppBar(
                             closeKeyboard()
                         },
                         modifier = Modifier,
+                        iconModifier = Modifier,
                         imageVector = Icons.Rounded.Clear,
                         tint = MaterialTheme.colors.onBackground,
                         contentDescription = stringResource(id = R.string.cd_clear_icon)
@@ -136,6 +138,7 @@ fun SearchAppBar(
                 } else {
                     CaIconButton(
                         modifier = Modifier,
+                        iconModifier = Modifier,
                         onClick = {
                             // This starts the activity and populates the intent with the speech text.
                             resultLauncher.launch(createLaunchSpeechRecognitionIntent)

@@ -11,7 +11,7 @@ import androidx.compose.ui.layout.ContentScale
 
 @Composable
 fun CaImage(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     painter: Painter,
     contentDescription: String?,
     contentScale: ContentScale = ContentScale.Fit,

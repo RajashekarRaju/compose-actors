@@ -10,11 +10,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 @Composable
 fun CaIconButton(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     onClick: () -> Unit,
     imageVector: ImageVector,
     contentDescription: String?,
-    iconModifier: Modifier = Modifier,
+    iconModifier: Modifier,
     tint: Color = MaterialTheme.colors.onBackground
 ) {
     IconButton(
@@ -22,7 +22,7 @@ fun CaIconButton(
         modifier = modifier,
         content = {
             CaIcon(
-                modifier = iconModifier,
+                modifier= iconModifier,
                 imageVector = imageVector,
                 tint = tint,
                 contentDescription = contentDescription,
@@ -33,11 +33,11 @@ fun CaIconButton(
 
 @Composable
 fun CaIconButton(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     onClick: () -> Unit,
     painter: Painter,
     contentDescription: String?,
-    iconModifier: Modifier = Modifier,
+    iconModifier: Modifier,
     tint: Color = MaterialTheme.colors.onBackground
 ) {
     IconButton(

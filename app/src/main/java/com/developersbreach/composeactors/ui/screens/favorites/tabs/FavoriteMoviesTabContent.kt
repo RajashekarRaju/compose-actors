@@ -101,6 +101,7 @@ private fun ItemFavoriteMovie(
                 modifier = Modifier.weight(0.8f)
             )
             CaIconButton(
+                iconModifier = Modifier,
                 onClick = { removeFavoriteMovie(movieItem) },
                 modifier = Modifier.weight(0.1f),
                 painter = painterResource(id = R.drawable.ic_favorite),
