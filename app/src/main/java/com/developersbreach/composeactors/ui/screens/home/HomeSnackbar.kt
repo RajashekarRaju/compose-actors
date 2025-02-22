@@ -1,7 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.home
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,13 +14,10 @@ fun HomeSnackbar(
     hostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
-    SnackbarHost(hostState) { data ->
-        CaSnackbar(
-            snackbarData = data,
-            // To avoid colliding with navigation bar.
-            modifier = modifier.padding(bottom = 48.dp)
-        )
-    }
+    CaSnackbar(
+        hostState = hostState,
+        modifier = modifier.padding(bottom = 48.dp)
+    )
 }
 
 @Preview
