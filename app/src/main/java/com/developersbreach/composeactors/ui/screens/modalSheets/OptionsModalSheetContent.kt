@@ -64,6 +64,7 @@ fun OptionsModalSheetContent(
         ) {
             CaIconButton(
                 modifier = Modifier.size(28.dp),
+                iconModifier = Modifier,
                 onClick = {
                     coroutineScope.launch {
                         modalSheetSheet.hide()
@@ -129,7 +130,8 @@ private fun ItemOptionRow(
         CaIcon(
             painter = painterResource(id = option.icon),
             contentDescription = "",
-            tint = MaterialTheme.colors.onBackground.copy(alpha = 0.75f)
+            tint = MaterialTheme.colors.onBackground.copy(alpha = 0.75f),
+            modifier = Modifier
         )
 
         Spacer(modifier = Modifier.width(24.dp))

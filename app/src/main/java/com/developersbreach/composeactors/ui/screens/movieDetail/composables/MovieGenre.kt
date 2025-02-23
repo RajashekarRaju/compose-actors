@@ -28,6 +28,7 @@ fun MovieGenre(
                 CaCard(
                     shape = RoundedCornerShape(24.dp),
                     backgroundColor = MaterialTheme.colors.surface,
+                    modifier = Modifier,
                     content = {
                         Text(
                             text = genre.genreName,

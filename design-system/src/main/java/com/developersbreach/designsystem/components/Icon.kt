@@ -10,14 +10,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 @Composable
 fun CaIcon(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     imageVector: ImageVector,
     contentDescription: String?,
-    iconModifier: Modifier = Modifier,
     tint: Color = MaterialTheme.colors.onBackground
 ) {
     Icon(
-        modifier = iconModifier,
+        modifier = modifier,
         imageVector = imageVector,
         tint = tint,
         contentDescription = contentDescription,
@@ -26,14 +25,13 @@ fun CaIcon(
 
 @Composable
 fun CaIcon(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     painter: Painter,
     contentDescription: String?,
-    iconModifier: Modifier = Modifier,
     tint: Color = MaterialTheme.colors.onBackground
 ) {
     Icon(
-        modifier = iconModifier,
+        modifier = modifier,
         tint = tint,
         contentDescription = contentDescription,
         painter = painter
