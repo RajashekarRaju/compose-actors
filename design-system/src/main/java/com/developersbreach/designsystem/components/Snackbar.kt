@@ -13,7 +13,7 @@ fun CaSnackbar(
 ) {
     SnackbarHost(
         hostState = hostState
-    ){data ->
+    ) { data ->
         Snackbar(
             modifier = modifier,
             snackbarData = data

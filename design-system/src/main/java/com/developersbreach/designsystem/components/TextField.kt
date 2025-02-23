@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 
-data class CaTextFieldLeadingIcon(
+data class CaTextFieldLeadingIconConfig(
     val modifier: Modifier,
     val iconModifier: Modifier,
     val onClick: () -> Unit,
@@ -27,7 +27,7 @@ fun CaTextField(
     modifier: Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    leadingIconInfo: CaTextFieldLeadingIcon,
+    leadingIconInfo: CaTextFieldLeadingIconConfig,
     trailingIcon: @Composable (() -> Unit)? = null,
     placeholderText: String? = null,
     textStyle: TextStyle = MaterialTheme.typography.subtitle1,
@@ -39,7 +39,7 @@ fun CaTextField(
     colors: TextFieldColors = TextFieldDefaults.textFieldColors(
         backgroundColor = Color.Transparent
     )
-){
+) {
     TextField(
         modifier = modifier,
         value = value,
@@ -55,7 +55,9 @@ fun CaTextField(
             )
         },
         trailingIcon = trailingIcon,
-        placeholder = { Text(text=placeholderText ?: "") },
+        placeholder = {
+            Text(text = placeholderText ?: "")
+        },
         textStyle = textStyle,
         singleLine = singleLine,
         maxLines = maxLines,
