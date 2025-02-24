@@ -53,7 +53,7 @@ fun TabsContainer(
                     onClick = { coroutineScope.launch { pagerState.animateScrollToPage(tabIndex) } },
                     text = {
                         CaTextSubtitle2(
-                            text=currentTab.tabName,
+                            text = currentTab.tabName,
                             modifier = Modifier
                         )
                     }

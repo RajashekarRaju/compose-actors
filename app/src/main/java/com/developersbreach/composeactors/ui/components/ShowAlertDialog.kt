@@ -29,12 +29,12 @@ fun ShowAlertDialog(
         title = {
             CaTextH5(
                 text = title,
-                modifier=Modifier
+                modifier = Modifier
             )
         },
         text = {
             CaTextBody1(
-                text=description,
+                text = description,
                 modifier = Modifier
             )
         },
