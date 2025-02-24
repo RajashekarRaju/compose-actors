@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +24,7 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaImage
 import com.developersbreach.designsystem.components.CaScaffold
 import com.developersbreach.designsystem.components.CaSurface
+import com.developersbreach.designsystem.components.CaText
 
 @Composable
 fun AboutScreen(
@@ -55,7 +55,7 @@ fun AboutScreen(
                                     .fillMaxWidth()
                                     .wrapContentHeight()
                             )
-                            Text(
+                            CaText(
                                 text = stringResource(id = R.string.tmdb_api_attribution),
                                 modifier = Modifier.padding(horizontal = 40.dp),
                                 style = TextStyle(

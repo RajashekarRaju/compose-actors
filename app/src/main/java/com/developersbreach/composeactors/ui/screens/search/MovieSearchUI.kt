@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +15,7 @@ import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaTextH6
 
 /**
  * @param movieList searchable results row list elements of [Movie]
@@ -50,10 +49,8 @@ private fun ItemSearchMovie(
     onClickMovie: (Int) -> Unit,
     closeKeyboard: () -> Unit?
 ) {
-    Text(
+    CaTextH6(
         text = movie.movieName,
-        style = MaterialTheme.typography.h6,
-        color = MaterialTheme.colors.onBackground,
         modifier = Modifier
             .fillMaxWidth()
             .clickable {

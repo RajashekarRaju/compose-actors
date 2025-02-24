@@ -9,8 +9,8 @@ Access the latest APK for Compose Actors from the link below.
 
 ## Current Roadmap v0.4.0
 
-- [ ] Move material design components and dependencies to separate design-system module
-- [ ] Extend Konsist tests for all design system component usages.
+- [x] Move material design components and dependencies to separate design-system module
+- [x] Extend Konsist tests for all design system component usages.
 - [ ] Introduce common preview annotations for composables.
 - [ ] Add new feature seasons or series information to app.
 - [ ] Include seasons in home tabs navigation.

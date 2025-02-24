@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +24,8 @@ import com.developersbreach.composeactors.utils.calculateAge
 import com.developersbreach.composeactors.utils.getPlaceOfBirth
 import com.developersbreach.composeactors.utils.getPopularity
 import com.developersbreach.designsystem.components.CaImage
+import com.developersbreach.designsystem.components.CaTextH6
+import com.developersbreach.designsystem.components.CaTextSubtitle2
 
 /**
  * Row with 3 elements which shows actor details just below actor image.
@@ -61,9 +62,8 @@ private fun AgeInfo(
         Box(
             modifier = Modifier.borderRevealAnimation()
         ) {
-            Text(
+            CaTextH6(
                 text = "${calculateAge(actorAge)}",
-                style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onSurface,
                 modifier = Modifier.align(alignment = Alignment.Center)
             )
@@ -90,10 +90,8 @@ private fun PopularityInfo(
         Box(
             modifier = Modifier.borderRevealAnimation()
         ) {
-            Text(
+            CaTextH6(
                 text = getPopularity(popularity),
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.onSurface,
                 modifier = Modifier
                     .padding(vertical = 8.dp)
                     .align(alignment = Alignment.Center)
@@ -141,9 +139,8 @@ private fun CountryInfo(
 private fun ActorInfoHeaderSubtitle(
     subtitle: String
 ) {
-    Text(
+    CaTextSubtitle2(
         text = subtitle,
-        style = MaterialTheme.typography.subtitle2,
         modifier = Modifier.padding(vertical = 8.dp),
         color = MaterialTheme.colors.onBackground
     )

@@ -13,13 +13,13 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.developersbreach.designsystem.components.CaTextSubtitle2
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -52,9 +52,9 @@ fun TabsContainer(
                     unselectedContentColor = MaterialTheme.colors.primary.copy(0.50f),
                     onClick = { coroutineScope.launch { pagerState.animateScrollToPage(tabIndex) } },
                     text = {
-                        Text(
+                        CaTextSubtitle2(
                             text = currentTab.tabName,
-                            style = MaterialTheme.typography.subtitle2
+                            modifier = Modifier
                         )
                     }
                 )

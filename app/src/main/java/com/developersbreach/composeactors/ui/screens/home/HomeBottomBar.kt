@@ -16,7 +16,6 @@ import androidx.compose.material.BottomAppBar
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -29,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.designsystem.components.CaIconButton
+import com.developersbreach.designsystem.components.CaTextH6
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -70,10 +70,9 @@ fun HomeBottomBar(
                     contentDescription = "",
                     tint = MaterialTheme.colors.onBackground
                 )
-                Text(
+                CaTextH6(
                     text = stringResource(id = R.string.app_name),
                     color = MaterialTheme.colors.onBackground,
-                    style = MaterialTheme.typography.h6,
                     modifier = Modifier.padding(start = 20.dp)
                 )
             }

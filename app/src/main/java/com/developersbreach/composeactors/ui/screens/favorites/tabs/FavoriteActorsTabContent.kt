@@ -14,7 +14,6 @@ import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,6 +32,8 @@ import com.developersbreach.composeactors.ui.screens.favorites.NoFavoritesFoundU
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.composeactors.utils.getPlaceOfBirth
 import com.developersbreach.designsystem.components.CaIconButton
+import com.developersbreach.designsystem.components.CaTextH5
+import com.developersbreach.designsystem.components.CaTextSubtitle1
 
 @Composable
 fun FavoritePersonsTabContent(
@@ -118,17 +119,16 @@ private fun ItemFavoritePerson(
                     modifier = Modifier.weight(1f),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    Text(
+                    CaTextH5(
                         text = item.personName,
-                        style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.onPrimary,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
 
-                    Text(
+                    CaTextSubtitle1(
                         text = "${getPlaceOfBirth(item.placeOfBirth)}",
-                        style = MaterialTheme.typography.subtitle1,
                         color = MaterialTheme.colors.onPrimary,
+                        modifier = Modifier
                     )
                 }
 

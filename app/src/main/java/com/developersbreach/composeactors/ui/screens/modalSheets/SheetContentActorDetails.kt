@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,6 +32,8 @@ import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.actorDetails.composables.ActorInfoHeader
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaText
+import com.developersbreach.designsystem.components.CaTextH6
 
 /**
  * Complete modal sheet content for showing actor details instead of navigating to
@@ -104,10 +105,8 @@ private fun ActorProfileImage(
 private fun ActorNameText(
     actorName: String
 ) {
-    Text(
+    CaTextH6(
         text = actorName,
-        color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.h6,
         modifier = Modifier.padding(horizontal = 24.dp)
     )
 }
@@ -116,7 +115,7 @@ private fun ActorNameText(
 private fun ActorBiographyText(
     biography: String
 ) {
-    Text(
+    CaText(
         text = biography,
         modifier = Modifier
             .fillMaxWidth()

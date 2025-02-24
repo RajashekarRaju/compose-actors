@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.runtime.Composable
@@ -18,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaIconButton
+import com.developersbreach.designsystem.components.CaTextH6
 
 @Composable
 fun AboutTopAppBar(
@@ -38,13 +38,11 @@ fun AboutTopAppBar(
             tint = MaterialTheme.colors.onBackground,
             contentDescription = stringResource(id = R.string.cd_up_button)
         )
-        Text(
+        CaTextH6(
             text = "About",
-            color = MaterialTheme.colors.onBackground,
-            style = MaterialTheme.typography.h6,
+            modifier = Modifier.align(Alignment.Center),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.align(Alignment.Center)
         )
     }
 }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaImage
+import com.developersbreach.designsystem.components.CaTextH6
 
 @Composable
 fun NoFavoritesFoundUI() {
@@ -32,9 +32,8 @@ fun NoFavoritesFoundUI() {
                 contentDescription = "",
                 modifier = Modifier.padding(horizontal = 24.dp)
             )
-            Text(
+            CaTextH6(
                 text = stringResource(R.string.no_favorites_found_message),
-                style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.primary,
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 40.dp),
                 textAlign = TextAlign.Center

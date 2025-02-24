@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.developersbreach.designsystem.components.CaText
 
 @Composable
 fun MovieDetailOverviewText(
@@ -23,7 +23,7 @@ fun MovieDetailOverviewText(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Text(
+    CaText(
         text = overview.toString(),
         maxLines = if (expanded) Int.MAX_VALUE else 4,
         overflow = if (expanded) TextOverflow.Visible else TextOverflow.Ellipsis,

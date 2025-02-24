@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
 import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaTextH6
 
 @Composable
 fun PersonSearchUI(
@@ -43,10 +42,8 @@ private fun ItemSearchPerson(
     onClickPerson: (Int) -> Unit,
     closeKeyboard: () -> Unit?
 ) {
-    Text(
+    CaTextH6(
         text = person.personName,
-        style = MaterialTheme.typography.h6,
-        color = MaterialTheme.colors.onBackground,
         modifier = Modifier
             .fillMaxWidth()
             .clickable {

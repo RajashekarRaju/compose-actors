@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +27,8 @@ import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToFavoritesButton
+import com.developersbreach.designsystem.components.CaTextBody1
+import com.developersbreach.designsystem.components.CaTextH6
 
 @Composable
 fun SheetContentMovieProviders(
@@ -92,10 +93,10 @@ fun NoStreaming(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
+        CaTextBody1(
             text = stringResource(id = R.string.no_watch_options),
-            style = MaterialTheme.typography.body1,
-            color = MaterialTheme.colors.onSurface
+            color = MaterialTheme.colors.onSurface,
+            modifier = Modifier
         )
     }
 }
@@ -140,9 +141,9 @@ private fun HeaderModalSheet(modifier: Modifier = Modifier) {
             )
         }
         Spacer(modifier = Modifier.height(14.dp))
-        Text(
+        CaTextH6(
             text = stringResource(id = R.string.stream),
-            style = MaterialTheme.typography.h6
+            modifier = Modifier
         )
     }
 }
