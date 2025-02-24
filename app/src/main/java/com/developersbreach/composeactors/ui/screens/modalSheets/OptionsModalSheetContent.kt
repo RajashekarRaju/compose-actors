@@ -20,7 +20,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -36,6 +35,8 @@ import com.developersbreach.composeactors.ui.screens.home.HomeOptionItems
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaIcon
 import com.developersbreach.designsystem.components.CaIconButton
+import com.developersbreach.designsystem.components.CaTextH5
+import com.developersbreach.designsystem.components.CaTextH6
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -77,10 +78,9 @@ fun OptionsModalSheetContent(
 
             Spacer(modifier = Modifier.width(20.dp))
 
-            Text(
+            CaTextH5(
                 text = stringResource(id = R.string.app_name),
                 color = MaterialTheme.colors.onBackground,
-                style = MaterialTheme.typography.h5,
                 modifier = Modifier
             )
         }
@@ -136,10 +136,10 @@ private fun ItemOptionRow(
 
         Spacer(modifier = Modifier.width(24.dp))
 
-        Text(
+        CaTextH6(
             text = option.title,
             color = MaterialTheme.colors.onBackground.copy(alpha = 0.75f),
-            style = MaterialTheme.typography.h6,
+            modifier = Modifier
         )
     }
 }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -19,6 +18,7 @@ import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.core.network.TmdbApiKey
 import com.developersbreach.composeactors.utils.NetworkManager
 import com.developersbreach.composeactors.utils.isTmdbApiKeyNotValid
+import com.developersbreach.designsystem.components.CaTextH6
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -88,9 +88,8 @@ fun CategoryTitle(
     topPadding: Dp = 0.dp,
     bottomPadding: Dp = 0.dp
 ) {
-    Text(
+    CaTextH6(
         text = title,
-        style = MaterialTheme.typography.h6,
         color = textColor,
         modifier = Modifier
             .padding(

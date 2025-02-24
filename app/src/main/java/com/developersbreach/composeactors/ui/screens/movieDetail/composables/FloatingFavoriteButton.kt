@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
@@ -20,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.designsystem.components.CaIcon
+import com.developersbreach.designsystem.components.CaTextSubtitle2
 
 @Composable
 fun FloatingAddToFavoritesButton(
@@ -67,10 +67,10 @@ fun FloatingAddToFavoritesButton(
                 AnimatedVisibility(
                     visibleState = fabState
                 ) {
-                    Text(
+                    CaTextSubtitle2(
                         text = getFavoriteText(isFavorite),
                         color = MaterialTheme.colors.onPrimary,
-                        style = MaterialTheme.typography.subtitle2
+                        modifier = Modifier
                     )
                 }
             }

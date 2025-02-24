@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +31,9 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.composeactors.utils.getMovieRuntimeFormatted
 import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.designsystem.components.CaIconButton
+import com.developersbreach.designsystem.components.CaText
+import com.developersbreach.designsystem.components.CaTextH6
+import com.developersbreach.designsystem.components.CaTextSubtitle1
 
 /**
  * Content inside modal sheet.
@@ -96,10 +98,9 @@ private fun HeaderModalSheet(
             .fillMaxWidth()
             .padding(start = 20.dp)
     ) {
-        Text(
+        CaTextH6(
             text = "${movie?.movieTitle}",
             color = MaterialTheme.colors.onSurface,
-            style = MaterialTheme.typography.h6,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
@@ -138,11 +139,11 @@ private fun SeparatorSheetTitleHeader() {
 private fun MovieReleaseDateText(
     releaseDate: String?
 ) {
-    Text(
+    CaTextSubtitle1(
         text = "${releaseDate?.take(4)}",
         color = MaterialTheme.colors.onSurface.copy(0.7f),
-        style = MaterialTheme.typography.subtitle1,
         maxLines = 1,
+        modifier = Modifier
     )
 }
 
@@ -150,10 +151,10 @@ private fun MovieReleaseDateText(
 private fun MovieDurationText(
     runtime: Int?
 ) {
-    Text(
+    CaTextSubtitle1(
         text = getMovieRuntimeFormatted(runtime),
         color = MaterialTheme.colors.onSurface.copy(0.7f),
-        style = MaterialTheme.typography.subtitle1,
+        modifier = Modifier,
         maxLines = 1,
     )
 }
@@ -181,7 +182,7 @@ private fun MoviePosterImage(
 private fun MovieOverviewText(
     overview: String
 ) {
-    Text(
+    CaText(
         text = overview,
         maxLines = 7,
         overflow = TextOverflow.Ellipsis,

@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +31,7 @@ import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailsData
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaTextSubtitle2
 import kotlinx.coroutines.Job
 
 @Composable
@@ -91,9 +91,8 @@ private fun ItemCast(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Text(
+        CaTextSubtitle2(
             text = cast.castName,
-            style = MaterialTheme.typography.subtitle2,
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,

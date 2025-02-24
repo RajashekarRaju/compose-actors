@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.runtime.Composable
@@ -18,6 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.designsystem.components.CaIconButton
+import com.developersbreach.designsystem.components.CaTextH6
 
 /**
  * @param navigateUp navigates back to previous screen.
@@ -51,10 +51,8 @@ fun MovieDetailTopAppBar(
             tint = MaterialTheme.colors.onBackground,
             contentDescription = stringResource(id = R.string.cd_up_button)
         )
-        Text(
+        CaTextH6(
             text = "$title",
-            color = MaterialTheme.colors.onBackground,
-            style = MaterialTheme.typography.h6,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier

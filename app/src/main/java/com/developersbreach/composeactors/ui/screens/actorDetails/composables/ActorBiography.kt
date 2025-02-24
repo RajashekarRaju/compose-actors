@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +21,7 @@ import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.verticalGradientScrim
 import com.developersbreach.designsystem.components.CaImage
+import com.developersbreach.designsystem.components.CaText
 
 /**
  * @param biography shows paragraph with gradient background drawn from image.
@@ -63,7 +63,7 @@ internal fun ActorBiography(
 
         // Make use of style to modify line height for the paragraph.
         if (biography != null) {
-            Text(
+            CaText(
                 text = biography,
                 style = TextStyle(
                     lineHeight = 20.sp,
@@ -71,7 +71,8 @@ internal fun ActorBiography(
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
                     textAlign = TextAlign.Justify
-                )
+                ),
+                modifier = Modifier
             )
         }
     }

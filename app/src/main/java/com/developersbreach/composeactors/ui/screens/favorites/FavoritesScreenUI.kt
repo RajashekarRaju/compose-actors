@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +24,7 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.designsystem.components.CaScaffold
 import com.developersbreach.designsystem.components.CaSurface
+import com.developersbreach.designsystem.components.CaTextH6
 
 @Composable
 fun FavoritesScreenUI(
@@ -100,9 +100,8 @@ private fun FeatureComingSoonTextUI() {
         contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxSize()
     ) {
-        Text(
+        CaTextH6(
             text = "Feature Coming Soon",
-            style = MaterialTheme.typography.h6,
             color = MaterialTheme.colors.primary,
             modifier = Modifier.padding(horizontal = 24.dp, vertical = 40.dp),
             textAlign = TextAlign.Center

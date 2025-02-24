@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +34,7 @@ import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsSc
 import com.developersbreach.composeactors.ui.screens.home.HomeData
 import com.developersbreach.designsystem.components.CaCard
 import com.developersbreach.designsystem.components.CaDivider
+import com.developersbreach.designsystem.components.CaTextSubtitle1
 
 
 @Composable
@@ -134,9 +134,8 @@ private fun ItemPerson(
 
                 Spacer(modifier = Modifier.padding(vertical = 8.dp))
 
-                Text(
+                CaTextSubtitle1(
                     text = person.personName,
-                    style = MaterialTheme.typography.subtitle1,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,

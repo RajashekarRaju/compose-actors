@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -25,6 +24,7 @@ import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaIcon
+import com.developersbreach.designsystem.components.CaTextSubtitle1
 
 /**
  * Appbar contains [HomeTopAppBarContent] which does not perform search query directly.
@@ -75,10 +75,9 @@ private fun HomeTopAppBarContent(
 
         Spacer(modifier = Modifier.padding(horizontal = 12.dp))
 
-        Text(
+        CaTextSubtitle1(
             text = stringResource(R.string.search_app_bar_title),
             color = MaterialTheme.colors.onSurface,
-            style = MaterialTheme.typography.subtitle1,
             modifier = Modifier.alpha(0.5f)
         )
     }

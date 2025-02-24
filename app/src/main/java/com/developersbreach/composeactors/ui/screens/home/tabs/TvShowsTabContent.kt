@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,6 +17,7 @@ import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.screens.home.HomeSheetUIState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaImage
+import com.developersbreach.designsystem.components.CaTextH6
 
 @Composable
 fun TvShowsTabContent(
@@ -35,9 +35,8 @@ fun TvShowsTabContent(
                 contentDescription = "",
                 modifier = Modifier.size(240.dp)
             )
-            Text(
+            CaTextH6(
                 text = "Feature Coming Soon",
-                style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.primary,
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 40.dp),
                 textAlign = TextAlign.Center

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,6 +14,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.window.DialogProperties
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaTextBody1
+import com.developersbreach.designsystem.components.CaTextButton
+import com.developersbreach.designsystem.components.CaTextH5
 
 @Composable
 fun ShowAlertDialog(
@@ -25,17 +27,15 @@ fun ShowAlertDialog(
 ) {
     AlertDialog(
         title = {
-            Text(
+            CaTextH5(
                 text = title,
-                modifier = Modifier,
-                style = MaterialTheme.typography.h5
+                modifier=Modifier
             )
         },
         text = {
-            Text(
-                text = description,
-                modifier = Modifier,
-                style = MaterialTheme.typography.body1
+            CaTextBody1(
+                text=description,
+                modifier = Modifier
             )
         },
         confirmButton = {
@@ -48,10 +48,9 @@ fun ShowAlertDialog(
                     modifier = Modifier,
                     shape = MaterialTheme.shapes.medium,
                     content = {
-                        Text(
+                        CaTextButton(
                             text = "Dismiss",
-                            modifier = Modifier,
-                            style = MaterialTheme.typography.button
+                            modifier = Modifier
                         )
                     }
                 )
