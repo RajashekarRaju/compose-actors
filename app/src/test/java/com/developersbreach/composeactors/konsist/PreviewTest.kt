@@ -7,19 +7,11 @@ import org.junit.Test
 class PreviewTest {
 
     @Test
-    fun `no direct usage of androidx compose Preview should be allowed except designSystem`() {
-        checkNoDirectUsageExceptPreviewLightDark(
-            previewAnnotation = "androidx.compose.ui.tooling.preview.Preview",
-            excludePaths = arrayOf(
+    fun `no direct usage of androidx compose Preview should be allowed except PreviewLightDark`() {
+        val previewAnnotation = "androidx.compose.ui.tooling.preview.Preview"
+        val excludePaths = arrayOf(
                 "compose-actors/app/src/main/java/com/developersbreach/composeactors/annotations/PreviewLightDark.kt"
             )
-        )
-    }
-
-    private fun checkNoDirectUsageExceptPreviewLightDark(
-        previewAnnotation: String,
-        excludePaths: Array<String>
-    ) {
         Konsist.scopeFromProject()
             .files
             .filter { file ->
