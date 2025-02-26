@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.ui.animations.borderRevealAnimation
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
@@ -146,7 +146,7 @@ private fun ActorInfoHeaderSubtitle(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun ActorInfoHeaderPreview() {
     ComposeActorsTheme {

@@ -18,9 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaIcon
@@ -83,10 +83,10 @@ private fun HomeTopAppBarContent(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun SearchBarPreview() {
-    ComposeActorsTheme(darkTheme = true) {
+    ComposeActorsTheme {
         HomeTopAppBarContent(
             navigateToSearch = { },
             searchType = SearchType.Persons

@@ -24,9 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.designsystem.components.CaIconButton
 import com.developersbreach.designsystem.components.CaTextH6
 import kotlinx.coroutines.CoroutineScope
@@ -80,7 +80,7 @@ fun HomeBottomBar(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 fun PreviewHomeBottomBar() {
     HomeBottomBar(
