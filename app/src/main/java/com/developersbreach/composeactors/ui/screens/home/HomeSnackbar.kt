@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaSnackbar
 
@@ -20,7 +20,7 @@ fun HomeSnackbar(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun HomeSnackbarPreview() {
     ComposeActorsTheme {

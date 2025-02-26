@@ -1,11 +1,11 @@
 package com.developersbreach.composeactors.screenshotTests
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import com.developersbreach.composeactors.ui.screens.home.HomeScreenUILightPreview
+import com.developersbreach.composeactors.annotations.PreviewLightDark
+import com.developersbreach.composeactors.ui.screens.home.HomeScreenUIPreview
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun HomeScreenUIPreviewTest() {
-    HomeScreenUILightPreview()
+    HomeScreenUIPreview()
 }

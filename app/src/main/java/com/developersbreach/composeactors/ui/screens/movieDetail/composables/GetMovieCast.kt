@@ -21,9 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.ui.screens.movieDetail.BottomSheetType
 import com.developersbreach.composeactors.data.movie.model.Cast
@@ -104,10 +104,10 @@ private fun ItemCast(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-private fun GetMovieCastLightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
+private fun GetMovieCastPreview() {
+    ComposeActorsTheme {
         GetMovieCast(
             data = MovieDetailsData(
                 movieData = fakeMovieDetail,
@@ -119,25 +119,6 @@ private fun GetMovieCastLightPreview() {
             ),
             openMovieDetailsBottomSheet = { Job() },
             selectBottomSheetCallback = { }
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
-@Composable
-private fun GetMovieCastDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
-        GetMovieCast(
-            data = MovieDetailsData(
-                movieData = fakeMovieDetail,
-                similarMovies = listOf(),
-                recommendedMovies = listOf(),
-                movieCast = listOf(),
-                isFetchingDetails = false,
-                movieProviders = listOf(Flatrate("", 1, ""))
-            ),
-            openMovieDetailsBottomSheet = { Job() },
-            selectBottomSheetCallback = {}
         )
     }
 }

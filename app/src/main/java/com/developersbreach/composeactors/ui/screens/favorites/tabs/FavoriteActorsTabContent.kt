@@ -20,9 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakeFavoritePersonsList
 import com.developersbreach.composeactors.data.person.model.FavoritePerson
 import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGenerator
@@ -145,10 +145,10 @@ private fun ItemFavoritePerson(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-private fun FavoritePersonsTabContentPreviewLightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
+private fun FavoritePersonsTabContentPreview() {
+    ComposeActorsTheme {
         FavoritePersonsTabContent(
             navigateToSelectedPerson = {},
             favoritePeople = fakeFavoritePersonsList(),
@@ -157,34 +157,10 @@ private fun FavoritePersonsTabContentPreviewLightPreview() {
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@PreviewLightDark
 @Composable
-private fun FavoritePersonsTabContentPreviewDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
-        FavoritePersonsTabContent(
-            navigateToSelectedPerson = {},
-            favoritePeople = fakeFavoritePersonsList(),
-            removeFavoritePerson = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun FavoritePersonsTabContentNoFavoritesPreviewLightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
-        FavoritePersonsTabContent(
-            navigateToSelectedPerson = {},
-            favoritePeople = emptyList(),
-            removeFavoritePerson = {}
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
-@Composable
-private fun FavoriteActorsTabContentNoFavoritesPreviewDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
+private fun FavoritePersonsTabContentNoFavoritesPreview() {
+    ComposeActorsTheme {
         FavoritePersonsTabContent(
             navigateToSelectedPerson = {},
             favoritePeople = emptyList(),

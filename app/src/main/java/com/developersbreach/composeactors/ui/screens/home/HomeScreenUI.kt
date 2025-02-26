@@ -19,8 +19,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
@@ -183,30 +183,10 @@ private fun HomeScreenUI(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-fun HomeScreenUILightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
-        HomeScreenUI(
-            navigateToSelectedPerson = {},
-            navigateToSelectedMovie = {},
-            homeSheetUIState = HomeSheetUIState(fakeMovieDetail),
-            updateSearchType = {},
-            data = HomeData(
-                popularPersonList = fakePersonsList(),
-                trendingPersonList = fakePersonsList(),
-                isFetchingPersons = false,
-                upcomingMoviesList = fakeMovieList(),
-                nowPlayingMoviesList = flow { fakeMovieList() }
-            ),
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
-@Composable
-private fun HomeScreenUIDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
+fun HomeScreenUIPreview() {
+    ComposeActorsTheme {
         HomeScreenUI(
             navigateToSelectedPerson = {},
             navigateToSelectedMovie = {},

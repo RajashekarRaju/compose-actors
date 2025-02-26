@@ -11,9 +11,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.ui.screens.home.HomeSheetUIState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaImage
@@ -45,7 +45,7 @@ fun TvShowsTabContent(
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
 private fun HomeScreenUIPreview() {
     ComposeActorsTheme {

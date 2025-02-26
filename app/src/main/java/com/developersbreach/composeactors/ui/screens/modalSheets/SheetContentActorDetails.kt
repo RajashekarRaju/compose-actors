@@ -22,10 +22,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonDetail
 import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.designsystem.components.CaDivider
@@ -129,20 +129,10 @@ private fun ActorBiographyText(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun SheetContentActorDetailsLightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
-        SheetContentActorDetails(
-            actor = fakePersonDetail
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun SheetContentActorDetailsDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
+fun SheetContentActorDetailsPreview() {
+    ComposeActorsTheme {
         SheetContentActorDetails(
             actor = fakePersonDetail
         )

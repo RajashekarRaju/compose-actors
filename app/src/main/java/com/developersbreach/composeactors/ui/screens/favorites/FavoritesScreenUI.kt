@@ -12,8 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.person.model.FavoritePerson
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.TabItem
@@ -109,26 +109,10 @@ private fun FeatureComingSoonTextUI() {
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun FavoriteScreenUILightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
-        FavoritesScreenUI(
-            favoriteMovies = emptyList(),
-            navigateToSelectedMovie = {},
-            removeFavoriteMovie = {},
-            navigateToSelectedPerson = {},
-            favoritePeople = emptyList(),
-            removeFavoritePerson = {},
-            navigateUp = {}
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun FavoriteScreenUIDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
+fun FavoriteScreenUIPreview() {
+    ComposeActorsTheme {
         FavoritesScreenUI(
             favoriteMovies = emptyList(),
             navigateToSelectedMovie = {},

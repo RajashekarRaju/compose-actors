@@ -25,9 +25,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieCastList
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
@@ -203,32 +203,10 @@ private fun GetBottomSheetContent(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-fun MovieDetailsUILightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
-        MovieDetailsContent(
-            data = MovieDetailsData(
-                movieData = fakeMovieDetail,
-                similarMovies = fakeMovieList(),
-                recommendedMovies = fakeMovieList(),
-                movieCast = fakeMovieCastList(),
-                isFetchingDetails = false,
-                movieProviders = listOf(Flatrate("", 1, ""))
-            ),
-            navigateUp = {},
-            showFab = remember { mutableStateOf(true) },
-            openMovieDetailsBottomSheet = { Job() },
-            selectBottomSheetCallback = {},
-            showBottomSheetScaffold = remember { mutableStateOf(true) }
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
-@Composable
-private fun MovieDetailsUIDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
+fun MovieDetailsUIPreview() {
+    ComposeActorsTheme {
         MovieDetailsContent(
             data = MovieDetailsData(
                 movieData = fakeMovieDetail,

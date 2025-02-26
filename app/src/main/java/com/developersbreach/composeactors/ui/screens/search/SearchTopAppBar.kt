@@ -24,9 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.ui.components.KeyboardState
 import com.developersbreach.composeactors.ui.components.closeKeyboardAndNavigateUp
 import com.developersbreach.composeactors.ui.components.getCurrentKeyboardState
@@ -163,27 +163,14 @@ private val createLaunchSpeechRecognitionIntent = Intent(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-private fun SearchAppBarLightPreview() {
-    ComposeActorsTheme(darkTheme = true) {
+private fun SearchAppBarPreview() {
+    ComposeActorsTheme {
         SearchAppBar(
             navigateUp = { },
             onQueryChange = { },
             searchHint = stringResource(id = R.string.hint_search_query_actors),
-            closeKeyboard = { }
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun SearchAppBarDarkPreview() {
-    ComposeActorsTheme(darkTheme = false) {
-        SearchAppBar(
-            navigateUp = { },
-            onQueryChange = { },
-            searchHint = stringResource(id = R.string.hint_search_query_movies),
             closeKeyboard = { }
         )
     }

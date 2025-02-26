@@ -9,8 +9,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
 import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
@@ -55,22 +55,10 @@ private fun ItemSearchPerson(
     )
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@PreviewLightDark
 @Composable
-private fun PersonSearchUIDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
-        PersonSearchUI(
-            persons = fakePersonsList(),
-            navigateToSelectedPerson = {},
-            closeKeyboard = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PersonSearchUILightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
+private fun PersonSearchUIPreview() {
+    ComposeActorsTheme {
         PersonSearchUI(
             persons = fakePersonsList(),
             navigateToSelectedPerson = {},

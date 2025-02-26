@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
@@ -91,31 +91,10 @@ internal fun ActorDetailsUI(
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@PreviewLightDark
 @Composable
-private fun ActorDetailsUIDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
-        ActorDetailsUI(
-            data = ActorDetailsData(
-                castList = fakeMovieList(),
-                actorData = fakePersonDetail,
-                isFetchingDetails = false
-            ),
-            sheetUIState = ActorDetailsSheetUIState(fakeMovieDetail),
-            navigateToSelectedMovie = {},
-            isFavoriteMovie = true,
-            navigateUp = {},
-            getSelectedMovieDetails = {},
-            addActorToFavorites = {},
-            removeActorFromFavorites = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ActorDetailsUILightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
+fun ActorDetailsUIPreview() {
+    ComposeActorsTheme {
         ActorDetailsUI(
             data = ActorDetailsData(
                 castList = fakeMovieList(),
