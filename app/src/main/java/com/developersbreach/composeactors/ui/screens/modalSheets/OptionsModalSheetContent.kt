@@ -28,9 +28,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.ui.screens.home.HomeOptionItems
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaIcon
@@ -144,32 +144,19 @@ private fun ItemOptionRow(
     }
 }
 
+@PreviewLightDark
 @Composable
-private fun OptionsModalSheetContentPreview() {
-    OptionsModalSheetContent(
-        navigateToFavorite = {},
-        navigateToSearch = {},
-        navigateToProfile = {},
-        navigateToAbout = {},
-        modalSheetSheet = ModalBottomSheetState(
-            initialValue = ModalBottomSheetValue.Expanded,
-            density = LocalDensity.current
-        ),
-    )
-}
-
-@Preview
-@Composable
-fun OptionsModalSheetContentLightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
-        OptionsModalSheetContentPreview()
-    }
-}
-
-@Preview
-@Composable
-private fun OptionsModalSheetContentDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
-        OptionsModalSheetContentPreview()
+fun OptionsModalSheetContentPreview() {
+    ComposeActorsTheme {
+        OptionsModalSheetContent(
+            navigateToFavorite = {},
+            navigateToSearch = {},
+            navigateToProfile = {},
+            navigateToAbout = {},
+            modalSheetSheet = ModalBottomSheetState(
+                initialValue = ModalBottomSheetValue.Expanded,
+                density = LocalDensity.current
+            ),
+        )
     }
 }

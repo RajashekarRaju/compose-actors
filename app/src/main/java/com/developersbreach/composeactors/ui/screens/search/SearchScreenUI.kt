@@ -9,8 +9,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
-import androidx.compose.ui.tooling.preview.Preview
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
 import com.developersbreach.composeactors.ui.components.ShowSearchProgress
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
@@ -79,27 +79,10 @@ fun SearchScreenUI(
     )
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@PreviewLightDark
 @Composable
-private fun SearchScreenUIDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
-        SearchScreenUI(
-            navigateUp = {},
-            navigateToSearchBySearchType = {},
-            searchHint = stringResource(R.string.hint_search_query_actors),
-            onSearchQueryChange = {},
-            data = ActorSearch(
-                personList = fakePersonsList(),
-                isSearchingResults = false
-            )
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SearchScreenUILightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
+fun SearchScreenUIPreview() {
+    ComposeActorsTheme {
         SearchScreenUI(
             navigateUp = {},
             navigateToSearchBySearchType = {},

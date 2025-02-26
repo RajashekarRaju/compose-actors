@@ -20,10 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
@@ -111,10 +111,10 @@ private fun ItemFavoriteMovie(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-private fun FavoriteMoviesTabContentLightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
+private fun FavoriteMoviesTabContentPreview() {
+    ComposeActorsTheme {
         FavoriteMoviesTabContent(
             navigateToSelectedMovie = {},
             favoriteMovies = fakeMovieList(),
@@ -123,34 +123,10 @@ private fun FavoriteMoviesTabContentLightPreview() {
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@PreviewLightDark
 @Composable
-private fun FavoriteMoviesTabContentDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
-        FavoriteMoviesTabContent(
-            navigateToSelectedMovie = {},
-            favoriteMovies = fakeMovieList(),
-            removeFavoriteMovie = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun FavoriteMoviesTabContentNoFavoritesLightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
-        FavoriteMoviesTabContent(
-            navigateToSelectedMovie = {},
-            favoriteMovies = emptyList(),
-            removeFavoriteMovie = {}
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
-@Composable
-private fun FavoriteMoviesTabContentNoFavoritesDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
+private fun FavoriteMoviesTabContentNoFavoritesPreview() {
+    ComposeActorsTheme {
         FavoriteMoviesTabContent(
             navigateToSelectedMovie = {},
             favoriteMovies = emptyList(),

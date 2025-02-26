@@ -9,10 +9,10 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.window.DialogProperties
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaTextBody1
 import com.developersbreach.designsystem.components.CaTextButton
@@ -67,26 +67,12 @@ fun ShowAlertDialog(
     )
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@PreviewLightDark
 @Composable
-private fun ShowAlertDialogUIDarkPreview(
+private fun ShowAlertDialogUIPreview(
     @PreviewParameter(LoremIpsum::class) text: String
 ) {
-    ComposeActorsTheme(darkTheme = true) {
-        ShowAlertDialog(
-            title = "Error occurred",
-            description = text,
-            onButtonClick = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun ShowAlertDialogUILightPreview(
-    @PreviewParameter(LoremIpsum::class) text: String
-) {
-    ComposeActorsTheme(darkTheme = true) {
+    ComposeActorsTheme {
         ShowAlertDialog(
             title = "Error occurred",
             description = text,

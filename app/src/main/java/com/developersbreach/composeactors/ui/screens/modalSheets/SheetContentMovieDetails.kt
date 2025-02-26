@@ -18,10 +18,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.movie.model.MovieDetail
 import com.developersbreach.composeactors.ui.components.CircularSeparator
@@ -198,21 +198,10 @@ private fun MovieOverviewText(
     )
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-fun SheetContentMovieDetailsLightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
-        SheetContentMovieDetails(
-            movie = fakeMovieDetail,
-            navigateToSelectedMovie = {}
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
-@Composable
-private fun SheetContentMovieDetailsDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
+fun SheetContentMovieDetailsPreview() {
+    ComposeActorsTheme {
         SheetContentMovieDetails(
             movie = fakeMovieDetail,
             navigateToSelectedMovie = {}

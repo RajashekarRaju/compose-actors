@@ -9,8 +9,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
@@ -62,22 +62,10 @@ private fun ItemSearchMovie(
     )
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@PreviewLightDark
 @Composable
-private fun MovieSearchUIDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
-        MovieSearchUI(
-            movieList = fakeMovieList(),
-            navigateToSelectedMovie = {},
-            closeKeyboard = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun MovieSearchUILightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
+private fun MovieSearchUIPreview() {
+    ComposeActorsTheme {
         MovieSearchUI(
             movieList = fakeMovieList(),
             navigateToSelectedMovie = {},
