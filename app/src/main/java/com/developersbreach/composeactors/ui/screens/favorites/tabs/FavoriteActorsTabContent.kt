@@ -147,7 +147,7 @@ private fun ItemFavoritePerson(
 
 @PreviewLightDark
 @Composable
-private fun FavoritePersonsTabContentPreviewPreview() {
+private fun FavoritePersonsTabContentPreview() {
     ComposeActorsTheme {
         FavoritePersonsTabContent(
             navigateToSelectedPerson = {},
