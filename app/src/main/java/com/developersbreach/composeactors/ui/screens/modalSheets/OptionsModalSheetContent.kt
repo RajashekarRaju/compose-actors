@@ -44,7 +44,7 @@ import kotlinx.coroutines.launch
 fun OptionsModalSheetContent(
     modalSheetSheet: ModalBottomSheetState,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    navigateToFavorite:() -> Unit,
+    navigateToFavorite: () -> Unit,
     navigateToSearch: () -> Unit,
     navigateToProfile: () -> Unit,
     navigateToAbout: () -> Unit
@@ -156,7 +156,7 @@ fun OptionsModalSheetContentPreview() {
             modalSheetSheet = ModalBottomSheetState(
                 initialValue = ModalBottomSheetValue.Expanded,
                 density = LocalDensity.current
-            ),
+            )
         )
     }
 }

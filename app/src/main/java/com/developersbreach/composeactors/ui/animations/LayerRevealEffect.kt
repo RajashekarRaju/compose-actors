@@ -31,7 +31,6 @@ fun LayerRevealImage(
     poster: String?,
     isLayerRevealAnimationEnded: MutableState<Boolean>
 ) {
-
     // To animate the canvas which has two rectangles.
     val animateShape = remember { Animatable(1f) }.also {
         LaunchAnimation(it)
@@ -75,7 +74,7 @@ fun LayerRevealImage(
 private fun DrawScope.drawRevealingRectangle(
     canvasScope: DrawScope,
     animateShape: Animatable<Float, AnimationVector1D>,
-    drawLayerColor: Color,
+    drawLayerColor: Color
 ) {
     drawRect(
         color = drawLayerColor,
@@ -84,7 +83,7 @@ private fun DrawScope.drawRevealingRectangle(
             width = canvasScope.size.width,
             height = canvasScope.size.height / 2 * animateShape.value
         ),
-        alpha = 1f,
+        alpha = 1f
         // Color, Luminosity, Overlay, Hue, ColorBurn (better fit)
         // blendMode = BlendMode.Hue
     )

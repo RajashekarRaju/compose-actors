@@ -47,7 +47,8 @@ object HttpClientModule {
                     }
                 )
                 register(
-                    ContentType.Text.Html, KotlinxSerializationConverter(
+                    ContentType.Text.Html,
+                    KotlinxSerializationConverter(
                         Json {
                             prettyPrint = true
                             isLenient = true

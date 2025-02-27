@@ -14,12 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.annotations.PreviewLightDark
-import com.developersbreach.composeactors.data.person.model.FavoritePerson
 import com.developersbreach.composeactors.data.movie.model.Movie
+import com.developersbreach.composeactors.data.person.model.FavoritePerson
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
-import com.developersbreach.composeactors.ui.screens.favorites.tabs.FavoritePersonsTabContent
 import com.developersbreach.composeactors.ui.screens.favorites.tabs.FavoriteMoviesTabContent
+import com.developersbreach.composeactors.ui.screens.favorites.tabs.FavoritePersonsTabContent
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.designsystem.components.CaScaffold
@@ -34,7 +34,7 @@ fun FavoritesScreenUI(
     removeFavoriteMovie: (Movie) -> Unit,
     navigateToSelectedPerson: (Int) -> Unit,
     favoritePeople: List<FavoritePerson>,
-    removeFavoritePerson: (FavoritePerson) -> Unit,
+    removeFavoritePerson: (FavoritePerson) -> Unit
 ) {
     val favoriteTabs = listOf(
         TabItem("Actors"),

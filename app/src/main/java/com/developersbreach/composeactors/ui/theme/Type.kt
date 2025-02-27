@@ -14,7 +14,7 @@ private val MontserratAlternates = FontFamily(
     Font(R.font.montserrat_alternates_regular, FontWeight.Normal),
     Font(R.font.montserrat_alternates_medium, FontWeight.Medium),
     Font(R.font.montserrat_alternates_semibold, FontWeight.SemiBold),
-    Font(R.font.montserrat_alternates_bold, FontWeight.Bold),
+    Font(R.font.montserrat_alternates_bold, FontWeight.Bold)
 )
 
 // Material typography styles

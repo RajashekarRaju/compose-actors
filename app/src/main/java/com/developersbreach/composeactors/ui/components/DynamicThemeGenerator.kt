@@ -24,10 +24,10 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import coil.size.Scale
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlin.math.max
 import kotlin.math.min
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * This file belongs to official jetpack samples repository made by google.
@@ -73,7 +73,6 @@ private class DominantColorState(
     }
 
     private suspend fun calculateDominantColor(url: String): DominantColors? {
-
         // Otherwise we calculate the swatches in the image, and return the first valid color
         return calculateSwatchesInImage(context, url)
             // First we want to sort the list by the color's population
@@ -92,7 +91,6 @@ private class DominantColorState(
 
 @Immutable
 private data class DominantColors(val color: Color, val onColor: Color)
-
 
 /**
  * A composable which allows dynamic theming of the [androidx.compose.material.Colors.primary]

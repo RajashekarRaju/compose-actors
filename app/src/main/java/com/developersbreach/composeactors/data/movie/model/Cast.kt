@@ -18,5 +18,5 @@ data class Cast(
 
 @Serializable
 data class CastResponse(
-    @SerialName("cast") val cast: List<Cast>,
+    @SerialName("cast") val cast: List<Cast>
 )

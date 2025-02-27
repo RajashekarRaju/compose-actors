@@ -23,7 +23,7 @@ import timber.log.Timber
 class MovieDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val movieRepository: MovieRepository,
-    private val personRepository: PersonRepository,
+    private val personRepository: PersonRepository
 ) : ViewModel() {
 
     private val movieId: Int = checkNotNull(savedStateHandle[MOVIE_DETAILS_ID_KEY])
@@ -74,7 +74,7 @@ class MovieDetailViewModel @Inject constructor(
                     movieId = movie.movieId,
                     movieName = movie.movieTitle,
                     posterPath = movie.poster,
-                    backdropPath = movie.banner,
+                    backdropPath = movie.banner
                 )
             )
         }
@@ -93,7 +93,7 @@ class MovieDetailViewModel @Inject constructor(
                     movieId = movie.movieId,
                     movieName = movie.movieTitle,
                     posterPath = movie.poster,
-                    backdropPath = movie.banner,
+                    backdropPath = movie.banner
                 )
             )
         }

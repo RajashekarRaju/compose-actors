@@ -155,7 +155,7 @@ private fun MovieDurationText(
         text = getMovieRuntimeFormatted(runtime),
         color = MaterialTheme.colors.onSurface.copy(0.7f),
         modifier = Modifier,
-        maxLines = 1,
+        maxLines = 1
     )
 }
 

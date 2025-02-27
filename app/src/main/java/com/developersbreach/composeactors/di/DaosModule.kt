@@ -1,8 +1,8 @@
 package com.developersbreach.composeactors.di
 
 import com.developersbreach.composeactors.core.database.AppDatabase
-import com.developersbreach.composeactors.core.database.dao.FavoritePersonsDao
 import com.developersbreach.composeactors.core.database.dao.FavoriteMoviesDao
+import com.developersbreach.composeactors.core.database.dao.FavoritePersonsDao
 import com.developersbreach.composeactors.core.database.dao.PersonDetailsDao
 import dagger.Module
 import dagger.Provides

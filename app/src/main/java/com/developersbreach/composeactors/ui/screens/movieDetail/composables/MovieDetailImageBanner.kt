@@ -23,6 +23,6 @@ fun MovieDetailImageBanner(
             .padding(horizontal = 16.dp)
             .fillMaxSize()
             .aspectRatio(1.8f)
-            .shadow(elevation = 8.dp),
+            .shadow(elevation = 8.dp)
     )
 }

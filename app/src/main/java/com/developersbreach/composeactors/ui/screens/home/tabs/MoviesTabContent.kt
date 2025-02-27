@@ -36,7 +36,7 @@ import kotlinx.coroutines.flow.emptyFlow
 fun MoviesTabContent(
     data: HomeData,
     navigateToSelectedMovie: (Int) -> Unit,
-    homeSheetUIState: HomeSheetUIState,
+    homeSheetUIState: HomeSheetUIState
 ) {
     val nowPlayingMovies = data.nowPlayingMoviesList.collectAsLazyPagingItems()
 
@@ -83,7 +83,7 @@ fun MoviesTabContent(
 
         nowPlayingMovies(
             listItems = nowPlayingMovies,
-            navigateToSelectedMovie = navigateToSelectedMovie,
+            navigateToSelectedMovie = navigateToSelectedMovie
         )
     }
 }
@@ -120,7 +120,7 @@ private fun UpcomingMovies(
 
 private fun LazyGridScope.nowPlayingMovies(
     listItems: LazyPagingItems<Movie>,
-    navigateToSelectedMovie: (Int) -> Unit,
+    navigateToSelectedMovie: (Int) -> Unit
 ) {
     itemsPaging(listItems) { movie ->
         LoadNetworkImage(

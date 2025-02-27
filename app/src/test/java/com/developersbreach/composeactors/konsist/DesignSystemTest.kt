@@ -16,7 +16,8 @@ class DesignSystemTest {
             componentName = "androidx.compose.material.Text",
             excludePaths = arrayOf(
                 "design-system/src/main/java/com/developersbreach/designsystem/components/Text.kt",
-                "design-system/src/main/java/com/developersbreach/designsystem/components/TextField.kt",
+                "design-system/src/main/java/com/developersbreach/designsystem/components/" +
+                        "TextField.kt"
             )
         )
     }

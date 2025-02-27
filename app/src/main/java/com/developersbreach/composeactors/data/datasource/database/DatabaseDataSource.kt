@@ -7,10 +7,10 @@ import com.developersbreach.composeactors.core.database.AppDatabase
 import com.developersbreach.composeactors.core.database.entity.PersonDetailEntity
 import com.developersbreach.composeactors.core.database.entity.movieAsDomainModel
 import com.developersbreach.composeactors.core.database.entity.toFavoritePersons
-import com.developersbreach.composeactors.data.person.model.FavoritePerson
 import com.developersbreach.composeactors.data.movie.model.Movie
-import com.developersbreach.composeactors.data.person.model.FavoritePersonsEntity
 import com.developersbreach.composeactors.data.movie.model.movieAsDatabaseModel
+import com.developersbreach.composeactors.data.person.model.FavoritePerson
+import com.developersbreach.composeactors.data.person.model.FavoritePersonsEntity
 import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.data.person.model.toEntity
 import javax.inject.Inject

@@ -25,10 +25,10 @@ import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
-import com.developersbreach.composeactors.ui.screens.movieDetail.BottomSheetType
 import com.developersbreach.composeactors.data.movie.model.Cast
 import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
+import com.developersbreach.composeactors.ui.screens.movieDetail.BottomSheetType
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailsData
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaTextSubtitle2
@@ -71,9 +71,11 @@ private fun ItemCast(
             .width(120.dp)
             .clickable {
                 openMovieDetailsBottomSheet()
-                selectBottomSheetCallback(BottomSheetType.ActorDetailBottomSheet.apply {
-                    movieOrPersonId = cast.personId
-                })
+                selectBottomSheetCallback(
+                    BottomSheetType.ActorDetailBottomSheet.apply {
+                        movieOrPersonId = cast.personId
+                    }
+                )
             }
     ) {
         LoadNetworkImage(

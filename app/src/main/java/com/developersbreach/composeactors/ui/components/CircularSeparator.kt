@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun CircularSeparator(
-    horPadding: Dp = 12.dp,
+    horPadding: Dp = 12.dp
 ) {
     Box(
         modifier = Modifier

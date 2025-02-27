@@ -61,7 +61,7 @@ class HomeViewModel @Inject constructor(
             )
         }.fold(
             ifLeft = { UiState.Error(it) },
-            ifRight = { UiState.Success(it) },
+            ifRight = { UiState.Success(it) }
         )
     }
 

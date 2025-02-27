@@ -6,10 +6,10 @@ import com.developersbreach.composeactors.core.cache.CacheKey
 import com.developersbreach.composeactors.core.cache.CacheManager
 import com.developersbreach.composeactors.core.database.entity.toPersonDetail
 import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
+import com.developersbreach.composeactors.data.movie.model.Movie
+import com.developersbreach.composeactors.data.person.model.FavoritePerson
 import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.data.person.model.PersonDetail
-import com.developersbreach.composeactors.data.person.model.FavoritePerson
-import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.person.remote.PersonApi
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,16 +20,20 @@ import kotlinx.coroutines.withContext
 class PersonRepositoryImpl @Inject constructor(
     private val personApi: PersonApi,
     private val databaseDataSource: DatabaseDataSource,
-    private val cacheManager: CacheManager,
+    private val cacheManager: CacheManager
 ) : PersonRepository {
 
-    override suspend fun getPopularPersons(): Either<Throwable, List<Person>> = withContext(Dispatchers.IO) {
+    override suspend fun getPopularPersons(): Either<Throwable, List<Person>> = withContext(
+        Dispatchers.IO
+    ) {
         personApi.getPopularPersons().map {
             it.data
         }
     }
 
-    override suspend fun getTrendingPersons(): Either<Throwable, List<Person>> = withContext(Dispatchers.IO) {
+    override suspend fun getTrendingPersons(): Either<Throwable, List<Person>> = withContext(
+        Dispatchers.IO
+    ) {
         personApi.getTrendingPersons().map {
             it.data
         }

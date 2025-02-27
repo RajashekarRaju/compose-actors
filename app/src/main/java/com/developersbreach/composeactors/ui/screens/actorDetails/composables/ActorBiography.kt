@@ -52,7 +52,7 @@ internal fun ActorBiography(
                 contentDescription = stringResource(id = R.string.cd_biography_icon),
                 colorFilter = ColorFilter.tint(color = MaterialTheme.colors.onSurface),
                 alpha = 0.5f,
-                modifier = Modifier.size(36.dp),
+                modifier = Modifier.size(36.dp)
             )
             CategoryTitle(
                 title = stringResource(R.string.cast_biography_title)

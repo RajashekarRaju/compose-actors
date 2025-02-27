@@ -11,9 +11,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.annotations.PreviewLightDark
-import com.developersbreach.composeactors.data.datasource.fake.fakePersonDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
+import com.developersbreach.composeactors.data.datasource.fake.fakePersonDetail
 import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGenerator
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.screens.actorDetails.composables.ActorBackgroundWithGradientForeground

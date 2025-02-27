@@ -20,7 +20,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 @RunWith(AndroidJUnit4::class)
 class HomeScreenUITest {
 
@@ -40,9 +39,9 @@ class HomeScreenUITest {
         navigateToSelectedPerson: (personId: Int) -> Unit = { },
         navigateToSelectedMovie: (movieId: Int) -> Unit = { },
         navigateToFavorite: () -> Unit = { },
-        navigateToSearch: (searchType: SearchType) -> Unit = {  },
-        updateHomeSearchType: (searchType: SearchType) -> Unit = {  },
-        navigateToAbout: () -> Unit = {  },
+        navigateToSearch: (searchType: SearchType) -> Unit = { },
+        updateHomeSearchType: (searchType: SearchType) -> Unit = { },
+        navigateToAbout: () -> Unit = { },
         navigateToSearchBySearchType: SearchType = SearchType.Persons,
         homeSheetUIState: HomeSheetUIState = HomeSheetUIState(),
         data: HomeData = mockHomeUIState
@@ -57,7 +56,7 @@ class HomeScreenUITest {
             navigateToSearchBySearchType = navigateToSearchBySearchType,
             data = data,
             sheetUiState = homeSheetUIState,
-            updateHomeSearchType = updateHomeSearchType,
+            updateHomeSearchType = updateHomeSearchType
         )
     }
 
@@ -145,7 +144,7 @@ class HomeScreenUITest {
     fun onClickSearchTopAppBar_shouldNavigateToSearchScreen() {
         composeTestRule.setContent {
             HomeScreenUIContent(
-                navigateToSearch = { SearchType.Persons },
+                navigateToSearch = { SearchType.Persons }
             )
         }
 

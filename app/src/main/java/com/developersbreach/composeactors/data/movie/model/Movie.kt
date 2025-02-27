@@ -22,7 +22,7 @@ data class Movie(
 
 @Serializable
 data class MoviesResponse(
-    @SerialName("cast") val movies: List<Movie>,
+    @SerialName("cast") val movies: List<Movie>
 )
 
 fun Movie.movieAsDatabaseModel(): FavoriteMoviesEntity {

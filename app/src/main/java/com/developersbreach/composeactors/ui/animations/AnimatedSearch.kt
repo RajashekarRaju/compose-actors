@@ -51,7 +51,6 @@ private fun AnimateShapeInfinitely(
  */
 @Composable
 fun AnimatedSearch() {
-
     // Simple progressive circle looking animation
     val animateCircle = remember { Animatable(0f) }.apply {
         AnimateShapeInfinitely(this)

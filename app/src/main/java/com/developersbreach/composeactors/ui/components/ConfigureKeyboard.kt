@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.LocalView
 fun closeKeyboardAndNavigateUp(
     navigateUp: () -> Unit,
     closeKeyboard: () -> Unit?,
-    keyboardState: KeyboardState,
+    keyboardState: KeyboardState
 ) {
     if (keyboardState == KeyboardState.Opened) {
         closeKeyboard()
@@ -35,7 +35,6 @@ enum class KeyboardState {
 
 @Composable
 fun getCurrentKeyboardState(): State<KeyboardState> {
-
     val keyboardState = remember { mutableStateOf(KeyboardState.Closed) }
     val view = LocalView.current
 

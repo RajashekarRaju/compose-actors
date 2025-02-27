@@ -39,7 +39,7 @@ internal fun ActorInfoHeader(
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.Center
     ) {
         item { AgeInfo(actorAge = actorData?.dateOfBirth) }
         item { PopularityInfo(popularity = actorData?.popularity) }

@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.screens.search
 
-
 import android.content.Intent
 import android.speech.RecognizerIntent
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -76,7 +75,7 @@ fun SearchAppBar(
     // This callback is invoked when the Speech Recognizer returns.
     // This is where you process the intent and extract the speech text from the intent.
     val resultLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult(),
+        contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
         val recordedSpeech = result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
         if (!recordedSpeech.isNullOrEmpty()) {
@@ -87,7 +86,6 @@ fun SearchAppBar(
     }
 
     Column {
-
         // This Spacer avoids colliding content with app bar by matching the height of status bar.
         Spacer(Modifier.statusBarsPadding())
 
@@ -135,14 +133,14 @@ fun SearchAppBar(
                         },
                         painter = painterResource(id = R.drawable.ic_mic),
                         tint = MaterialTheme.colors.onBackground,
-                        contentDescription = "",
+                        contentDescription = ""
                     )
                 }
             },
             placeholderText = searchHint,
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colors.background, RectangleShape),
+                .background(MaterialTheme.colors.background, RectangleShape)
         )
 
         // Divides content and search bar with line.

@@ -34,7 +34,7 @@ data class MovieDetail(
 data class ProductionCompanies(
     @SerialName("id") @Stable val id: Int,
     @SerialName("logo_path") private val logoPath: String?,
-    @SerialName("name") val name: String?,
+    @SerialName("name") val name: String?
 ) {
     val banner: String = "$HIGH_RES_IMAGE$logoPath"
 }

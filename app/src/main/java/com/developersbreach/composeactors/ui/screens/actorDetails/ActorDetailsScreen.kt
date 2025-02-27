@@ -10,7 +10,7 @@ import com.developersbreach.composeactors.ui.components.UiStateHandler
 internal fun ActorDetailsScreen(
     viewModel: ActorDetailsViewModel = hiltViewModel(),
     navigateToSelectedMovie: (Int) -> Unit,
-    navigateUp: () -> Unit,
+    navigateUp: () -> Unit
 ) {
     val movieId by viewModel.isFavoriteMovie.observeAsState()
     UiStateHandler(

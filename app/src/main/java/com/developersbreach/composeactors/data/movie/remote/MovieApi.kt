@@ -13,11 +13,11 @@ interface MovieApi {
     suspend fun getMovieDetails(movieId: Int): Either<Throwable, MovieDetail>
     suspend fun getSimilarMovies(
         movieId: Int,
-        page: Int = 1,
+        page: Int = 1
     ): Either<Throwable, PagedResponse<Movie>>
     suspend fun getRecommendedMovies(
         movieId: Int,
-        page: Int = 1,
+        page: Int = 1
     ): Either<Throwable, PagedResponse<Movie>>
     suspend fun getMovieCast(movieId: Int): Either<Throwable, CastResponse>
     suspend fun getMovieProviders(movieId: Int): Either<Throwable, MovieProvidersResponse>

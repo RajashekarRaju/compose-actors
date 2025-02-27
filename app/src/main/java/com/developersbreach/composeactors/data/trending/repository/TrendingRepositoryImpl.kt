@@ -10,10 +10,12 @@ import kotlinx.coroutines.withContext
 
 @Singleton
 class TrendingRepositoryImpl @Inject constructor(
-    private val trendingApi: TrendingApi,
+    private val trendingApi: TrendingApi
 ) : TrendingRepository {
 
-    override suspend fun getTrendingActors(): Either<Throwable, List<Person>> = withContext(Dispatchers.IO) {
+    override suspend fun getTrendingActors(): Either<Throwable, List<Person>> = withContext(
+        Dispatchers.IO
+    ) {
         trendingApi.getTrendingActors().map {
             it.data
         }

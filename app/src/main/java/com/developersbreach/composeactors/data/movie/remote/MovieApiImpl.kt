@@ -22,7 +22,7 @@ class MovieApiImpl @Inject constructor(
         page: Int
     ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
-            URL("${BASE_URL}movie/now_playing?${API_KEY}&page=$page")
+            URL("${BASE_URL}movie/now_playing?$API_KEY&page=$page")
         )
     }
 
@@ -31,7 +31,7 @@ class MovieApiImpl @Inject constructor(
         page: Int
     ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
-            URL("${BASE_URL}movie/upcoming?${API_KEY}&page=$page")
+            URL("${BASE_URL}movie/upcoming?$API_KEY&page=$page")
         )
     }
 
@@ -40,7 +40,7 @@ class MovieApiImpl @Inject constructor(
         movieId: Int
     ): Either<Throwable, MovieDetail> {
         return requestHandler.getResponse<MovieDetail>(
-            URL("${BASE_URL}movie/$movieId?${API_KEY}")
+            URL("${BASE_URL}movie/$movieId?$API_KEY")
         )
     }
 
@@ -50,7 +50,7 @@ class MovieApiImpl @Inject constructor(
         page: Int
     ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
-            URL("${BASE_URL}movie/$movieId/similar?${API_KEY}&page=$page")
+            URL("${BASE_URL}movie/$movieId/similar?$API_KEY&page=$page")
         )
     }
 
@@ -60,7 +60,7 @@ class MovieApiImpl @Inject constructor(
         page: Int
     ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
-            URL("${BASE_URL}movie/$movieId/recommendations?${API_KEY}&page=$page")
+            URL("${BASE_URL}movie/$movieId/recommendations?$API_KEY&page=$page")
         )
     }
 
@@ -69,7 +69,7 @@ class MovieApiImpl @Inject constructor(
         movieId: Int
     ): Either<Throwable, CastResponse> {
         return requestHandler.getResponse<CastResponse>(
-            URL("${BASE_URL}movie/$movieId/credits?${API_KEY}")
+            URL("${BASE_URL}movie/$movieId/credits?$API_KEY")
         )
     }
 
@@ -78,7 +78,7 @@ class MovieApiImpl @Inject constructor(
         movieId: Int
     ): Either<Throwable, MovieProvidersResponse> {
         return requestHandler.getResponse<MovieProvidersResponse>(
-            URL("${BASE_URL}movie/$movieId/watch/providers?${API_KEY}")
+            URL("${BASE_URL}movie/$movieId/watch/providers?$API_KEY")
         )
     }
 }

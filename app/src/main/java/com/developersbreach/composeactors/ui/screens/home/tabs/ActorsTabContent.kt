@@ -36,7 +36,6 @@ import com.developersbreach.designsystem.components.CaCard
 import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.designsystem.components.CaTextSubtitle1
 
-
 @Composable
 fun PersonsTabContent(
     data: HomeData,
@@ -107,7 +106,6 @@ private fun ItemPerson(
     person: Person,
     onClickPerson: (Int) -> Unit
 ) {
-
     CaCard(
         modifier = Modifier
             .width(150.dp)

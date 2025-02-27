@@ -12,7 +12,7 @@ private val LightColorPalette = lightColors(
     background = light_background,
     onBackground = light_onBackground,
     surface = light_surface,
-    onSurface = light_onSurface,
+    onSurface = light_onSurface
 )
 
 private val DarkColorPalette = darkColors(

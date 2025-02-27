@@ -4,16 +4,16 @@ import arrow.core.Either
 import com.developersbreach.composeactors.core.network.BaseUrlProvider
 import com.developersbreach.composeactors.core.network.HttpRequestHandler
 import com.developersbreach.composeactors.core.network.PagedResponse
+import com.developersbreach.composeactors.data.movie.model.MoviesResponse
 import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.data.person.model.PersonDetail
-import com.developersbreach.composeactors.data.movie.model.MoviesResponse
 import java.net.URL
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PersonApiImpl @Inject constructor(
-    private val requestHandler: HttpRequestHandler,
+    private val requestHandler: HttpRequestHandler
 ) : PersonApi, BaseUrlProvider() {
 
     // person/popular?api_key=API_KEY
@@ -35,7 +35,7 @@ class PersonApiImpl @Inject constructor(
         personId: Int
     ): Either<Throwable, PersonDetail> {
         return requestHandler.getResponse(
-            URL("${BASE_URL}person/${personId}?$API_KEY")
+            URL("${BASE_URL}person/$personId?$API_KEY")
         )
     }
 
@@ -44,7 +44,7 @@ class PersonApiImpl @Inject constructor(
         personId: Int
     ): Either<Throwable, MoviesResponse> {
         return requestHandler.getResponse<MoviesResponse>(
-            URL("${BASE_URL}person/${personId}/movie_credits?$API_KEY")
+            URL("${BASE_URL}person/$personId/movie_credits?$API_KEY")
         )
     }
 }

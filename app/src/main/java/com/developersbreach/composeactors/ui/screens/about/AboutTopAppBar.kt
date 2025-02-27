@@ -42,7 +42,7 @@ fun AboutTopAppBar(
             text = "About",
             modifier = Modifier.align(Alignment.Center),
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            overflow = TextOverflow.Ellipsis
         )
     }
 }

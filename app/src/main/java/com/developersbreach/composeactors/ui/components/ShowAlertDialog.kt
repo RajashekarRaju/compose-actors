@@ -23,7 +23,7 @@ fun ShowAlertDialog(
     modifier: Modifier = Modifier,
     title: String,
     description: String,
-    onButtonClick: () -> Unit = {},
+    onButtonClick: () -> Unit = {}
 ) {
     AlertDialog(
         title = {
@@ -63,7 +63,7 @@ fun ShowAlertDialog(
             dismissOnClickOutside = true
         ),
         shape = MaterialTheme.shapes.medium,
-        backgroundColor = MaterialTheme.colors.surface,
+        backgroundColor = MaterialTheme.colors.surface
     )
 }
 

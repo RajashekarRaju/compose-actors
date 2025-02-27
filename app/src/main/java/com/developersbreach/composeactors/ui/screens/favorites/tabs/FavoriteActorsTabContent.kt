@@ -39,7 +39,7 @@ import com.developersbreach.designsystem.components.CaTextSubtitle1
 fun FavoritePersonsTabContent(
     navigateToSelectedPerson: (Int) -> Unit,
     favoritePeople: List<FavoritePerson>,
-    removeFavoritePerson: (FavoritePerson) -> Unit,
+    removeFavoritePerson: (FavoritePerson) -> Unit
 ) {
     if (favoritePeople.isEmpty()) {
         NoFavoritesFoundUI()
@@ -54,7 +54,7 @@ fun FavoritePersonsTabContent(
         modifier = Modifier.fillMaxSize(),
         pageSpacing = 24.dp,
         pageSize = PageSize.Fixed(512.dp),
-        contentPadding = PaddingValues(top = 24.dp, start = 24.dp, end = 24.dp, bottom = 48.dp),
+        contentPadding = PaddingValues(top = 24.dp, start = 24.dp, end = 24.dp, bottom = 48.dp)
     ) { currentPage ->
         ItemFavoritePerson(
             item = favoritePeople[currentPage],

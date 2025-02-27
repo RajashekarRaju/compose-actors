@@ -19,7 +19,6 @@ import com.developersbreach.composeactors.ui.screens.search.SearchScreen
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.screens.search.SearchViewModel
 
-
 /**
  * @param startDestination default screen visible when user opens app.
  * @param routes gives access to all destination routes in [AppDestinations] object.
@@ -41,7 +40,6 @@ fun AppNavigation(
         navController = navController,
         startDestination = startDestination
     ) {
-
         /**
          * Start destination.
          * Can later navigate to [ActorDetailsScreen] and [SearchScreen]
@@ -55,7 +53,7 @@ fun AppNavigation(
                 navigateToSearch = actions.navigateToSearch,
                 navigateToFavorite = actions.navigateToFavorite,
                 navigateToSelectedMovie = actions.navigateToSelectedMovie,
-                navigateToAbout = actions.navigateToAbout,
+                navigateToAbout = actions.navigateToAbout
             )
         }
 
@@ -73,7 +71,7 @@ fun AppNavigation(
             SearchScreen(
                 navigateUp = actions.navigateUp,
                 navigateToSelectedPerson = actions.navigateToSelectedPerson,
-                navigateToSelectedMovie = actions.navigateToSelectedMovie,
+                navigateToSelectedMovie = actions.navigateToSelectedMovie
             )
         }
 
@@ -92,7 +90,7 @@ fun AppNavigation(
         ) {
             ActorDetailsScreen(
                 navigateToSelectedMovie = actions.navigateToSelectedMovie,
-                navigateUp = actions.navigateUp,
+                navigateUp = actions.navigateUp
             )
         }
 
@@ -121,7 +119,7 @@ fun AppNavigation(
             FavoritesScreen(
                 navigateUp = actions.navigateUp,
                 navigateToSelectedMovie = actions.navigateToSelectedMovie,
-                navigateToSelectedPerson = actions.navigateToSelectedPerson,
+                navigateToSelectedPerson = actions.navigateToSelectedPerson
             )
         }
 

@@ -20,7 +20,7 @@ fun fakeMovieList(): MutableList<Movie> {
         "The Prestige",
         "Prisoners",
         "American Psycho",
-        "Logan",
+        "Logan"
     ).forEachIndexed { index, name ->
         movies.add(Movie(index, name, "", ""))
     }
@@ -30,19 +30,31 @@ fun fakeMovieList(): MutableList<Movie> {
 
 val upcomingMoviesList = listOf(
     Movie(
-        movieId = 363736, movieName = "Oppenheimer", posterPath = "", backdropPath = ""
+        movieId = 363736,
+        movieName = "Oppenheimer",
+        posterPath = "",
+        backdropPath = ""
     ),
     Movie(
-        movieId = 123434, movieName = "Dune", posterPath = "", backdropPath = ""
+        movieId = 123434,
+        movieName = "Dune",
+        posterPath = "",
+        backdropPath = ""
     )
 )
 
 val nowPlayingMoviesList = listOf(
     Movie(
-        movieId = 157336, movieName = "Interstellar", posterPath = "", backdropPath = ""
+        movieId = 157336,
+        movieName = "Interstellar",
+        posterPath = "",
+        backdropPath = ""
     ),
     Movie(
-        movieId = 244786, movieName = "Whiplash", posterPath = "", backdropPath = ""
+        movieId = 244786,
+        movieName = "Whiplash",
+        posterPath = "",
+        backdropPath = ""
     )
 )
 
@@ -56,7 +68,7 @@ private val fakeProductionCompanies = listOf(
         id = 7228,
         logoPath = "rrbt",
         name = "Silly company"
-    ),
+    )
 )
 
 val fakeMovieDetail = MovieDetail(
@@ -75,5 +87,5 @@ val fakeMovieDetail = MovieDetail(
     runtime = 154,
     status = "Released",
     tagline = "You won't know the facts until you've seen the fiction.",
-    voteAverage = 99.0,
+    voteAverage = 99.0
 )

@@ -91,7 +91,7 @@ object ApiModule {
     fun providePersonRepository(
         personApi: PersonApi,
         databaseDataSource: DatabaseDataSource,
-        cacheManager: CacheManager,
+        cacheManager: CacheManager
     ): PersonRepository {
         return PersonRepositoryImpl(personApi, databaseDataSource, cacheManager)
     }

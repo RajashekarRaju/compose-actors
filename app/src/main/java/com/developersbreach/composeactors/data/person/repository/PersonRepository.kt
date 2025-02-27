@@ -2,10 +2,10 @@ package com.developersbreach.composeactors.data.person.repository
 
 import androidx.lifecycle.LiveData
 import arrow.core.Either
+import com.developersbreach.composeactors.data.movie.model.Movie
+import com.developersbreach.composeactors.data.person.model.FavoritePerson
 import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.data.person.model.PersonDetail
-import com.developersbreach.composeactors.data.person.model.FavoritePerson
-import com.developersbreach.composeactors.data.movie.model.Movie
 
 interface PersonRepository {
     suspend fun getPopularPersons(): Either<Throwable, List<Person>>

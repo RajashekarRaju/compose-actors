@@ -28,9 +28,8 @@ import androidx.compose.ui.unit.dp
 fun Modifier.borderRevealAnimation(
     initialState: Float = 28f,
     size: Dp = 60.dp,
-    shape: Shape = CircleShape,
+    shape: Shape = CircleShape
 ): Modifier = composed {
-
     val animate = remember { Animatable(initialState) }.apply {
         RevealEffectAnimation(this)
     }
@@ -42,7 +41,7 @@ fun Modifier.borderRevealAnimation(
         .border(
             width = Dp(animate.value),
             color = MaterialTheme.colors.onSurface,
-            shape = shape,
+            shape = shape
         )
 }
 

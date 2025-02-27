@@ -17,7 +17,6 @@ import kotlin.math.pow
  * Sample -> JetCaster.
  */
 
-
 /**
  * Draws a vertical gradient scrim in the foreground.
  *

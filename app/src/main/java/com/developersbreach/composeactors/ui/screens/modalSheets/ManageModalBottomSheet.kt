@@ -14,12 +14,12 @@ import kotlinx.coroutines.launch
 fun modalBottomSheetState(
     initialValue: ModalBottomSheetValue = ModalBottomSheetValue.Hidden,
     skipHalfExpanded: Boolean = true,
-    animationSpec: AnimationSpec<Float> = ModalBottomSheetDefaults.AnimationSpec,
+    animationSpec: AnimationSpec<Float> = ModalBottomSheetDefaults.AnimationSpec
 ): ModalBottomSheetState {
     return rememberModalBottomSheetState(
         initialValue = initialValue,
         skipHalfExpanded = skipHalfExpanded,
-        animationSpec = animationSpec,
+        animationSpec = animationSpec
     )
 }
 

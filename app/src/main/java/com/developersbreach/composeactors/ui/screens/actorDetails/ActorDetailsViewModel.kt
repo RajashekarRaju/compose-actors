@@ -26,7 +26,7 @@ import timber.log.Timber
 class ActorDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val movieRepository: MovieRepository,
-    private val personRepository: PersonRepository,
+    private val personRepository: PersonRepository
 ) : ViewModel() {
 
     private val personId: Int = checkNotNull(savedStateHandle[ACTOR_DETAIL_ID_KEY])
@@ -55,7 +55,7 @@ class ActorDetailsViewModel @Inject constructor(
             )
         }.fold(
             ifLeft = { UiState.Error(it) },
-            ifRight = { UiState.Success(it) },
+            ifRight = { UiState.Success(it) }
         )
     }
 

@@ -21,15 +21,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.annotations.PreviewLightDark
-import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
+import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
-import com.developersbreach.composeactors.ui.screens.home.tabs.PersonsTabContent
 import com.developersbreach.composeactors.ui.screens.home.tabs.MoviesTabContent
+import com.developersbreach.composeactors.ui.screens.home.tabs.PersonsTabContent
 import com.developersbreach.composeactors.ui.screens.home.tabs.TvShowsTabContent
 import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
 import com.developersbreach.composeactors.ui.screens.search.SearchType
@@ -77,7 +77,7 @@ fun HomeScreenUI(
                         navigateToProfile = { },
                         navigateToAbout = navigateToAbout
                     )
-                },
+                }
             ) {
                 CaScaffold(
                     modifier = Modifier,
@@ -151,7 +151,7 @@ private fun HomeScreenUI(
         )
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
         HorizontalPager(
-            state = homePagerState,
+            state = homePagerState
         ) {
             when (it) {
                 0 -> {
@@ -198,7 +198,7 @@ fun HomeScreenUIPreview() {
                 isFetchingPersons = false,
                 upcomingMoviesList = fakeMovieList(),
                 nowPlayingMoviesList = flow { fakeMovieList() }
-            ),
+            )
         )
     }
 }

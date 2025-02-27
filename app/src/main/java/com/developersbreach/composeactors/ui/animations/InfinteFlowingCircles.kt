@@ -22,7 +22,6 @@ import com.developersbreach.composeactors.ui.screens.search.SearchScreen
  */
 @Composable
 fun InfinitelyFlowingCircles() {
-
     // Same color with different variants for different circles.
     val primaryColor = MaterialTheme.colors.primary
     val frontCircle = primaryColor.copy(0.75f)
@@ -75,7 +74,7 @@ private fun DrawCircleOnCanvas(
                 x = canvasWidth / 2,
                 y = canvasHeight / 2
             ),
-            radius = size.minDimension / radiusRatio,
+            radius = size.minDimension / radiusRatio
         )
     }
 }
@@ -91,7 +90,7 @@ private fun DrawCircleOnCanvas(
 private fun scaleInfiniteTransition(
     initialValue: Float = 0f,
     targetValue: Float,
-    durationMillis: Int,
+    durationMillis: Int
 ): Float {
     val infiniteTransition = rememberInfiniteTransition()
     val scale: Float by infiniteTransition.animateFloat(

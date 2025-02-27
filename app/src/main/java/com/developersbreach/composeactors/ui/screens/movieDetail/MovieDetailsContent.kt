@@ -31,7 +31,7 @@ fun MovieDetailsContent(
     showFab: MutableState<Boolean>,
     openMovieDetailsBottomSheet: () -> Job,
     selectBottomSheetCallback: (BottomSheetType) -> Unit,
-    showBottomSheetScaffold: MutableState<Boolean>,
+    showBottomSheetScaffold: MutableState<Boolean>
 ) {
     val movieData = data.movieData
     val listState = rememberLazyListState()
@@ -52,7 +52,6 @@ fun MovieDetailsContent(
         state = listState,
         modifier = modifier.navigationBarsPadding()
     ) {
-
         stickyHeader {
             MovieDetailTopAppBar(
                 modifier = modifier.testTag("TestTag:MovieDetailTopAppBar"),

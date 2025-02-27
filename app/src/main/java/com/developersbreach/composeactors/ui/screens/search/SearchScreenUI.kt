@@ -23,7 +23,7 @@ fun SearchScreenUI(
     navigateToSearchBySearchType: (Int) -> Unit,
     searchHint: String,
     onSearchQueryChange: (query: String) -> Unit,
-    data: SearchDataType,
+    data: SearchDataType
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val closeKeyboard = {
@@ -43,7 +43,7 @@ fun SearchScreenUI(
                         closeKeyboard = closeKeyboard
                     )
                 },
-                content = {paddingValues ->
+                content = { paddingValues ->
                     Box(
                         modifier = Modifier.padding(paddingValues)
                     ) {
@@ -72,7 +72,6 @@ fun SearchScreenUI(
                             }
                         }
                     }
-
                 }
             )
         }

@@ -28,10 +28,10 @@ import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonDetail
 import com.developersbreach.composeactors.data.person.model.PersonDetail
-import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.actorDetails.composables.ActorInfoHeader
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.designsystem.components.CaText
 import com.developersbreach.designsystem.components.CaTextH6
 
@@ -42,13 +42,13 @@ import com.developersbreach.designsystem.components.CaTextH6
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SheetContentActorDetails(
-    actor: PersonDetail?,
+    actor: PersonDetail?
 ) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
-            .navigationBarsPadding(),
+            .navigationBarsPadding()
     ) {
         stickyHeader {
             // Extra parent column added because, the sticky header needs background for

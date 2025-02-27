@@ -1,9 +1,9 @@
 package com.developersbreach.composeactors.data.datasource.fake
 
-import com.developersbreach.composeactors.data.person.model.Person
-import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.data.movie.model.Cast
 import com.developersbreach.composeactors.data.person.model.FavoritePerson
+import com.developersbreach.composeactors.data.person.model.Person
+import com.developersbreach.composeactors.data.person.model.PersonDetail
 
 private val personsData = listOf(
     "John travolta",
@@ -19,7 +19,7 @@ private val personsData = listOf(
     "Eric Stoltz",
     "Maria de Medeiros",
     "Rosanna Arquette",
-    "Sophia Lillis",
+    "Sophia Lillis"
 )
 
 fun fakePersonsList(): MutableList<Person> {
@@ -69,7 +69,7 @@ val trendingPersonLists = listOf(
         personId = 1892,
         personName = "Matt Damon",
         profilePath = "7wbHIn7GziFlJLPl8Zu1XVl24EG.jpg"
-    ),
+    )
 )
 
 val fakePersonDetail = PersonDetail(

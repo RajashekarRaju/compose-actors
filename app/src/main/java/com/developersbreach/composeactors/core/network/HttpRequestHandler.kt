@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Singleton
 class HttpRequestHandler @Inject constructor(
-    val client: HttpClient,
+    val client: HttpClient
 ) {
     suspend inline fun <reified T> getResponse(url: URL): Either<Throwable, T> {
         return try {

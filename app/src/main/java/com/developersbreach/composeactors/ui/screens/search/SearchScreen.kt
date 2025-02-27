@@ -14,7 +14,7 @@ fun SearchScreen(
     navigateToSelectedMovie: (Int) -> Unit
 ) {
     UiStateHandler(
-        uiState = viewModel.uiState,
+        uiState = viewModel.uiState
     ) {
         val navigateToSearchBySearchType = when (viewModel.searchType) {
             SearchType.Persons -> navigateToSelectedPerson

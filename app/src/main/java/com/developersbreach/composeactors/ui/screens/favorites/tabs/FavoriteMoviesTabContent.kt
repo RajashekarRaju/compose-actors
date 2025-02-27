@@ -32,7 +32,6 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaIconButton
 import com.developersbreach.designsystem.components.CaTextSubtitle1
 
-
 /**
  * Content shown for home tab Favorites.
  * If user did not add any movies to favorites, a message will be shown.
@@ -41,7 +40,7 @@ import com.developersbreach.designsystem.components.CaTextSubtitle1
 fun FavoriteMoviesTabContent(
     navigateToSelectedMovie: (Int) -> Unit,
     favoriteMovies: List<Movie>,
-    removeFavoriteMovie: (Movie) -> Unit,
+    removeFavoriteMovie: (Movie) -> Unit
 ) {
     if (favoriteMovies.isEmpty()) {
         NoFavoritesFoundUI()

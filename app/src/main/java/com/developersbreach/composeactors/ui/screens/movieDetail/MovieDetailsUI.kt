@@ -75,7 +75,11 @@ fun MovieDetailsUI(
     // Change button state with respect to scroll changes.
     val showFab = rememberSaveable { mutableStateOf(true) }
     // Remember scroll state to change button state.
-    val showBottomSheetScaffold = rememberSaveable { mutableStateOf(!isLayerRevealAnimationEnded.value) }
+    val showBottomSheetScaffold = rememberSaveable {
+        mutableStateOf(
+            !isLayerRevealAnimationEnded.value
+        )
+    }
 
     val bottomSheetPeakValue = if (showBottomSheetScaffold.value) {
         72.dp
@@ -97,7 +101,7 @@ fun MovieDetailsUI(
                 movieSheetUIState,
                 navigateToSelectedMovie
             )
-        },
+        }
     ) {
         val scaffoldState = rememberBottomSheetScaffoldState()
         BottomSheetScaffold(
@@ -109,7 +113,7 @@ fun MovieDetailsUI(
                     movieProvider = data.movieProviders,
                     isFavoriteMovie = isFavoriteMovie,
                     addMovieToFavorites = addMovieToFavorites,
-                    removeMovieFromFavorites = removeMovieFromFavorites,
+                    removeMovieFromFavorites = removeMovieFromFavorites
                 )
             }
         ) {
@@ -127,7 +131,7 @@ fun MovieDetailsUI(
                     selectBottomSheetCallback = selectBottomSheetCallback,
                     openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
                     showFab = showFab,
-                    showBottomSheetScaffold = showBottomSheetScaffold,
+                    showBottomSheetScaffold = showBottomSheetScaffold
                 )
             }
         }
@@ -140,7 +144,8 @@ private fun getAnimatedSheetPeekHeight(bottomSheetPeakValue: Dp): Dp {
     val animatedSheetPeekHeight by transition.animateDp(
         transitionSpec = {
             spring(stiffness = Spring.StiffnessLow)
-        }, label = ""
+        },
+        label = ""
     ) { value -> value }
     return animatedSheetPeekHeight
 }

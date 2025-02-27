@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun <T> UiStateHandler(
     uiState: UiState<T>,
-    content: @Composable (T) -> Unit,
+    content: @Composable (T) -> Unit
 ) {
     val shouldDismissErrorDialog = rememberSaveable { mutableStateOf(false) }
 
@@ -40,7 +40,7 @@ fun <T> UiStateHandler(
                         onButtonClick = { shouldDismissErrorDialog.value = true },
                         modifier = Modifier,
                         title = "Error occurred",
-                        description = errorDetails.localizedMessage ?: "Error information not available",
+                        description = errorDetails.localizedMessage ?: "Error information not available"
                     )
                 }
             }

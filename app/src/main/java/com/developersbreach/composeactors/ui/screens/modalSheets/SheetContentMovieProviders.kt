@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.movie.model.Flatrate
-import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToFavoritesButton
+import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.designsystem.components.CaTextBody1
 import com.developersbreach.designsystem.components.CaTextH6
 
