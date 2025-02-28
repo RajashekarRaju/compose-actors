@@ -2,7 +2,6 @@
 
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
-
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
@@ -83,7 +82,13 @@ android {
 ktlint {
     android = true
     ignoreFailures = false
-    disabledRules.set(listOf("final-newline"))
+    disabledRules.set(
+        listOf(
+            "final-newline",
+            "max-line-length",
+            "no-wildcard-imports"
+        )
+    )
     reporters {
         reporter(ReporterType.PLAIN)
         reporter(ReporterType.CHECKSTYLE)

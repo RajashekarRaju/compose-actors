@@ -17,7 +17,7 @@ class DesignSystemTest {
             excludePaths = arrayOf(
                 "design-system/src/main/java/com/developersbreach/designsystem/components/Text.kt",
                 "design-system/src/main/java/com/developersbreach/designsystem/components/" +
-                        "TextField.kt"
+                    "TextField.kt"
             )
         )
     }
