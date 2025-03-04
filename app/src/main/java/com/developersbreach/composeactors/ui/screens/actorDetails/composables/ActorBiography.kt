@@ -29,23 +29,23 @@ import com.developersbreach.designsystem.components.CaText
  */
 @Composable
 internal fun ActorBiography(
-    biography: String?
+    biography: String?,
 ) {
     Column(
         modifier = Modifier
             .verticalGradientScrim(
                 color = MaterialTheme.colors.surface.copy(alpha = 0.75f),
                 startYPercentage = 0f,
-                endYPercentage = 1f
+                endYPercentage = 1f,
             )
             .padding(
                 bottom = 112.dp,
                 start = 16.dp,
-                end = 16.dp
-            )
+                end = 16.dp,
+            ),
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             CaImage(
                 painter = painterResource(id = R.drawable.ic_biography),
@@ -55,7 +55,7 @@ internal fun ActorBiography(
                 modifier = Modifier.size(36.dp),
             )
             CategoryTitle(
-                title = stringResource(R.string.cast_biography_title)
+                title = stringResource(R.string.cast_biography_title),
             )
         }
 
@@ -70,9 +70,9 @@ internal fun ActorBiography(
                     color = MaterialTheme.colors.onSurface,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
-                    textAlign = TextAlign.Justify
+                    textAlign = TextAlign.Justify,
                 ),
-                modifier = Modifier
+                modifier = Modifier,
             )
         }
     }

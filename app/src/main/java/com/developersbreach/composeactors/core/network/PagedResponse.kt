@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 data class PagedResponse<T>(
     @SerialName("total_pages") val totalPages: Int,
     @SerialName("page") val page: Int,
-    @SerialName("results") val data: List<T>
+    @SerialName("results") val data: List<T>,
 )

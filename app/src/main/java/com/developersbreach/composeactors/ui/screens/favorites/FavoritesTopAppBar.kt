@@ -21,12 +21,12 @@ import com.developersbreach.designsystem.components.CaTextH6
 
 @Composable
 fun FavoritesTopAppBar(
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .statusBarsPadding()
+            .statusBarsPadding(),
     ) {
         CaIconButton(
             onClick = navigateUp,
@@ -36,13 +36,13 @@ fun FavoritesTopAppBar(
             iconModifier = Modifier,
             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
             tint = MaterialTheme.colors.onBackground,
-            contentDescription = stringResource(id = R.string.cd_up_button)
+            contentDescription = stringResource(id = R.string.cd_up_button),
         )
         CaTextH6(
             text = "Favorites",
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
         )
     }
 }

@@ -25,7 +25,7 @@ fun modalBottomSheetState(
 
 @Composable
 fun manageModalBottomSheet(
-    modalSheetState: ModalBottomSheetState
+    modalSheetState: ModalBottomSheetState,
 ): () -> Job {
     val coroutineScope = rememberCoroutineScope()
 

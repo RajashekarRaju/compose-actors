@@ -24,7 +24,7 @@ data class MovieDetail(
     @SerialName("runtime") val runtime: Int,
     @SerialName("status") val status: String,
     @SerialName("tagline") val tagline: String,
-    @SerialName("vote_average") val voteAverage: Double
+    @SerialName("vote_average") val voteAverage: Double,
 ) {
     val banner: String = "$HIGH_RES_IMAGE$backdropPath"
     val poster: String = "$HIGH_RES_IMAGE$posterPath"

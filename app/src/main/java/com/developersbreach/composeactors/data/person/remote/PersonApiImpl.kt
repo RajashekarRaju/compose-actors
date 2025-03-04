@@ -19,32 +19,32 @@ class PersonApiImpl @Inject constructor(
     // person/popular?api_key=API_KEY
     override suspend fun getPopularPersons(): Either<Throwable, PagedResponse<Person>> {
         return requestHandler.getPagedResponse(
-            URL("${BASE_URL}person/popular?$API_KEY")
+            URL("${BASE_URL}person/popular?$API_KEY"),
         )
     }
 
     // person/3233?api_key=API_KEY
     override suspend fun getTrendingPersons(): Either<Throwable, PagedResponse<Person>> {
         return requestHandler.getPagedResponse(
-            URL("${BASE_URL}trending/person/week?$API_KEY")
+            URL("${BASE_URL}trending/person/week?$API_KEY"),
         )
     }
 
     // person/3233?api_key=API_KEY
     override suspend fun getPersonDetails(
-        personId: Int
+        personId: Int,
     ): Either<Throwable, PersonDetail> {
         return requestHandler.getResponse(
-            URL("${BASE_URL}person/${personId}?$API_KEY")
+            URL("${BASE_URL}person/$personId?$API_KEY"),
         )
     }
 
     // person/3233/movie_credits?api_key=API_KEY
     override suspend fun getCastDetails(
-        personId: Int
+        personId: Int,
     ): Either<Throwable, MoviesResponse> {
         return requestHandler.getResponse<MoviesResponse>(
-            URL("${BASE_URL}person/${personId}/movie_credits?$API_KEY")
+            URL("${BASE_URL}person/$personId/movie_credits?$API_KEY"),
         )
     }
 }

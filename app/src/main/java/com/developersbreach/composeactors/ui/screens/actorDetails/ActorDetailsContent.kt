@@ -22,7 +22,7 @@ internal fun ActorDetailsContent(
     data: ActorDetailsData,
     openActorDetailsBottomSheet: () -> Job,
     getSelectedMovieDetails: (Int) -> Unit,
-    showFab: MutableState<Boolean>
+    showFab: MutableState<Boolean>,
 ) {
     val actorData = data.actorData
     val listState = rememberLazyListState()
@@ -37,7 +37,7 @@ internal fun ActorDetailsContent(
     /** Scrollable actor details content */
     LazyColumn(
         state = listState,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         item {
             ActorInfoHeader(actorData)
@@ -46,7 +46,7 @@ internal fun ActorDetailsContent(
             ActorCastedMovies(
                 data,
                 openActorDetailsBottomSheet,
-                getSelectedMovieDetails
+                getSelectedMovieDetails,
             )
         }
         item {

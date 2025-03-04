@@ -17,11 +17,11 @@ import com.developersbreach.designsystem.components.CaTextSubtitle2
 
 @Composable
 fun MovieGenre(
-    genres: List<Genre>?
+    genres: List<Genre>?,
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp),
     ) {
         genres?.let {
             items(it) { genre ->
@@ -34,9 +34,9 @@ fun MovieGenre(
                             text = genre.genreName,
                             color = MaterialTheme.colors.onSurface,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                         )
-                    }
+                    },
                 )
             }
         }

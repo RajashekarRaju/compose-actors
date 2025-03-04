@@ -29,19 +29,19 @@ fun ShowAlertDialog(
         title = {
             CaTextH5(
                 text = title,
-                modifier = Modifier
+                modifier = Modifier,
             )
         },
         text = {
             CaTextBody1(
                 text = description,
-                modifier = Modifier
+                modifier = Modifier,
             )
         },
         confirmButton = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+                horizontalArrangement = Arrangement.End,
             ) {
                 TextButton(
                     onClick = {},
@@ -50,9 +50,9 @@ fun ShowAlertDialog(
                     content = {
                         CaTextButton(
                             text = "Dismiss",
-                            modifier = Modifier
+                            modifier = Modifier,
                         )
-                    }
+                    },
                 )
             }
         },
@@ -60,7 +60,7 @@ fun ShowAlertDialog(
         modifier = modifier.testTag("TestTag:InfoDialog"),
         properties = DialogProperties(
             dismissOnBackPress = true,
-            dismissOnClickOutside = true
+            dismissOnClickOutside = true,
         ),
         shape = MaterialTheme.shapes.medium,
         backgroundColor = MaterialTheme.colors.surface,
@@ -70,13 +70,13 @@ fun ShowAlertDialog(
 @PreviewLightDark
 @Composable
 private fun ShowAlertDialogUIPreview(
-    @PreviewParameter(LoremIpsum::class) text: String
+    @PreviewParameter(LoremIpsum::class) text: String,
 ) {
     ComposeActorsTheme {
         ShowAlertDialog(
             title = "Error occurred",
             description = text,
-            onButtonClick = {}
+            onButtonClick = {},
         )
     }
 }

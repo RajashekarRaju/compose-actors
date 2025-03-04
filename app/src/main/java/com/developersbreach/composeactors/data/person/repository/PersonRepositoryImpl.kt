@@ -36,7 +36,7 @@ class PersonRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getPersonDetails(
-        personId: Int
+        personId: Int,
     ): Either<Throwable, PersonDetail> = withContext(Dispatchers.IO) {
         val cacheKey = CacheKey.forPerson(personId)
         val cachedData = cacheManager.get<PersonDetail>(cacheKey)
@@ -60,7 +60,7 @@ class PersonRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCastDetails(
-        personId: Int
+        personId: Int,
     ): Either<Throwable, List<Movie>> = withContext(Dispatchers.IO) {
         personApi.getCastDetails(personId).map {
             it.movies

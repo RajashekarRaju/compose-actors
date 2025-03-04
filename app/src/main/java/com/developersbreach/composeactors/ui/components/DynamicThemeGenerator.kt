@@ -39,7 +39,7 @@ private fun rememberDominantColorState(
     context: Context = LocalContext.current,
     defaultColor: Color = MaterialTheme.colors.primary,
     defaultOnColor: Color = MaterialTheme.colors.onPrimary,
-    isColorValid: (Color) -> Boolean = { true }
+    isColorValid: (Color) -> Boolean = { true },
 ): DominantColorState = remember {
     DominantColorState(context, defaultColor, defaultOnColor, isColorValid)
 }
@@ -59,7 +59,7 @@ private class DominantColorState(
     private val context: Context,
     private val defaultColor: Color,
     private val defaultOnColor: Color,
-    private val isColorValid: (Color) -> Boolean = { true }
+    private val isColorValid: (Color) -> Boolean = { true },
 ) {
     var color by mutableStateOf(defaultColor)
         private set
@@ -73,7 +73,6 @@ private class DominantColorState(
     }
 
     private suspend fun calculateDominantColor(url: String): DominantColors? {
-
         // Otherwise we calculate the swatches in the image, and return the first valid color
         return calculateSwatchesInImage(context, url)
             // First we want to sort the list by the color's population
@@ -84,7 +83,7 @@ private class DominantColorState(
             ?.let { swatch ->
                 DominantColors(
                     color = Color(swatch.rgb),
-                    onColor = Color(swatch.bodyTextColor).copy(alpha = 1f)
+                    onColor = Color(swatch.bodyTextColor).copy(alpha = 1f),
                 )
             }
     }
@@ -93,7 +92,6 @@ private class DominantColorState(
 @Immutable
 private data class DominantColors(val color: Color, val onColor: Color)
 
-
 /**
  * A composable which allows dynamic theming of the [androidx.compose.material.Colors.primary]
  * color from an image.
@@ -101,17 +99,17 @@ private data class DominantColors(val color: Color, val onColor: Color)
 @Composable
 private fun DynamicThemePrimaryColorsFromImage(
     dominantColorState: DominantColorState = rememberDominantColorState(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val colors = MaterialTheme.colors.copy(
         primary = animateColorAsState(
             dominantColorState.color,
-            spring(stiffness = Spring.StiffnessLow)
+            spring(stiffness = Spring.StiffnessLow),
         ).value,
         onPrimary = animateColorAsState(
             dominantColorState.onColor,
-            spring(stiffness = Spring.StiffnessLow)
-        ).value
+            spring(stiffness = Spring.StiffnessLow),
+        ).value,
     )
     MaterialTheme(colors = colors, content = content)
 }
@@ -121,7 +119,7 @@ private fun DynamicThemePrimaryColorsFromImage(
  */
 private suspend fun calculateSwatchesInImage(
     context: Context,
-    imageUrl: String
+    imageUrl: String,
 ): List<Palette.Swatch> {
     val r = ImageRequest.Builder(context)
         .data(imageUrl)
@@ -157,13 +155,13 @@ private suspend fun calculateSwatchesInImage(
 fun ImageBackgroundThemeGenerator(
     imageUrl: String,
     backgroundColor: Color = MaterialTheme.colors.background,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val dominantColorState = rememberDominantColorState(
-        defaultColor = MaterialTheme.colors.background
+        defaultColor = MaterialTheme.colors.background,
     ) { color ->
         // We want a color which has sufficient contrast against the background color
-        color.contrastAgainst(backgroundColor) >= MinContrastOfPrimaryVsBackground
+        color.contrastAgainst(backgroundColor) >= MIN_CONTRAST_OF_PRIMARY_VS_BACKGROUND
     }
     DynamicThemePrimaryColorsFromImage(dominantColorState) {
         // Update the dominantColorState with colors coming from the podcast image URL
@@ -186,4 +184,4 @@ private fun Color.contrastAgainst(background: Color): Float {
  * surface color. These values are defined within the WCAG AA guidelines, and we use a value of
  * 3:1 which is the minimum for user-interface components.
  */
-private const val MinContrastOfPrimaryVsBackground = 3f
+private const val MIN_CONTRAST_OF_PRIMARY_VS_BACKGROUND = 3f

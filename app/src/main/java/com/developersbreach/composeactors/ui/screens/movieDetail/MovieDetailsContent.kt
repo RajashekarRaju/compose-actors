@@ -50,15 +50,14 @@ fun MovieDetailsContent(
 
     LazyColumn(
         state = listState,
-        modifier = modifier.navigationBarsPadding()
+        modifier = modifier.navigationBarsPadding(),
     ) {
-
         stickyHeader {
             MovieDetailTopAppBar(
                 modifier = modifier.testTag("TestTag:MovieDetailTopAppBar"),
                 navigateUp = navigateUp,
                 title = movieData?.movieTitle,
-                showTopBarBackground = showTopBarBackground
+                showTopBarBackground = showTopBarBackground,
             )
         }
 
@@ -75,21 +74,21 @@ fun MovieDetailsContent(
             GetMovieCast(
                 data = data,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
-                selectBottomSheetCallback = selectBottomSheetCallback
+                selectBottomSheetCallback = selectBottomSheetCallback,
             )
             Spacer(modifier = Modifier.height(24.dp))
             CategoryTitle(title = "Similar", alpha = 1f)
             GetRelatedMovies(
                 movieList = data.similarMovies,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
-                selectBottomSheetCallback = selectBottomSheetCallback
+                selectBottomSheetCallback = selectBottomSheetCallback,
             )
             Spacer(modifier = Modifier.height(12.dp))
             CategoryTitle(title = "Recommended", alpha = 1f)
             GetRelatedMovies(
                 movieList = data.recommendedMovies,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
-                selectBottomSheetCallback = selectBottomSheetCallback
+                selectBottomSheetCallback = selectBottomSheetCallback,
             )
             Spacer(modifier = Modifier.height(52.dp))
         }

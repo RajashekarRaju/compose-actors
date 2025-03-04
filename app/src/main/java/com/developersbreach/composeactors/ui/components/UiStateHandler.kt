@@ -23,13 +23,13 @@ fun <T> UiStateHandler(
     }
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         when (uiState) {
             is UiState.Loading -> {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
-                    color = MaterialTheme.colors.onBackground
+                    color = MaterialTheme.colors.onBackground,
                 )
             }
 

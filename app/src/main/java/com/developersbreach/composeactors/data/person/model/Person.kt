@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 data class Person(
     @SerialName("id") @Stable val personId: Int,
     @SerialName("name") val personName: String,
-    @SerialName("profile_path") private val profilePath: String?
+    @SerialName("profile_path") private val profilePath: String?,
 ) {
     val profileUrl: String = "$LOW_RES_IMAGE$profilePath"
 }

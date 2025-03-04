@@ -15,10 +15,7 @@ import kotlin.math.pow
 /**
  * This file belongs to official jetpack samples repository made by google.
  * Sample -> JetCaster.
- */
-
-
-/**
+ *
  * Draws a vertical gradient scrim in the foreground.
  *
  * @param color The color of the gradient scrim.
@@ -34,7 +31,7 @@ fun Modifier.verticalGradientScrim(
     @FloatRange(from = 0.0, to = 1.0) startYPercentage: Float = 0f,
     @FloatRange(from = 0.0, to = 1.0) endYPercentage: Float = 1f,
     decay: Float = 1.0f,
-    numStops: Int = 16
+    numStops: Int = 16,
 ): Modifier = composed {
     val colors = remember(color, numStops) {
         if (decay != 1f) {
@@ -57,7 +54,7 @@ fun Modifier.verticalGradientScrim(
         Brush.verticalGradient(
             colors = colors,
             startY = height * startYPercentage,
-            endY = height * endYPercentage
+            endY = height * endYPercentage,
         )
     }
 

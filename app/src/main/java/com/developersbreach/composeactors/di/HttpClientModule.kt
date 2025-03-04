@@ -44,16 +44,17 @@ object HttpClientModule {
                     Json {
                         ignoreUnknownKeys = true
                         prettyPrint = true
-                    }
+                    },
                 )
                 register(
-                    ContentType.Text.Html, KotlinxSerializationConverter(
+                    ContentType.Text.Html,
+                    KotlinxSerializationConverter(
                         Json {
                             prettyPrint = true
                             isLenient = true
                             ignoreUnknownKeys = true
-                        }
-                    )
+                        },
+                    ),
                 )
             }
         }

@@ -23,13 +23,14 @@ import com.developersbreach.designsystem.components.CaImage
  * @param showAnimProgress remove the background loading progress bar of image if not necessary,
  * by default is visible for all images which uses this composable. False in actors [ActorDetailsScreen].
  */
+@Suppress("ktlint:standard:function-naming")
 @Composable
 fun LoadNetworkImage(
     imageUrl: String?,
     contentDescription: String,
     modifier: Modifier,
     shape: Shape,
-    showAnimProgress: Boolean = true
+    showAnimProgress: Boolean = true,
 ) {
     val imageRequest: ImageRequest = ImageRequest.Builder(LocalContext.current)
         .data(data = imageUrl)
@@ -47,6 +48,6 @@ fun LoadNetworkImage(
         contentScale = ContentScale.Crop,
         modifier = modifier
             .clip(shape)
-            .background(color = MaterialTheme.colors.surface)
+            .background(color = MaterialTheme.colors.surface),
     )
 }

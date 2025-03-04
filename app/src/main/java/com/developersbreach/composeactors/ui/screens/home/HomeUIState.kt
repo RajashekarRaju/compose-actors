@@ -16,5 +16,5 @@ data class HomeData(
 )
 
 data class HomeSheetUIState(
-    var selectedMovieDetails: MovieDetail? = null
+    var selectedMovieDetails: MovieDetail? = null,
 )

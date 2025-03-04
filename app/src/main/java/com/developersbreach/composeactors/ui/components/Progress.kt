@@ -19,15 +19,15 @@ import com.developersbreach.composeactors.utils.isTmdbApiKeyNotValid
  */
 @Composable
 fun ShowProgressIndicator(
-    isLoadingData: Boolean
+    isLoadingData: Boolean,
 ) {
     if (isLoadingData && isTmdbApiKeyNotValid()) {
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center),
-                color = MaterialTheme.colors.onBackground
+                color = MaterialTheme.colors.onBackground,
             )
         }
     }
@@ -39,7 +39,7 @@ fun ShowProgressIndicator(
  */
 @Composable
 fun ShowSearchProgress(
-    isLoadingData: Boolean
+    isLoadingData: Boolean,
 ) {
     if (isLoadingData) {
         InfinitelyFlowingCircles()
@@ -47,7 +47,7 @@ fun ShowSearchProgress(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(bottom = 28.dp, end = 28.dp),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             AnimatedSearch()
         }

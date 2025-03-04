@@ -30,12 +30,12 @@ fun closeKeyboardAndNavigateUp(
 }
 
 enum class KeyboardState {
-    Opened, Closed
+    Opened,
+    Closed,
 }
 
 @Composable
 fun getCurrentKeyboardState(): State<KeyboardState> {
-
     val keyboardState = remember { mutableStateOf(KeyboardState.Closed) }
     val view = LocalView.current
 
@@ -72,17 +72,16 @@ fun getCurrentKeyboardState(): State<KeyboardState> {
  *
  * Then call focus requester to the modifier.
  * modifier = Modifier.focusRequester(focusRequester)
- */
-/*
+ *
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LaunchKeyboardOnScreenOpen(
-    focusRequester: FocusRequester,
-    keyboardController: SoftwareKeyboardController?,
+ focusRequester: FocusRequester,
+ keyboardController: SoftwareKeyboardController?,
 ) {
-    LaunchedEffect(true) {
-        focusRequester.requestFocus()
-        keyboardController?.show()
-    }
+ LaunchedEffect(true) {
+ focusRequester.requestFocus()
+ keyboardController?.show()
+ }
 }
-*/
+**/

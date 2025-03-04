@@ -1,5 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
@@ -10,6 +12,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.serialization)
     alias(libs.plugins.screenshot)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -67,6 +70,16 @@ android {
 
     testOptions {
         unitTests.isIncludeAndroidResources = true
+    }
+}
+
+ktlint {
+    android = true
+    ignoreFailures = false
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.CHECKSTYLE)
+        reporter(ReporterType.SARIF)
     }
 }
 

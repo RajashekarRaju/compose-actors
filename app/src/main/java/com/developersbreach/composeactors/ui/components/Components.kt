@@ -31,13 +31,13 @@ import kotlinx.coroutines.launch
 private fun LaunchSnackBar(
     scaffoldState: ScaffoldState,
     snackBarMessage: String,
-    scope: CoroutineScope = rememberCoroutineScope()
+    scope: CoroutineScope = rememberCoroutineScope(),
 ) {
     LaunchedEffect(scope) {
         scope.launch {
             scaffoldState.snackbarHostState.showSnackbar(
                 message = snackBarMessage,
-                duration = SnackbarDuration.Indefinite
+                duration = SnackbarDuration.Indefinite,
             )
         }
     }
@@ -49,13 +49,13 @@ private fun LaunchSnackBar(
 @Composable
 fun IfOfflineShowSnackbar(
     scaffoldState: ScaffoldState,
-    context: Context = LocalContext.current
+    context: Context = LocalContext.current,
 ) {
     val isOnline = NetworkManager(context).checkForActiveNetwork()
     if (!isOnline) {
         LaunchSnackBar(
             scaffoldState,
-            context.getString(R.string.offline_snackbar_message)
+            context.getString(R.string.offline_snackbar_message),
         )
     }
 }
@@ -66,12 +66,12 @@ fun IfOfflineShowSnackbar(
 @Composable
 fun ApiKeyMissingShowSnackbar(
     scaffoldState: ScaffoldState,
-    context: Context = LocalContext.current
+    context: Context = LocalContext.current,
 ) {
     if (isTmdbApiKeyNotValid()) {
         LaunchSnackBar(
             scaffoldState,
-            context.getString(R.string.missing_api_key_snackbar_message)
+            context.getString(R.string.missing_api_key_snackbar_message),
         )
     }
 }
@@ -86,7 +86,7 @@ fun CategoryTitle(
     alpha: Float = 0.5f,
     startPadding: Dp = 20.dp,
     topPadding: Dp = 0.dp,
-    bottomPadding: Dp = 0.dp
+    bottomPadding: Dp = 0.dp,
 ) {
     CaTextH6(
         text = title,
@@ -95,8 +95,8 @@ fun CategoryTitle(
             .padding(
                 start = startPadding,
                 top = topPadding,
-                bottom = bottomPadding
+                bottom = bottomPadding,
             )
-            .alpha(alpha)
+            .alpha(alpha),
     )
 }

@@ -53,7 +53,7 @@ fun MovieDetailsUI(
     isFavoriteMovie: Boolean,
     addMovieToFavorites: () -> Unit,
     removeMovieFromFavorites: () -> Unit,
-    navigateToSelectedMovie: (movieId: Int) -> Unit
+    navigateToSelectedMovie: (movieId: Int) -> Unit,
 ) {
     val state = remember {
         MutableTransitionState(false).apply {
@@ -63,11 +63,11 @@ fun MovieDetailsUI(
     }
 
     val modalSheetState = modalBottomSheetState(
-        animationSpec = tween(durationMillis = 300, delayMillis = 50)
+        animationSpec = tween(durationMillis = 300, delayMillis = 50),
     )
 
     val openMovieDetailsBottomSheet = manageModalBottomSheet(
-        modalSheetState = modalSheetState
+        modalSheetState = modalSheetState,
     )
 
     // This helps us reveal screen content with fadeIn anim once reveal effect is completed.
@@ -95,7 +95,7 @@ fun MovieDetailsUI(
                 selectedBottomSheet.value,
                 actorsSheetUIState,
                 movieSheetUIState,
-                navigateToSelectedMovie
+                navigateToSelectedMovie,
             )
         },
     ) {
@@ -111,12 +111,12 @@ fun MovieDetailsUI(
                     addMovieToFavorites = addMovieToFavorites,
                     removeMovieFromFavorites = removeMovieFromFavorites,
                 )
-            }
+            },
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .testTag("TestTag:MovieDetailScreen")
+                    .testTag("TestTag:MovieDetailScreen"),
             ) {
                 MovieDetailsUiContent(
                     data = data,
@@ -140,7 +140,8 @@ private fun getAnimatedSheetPeekHeight(bottomSheetPeakValue: Dp): Dp {
     val animatedSheetPeekHeight by transition.animateDp(
         transitionSpec = {
             spring(stiffness = Spring.StiffnessLow)
-        }, label = ""
+        },
+        label = "",
     ) { value -> value }
     return animatedSheetPeekHeight
 }
@@ -155,7 +156,7 @@ fun MovieDetailsUiContent(
     selectBottomSheetCallback: (BottomSheetType) -> Unit,
     openMovieDetailsBottomSheet: () -> Job,
     showFab: MutableState<Boolean>,
-    showBottomSheetScaffold: MutableState<Boolean>
+    showBottomSheetScaffold: MutableState<Boolean>,
 ) {
     // Background poster with layer reveal effect
     LayerRevealImage(data.movieData?.poster, isLayerRevealAnimationEnded)
@@ -163,7 +164,7 @@ fun MovieDetailsUiContent(
     if (isLayerRevealAnimationEnded.value) {
         AnimatedVisibility(
             visibleState = state,
-            enter = fadeIn()
+            enter = fadeIn(),
         ) {
             // Main details content
             MovieDetailsContent(
@@ -173,7 +174,7 @@ fun MovieDetailsUiContent(
                 showFab = showFab,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
                 selectBottomSheetCallback = selectBottomSheetCallback,
-                showBottomSheetScaffold = showBottomSheetScaffold
+                showBottomSheetScaffold = showBottomSheetScaffold,
             )
         }
     }
@@ -184,19 +185,19 @@ private fun GetBottomSheetContent(
     bottomSheetType: BottomSheetType?,
     sheetUiState: ActorsSheetUIState,
     movieSheetUIState: MovieSheetUIState,
-    navigateToSelectedMovie: (Int) -> Unit
+    navigateToSelectedMovie: (Int) -> Unit,
 ) {
     bottomSheetType?.let { type ->
         when (type) {
             BottomSheetType.MovieDetailBottomSheet -> {
                 SheetContentMovieDetails(
                     movie = movieSheetUIState.selectedMovieDetails,
-                    navigateToSelectedMovie = navigateToSelectedMovie
+                    navigateToSelectedMovie = navigateToSelectedMovie,
                 )
             }
             BottomSheetType.ActorDetailBottomSheet -> {
                 SheetContentActorDetails(
-                    actor = sheetUiState.selectedPersonDetails
+                    actor = sheetUiState.selectedPersonDetails,
                 )
             }
         }
@@ -214,13 +215,13 @@ fun MovieDetailsUIPreview() {
                 recommendedMovies = fakeMovieList(),
                 movieCast = fakeMovieCastList(),
                 isFetchingDetails = false,
-                movieProviders = listOf(Flatrate("", 1, ""))
+                movieProviders = listOf(Flatrate("", 1, "")),
             ),
             navigateUp = {},
             showFab = remember { mutableStateOf(true) },
             openMovieDetailsBottomSheet = { Job() },
             selectBottomSheetCallback = {},
-            showBottomSheetScaffold = remember { mutableStateOf(true) }
+            showBottomSheetScaffold = remember { mutableStateOf(true) },
         )
     }
 }

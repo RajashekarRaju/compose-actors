@@ -19,7 +19,7 @@ import com.developersbreach.designsystem.components.CaText
 
 @Composable
 fun MovieDetailOverviewText(
-    overview: String?
+    overview: String?,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -35,7 +35,7 @@ fun MovieDetailOverviewText(
             lineHeight = 20.sp,
             color = MaterialTheme.colors.onBackground,
             textAlign = TextAlign.Justify,
-            fontSize = 16.sp
-        )
+            fontSize = 16.sp,
+        ),
     )
 }

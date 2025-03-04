@@ -9,7 +9,7 @@ import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.movie.model.MovieDetail
 import com.developersbreach.composeactors.data.movie.remote.MovieApi
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
@@ -18,17 +18,17 @@ import kotlinx.coroutines.withContext
 @Singleton
 class MovieRepositoryImpl @Inject constructor(
     private val movieApi: MovieApi,
-    private val databaseDataSource: DatabaseDataSource
+    private val databaseDataSource: DatabaseDataSource,
 ) : MovieRepository {
 
     override suspend fun getNowPlayingMovies(
-        page: Int
+        page: Int,
     ): Either<Throwable, PagedResponse<Movie>> = withContext(Dispatchers.IO) {
         movieApi.getNowPlayingMovies(page)
     }
 
     override suspend fun getUpcomingMovies(
-        page: Int
+        page: Int,
     ): Either<Throwable, List<Movie>> = withContext(Dispatchers.IO) {
         movieApi.getUpcomingMovies(page).map {
             it.data
@@ -36,14 +36,14 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMovieDetails(
-        movieId: Int
+        movieId: Int,
     ): Either<Throwable, MovieDetail> = withContext(Dispatchers.IO) {
         movieApi.getMovieDetails(movieId)
     }
 
     override suspend fun getSimilarMovies(
         movieId: Int,
-        page: Int
+        page: Int,
     ): Either<Throwable, List<Movie>> = withContext(Dispatchers.IO) {
         movieApi.getSimilarMovies(movieId, page).map {
             it.data
@@ -52,7 +52,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getRecommendedMovies(
         movieId: Int,
-        page: Int
+        page: Int,
     ): Either<Throwable, List<Movie>> = withContext(Dispatchers.IO) {
         movieApi.getRecommendedMovies(movieId, page).map {
             it.data
@@ -60,7 +60,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMovieCast(
-        movieId: Int
+        movieId: Int,
     ): Either<Throwable, List<Cast>> = withContext(Dispatchers.IO) {
         movieApi.getMovieCast(movieId).map {
             it.cast
@@ -68,7 +68,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMovieProviders(
-        movieId: Int
+        movieId: Int,
     ): Either<Throwable, List<Flatrate>> = withContext(Dispatchers.IO) {
         val response = movieApi.getMovieProviders(movieId)
         response.map {

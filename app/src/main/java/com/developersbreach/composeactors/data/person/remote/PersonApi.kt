@@ -8,7 +8,10 @@ import com.developersbreach.composeactors.data.movie.model.MoviesResponse
 
 interface PersonApi {
     suspend fun getPopularPersons(): Either<Throwable, PagedResponse<Person>>
+
     suspend fun getTrendingPersons(): Either<Throwable, PagedResponse<Person>>
+
     suspend fun getPersonDetails(personId: Int): Either<Throwable, PersonDetail>
+
     suspend fun getCastDetails(personId: Int): Either<Throwable, MoviesResponse>
 }

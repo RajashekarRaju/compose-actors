@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val searchRepository: SearchRepository
+    private val searchRepository: SearchRepository,
 ) : ViewModel() {
 
     val searchType: SearchType = checkNotNull(savedStateHandle[SEARCH_TYPE])
@@ -37,19 +37,19 @@ class SearchViewModel @Inject constructor(
                 SearchType.Persons -> {
                     uiState = UiState.Success(ActorSearch(isSearchingResults = true))
                     uiState = searchRepository.getSearchableActorsData(
-                        query = searchQuery
+                        query = searchQuery,
                     ).fold(
                         ifLeft = { UiState.Error(it) },
-                        ifRight = { UiState.Success(ActorSearch(it, false)) }
+                        ifRight = { UiState.Success(ActorSearch(it, false)) },
                     )
                 }
                 SearchType.Movies -> {
                     uiState = UiState.Success(MovieSearch(isSearchingResults = true))
                     uiState = searchRepository.getSearchableMoviesData(
-                        query = searchQuery
+                        query = searchQuery,
                     ).fold(
                         ifLeft = { UiState.Error(it) },
-                        ifRight = { UiState.Success(MovieSearch(it, false)) }
+                        ifRight = { UiState.Success(MovieSearch(it, false)) },
                     )
                 }
             }

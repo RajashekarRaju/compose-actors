@@ -10,7 +10,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
 class GetPagedMovies @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository,
 ) {
 
     operator fun invoke(): Flow<PagingData<Movie>> {
@@ -19,7 +19,7 @@ class GetPagedMovies @Inject constructor(
             initialKey = INITIAL_PAGE_KEY,
             pagingSourceFactory = {
                 MoviesPagingSource(movieRepository)
-            }
+            },
         ).flow
     }
 

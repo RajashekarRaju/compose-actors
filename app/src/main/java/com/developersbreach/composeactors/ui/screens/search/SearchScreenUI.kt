@@ -40,12 +40,12 @@ fun SearchScreenUI(
                         navigateUp = navigateUp,
                         onQueryChange = onSearchQueryChange,
                         searchHint = searchHint,
-                        closeKeyboard = closeKeyboard
+                        closeKeyboard = closeKeyboard,
                     )
                 },
-                content = {paddingValues ->
+                content = { paddingValues ->
                     Box(
-                        modifier = Modifier.padding(paddingValues)
+                        modifier = Modifier.padding(paddingValues),
                     ) {
                         when (data) {
                             is ActorSearch -> {
@@ -56,7 +56,7 @@ fun SearchScreenUI(
                                 PersonSearchUI(
                                     persons = data.personList,
                                     navigateToSelectedPerson = navigateToSearchBySearchType,
-                                    closeKeyboard = closeKeyboard
+                                    closeKeyboard = closeKeyboard,
                                 )
                             }
                             is MovieSearch -> {
@@ -67,15 +67,14 @@ fun SearchScreenUI(
                                 MovieSearchUI(
                                     movieList = data.movieList,
                                     navigateToSelectedMovie = navigateToSearchBySearchType,
-                                    closeKeyboard = closeKeyboard
+                                    closeKeyboard = closeKeyboard,
                                 )
                             }
                         }
                     }
-
-                }
+                },
             )
-        }
+        },
     )
 }
 
@@ -90,8 +89,8 @@ fun SearchScreenUIPreview() {
             onSearchQueryChange = {},
             data = ActorSearch(
                 personList = fakePersonsList(),
-                isSearchingResults = false
-            )
+                isSearchingResults = false,
+            ),
         )
     }
 }

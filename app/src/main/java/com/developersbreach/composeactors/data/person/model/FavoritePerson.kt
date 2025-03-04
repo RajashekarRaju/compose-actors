@@ -7,7 +7,7 @@ data class FavoritePerson(
     @Stable val personId: Int,
     val personName: String,
     val profileUrl: String,
-    val placeOfBirth: String?
+    val placeOfBirth: String?,
 )
 
 fun FavoritePerson.FavoritePersonsEntity(): FavoritePersonsEntity {
@@ -15,6 +15,6 @@ fun FavoritePerson.FavoritePersonsEntity(): FavoritePersonsEntity {
         personId = this.personId,
         personName = this.personName,
         personProfileUrl = this.profileUrl,
-        personPlaceOfBirth = this.placeOfBirth
+        personPlaceOfBirth = this.placeOfBirth,
     )
 }

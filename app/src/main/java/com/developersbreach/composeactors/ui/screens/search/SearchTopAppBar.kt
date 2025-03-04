@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.screens.search
 
-
 import android.content.Intent
 import android.speech.RecognizerIntent
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -54,7 +53,7 @@ fun SearchAppBar(
     navigateUp: () -> Unit,
     onQueryChange: (searchQuery: String) -> Unit,
     searchHint: String,
-    closeKeyboard: () -> Unit?
+    closeKeyboard: () -> Unit?,
 ) {
     // Immediately update and keep track of query from text field changes.
     var query: String by rememberSaveable { mutableStateOf("") }
@@ -87,7 +86,6 @@ fun SearchAppBar(
     }
 
     Column {
-
         // This Spacer avoids colliding content with app bar by matching the height of status bar.
         Spacer(Modifier.statusBarsPadding())
 
@@ -106,12 +104,12 @@ fun SearchAppBar(
                     closeKeyboardAndNavigateUp(
                         navigateUp = navigateUp,
                         closeKeyboard = closeKeyboard,
-                        keyboardState = keyboardState
+                        keyboardState = keyboardState,
                     )
                 },
                 imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                 tint = MaterialTheme.colors.onBackground,
-                contentDescription = stringResource(id = R.string.cd_search_icon)
+                contentDescription = stringResource(id = R.string.cd_search_icon),
             ),
             trailingIcon = {
                 if (showClearQueryIcon) {
@@ -124,7 +122,7 @@ fun SearchAppBar(
                         iconModifier = Modifier,
                         imageVector = Icons.Rounded.Clear,
                         tint = MaterialTheme.colors.onBackground,
-                        contentDescription = stringResource(id = R.string.cd_clear_icon)
+                        contentDescription = stringResource(id = R.string.cd_clear_icon),
                     )
                 } else {
                     CaIconButton(
@@ -148,18 +146,18 @@ fun SearchAppBar(
         // Divides content and search bar with line.
         CaDivider(
             modifier = Modifier,
-            colorAlpha = 0.1f
+            colorAlpha = 0.1f,
         )
     }
 }
 
 // Create an intent that can start the Speech Recognizer activity
 private val createLaunchSpeechRecognitionIntent = Intent(
-    RecognizerIntent.ACTION_RECOGNIZE_SPEECH
+    RecognizerIntent.ACTION_RECOGNIZE_SPEECH,
 ).apply {
     putExtra(
         RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM,
     )
 }
 
@@ -171,7 +169,7 @@ private fun SearchAppBarPreview() {
             navigateUp = { },
             onQueryChange = { },
             searchHint = stringResource(id = R.string.hint_search_query_actors),
-            closeKeyboard = { }
+            closeKeyboard = { },
         )
     }
 }

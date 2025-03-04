@@ -12,24 +12,24 @@ import javax.inject.Singleton
 
 @Singleton
 class SearchApiImpl @Inject constructor(
-    private val requestHandler: HttpRequestHandler
+    private val requestHandler: HttpRequestHandler,
 ) : SearchApi, BaseUrlProvider() {
 
     // search/person?api_key=API_KEY&query=$pacino
     override suspend fun getSearchableActorsData(
-        query: String
+        query: String,
     ): Either<Throwable, PagedResponse<Person>> {
         return requestHandler.getPagedResponse<Person>(
-            URL("${BASE_URL}search/person?${API_KEY}&query=${query.toEncodedQuery()}")
+            URL("${BASE_URL}search/person?${API_KEY}&query=${query.toEncodedQuery()}"),
         )
     }
 
     // search/movie?api_key=API_KEY&query=$thor
     override suspend fun getSearchableMoviesData(
-        query: String
+        query: String,
     ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
-            URL("${BASE_URL}search/movie?${API_KEY}&query=${query.toEncodedQuery()}")
+            URL("${BASE_URL}search/movie?${API_KEY}&query=${query.toEncodedQuery()}"),
         )
     }
 }

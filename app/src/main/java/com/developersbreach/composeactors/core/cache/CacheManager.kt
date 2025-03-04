@@ -6,10 +6,13 @@ import javax.inject.Singleton
 
 @Singleton
 class CacheManager @Inject constructor(
-    cacheSize: Int = 100
+    cacheSize: Int = 100,
 ) {
     private val cache = object : LruCache<String, Any>(cacheSize) {
-        override fun sizeOf(key: String, value: Any): Int {
+        override fun sizeOf(
+            key: String,
+            value: Any,
+        ): Int {
             return 1
         }
     }
@@ -20,7 +23,10 @@ class CacheManager @Inject constructor(
     }
 
     @Synchronized
-    fun <T> put(key: String, value: T) {
+    fun <T> put(
+        key: String,
+        value: T,
+    ) {
         cache.put(key, value)
     }
 

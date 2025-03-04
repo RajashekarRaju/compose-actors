@@ -9,8 +9,8 @@ class PreviewAnnotationRestrictionTest {
         checkNoDirectUsageExceptAllowed(
             componentName = "androidx.compose.ui.tooling.preview.Preview",
             excludePaths = arrayOf(
-                "compose-actors/app/src/main/java/com/developersbreach/composeactors/annotations/PreviewLightDark.kt"
-            )
+                "compose-actors/app/src/main/java/com/developersbreach/composeactors/annotations/PreviewLightDark.kt",
+            ),
         )
     }
 }

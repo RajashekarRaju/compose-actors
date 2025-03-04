@@ -11,13 +11,13 @@ import javax.inject.Singleton
 
 @Singleton
 class TrendingApiImpl @Inject constructor(
-    private val requestHandler: HttpRequestHandler
+    private val requestHandler: HttpRequestHandler,
 ) : TrendingApi, BaseUrlProvider() {
 
     // trending/person/week?api_key=API_KEY
     override suspend fun getTrendingActors(): Either<Throwable, PagedResponse<Person>> {
         return requestHandler.getPagedResponse<Person>(
-            URL("${BASE_URL}trending/person/week?${API_KEY}")
+            URL("${BASE_URL}trending/person/week?${API_KEY}"),
         )
     }
 }

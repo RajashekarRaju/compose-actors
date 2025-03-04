@@ -8,20 +8,16 @@ import com.developersbreach.composeactors.data.person.model.FavoritePerson
 
 @Entity(tableName = "favorite_persons_table")
 data class FavoritePersonsEntity(
-
     @Stable
     @PrimaryKey
     @ColumnInfo(name = "column_person_id")
     val personId: Int,
-
     @ColumnInfo(name = "column_person_name")
     val personName: String,
-
     @ColumnInfo(name = "column_person_profileUrl")
     val personProfileUrl: String,
-
     @ColumnInfo(name = "column_person_placeOfBirth")
-    val personPlaceOfBirth: String?
+    val personPlaceOfBirth: String?,
 )
 
 fun List<FavoritePersonsEntity>.toFavoritePersons(): List<FavoritePerson> {
@@ -30,7 +26,7 @@ fun List<FavoritePersonsEntity>.toFavoritePersons(): List<FavoritePerson> {
             personId = it.personId,
             personName = it.personName,
             profileUrl = it.personProfileUrl,
-            placeOfBirth = it.personPlaceOfBirth
+            placeOfBirth = it.personPlaceOfBirth,
         )
     }
 }

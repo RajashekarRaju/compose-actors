@@ -32,6 +32,6 @@ fun FavoritesScreen(
         removeFavoriteMovie = removeFavoriteMovie,
         navigateToSelectedPerson = navigateToSelectedPerson,
         favoritePeople = favoritePersons,
-        removeFavoritePerson = removeFavoritePerson
+        removeFavoritePerson = removeFavoritePerson,
     )
 }

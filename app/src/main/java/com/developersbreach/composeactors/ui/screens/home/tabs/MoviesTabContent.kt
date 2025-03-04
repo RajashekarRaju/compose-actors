@@ -45,15 +45,15 @@ fun MoviesTabContent(
         columns = GridCells.Fixed(3),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(16.dp)
+        contentPadding = PaddingValues(16.dp),
     ) {
         item(
-            span = { GridItemSpan(3) }
+            span = { GridItemSpan(3) },
         ) {
             CategoryTitle(
                 title = "Upcoming",
                 startPadding = 0.dp,
-                bottomPadding = 8.dp
+                bottomPadding = 8.dp,
             )
         }
 
@@ -65,19 +65,19 @@ fun MoviesTabContent(
                     navigateToSelectedMovie = navigateToSelectedMovie,
                     modifier = Modifier
                         .height(140.dp)
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
                 )
-            }
+            },
         )
 
         item(
-            span = { GridItemSpan(3) }
+            span = { GridItemSpan(3) },
         ) {
             CategoryTitle(
                 title = "Now Playing",
                 startPadding = 0.dp,
                 topPadding = 16.dp,
-                bottomPadding = 8.dp
+                bottomPadding = 8.dp,
             )
         }
 
@@ -92,16 +92,16 @@ fun MoviesTabContent(
 private fun UpcomingMovies(
     data: HomeData,
     navigateToSelectedMovie: (Int) -> Unit,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     LazyRow(
         contentPadding = PaddingValues(horizontal = 0.dp),
         horizontalArrangement = Arrangement.spacedBy(20.dp),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         items(
             items = data.upcomingMoviesList,
-            key = { it.movieId }
+            key = { it.movieId },
         ) { movieItem ->
             LoadNetworkImage(
                 imageUrl = movieItem.posterPathUrl,
@@ -112,7 +112,7 @@ private fun UpcomingMovies(
                     .width(260.dp)
                     .clickable {
                         navigateToSelectedMovie(movieItem.movieId)
-                    }
+                    },
             )
         }
     }
@@ -133,7 +133,7 @@ private fun LazyGridScope.nowPlayingMovies(
                     if (movie != null) {
                         navigateToSelectedMovie(movie.movieId)
                     }
-                }
+                },
         )
     }
 }
@@ -148,10 +148,10 @@ private fun MoviesTabContentPreview() {
                 trendingPersonList = listOf(),
                 isFetchingPersons = false,
                 upcomingMoviesList = listOf(),
-                nowPlayingMoviesList = emptyFlow()
+                nowPlayingMoviesList = emptyFlow(),
             ),
             navigateToSelectedMovie = {},
-            homeSheetUIState = HomeSheetUIState()
+            homeSheetUIState = HomeSheetUIState(),
         )
     }
 }
