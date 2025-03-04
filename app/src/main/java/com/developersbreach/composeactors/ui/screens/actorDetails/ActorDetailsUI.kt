@@ -32,13 +32,13 @@ internal fun ActorDetailsUI(
     navigateUp: () -> Unit,
     getSelectedMovieDetails: (Int) -> Unit,
     addActorToFavorites: () -> Unit,
-    removeActorFromFavorites: () -> Unit
+    removeActorFromFavorites: () -> Unit,
 ) {
     val showFab = rememberSaveable { mutableStateOf(true) }
     val actorProfileUrl = "${data.actorData?.profileUrl}"
     val modalSheetState = modalBottomSheetState()
     val openActorDetailsBottomSheet = manageModalBottomSheet(
-        modalSheetState = modalSheetState
+        modalSheetState = modalSheetState,
     )
 
     ModalBottomSheetLayout(
@@ -49,12 +49,12 @@ internal fun ActorDetailsUI(
         sheetContent = {
             SheetContentMovieDetails(
                 movie = sheetUIState.selectedMovieDetails,
-                navigateToSelectedMovie = navigateToSelectedMovie
+                navigateToSelectedMovie = navigateToSelectedMovie,
             )
-        }
+        },
     ) {
         ImageBackgroundThemeGenerator(
-            imageUrl = actorProfileUrl
+            imageUrl = actorProfileUrl,
         ) {
             Box {
                 // Draws gradient from image and overlays on it.
@@ -64,7 +64,7 @@ internal fun ActorDetailsUI(
                     // Custom top app bar
                     ActorDetailsTopAppBar(
                         navigateUp = navigateUp,
-                        title = "${data.actorData?.personName}"
+                        title = "${data.actorData?.personName}",
                     )
 
                     // Main details content
@@ -73,7 +73,7 @@ internal fun ActorDetailsUI(
                         data = data,
                         openActorDetailsBottomSheet = openActorDetailsBottomSheet,
                         getSelectedMovieDetails = getSelectedMovieDetails,
-                        showFab = showFab
+                        showFab = showFab,
                     )
                 }
                 // Progress bar
@@ -85,7 +85,7 @@ internal fun ActorDetailsUI(
             FloatingAddToFavoritesButton(
                 isFavorite = isFavoriteMovie,
                 addToFavorites = addActorToFavorites,
-                removeFromFavorites = removeActorFromFavorites
+                removeFromFavorites = removeActorFromFavorites,
             )
         }
     }
@@ -99,7 +99,7 @@ fun ActorDetailsUIPreview() {
             data = ActorDetailsData(
                 castList = fakeMovieList(),
                 actorData = fakePersonDetail,
-                isFetchingDetails = false
+                isFetchingDetails = false,
             ),
             sheetUIState = ActorDetailsSheetUIState(fakeMovieDetail),
             navigateToSelectedMovie = {},
@@ -107,7 +107,7 @@ fun ActorDetailsUIPreview() {
             navigateUp = {},
             getSelectedMovieDetails = {},
             addActorToFavorites = {},
-            removeActorFromFavorites = {}
+            removeActorFromFavorites = {},
         )
     }
 }

@@ -24,11 +24,11 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 internal fun ActorRoundProfile(
     profileUrl: String,
     size: Dp = 120.dp,
-    profilePreview: Int = R.drawable.adele
+    profilePreview: Int = R.drawable.adele,
 ) {
     Box(
         modifier = Modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         LoadNetworkImage(
             imageUrl = profileUrl,
@@ -39,8 +39,8 @@ internal fun ActorRoundProfile(
                 .border(
                     width = 4.dp,
                     color = MaterialTheme.colors.surface,
-                    shape = CircleShape
-                )
+                    shape = CircleShape,
+                ),
         )
     }
 }
@@ -52,7 +52,7 @@ fun ActorRoundProfilePreview() {
         ActorRoundProfile(
             profileUrl = "",
             size = 120.dp,
-            profilePreview = R.drawable.adele
+            profilePreview = R.drawable.adele,
         )
     }
 }

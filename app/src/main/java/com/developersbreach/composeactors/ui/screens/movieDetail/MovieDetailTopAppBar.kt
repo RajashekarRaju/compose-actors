@@ -29,7 +29,7 @@ fun MovieDetailTopAppBar(
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit,
     title: String?,
-    showTopBarBackground: State<Boolean>
+    showTopBarBackground: State<Boolean>,
 ) {
     val conditionalModifier = if (showTopBarBackground.value) {
         modifier.background(color = MaterialTheme.colors.background)
@@ -41,7 +41,7 @@ fun MovieDetailTopAppBar(
         verticalAlignment = Alignment.CenterVertically,
         modifier = conditionalModifier
             .fillMaxWidth()
-            .statusBarsPadding()
+            .statusBarsPadding(),
     ) {
         CaIconButton(
             onClick = navigateUp,
@@ -49,7 +49,7 @@ fun MovieDetailTopAppBar(
             iconModifier = Modifier,
             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
             tint = MaterialTheme.colors.onBackground,
-            contentDescription = stringResource(id = R.string.cd_up_button)
+            contentDescription = stringResource(id = R.string.cd_up_button),
         )
         CaTextH6(
             text = "$title",
@@ -57,7 +57,7 @@ fun MovieDetailTopAppBar(
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 8.dp)
+                .padding(start = 16.dp, end = 8.dp),
         )
     }
 }

@@ -27,7 +27,7 @@ import timber.log.Timber
 class HomeViewModel @Inject constructor(
     private val personRepository: PersonRepository,
     private val movieRepository: MovieRepository,
-    private val getPagedMovies: GetPagedMovies
+    private val getPagedMovies: GetPagedMovies,
 ) : ViewModel() {
 
     var uiState: UiState<HomeData> by mutableStateOf(UiState.Loading)
@@ -57,7 +57,7 @@ class HomeViewModel @Inject constructor(
                 trendingPersonList = personRepository.getTrendingPersons().bind(),
                 isFetchingPersons = false,
                 upcomingMoviesList = movieRepository.getUpcomingMovies().bind(),
-                nowPlayingMoviesList = getPagedMovies().cachedIn(viewModelScope)
+                nowPlayingMoviesList = getPagedMovies().cachedIn(viewModelScope),
             )
         }.fold(
             ifLeft = { UiState.Error(it) },

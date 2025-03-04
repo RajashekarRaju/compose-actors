@@ -35,7 +35,7 @@ import com.developersbreach.designsystem.components.CaTextSubtitle2
  */
 @Composable
 internal fun ActorInfoHeader(
-    actorData: PersonDetail?
+    actorData: PersonDetail?,
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
@@ -53,24 +53,24 @@ internal fun ActorInfoHeader(
  */
 @Composable
 private fun AgeInfo(
-    actorAge: String?
+    actorAge: String?,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(16.dp),
     ) {
         Box(
-            modifier = Modifier.borderRevealAnimation()
+            modifier = Modifier.borderRevealAnimation(),
         ) {
             CaTextH6(
                 text = "${calculateAge(actorAge)}",
                 color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.align(alignment = Alignment.Center)
+                modifier = Modifier.align(alignment = Alignment.Center),
             )
         }
 
         ActorInfoHeaderSubtitle(
-            subtitle = stringResource(R.string.actor_age_subtitle)
+            subtitle = stringResource(R.string.actor_age_subtitle),
         )
     }
 }
@@ -81,25 +81,25 @@ private fun AgeInfo(
  */
 @Composable
 private fun PopularityInfo(
-    popularity: Double?
+    popularity: Double?,
 ) {
     Column(
         modifier = Modifier.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
-            modifier = Modifier.borderRevealAnimation()
+            modifier = Modifier.borderRevealAnimation(),
         ) {
             CaTextH6(
                 text = getPopularity(popularity),
                 modifier = Modifier
                     .padding(vertical = 8.dp)
-                    .align(alignment = Alignment.Center)
+                    .align(alignment = Alignment.Center),
             )
         }
 
         ActorInfoHeaderSubtitle(
-            subtitle = stringResource(R.string.actor_popularity_subtitle)
+            subtitle = stringResource(R.string.actor_popularity_subtitle),
         )
     }
 }
@@ -110,14 +110,14 @@ private fun PopularityInfo(
  */
 @Composable
 private fun CountryInfo(
-    placeOfBirth: String?
+    placeOfBirth: String?,
 ) {
     Column(
         modifier = Modifier.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
-            modifier = Modifier.borderRevealAnimation()
+            modifier = Modifier.borderRevealAnimation(),
         ) {
             CaImage(
                 painter = painterResource(id = R.drawable.ic_globe),
@@ -125,24 +125,24 @@ private fun CountryInfo(
                 colorFilter = ColorFilter.tint(color = MaterialTheme.colors.onSurface),
                 modifier = Modifier
                     .align(alignment = Alignment.Center)
-                    .size(32.dp)
+                    .size(32.dp),
             )
         }
 
         ActorInfoHeaderSubtitle(
-            subtitle = "${getPlaceOfBirth(placeOfBirth)}"
+            subtitle = "${getPlaceOfBirth(placeOfBirth)}",
         )
     }
 }
 
 @Composable
 private fun ActorInfoHeaderSubtitle(
-    subtitle: String
+    subtitle: String,
 ) {
     CaTextSubtitle2(
         text = subtitle,
         modifier = Modifier.padding(vertical = 8.dp),
-        color = MaterialTheme.colors.onBackground
+        color = MaterialTheme.colors.onBackground,
     )
 }
 
@@ -158,8 +158,8 @@ private fun ActorInfoHeaderPreview() {
                 biography = "Kate Elizabeth Winslet CBE born 5 October 1975 is an English actress. Known for her work in independent films, particularly period dramas, and for her portrayals of headstrong and complicated women, she has received numerous accolades, including an Academy Award, a Grammy Award, two Primetime Emmy Awards, three BAFTA Awards, and five Golden Globe Awards. Time magazine named Winslet one of the 100 most influential people in the world in 2009 and 2021. She was appointed Commander of the Order of the British Empire (CBE) in 2012.",
                 dateOfBirth = "47",
                 placeOfBirth = "UK",
-                popularity = 52.0
-            )
+                popularity = 52.0,
+            ),
         )
     }
 }

@@ -35,21 +35,21 @@ fun SheetContentMovieProviders(
     movieProvider: List<Flatrate>,
     isFavoriteMovie: Boolean,
     addMovieToFavorites: () -> Unit,
-    removeMovieFromFavorites: () -> Unit
+    removeMovieFromFavorites: () -> Unit,
 ) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxWidth()
             .height(250.dp)
             .background(MaterialTheme.colors.surface)
-            .navigationBarsPadding()
+            .navigationBarsPadding(),
     ) {
         val (header, streaming, noStreaming, floatingButton) = createRefs()
 
         HeaderModalSheet(
             modifier = Modifier.constrainAs(header) {
                 top.linkTo(parent.top, margin = 16.dp)
-            }
+            },
         )
 
         if (movieProvider.isNotEmpty()) {
@@ -59,7 +59,7 @@ fun SheetContentMovieProviders(
                     top.linkTo(header.bottom, margin = 16.dp)
                     start.linkTo(parent.start, margin = 24.dp)
                     end.linkTo(parent.end)
-                }
+                },
             )
         } else {
             NoStreaming(
@@ -67,7 +67,7 @@ fun SheetContentMovieProviders(
                     top.linkTo(header.bottom, margin = 16.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                }
+                },
             )
         }
 
@@ -79,7 +79,7 @@ fun SheetContentMovieProviders(
                 bottom.linkTo(parent.bottom, margin = 8.dp)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
-            }
+            },
         )
     }
 }
@@ -91,22 +91,25 @@ fun NoStreaming(modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         CaTextBody1(
             text = stringResource(id = R.string.no_watch_options),
             color = MaterialTheme.colors.onSurface,
-            modifier = Modifier
+            modifier = Modifier,
         )
     }
 }
 
 @Composable
-fun Streaming(flatrate: List<Flatrate>, modifier: Modifier = Modifier) {
+fun Streaming(
+    flatrate: List<Flatrate>,
+    modifier: Modifier = Modifier,
+) {
     LazyRow(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 24.dp)
+            .padding(start = 24.dp),
     ) {
         items(flatrate) { flatrate ->
             LoadNetworkImage(
@@ -116,7 +119,7 @@ fun Streaming(flatrate: List<Flatrate>, modifier: Modifier = Modifier) {
                 showAnimProgress = false,
                 modifier = Modifier
                     .padding(horizontal = 4.dp)
-                    .size(48.dp)
+                    .size(48.dp),
             )
         }
     }
@@ -127,23 +130,23 @@ private fun HeaderModalSheet(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 16.dp),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
         ) {
             CaDivider(
                 thickness = 4.dp,
                 modifier = Modifier
                     .clip(RoundedCornerShape(percent = 100))
-                    .width(48.dp)
+                    .width(48.dp),
             )
         }
         Spacer(modifier = Modifier.height(14.dp))
         CaTextH6(
             text = stringResource(id = R.string.stream),
-            modifier = Modifier
+            modifier = Modifier,
         )
     }
 }

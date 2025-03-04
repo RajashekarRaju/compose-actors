@@ -57,14 +57,14 @@ fun SheetContentActorDetails(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = MaterialTheme.colors.background)
+                    .background(color = MaterialTheme.colors.background),
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
                 CaDivider(
                     thickness = 4.dp,
                     modifier = Modifier
                         .clip(RoundedCornerShape(percent = 100))
-                        .width(48.dp)
+                        .width(48.dp),
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 ActorProfileImage(actor?.profileUrl)
@@ -85,7 +85,7 @@ fun SheetContentActorDetails(
 
 @Composable
 private fun ActorProfileImage(
-    profileUrl: String?
+    profileUrl: String?,
 ) {
     LoadNetworkImage(
         imageUrl = profileUrl,
@@ -96,24 +96,24 @@ private fun ActorProfileImage(
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colors.onBackground,
-                shape = CircleShape
-            )
+                shape = CircleShape,
+            ),
     )
 }
 
 @Composable
 private fun ActorNameText(
-    actorName: String
+    actorName: String,
 ) {
     CaTextH6(
         text = actorName,
-        modifier = Modifier.padding(horizontal = 24.dp)
+        modifier = Modifier.padding(horizontal = 24.dp),
     )
 }
 
 @Composable
 private fun ActorBiographyText(
-    biography: String
+    biography: String,
 ) {
     CaText(
         text = biography,
@@ -124,8 +124,8 @@ private fun ActorBiographyText(
             lineHeight = 20.sp,
             color = MaterialTheme.colors.onBackground.copy(0.8f),
             textAlign = TextAlign.Justify,
-            fontSize = 16.sp
-        )
+            fontSize = 16.sp,
+        ),
     )
 }
 
@@ -134,7 +134,7 @@ private fun ActorBiographyText(
 fun SheetContentActorDetailsPreview() {
     ComposeActorsTheme {
         SheetContentActorDetails(
-            actor = fakePersonDetail
+            actor = fakePersonDetail,
         )
     }
 }

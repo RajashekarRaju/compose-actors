@@ -50,25 +50,25 @@ val popularPersonLists = listOf(
     Person(
         personId = 28782,
         personName = "Monica Bellucci",
-        profilePath = "z3sLuRKP7hQVrvSTsqdLjGSldwG.jpg"
+        profilePath = "z3sLuRKP7hQVrvSTsqdLjGSldwG.jpg",
     ),
     Person(
         personId = 287,
         personName = "Brad Pitt",
-        profilePath = "kU3B75TyRiCgE270EyZnHjfivoq.jpg"
-    )
+        profilePath = "kU3B75TyRiCgE270EyZnHjfivoq.jpg",
+    ),
 )
 
 val trendingPersonLists = listOf(
     Person(
         personId = 8784,
         personName = "Daniel Craig",
-        profilePath = "rFuETZeyOAfIqBahOObF7Soq5Dh.jpg"
+        profilePath = "rFuETZeyOAfIqBahOObF7Soq5Dh.jpg",
     ),
     Person(
         personId = 1892,
         personName = "Matt Damon",
-        profilePath = "7wbHIn7GziFlJLPl8Zu1XVl24EG.jpg"
+        profilePath = "7wbHIn7GziFlJLPl8Zu1XVl24EG.jpg",
     ),
 )
 
@@ -79,5 +79,5 @@ val fakePersonDetail = PersonDetail(
     biography = "This is fake biography for the actor added here to see how the actual preview looks in the screen so don't get any serious about this.",
     dateOfBirth = "59",
     placeOfBirth = "Italy",
-    popularity = 43.0
+    popularity = 43.0,
 )

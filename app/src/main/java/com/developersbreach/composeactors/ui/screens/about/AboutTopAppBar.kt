@@ -21,12 +21,12 @@ import com.developersbreach.designsystem.components.CaTextH6
 
 @Composable
 fun AboutTopAppBar(
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .statusBarsPadding()
+            .statusBarsPadding(),
     ) {
         CaIconButton(
             onClick = navigateUp,
@@ -36,7 +36,7 @@ fun AboutTopAppBar(
             iconModifier = Modifier,
             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
             tint = MaterialTheme.colors.onBackground,
-            contentDescription = stringResource(id = R.string.cd_up_button)
+            contentDescription = stringResource(id = R.string.cd_up_button),
         )
         CaTextH6(
             text = "About",

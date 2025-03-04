@@ -32,7 +32,7 @@ object ApiModule {
     @Provides
     @Singleton
     fun provideTrendingApi(
-        requestHandler: HttpRequestHandler
+        requestHandler: HttpRequestHandler,
     ): TrendingApi {
         return TrendingApiImpl(requestHandler)
     }
@@ -40,7 +40,7 @@ object ApiModule {
     @Provides
     @Singleton
     fun provideTrendingRepository(
-        trendingApi: TrendingApi
+        trendingApi: TrendingApi,
     ): TrendingRepository {
         return TrendingRepositoryImpl(trendingApi)
     }
@@ -48,7 +48,7 @@ object ApiModule {
     @Provides
     @Singleton
     fun provideSearchApiImpl(
-        requestHandler: HttpRequestHandler
+        requestHandler: HttpRequestHandler,
     ): SearchApi {
         return SearchApiImpl(requestHandler)
     }
@@ -56,7 +56,7 @@ object ApiModule {
     @Provides
     @Singleton
     fun provideSearchRepository(
-        searchApi: SearchApi
+        searchApi: SearchApi,
     ): SearchRepository {
         return SearchRepositoryImpl(searchApi)
     }
@@ -64,7 +64,7 @@ object ApiModule {
     @Provides
     @Singleton
     fun provideMovieApiImpl(
-        requestHandler: HttpRequestHandler
+        requestHandler: HttpRequestHandler,
     ): MovieApi {
         return MovieApiImpl(requestHandler)
     }
@@ -73,7 +73,7 @@ object ApiModule {
     @Singleton
     fun provideMovieRepository(
         movieApi: MovieApi,
-        databaseDataSource: DatabaseDataSource
+        databaseDataSource: DatabaseDataSource,
     ): MovieRepository {
         return MovieRepositoryImpl(movieApi, databaseDataSource)
     }
@@ -81,7 +81,7 @@ object ApiModule {
     @Provides
     @Singleton
     fun providePersonApiImpl(
-        requestHandler: HttpRequestHandler
+        requestHandler: HttpRequestHandler,
     ): PersonApi {
         return PersonApiImpl(requestHandler)
     }

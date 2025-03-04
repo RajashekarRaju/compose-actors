@@ -9,7 +9,6 @@ import com.developersbreach.composeactors.core.database.entity.FavoritePersonsEn
 import com.developersbreach.composeactors.core.database.entity.FavoriteMoviesEntity
 import com.developersbreach.composeactors.core.database.entity.PersonDetailEntity
 
-
 @Database(
     entities = [FavoritePersonsEntity::class, FavoriteMoviesEntity::class, PersonDetailEntity::class],
     version = 5,

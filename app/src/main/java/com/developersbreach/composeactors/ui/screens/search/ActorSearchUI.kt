@@ -20,17 +20,17 @@ import com.developersbreach.designsystem.components.CaTextH6
 fun PersonSearchUI(
     persons: List<Person>,
     navigateToSelectedPerson: (Int) -> Unit,
-    closeKeyboard: () -> Unit?
+    closeKeyboard: () -> Unit?,
 ) {
     LazyColumn(
         // This padding helps avoid content going behind the navigation bars.
-        modifier = Modifier.padding(bottom = 48.dp)
+        modifier = Modifier.padding(bottom = 48.dp),
     ) {
         items(persons) {
             ItemSearchPerson(
                 person = it,
                 onClickPerson = navigateToSelectedPerson,
-                closeKeyboard = closeKeyboard
+                closeKeyboard = closeKeyboard,
             )
         }
     }
@@ -40,7 +40,7 @@ fun PersonSearchUI(
 private fun ItemSearchPerson(
     person: Person,
     onClickPerson: (Int) -> Unit,
-    closeKeyboard: () -> Unit?
+    closeKeyboard: () -> Unit?,
 ) {
     CaTextH6(
         text = person.personName,
@@ -51,7 +51,7 @@ private fun ItemSearchPerson(
                 onClickPerson(person.personId)
             }
             .padding(horizontal = 20.dp, vertical = 12.dp)
-            .wrapContentWidth(Alignment.Start)
+            .wrapContentWidth(Alignment.Start),
     )
 }
 
@@ -62,7 +62,7 @@ private fun PersonSearchUIPreview() {
         PersonSearchUI(
             persons = fakePersonsList(),
             navigateToSelectedPerson = {},
-            closeKeyboard = {}
+            closeKeyboard = {},
         )
     }
 }

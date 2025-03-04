@@ -11,11 +11,11 @@ import kotlinx.coroutines.withContext
 
 @Singleton
 class SearchRepositoryImpl @Inject constructor(
-    private val searchApi: SearchApi
+    private val searchApi: SearchApi,
 ) : SearchRepository {
 
     override suspend fun getSearchableActorsData(
-        query: String
+        query: String,
     ): Either<Throwable, List<Person>> = withContext(Dispatchers.IO) {
         searchApi.getSearchableActorsData(query).map {
             it.data
@@ -23,7 +23,7 @@ class SearchRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getSearchableMoviesData(
-        query: String
+        query: String,
     ): Either<Throwable, List<Movie>> = withContext(Dispatchers.IO) {
         searchApi.getSearchableMoviesData(query).map {
             it.data

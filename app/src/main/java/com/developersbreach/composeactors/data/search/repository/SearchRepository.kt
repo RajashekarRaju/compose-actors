@@ -6,5 +6,6 @@ import com.developersbreach.composeactors.data.movie.model.Movie
 
 interface SearchRepository {
     suspend fun getSearchableActorsData(query: String): Either<Throwable, List<Person>>
+
     suspend fun getSearchableMoviesData(query: String): Either<Throwable, List<Movie>>
 }

@@ -13,7 +13,7 @@ import com.developersbreach.composeactors.ui.components.UiStateHandler
 fun MovieDetailScreen(
     viewModel: MovieDetailViewModel = hiltViewModel(),
     navigateToSelectedMovie: (Int) -> Unit,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
 ) {
     val movieId by viewModel.isFavoriteMovie.observeAsState()
 
@@ -24,7 +24,7 @@ fun MovieDetailScreen(
     val selectBottomSheetCallback = setBottomSheetCallBack(viewModel, selectedBottomSheet)
 
     UiStateHandler(
-        uiState = viewModel.uiState
+        uiState = viewModel.uiState,
     ) { data ->
         MovieDetailsUI(
             data = data,
@@ -36,14 +36,14 @@ fun MovieDetailScreen(
             isFavoriteMovie = movieId != 0 && movieId != null,
             addMovieToFavorites = { viewModel.addMovieToFavorites(data.movieData) },
             removeMovieFromFavorites = { viewModel.removeMovieFromFavorites(data.movieData) },
-            navigateToSelectedMovie = navigateToSelectedMovie
+            navigateToSelectedMovie = navigateToSelectedMovie,
         )
     }
 }
 
 private fun setBottomSheetCallBack(
     viewModel: MovieDetailViewModel,
-    selectedBottomSheet: MutableState<BottomSheetType?>
+    selectedBottomSheet: MutableState<BottomSheetType?>,
 ) = { bottomSheetType: BottomSheetType ->
     when (bottomSheetType) {
         BottomSheetType.MovieDetailBottomSheet -> {

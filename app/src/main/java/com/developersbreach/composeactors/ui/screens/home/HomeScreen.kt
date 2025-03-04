@@ -20,7 +20,7 @@ fun HomeScreen(
     val navigateToSearchBySearchType by viewModel.updateHomeSearchType.observeAsState(SearchType.Persons)
 
     UiStateHandler(
-        uiState = viewModel.uiState
+        uiState = viewModel.uiState,
     ) { data ->
         HomeScreenUI(
             modifier = Modifier,
@@ -34,7 +34,7 @@ fun HomeScreen(
             sheetUiState = viewModel.sheetUiState,
             updateHomeSearchType = { searchType: SearchType ->
                 viewModel.updateHomeSearchType(searchType)
-            }
+            },
         )
     }
 }

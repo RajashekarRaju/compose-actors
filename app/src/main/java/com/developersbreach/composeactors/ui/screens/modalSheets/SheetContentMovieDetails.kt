@@ -47,12 +47,12 @@ import com.developersbreach.designsystem.components.CaTextSubtitle1
 @Composable
 fun SheetContentMovieDetails(
     movie: MovieDetail?,
-    navigateToSelectedMovie: (Int) -> Unit
+    navigateToSelectedMovie: (Int) -> Unit,
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .navigationBarsPadding()
+            .navigationBarsPadding(),
     ) {
         Spacer(modifier = Modifier.height(4.dp))
         HeaderModalSheet(movie, navigateToSelectedMovie)
@@ -65,7 +65,7 @@ fun SheetContentMovieDetails(
         Row(
             Modifier.padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             CircularSeparator()
             MovieReleaseDateText(movie?.releaseDate)
@@ -78,7 +78,7 @@ fun SheetContentMovieDetails(
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = 20.dp),
         ) {
             MoviePosterImage(movie, navigateToSelectedMovie)
             MovieOverviewText(movie?.overview.toString())
@@ -91,12 +91,12 @@ fun SheetContentMovieDetails(
 @Composable
 private fun HeaderModalSheet(
     movie: MovieDetail?,
-    onClickMovie: (Int) -> Unit
+    onClickMovie: (Int) -> Unit,
 ) {
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp)
+            .padding(start = 20.dp),
     ) {
         CaTextH6(
             text = "${movie?.movieTitle}",
@@ -105,7 +105,7 @@ private fun HeaderModalSheet(
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .weight(8f)
-                .align(alignment = Alignment.CenterVertically)
+                .align(alignment = Alignment.CenterVertically),
         )
 
         // On clicking this icon triggers detail screen navigation with movie Id.
@@ -121,7 +121,7 @@ private fun HeaderModalSheet(
             iconModifier = Modifier,
             painter = painterResource(id = R.drawable.ic_chevron_right),
             tint = MaterialTheme.colors.onSurface.copy(alpha = 0.75f),
-            contentDescription = ""
+            contentDescription = "",
         )
     }
 }
@@ -131,25 +131,25 @@ private fun SeparatorSheetTitleHeader() {
     CaDivider(
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colors.onSurface.copy(alpha = 0.50f),
-        thickness = 0.50.dp
+        thickness = 0.50.dp,
     )
 }
 
 @Composable
 private fun MovieReleaseDateText(
-    releaseDate: String?
+    releaseDate: String?,
 ) {
     CaTextSubtitle1(
         text = "${releaseDate?.take(4)}",
         color = MaterialTheme.colors.onSurface.copy(0.7f),
         maxLines = 1,
-        modifier = Modifier
+        modifier = Modifier,
     )
 }
 
 @Composable
 private fun MovieDurationText(
-    runtime: Int?
+    runtime: Int?,
 ) {
     CaTextSubtitle1(
         text = getMovieRuntimeFormatted(runtime),
@@ -162,7 +162,7 @@ private fun MovieDurationText(
 @Composable
 private fun MoviePosterImage(
     movie: MovieDetail?,
-    selectedMovie: (Int) -> Unit
+    selectedMovie: (Int) -> Unit,
 ) {
     LoadNetworkImage(
         imageUrl = "${movie?.poster}",
@@ -174,13 +174,13 @@ private fun MoviePosterImage(
                 if (movie != null) {
                     selectedMovie(movie.movieId)
                 }
-            }
+            },
     )
 }
 
 @Composable
 private fun MovieOverviewText(
-    overview: String
+    overview: String,
 ) {
     CaText(
         text = overview,
@@ -193,8 +193,8 @@ private fun MovieOverviewText(
             lineHeight = 20.sp,
             color = MaterialTheme.colors.onSurface.copy(0.8f),
             textAlign = TextAlign.Justify,
-            fontSize = 16.sp
-        )
+            fontSize = 16.sp,
+        ),
     )
 }
 
@@ -204,7 +204,7 @@ fun SheetContentMovieDetailsPreview() {
     ComposeActorsTheme {
         SheetContentMovieDetails(
             movie = fakeMovieDetail,
-            navigateToSelectedMovie = {}
+            navigateToSelectedMovie = {},
         )
     }
 }

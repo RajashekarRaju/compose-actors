@@ -6,7 +6,7 @@ import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 
 class MoviesPagingSource(
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository,
 ) : PagingSource<Int, Movie>() {
 
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
@@ -23,7 +23,7 @@ class MoviesPagingSource(
 
     private suspend fun loadMovies(
         currentPageNumber: Int,
-        params: LoadParams<Int>
+        params: LoadParams<Int>,
     ): LoadResult<Int, Movie> {
         val response = movieRepository.getNowPlayingMovies(currentPageNumber)
         return response.fold(
@@ -36,9 +36,9 @@ class MoviesPagingSource(
                 LoadResult.Page(
                     prevKey = null,
                     nextKey = nextKey,
-                    data = it.data
+                    data = it.data,
                 )
-            }
+            },
         )
     }
 }

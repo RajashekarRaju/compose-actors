@@ -9,7 +9,7 @@ import com.developersbreach.composeactors.ui.screens.search.SearchType
  */
 class AppActions(
     private val navController: NavHostController,
-    private val routes: AppDestinations
+    private val routes: AppDestinations,
 ) {
 
     // Triggered when user tries to navigate to details of an person from list with Id.

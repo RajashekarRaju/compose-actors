@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 
 @Singleton
 class DatabaseDataSource @Inject constructor(
-    private val database: AppDatabase
+    private val database: AppDatabase,
 ) {
 
     fun getAllFavoriteMovies(): LiveData<List<Movie>> {
@@ -38,15 +38,15 @@ class DatabaseDataSource @Inject constructor(
     }
 
     fun checkIfMovieIsFavorite(
-        movieId: Int
+        movieId: Int,
     ) = database.favoriteMoviesDao.checkIfMovieIsFavorite(movieId)
 
     fun checkIfPersonIsFavorite(
-        personId: Int
+        personId: Int,
     ) = database.favoritePersonsDao.checkIfPersonIsFavorite(personId)
 
     suspend fun addMovieToFavorites(
-        movie: Movie
+        movie: Movie,
     ) = withContext(Dispatchers.IO) {
         with(movie.movieAsDatabaseModel()) {
             database.favoriteMoviesDao.addMovieToFavorites(favoriteMoviesEntity = this)
@@ -54,7 +54,7 @@ class DatabaseDataSource @Inject constructor(
     }
 
     suspend fun addPersonToFavorites(
-        favoritePerson: FavoritePerson
+        favoritePerson: FavoritePerson,
     ) = withContext(Dispatchers.IO) {
         with(favoritePerson.FavoritePersonsEntity()) {
             database.favoritePersonsDao.addPersonToFavorites(favoritePersonsEntity = this)
@@ -62,7 +62,7 @@ class DatabaseDataSource @Inject constructor(
     }
 
     suspend fun deleteSelectedFavoriteMovie(
-        movie: Movie
+        movie: Movie,
     ) = withContext(Dispatchers.IO) {
         with(movie.movieAsDatabaseModel()) {
             database.favoriteMoviesDao.deleteSelectedFavoriteMovie(favoriteMoviesEntity = this)
@@ -70,7 +70,7 @@ class DatabaseDataSource @Inject constructor(
     }
 
     suspend fun deleteSelectedFavoritePerson(
-        favoritePerson: FavoritePerson
+        favoritePerson: FavoritePerson,
     ) = withContext(Dispatchers.IO) {
         with(favoritePerson.FavoritePersonsEntity()) {
             database.favoritePersonsDao.deleteSelectedFavoritePerson(favoritePersonsEntity = this)
@@ -78,13 +78,13 @@ class DatabaseDataSource @Inject constructor(
     }
 
     suspend fun addPersonDetail(
-        personDetail: PersonDetail
+        personDetail: PersonDetail,
     ) {
         database.personDetailsDao.insertPersonDetail(personDetail.toEntity())
     }
 
     suspend fun getPersonDetail(
-        personId: Int
+        personId: Int,
     ): Either<Throwable, PersonDetailEntity?> {
         return Either.catch {
             database.personDetailsDao.getPersonDetail(personId)

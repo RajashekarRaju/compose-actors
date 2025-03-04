@@ -35,7 +35,7 @@ import com.developersbreach.designsystem.components.CaTextSubtitle1
 fun HomeTopAppBar(
     modifier: Modifier = Modifier,
     navigateToSearch: (SearchType) -> Unit,
-    searchType: SearchType
+    searchType: SearchType,
 ) {
     TopAppBar(
         content = { HomeTopAppBarContent(navigateToSearch, searchType) },
@@ -43,7 +43,7 @@ fun HomeTopAppBar(
         elevation = 0.dp,
         modifier = modifier
             .statusBarsPadding()
-            .padding(top = 4.dp, start = 16.dp, end = 16.dp)
+            .padding(top = 4.dp, start = 16.dp, end = 16.dp),
     )
 }
 
@@ -53,7 +53,7 @@ fun HomeTopAppBar(
 @Composable
 private fun HomeTopAppBarContent(
     navigateToSearch: (SearchType) -> Unit,
-    searchType: SearchType
+    searchType: SearchType,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -62,7 +62,7 @@ private fun HomeTopAppBarContent(
             .height(48.dp)
             .clip(shape = MaterialTheme.shapes.medium)
             .clickable { navigateToSearch(searchType) }
-            .background(color = MaterialTheme.colors.surface)
+            .background(color = MaterialTheme.colors.surface),
     ) {
         Spacer(modifier = Modifier.padding(horizontal = 8.dp))
 
@@ -70,7 +70,7 @@ private fun HomeTopAppBarContent(
             imageVector = Icons.Default.Search,
             contentDescription = stringResource(R.string.cd_search_icon),
             tint = MaterialTheme.colors.onSurface,
-            modifier = Modifier.alpha(0.5f)
+            modifier = Modifier.alpha(0.5f),
         )
 
         Spacer(modifier = Modifier.padding(horizontal = 12.dp))
@@ -78,7 +78,7 @@ private fun HomeTopAppBarContent(
         CaTextSubtitle1(
             text = stringResource(R.string.search_app_bar_title),
             color = MaterialTheme.colors.onSurface,
-            modifier = Modifier.alpha(0.5f)
+            modifier = Modifier.alpha(0.5f),
         )
     }
 }
@@ -89,7 +89,7 @@ private fun SearchBarPreview() {
     ComposeActorsTheme {
         HomeTopAppBarContent(
             navigateToSearch = { },
-            searchType = SearchType.Persons
+            searchType = SearchType.Persons,
         )
     }
 }

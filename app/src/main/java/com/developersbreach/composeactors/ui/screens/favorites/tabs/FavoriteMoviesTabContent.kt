@@ -32,7 +32,6 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaIconButton
 import com.developersbreach.designsystem.components.CaTextSubtitle1
 
-
 /**
  * Content shown for home tab Favorites.
  * If user did not add any movies to favorites, a message will be shown.
@@ -53,13 +52,13 @@ fun FavoriteMoviesTabContent(
         contentPadding = PaddingValues(24.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         state = listState,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         items(favoriteMovies) { movieItem: Movie ->
             ItemFavoriteMovie(
                 movieItem = movieItem,
                 onClickMovie = navigateToSelectedMovie,
-                removeFavoriteMovie = removeFavoriteMovie
+                removeFavoriteMovie = removeFavoriteMovie,
             )
         }
     }
@@ -69,13 +68,13 @@ fun FavoriteMoviesTabContent(
 private fun ItemFavoriteMovie(
     movieItem: Movie,
     onClickMovie: (Int) -> Unit,
-    removeFavoriteMovie: (Movie) -> Unit
+    removeFavoriteMovie: (Movie) -> Unit,
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .clip(shape = MaterialTheme.shapes.medium)
-            .background(MaterialTheme.colors.surface)
+            .background(MaterialTheme.colors.surface),
     ) {
         LoadNetworkImage(
             imageUrl = movieItem.bannerUrl,
@@ -84,20 +83,20 @@ private fun ItemFavoriteMovie(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .clickable { onClickMovie(movieItem.movieId) }
+                .clickable { onClickMovie(movieItem.movieId) },
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
         ) {
             CaTextSubtitle1(
                 text = movieItem.movieName,
                 color = MaterialTheme.colors.primary,
                 lineHeight = 20.sp,
-                modifier = Modifier.weight(0.8f)
+                modifier = Modifier.weight(0.8f),
             )
             CaIconButton(
                 iconModifier = Modifier,
@@ -105,7 +104,7 @@ private fun ItemFavoriteMovie(
                 modifier = Modifier.weight(0.1f),
                 painter = painterResource(id = R.drawable.ic_favorite),
                 contentDescription = null,
-                tint = MaterialTheme.colors.primary
+                tint = MaterialTheme.colors.primary,
             )
         }
     }
@@ -118,7 +117,7 @@ private fun FavoriteMoviesTabContentPreview() {
         FavoriteMoviesTabContent(
             navigateToSelectedMovie = {},
             favoriteMovies = fakeMovieList(),
-            removeFavoriteMovie = {}
+            removeFavoriteMovie = {},
         )
     }
 }
@@ -130,7 +129,7 @@ private fun FavoriteMoviesTabContentNoFavoritesPreview() {
         FavoriteMoviesTabContent(
             navigateToSelectedMovie = {},
             favoriteMovies = emptyList(),
-            removeFavoriteMovie = {}
+            removeFavoriteMovie = {},
         )
     }
 }

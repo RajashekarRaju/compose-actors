@@ -11,7 +11,7 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
     navigateUp: () -> Unit,
     navigateToSelectedPerson: (Int) -> Unit,
-    navigateToSelectedMovie: (Int) -> Unit
+    navigateToSelectedMovie: (Int) -> Unit,
 ) {
     UiStateHandler(
         uiState = viewModel.uiState,
@@ -31,7 +31,7 @@ fun SearchScreen(
             navigateToSearchBySearchType = navigateToSearchBySearchType,
             searchHint = searchHint,
             onSearchQueryChange = { query -> viewModel.performQuery(query) },
-            data = it
+            data = it,
         )
     }
 }

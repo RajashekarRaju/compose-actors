@@ -23,7 +23,7 @@ fun CircularSeparator(
             .clip(CircleShape)
             .background(
                 color = MaterialTheme.colors.onBackground.copy(alpha = 0.25f),
-                shape = CircleShape
-            )
+                shape = CircleShape,
+            ),
     )
 }

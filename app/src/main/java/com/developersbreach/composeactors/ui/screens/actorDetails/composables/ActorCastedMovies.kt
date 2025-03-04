@@ -31,12 +31,12 @@ import kotlinx.coroutines.Job
 internal fun ActorCastedMovies(
     data: ActorDetailsData,
     openActorDetailsBottomSheet: () -> Job,
-    getSelectedMovieDetails: (Int) -> Unit
+    getSelectedMovieDetails: (Int) -> Unit,
 ) {
     val cast: List<Movie> = data.castList
 
     Row(
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         CaImage(
             painter = painterResource(id = R.drawable.ic_movies_cast),
@@ -45,20 +45,20 @@ internal fun ActorCastedMovies(
             alpha = 0.5f,
             modifier = Modifier
                 .padding(start = 12.dp)
-                .size(36.dp)
+                .size(36.dp),
         )
         CategoryTitle(
-            title = stringResource(R.string.cast_movie_title)
+            title = stringResource(R.string.cast_movie_title),
         )
     }
 
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(16.dp)
+        contentPadding = PaddingValues(16.dp),
     ) {
         items(
             items = cast,
-            key = { it.movieId }
+            key = { it.movieId },
         ) { movie ->
             LoadNetworkImage(
                 imageUrl = movie.posterPathUrl,
@@ -69,7 +69,7 @@ internal fun ActorCastedMovies(
                     .clickable {
                         getSelectedMovieDetails(movie.movieId)
                         openActorDetailsBottomSheet()
-                    }
+                    },
             )
         }
     }

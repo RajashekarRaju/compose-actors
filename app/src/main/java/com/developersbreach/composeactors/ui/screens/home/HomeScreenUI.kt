@@ -50,13 +50,13 @@ fun HomeScreenUI(
     navigateToSelectedMovie: (Int) -> Unit,
     data: HomeData,
     sheetUiState: HomeSheetUIState,
-    updateHomeSearchType: (SearchType) -> Unit
+    updateHomeSearchType: (SearchType) -> Unit,
 ) {
     val scaffoldState = rememberScaffoldState()
     val modalSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         animationSpec = tween(durationMillis = 500),
-        skipHalfExpanded = true
+        skipHalfExpanded = true,
     )
 
     CaSurface(
@@ -75,7 +75,7 @@ fun HomeScreenUI(
                         navigateToFavorite = navigateToFavorite,
                         navigateToSearch = { navigateToSearch(SearchType.Movies) },
                         navigateToProfile = { },
-                        navigateToAbout = navigateToAbout
+                        navigateToAbout = navigateToAbout,
                     )
                 },
             ) {
@@ -86,18 +86,18 @@ fun HomeScreenUI(
                         HomeTopAppBar(
                             modifier = Modifier.testTag("TestTag:HomeTopAppBar"),
                             navigateToSearch = navigateToSearch,
-                            searchType = navigateToSearchBySearchType
+                            searchType = navigateToSearchBySearchType,
                         )
                     },
                     bottomBar = {
                         HomeBottomBar(
-                            modalSheetSheet = modalSheetState
+                            modalSheetSheet = modalSheetState,
                         )
                     },
                     snackbarHost = { HomeSnackbar(it) },
                     content = {
                         Box(
-                            modifier = modifier.padding(paddingValues = it)
+                            modifier = modifier.padding(paddingValues = it),
                         ) {
                             // Main content for this screen
                             HomeScreenUI(
@@ -105,7 +105,7 @@ fun HomeScreenUI(
                                 data = data,
                                 homeSheetUIState = sheetUiState,
                                 navigateToSelectedMovie = navigateToSelectedMovie,
-                                updateSearchType = updateHomeSearchType
+                                updateSearchType = updateHomeSearchType,
                             )
 
                             // Perform network check and show snackbar if offline
@@ -114,10 +114,10 @@ fun HomeScreenUI(
                             // If Api key is missing, show a SnackBar.
                             ApiKeyMissingShowSnackbar(scaffoldState)
                         }
-                    }
+                    },
                 )
             }
-        }
+        },
     )
 }
 
@@ -127,27 +127,27 @@ private fun HomeScreenUI(
     navigateToSelectedMovie: (Int) -> Unit,
     data: HomeData,
     homeSheetUIState: HomeSheetUIState,
-    updateSearchType: (navigateToSearchByType: SearchType) -> Unit
+    updateSearchType: (navigateToSearchByType: SearchType) -> Unit,
 ) {
     val popularPersonsListState = rememberLazyListState()
     val trendingPersonsListState = rememberLazyListState()
     val homeTabs = listOf(
         TabItem("Actors"),
         TabItem("Movies"),
-        TabItem("TV Shows")
+        TabItem("TV Shows"),
     )
     val homePagerState = rememberPagerState(
-        pageCount = { homeTabs.size }
+        pageCount = { homeTabs.size },
     )
 
     Column(
-        Modifier.fillMaxSize()
+        Modifier.fillMaxSize(),
     ) {
         TabsContainer(tabs = homeTabs, pagerState = homePagerState)
         CaDivider(
             thickness = 1.dp,
             modifier = Modifier.padding(vertical = 0.dp),
-            colorAlpha = 0.1f
+            colorAlpha = 0.1f,
         )
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
         HorizontalPager(
@@ -160,7 +160,7 @@ private fun HomeScreenUI(
                         data = data,
                         navigateToSelectedPerson = navigateToSelectedPerson,
                         popularPersonsListState = popularPersonsListState,
-                        trendingPersonsListState = trendingPersonsListState
+                        trendingPersonsListState = trendingPersonsListState,
                     )
                 }
 
@@ -169,13 +169,13 @@ private fun HomeScreenUI(
                     MoviesTabContent(
                         data = data,
                         homeSheetUIState = homeSheetUIState,
-                        navigateToSelectedMovie = navigateToSelectedMovie
+                        navigateToSelectedMovie = navigateToSelectedMovie,
                     )
                 }
 
                 2 -> {
                     TvShowsTabContent(
-                        homeSheetUIState = homeSheetUIState
+                        homeSheetUIState = homeSheetUIState,
                     )
                 }
             }
@@ -197,7 +197,7 @@ fun HomeScreenUIPreview() {
                 trendingPersonList = fakePersonsList(),
                 isFetchingPersons = false,
                 upcomingMoviesList = fakeMovieList(),
-                nowPlayingMoviesList = flow { fakeMovieList() }
+                nowPlayingMoviesList = flow { fakeMovieList() },
             ),
         )
     }

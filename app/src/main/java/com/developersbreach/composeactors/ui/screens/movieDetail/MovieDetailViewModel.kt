@@ -53,16 +53,16 @@ class MovieDetailViewModel @Inject constructor(
                 recommendedMovies = movieRepository.getRecommendedMovies(movieId).bind(),
                 movieCast = movieRepository.getMovieCast(movieId).bind(),
                 movieProviders = movieRepository.getMovieProviders(movieId).bind(),
-                isFetchingDetails = false
+                isFetchingDetails = false,
             )
         }.fold(
             ifLeft = { uiState = UiState.Error(it) },
-            ifRight = { uiState = UiState.Success(it) }
+            ifRight = { uiState = UiState.Success(it) },
         )
     }
 
     fun addMovieToFavorites(
-        movie: MovieDetail?
+        movie: MovieDetail?,
     ) {
         if (movie == null) {
             Timber.e("Failed to addMovieToFavorites, since movie was null")
@@ -75,13 +75,13 @@ class MovieDetailViewModel @Inject constructor(
                     movieName = movie.movieTitle,
                     posterPath = movie.poster,
                     backdropPath = movie.banner,
-                )
+                ),
             )
         }
     }
 
     fun removeMovieFromFavorites(
-        movie: MovieDetail?
+        movie: MovieDetail?,
     ) {
         if (movie == null) {
             Timber.e("Failed to removeMovieFromFavorites, since movie was null")
@@ -94,13 +94,13 @@ class MovieDetailViewModel @Inject constructor(
                     movieName = movie.movieTitle,
                     posterPath = movie.poster,
                     backdropPath = movie.banner,
-                )
+                ),
             )
         }
     }
 
     fun getSelectedPersonDetails(
-        personId: Int?
+        personId: Int?,
     ) {
         if (personId == null) {
             Timber.e("Failed to getSelectedPersonDetails, since id was null")
@@ -108,16 +108,16 @@ class MovieDetailViewModel @Inject constructor(
         }
         viewModelScope.launch {
             personRepository.getPersonDetails(
-                personId = personId
+                personId = personId,
             ).fold(
                 ifLeft = { uiState = UiState.Error(it) },
-                ifRight = { sheetUiState = ActorsSheetUIState(it) }
+                ifRight = { sheetUiState = ActorsSheetUIState(it) },
             )
         }
     }
 
     fun getSelectedMovieDetails(
-        movieId: Int?
+        movieId: Int?,
     ) {
         if (movieId == null) {
             Timber.e("Failed to getSelectedMovieDetails, since id was null")
@@ -125,10 +125,10 @@ class MovieDetailViewModel @Inject constructor(
         }
         viewModelScope.launch {
             movieRepository.getMovieDetails(
-                movieId = movieId
+                movieId = movieId,
             ).fold(
                 ifLeft = { uiState = UiState.Error(it) },
-                ifRight = { movieSheetUiState = MovieSheetUIState(selectedMovieDetails = it) }
+                ifRight = { movieSheetUiState = MovieSheetUIState(selectedMovieDetails = it) },
             )
         }
     }
