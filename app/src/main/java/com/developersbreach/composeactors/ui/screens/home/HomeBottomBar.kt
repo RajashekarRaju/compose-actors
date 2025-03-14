@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
 fun HomeBottomBar(
     modalSheetSheet: ModalBottomSheetState,
     paddingValues: PaddingValues = PaddingValues(0.dp),
-    coroutineScope: CoroutineScope = rememberCoroutineScope()
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ) {
     BottomAppBar(
         backgroundColor = MaterialTheme.colors.surface,
@@ -47,14 +47,14 @@ fun HomeBottomBar(
             .background(MaterialTheme.colors.surface)
             .navigationBarsPadding()
             .fillMaxWidth()
-            .height(60.dp)
+            .height(60.dp),
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Row(
                 modifier = Modifier.fillMaxHeight(),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 CaIconButton(
                     onClick = {
@@ -68,12 +68,12 @@ fun HomeBottomBar(
                     iconModifier = Modifier,
                     painter = painterResource(id = R.drawable.ic_arrow_up),
                     contentDescription = "",
-                    tint = MaterialTheme.colors.onBackground
+                    tint = MaterialTheme.colors.onBackground,
                 )
                 CaTextH6(
                     text = stringResource(id = R.string.app_name),
                     color = MaterialTheme.colors.onBackground,
-                    modifier = Modifier.padding(start = 20.dp)
+                    modifier = Modifier.padding(start = 20.dp),
                 )
             }
         }
@@ -87,7 +87,7 @@ fun PreviewHomeBottomBar() {
         modalSheetSheet = rememberModalBottomSheetState(
             initialValue = ModalBottomSheetValue.HalfExpanded,
             animationSpec = tween(durationMillis = 500),
-            skipHalfExpanded = true
-        )
+            skipHalfExpanded = true,
+        ),
     )
 }

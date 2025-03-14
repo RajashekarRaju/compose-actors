@@ -8,13 +8,13 @@ import javax.inject.Singleton
 
 @Singleton
 class YouTubeThumbnailProviderApiImpl @Inject constructor(
-    private val requestHandler: HttpRequestHandler
+    private val requestHandler: HttpRequestHandler,
 ) : YouTubeThumbnailProviderApi {
 
     // SUXWAEX2jlg
     override suspend fun getMovieTrailerThumbnail(trailerId: String): Either<Throwable, Unit> {
         return requestHandler.getResponse(
-            URL("https://img.youtube.com/vi/$trailerId/sddefault.jpg")
+            URL("https://img.youtube.com/vi/$trailerId/sddefault.jpg"),
         )
     }
 }

@@ -12,11 +12,11 @@ import com.developersbreach.designsystem.components.CaSnackbar
 @Composable
 fun HomeSnackbar(
     hostState: SnackbarHostState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     CaSnackbar(
         hostState = hostState,
-        modifier = modifier.padding(bottom = 48.dp)
+        modifier = modifier.padding(bottom = 48.dp),
     )
 }
 

@@ -22,21 +22,21 @@ import com.developersbreach.designsystem.components.CaTextH6
 fun NoFavoritesFoundUI() {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CaImage(
                 painter = painterResource(id = R.drawable.ic_no_favorites),
                 contentDescription = "",
-                modifier = Modifier.padding(horizontal = 24.dp)
+                modifier = Modifier.padding(horizontal = 24.dp),
             )
             CaTextH6(
                 text = stringResource(R.string.no_favorites_found_message),
                 color = MaterialTheme.colors.primary,
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 40.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         }
     }

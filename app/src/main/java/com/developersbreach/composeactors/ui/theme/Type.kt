@@ -19,34 +19,33 @@ private val MontserratAlternates = FontFamily(
 
 // Material typography styles
 val Typography = Typography(
-
     h4 = TextStyle(
         fontFamily = MontserratAlternates,
         fontWeight = FontWeight.W700,
-        fontSize = 32.sp
+        fontSize = 32.sp,
     ),
     h5 = TextStyle(
         fontFamily = MontserratAlternates,
         fontWeight = FontWeight.W600,
-        fontSize = 24.sp
+        fontSize = 24.sp,
     ),
     h6 = TextStyle(
         fontFamily = MontserratAlternates,
         fontWeight = FontWeight.W600,
-        fontSize = 20.sp
+        fontSize = 20.sp,
     ),
     subtitle1 = TextStyle(
         fontFamily = MontserratAlternates,
         fontWeight = FontWeight.W600,
-        fontSize = 16.sp
+        fontSize = 16.sp,
     ),
     subtitle2 = TextStyle(
         fontFamily = MontserratAlternates,
         fontWeight = FontWeight.W500,
-        fontSize = 14.sp
+        fontSize = 14.sp,
     ),
     body2 = TextStyle(
         fontFamily = MontserratAlternates,
-        fontSize = 14.sp
-    )
+        fontSize = 14.sp,
+    ),
 )

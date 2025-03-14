@@ -21,7 +21,7 @@ import com.developersbreach.composeactors.ui.components.verticalGradientScrim
 @Composable
 internal fun ActorBackgroundWithGradientForeground(
     imageUrl: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box {
         LoadNetworkImage(
@@ -31,7 +31,7 @@ internal fun ActorBackgroundWithGradientForeground(
             showAnimProgress = false,
             modifier = modifier
                 .fillMaxSize()
-                .alpha(0.5f)
+                .alpha(0.5f),
         )
 
         Box(
@@ -40,8 +40,8 @@ internal fun ActorBackgroundWithGradientForeground(
                 .verticalGradientScrim(
                     color = MaterialTheme.colors.primary.copy(alpha = 0.50f),
                     startYPercentage = 1f,
-                    endYPercentage = 0f
-                )
+                    endYPercentage = 0f,
+                ),
         )
     }
 }

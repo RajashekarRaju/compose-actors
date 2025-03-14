@@ -11,5 +11,5 @@ data class ActorDetailsData(
 )
 
 data class ActorDetailsSheetUIState(
-    val selectedMovieDetails: MovieDetail? = null
+    val selectedMovieDetails: MovieDetail? = null,
 )

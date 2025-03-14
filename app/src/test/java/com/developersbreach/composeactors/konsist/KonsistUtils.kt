@@ -10,7 +10,7 @@ import com.lemonappdev.konsist.api.verify.assertFalse
  */
 fun checkNoDirectUsageExceptAllowed(
     componentName: String,
-    excludePaths: Array<String>
+    excludePaths: Array<String>,
 ) {
     Konsist.scopeFromProject()
         .files

@@ -36,19 +36,18 @@ import com.developersbreach.designsystem.components.CaCard
 import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.designsystem.components.CaTextSubtitle1
 
-
 @Composable
 fun PersonsTabContent(
     data: HomeData,
     navigateToSelectedPerson: (Int) -> Unit,
     popularPersonsListState: LazyListState,
-    trendingPersonsListState: LazyListState
+    trendingPersonsListState: LazyListState,
 ) {
     ShowProgressIndicator(isLoadingData = data.isFetchingPersons)
 
     LazyColumn(
         contentPadding = PaddingValues(vertical = 16.dp),
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         item {
             CategoryTitle(stringResource(R.string.category_actors_popular))
@@ -56,18 +55,18 @@ fun PersonsTabContent(
             PersonsList(
                 personsList = data.popularPersonList,
                 navigateToSelectedPerson = navigateToSelectedPerson,
-                personsListState = popularPersonsListState
+                personsListState = popularPersonsListState,
             )
             CaDivider(
                 modifier = Modifier.padding(vertical = 32.dp),
-                colorAlpha = 1f
+                colorAlpha = 1f,
             )
             CategoryTitle(stringResource(R.string.category_actors_trending))
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
             PersonsList(
                 personsList = data.trendingPersonList,
                 navigateToSelectedPerson = navigateToSelectedPerson,
-                personsListState = trendingPersonsListState
+                personsListState = trendingPersonsListState,
             )
         }
     }
@@ -80,20 +79,20 @@ fun PersonsTabContent(
 private fun PersonsList(
     personsList: List<Person>,
     navigateToSelectedPerson: (Int) -> Unit,
-    personsListState: LazyListState
+    personsListState: LazyListState,
 ) {
     LazyRow(
         state = personsListState,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp),
     ) {
         items(
             items = personsList,
-            key = { it.personId }
+            key = { it.personId },
         ) { person ->
             ItemPerson(
                 person = person,
-                onClickPerson = navigateToSelectedPerson
+                onClickPerson = navigateToSelectedPerson,
             )
         }
     }
@@ -105,9 +104,8 @@ private fun PersonsList(
 @Composable
 private fun ItemPerson(
     person: Person,
-    onClickPerson: (Int) -> Unit
+    onClickPerson: (Int) -> Unit,
 ) {
-
     CaCard(
         modifier = Modifier
             .width(150.dp)
@@ -115,7 +113,7 @@ private fun ItemPerson(
             .clickable(onClick = { onClickPerson(person.personId) }),
         content = {
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Spacer(modifier = Modifier.padding(vertical = 12.dp))
 
@@ -128,8 +126,8 @@ private fun ItemPerson(
                         .border(
                             width = 1.dp,
                             color = MaterialTheme.colors.onSurface,
-                            shape = CircleShape
-                        )
+                            shape = CircleShape,
+                        ),
                 )
 
                 Spacer(modifier = Modifier.padding(vertical = 8.dp))
@@ -141,12 +139,11 @@ private fun ItemPerson(
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
+                        .padding(horizontal = 8.dp),
                 )
 
                 Spacer(modifier = Modifier.padding(vertical = 12.dp))
             }
-        }
-
+        },
     )
 }

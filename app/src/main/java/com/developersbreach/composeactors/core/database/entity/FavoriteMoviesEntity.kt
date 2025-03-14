@@ -8,20 +8,16 @@ import com.developersbreach.composeactors.data.movie.model.Movie
 
 @Entity(tableName = "favorite_movies_table")
 data class FavoriteMoviesEntity(
-
     @Stable
     @PrimaryKey
     @ColumnInfo(name = "column_movie_id")
     val movieId: Int,
-
     @ColumnInfo(name = "column_movie_name")
     val movieName: String,
-
     @ColumnInfo(name = "column_movie_posterUrl")
     val moviePosterUrl: String?,
-
     @ColumnInfo(name = "column_movie_banner")
-    val movieBanner: String?
+    val movieBanner: String?,
 )
 
 fun List<FavoriteMoviesEntity>.movieAsDomainModel(): List<Movie> {
@@ -30,7 +26,7 @@ fun List<FavoriteMoviesEntity>.movieAsDomainModel(): List<Movie> {
             movieId = it.movieId,
             movieName = it.movieName,
             posterPath = it.moviePosterUrl,
-            backdropPath = it.movieBanner
+            backdropPath = it.movieBanner,
         )
     }
 }

@@ -51,7 +51,7 @@ class ActorDetailsViewModel @Inject constructor(
             ActorDetailsData(
                 castList = personRepository.getCastDetails(personId).bind(),
                 actorData = personRepository.getPersonDetails(personId).bind(),
-                isFetchingDetails = false
+                isFetchingDetails = false,
             )
         }.fold(
             ifLeft = { UiState.Error(it) },
@@ -60,7 +60,7 @@ class ActorDetailsViewModel @Inject constructor(
     }
 
     fun getSelectedMovieDetails(
-        movieId: Int?
+        movieId: Int?,
     ) {
         if (movieId == null) {
             Timber.e("Failed to getSelectedMovieDetails, since id was null")
@@ -68,16 +68,16 @@ class ActorDetailsViewModel @Inject constructor(
         }
         viewModelScope.launch {
             movieRepository.getMovieDetails(
-                movieId = movieId
+                movieId = movieId,
             ).fold(
                 ifLeft = { UiState.Error(it) },
-                ifRight = { sheetUIState = ActorDetailsSheetUIState(selectedMovieDetails = it) }
+                ifRight = { sheetUIState = ActorDetailsSheetUIState(selectedMovieDetails = it) },
             )
         }
     }
 
     fun addActorToFavorites(
-        actor: PersonDetail?
+        actor: PersonDetail?,
     ) {
         if (actor == null) {
             Timber.e("Actor was null while adding to favorite operation.")
@@ -95,7 +95,7 @@ class ActorDetailsViewModel @Inject constructor(
         }
         viewModelScope.launch {
             personRepository.deleteSelectedFavoritePerson(
-                actor.toFavoritePerson()
+                actor.toFavoritePerson(),
             )
         }
     }

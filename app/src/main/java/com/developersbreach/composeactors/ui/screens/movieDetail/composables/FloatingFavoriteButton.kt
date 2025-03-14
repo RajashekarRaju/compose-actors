@@ -26,7 +26,7 @@ fun FloatingAddToFavoritesButton(
     isFavorite: Boolean,
     addToFavorites: () -> Unit,
     removeFromFavorites: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val fabState = remember {
         MutableTransitionState(false).apply {
@@ -39,7 +39,7 @@ fun FloatingAddToFavoritesButton(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
-        contentAlignment = Alignment.BottomCenter
+        contentAlignment = Alignment.BottomCenter,
     ) {
         ExtendedFloatingActionButton(
             backgroundColor = MaterialTheme.colors.primary,
@@ -60,27 +60,27 @@ fun FloatingAddToFavoritesButton(
                         Icons.Filled.Favorite
                     } else {
                         Icons.Outlined.FavoriteBorder
-                    }
+                    },
                 )
             },
             text = {
                 AnimatedVisibility(
-                    visibleState = fabState
+                    visibleState = fabState,
                 ) {
                     CaTextSubtitle2(
                         text = getFavoriteText(isFavorite),
                         color = MaterialTheme.colors.onPrimary,
-                        modifier = Modifier
+                        modifier = Modifier,
                     )
                 }
-            }
+            },
         )
     }
 }
 
 @Composable
 private fun getFavoriteText(
-    isFavoriteMovie: Boolean
+    isFavoriteMovie: Boolean,
 ): String {
     return if (!isFavoriteMovie) {
         stringResource(R.string.add_to_favorites_text)

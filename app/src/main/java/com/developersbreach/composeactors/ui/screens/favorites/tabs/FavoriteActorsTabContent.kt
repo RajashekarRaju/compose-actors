@@ -46,7 +46,7 @@ fun FavoritePersonsTabContent(
     }
 
     val listState = rememberPagerState(
-        pageCount = { favoritePeople.size }
+        pageCount = { favoritePeople.size },
     )
 
     VerticalPager(
@@ -59,7 +59,7 @@ fun FavoritePersonsTabContent(
         ItemFavoritePerson(
             item = favoritePeople[currentPage],
             onClickPerson = navigateToSelectedPerson,
-            removeFavoritePerson = removeFavoritePerson
+            removeFavoritePerson = removeFavoritePerson,
         )
     }
 }
@@ -68,12 +68,12 @@ fun FavoritePersonsTabContent(
 private fun ItemFavoritePerson(
     item: FavoritePerson,
     onClickPerson: (Int) -> Unit,
-    removeFavoritePerson: (FavoritePerson) -> Unit
+    removeFavoritePerson: (FavoritePerson) -> Unit,
 ) {
     Box(
         modifier = Modifier
             .wrapContentHeight()
-            .clip(MaterialTheme.shapes.large)
+            .clip(MaterialTheme.shapes.large),
     ) {
         LoadNetworkImage(
             imageUrl = item.profileUrl,
@@ -85,12 +85,12 @@ private fun ItemFavoritePerson(
                 .height(512.dp)
                 .clickable {
                     onClickPerson(item.personId)
-                }
+                },
         )
 
         ImageBackgroundThemeGenerator(
             imageUrl = item.profileUrl,
-            backgroundColor = MaterialTheme.colors.primary
+            backgroundColor = MaterialTheme.colors.primary,
         ) {
             Box(
                 modifier = Modifier
@@ -100,35 +100,35 @@ private fun ItemFavoritePerson(
                     .verticalGradientScrim(
                         color = MaterialTheme.colors.primary.copy(alpha = 0.75f),
                         startYPercentage = 0f,
-                        endYPercentage = 1f
-                    )
+                        endYPercentage = 1f,
+                    ),
             )
         }
 
         ImageBackgroundThemeGenerator(
             imageUrl = item.profileUrl,
-            backgroundColor = MaterialTheme.colors.onSurface
+            backgroundColor = MaterialTheme.colors.onSurface,
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(start = 20.dp, bottom = 20.dp, end = 12.dp)
+                    .padding(start = 20.dp, bottom = 20.dp, end = 12.dp),
             ) {
                 Column(
                     modifier = Modifier.weight(1f),
-                    horizontalAlignment = Alignment.Start
+                    horizontalAlignment = Alignment.Start,
                 ) {
                     CaTextH5(
                         text = item.personName,
                         color = MaterialTheme.colors.onPrimary,
-                        modifier = Modifier.padding(vertical = 8.dp)
+                        modifier = Modifier.padding(vertical = 8.dp),
                     )
 
                     CaTextSubtitle1(
                         text = "${getPlaceOfBirth(item.placeOfBirth)}",
                         color = MaterialTheme.colors.onPrimary,
-                        modifier = Modifier
+                        modifier = Modifier,
                     )
                 }
 
@@ -138,7 +138,7 @@ private fun ItemFavoritePerson(
                     modifier = Modifier,
                     painter = painterResource(id = R.drawable.ic_favorite),
                     contentDescription = null,
-                    tint = MaterialTheme.colors.primary
+                    tint = MaterialTheme.colors.primary,
                 )
             }
         }
@@ -152,7 +152,7 @@ private fun FavoritePersonsTabContentPreview() {
         FavoritePersonsTabContent(
             navigateToSelectedPerson = {},
             favoritePeople = fakeFavoritePersonsList(),
-            removeFavoritePerson = {}
+            removeFavoritePerson = {},
         )
     }
 }
@@ -164,7 +164,7 @@ private fun FavoritePersonsTabContentNoFavoritesPreview() {
         FavoritePersonsTabContent(
             navigateToSelectedPerson = {},
             favoritePeople = emptyList(),
-            removeFavoritePerson = {}
+            removeFavoritePerson = {},
         )
     }
 }

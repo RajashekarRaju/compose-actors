@@ -24,17 +24,17 @@ import com.developersbreach.designsystem.components.CaTextH6
 fun MovieSearchUI(
     movieList: List<Movie>,
     navigateToSelectedMovie: (Int) -> Unit,
-    closeKeyboard: () -> Unit?
+    closeKeyboard: () -> Unit?,
 ) {
     LazyColumn(
         // This padding helps avoid content going behind the navigation bars.
-        modifier = Modifier.padding(bottom = 48.dp)
+        modifier = Modifier.padding(bottom = 48.dp),
     ) {
         items(movieList) { movie ->
             ItemSearchMovie(
                 movie = movie,
                 onClickMovie = navigateToSelectedMovie,
-                closeKeyboard = closeKeyboard
+                closeKeyboard = closeKeyboard,
             )
         }
     }
@@ -47,7 +47,7 @@ fun MovieSearchUI(
 private fun ItemSearchMovie(
     movie: Movie,
     onClickMovie: (Int) -> Unit,
-    closeKeyboard: () -> Unit?
+    closeKeyboard: () -> Unit?,
 ) {
     CaTextH6(
         text = movie.movieName,
@@ -58,7 +58,7 @@ private fun ItemSearchMovie(
                 onClickMovie(movie.movieId)
             }
             .padding(horizontal = 20.dp, vertical = 12.dp)
-            .wrapContentWidth(Alignment.Start)
+            .wrapContentWidth(Alignment.Start),
     )
 }
 
@@ -69,7 +69,7 @@ private fun MovieSearchUIPreview() {
         MovieSearchUI(
             movieList = fakeMovieList(),
             navigateToSelectedMovie = {},
-            closeKeyboard = {}
+            closeKeyboard = {},
         )
     }
 }

@@ -30,7 +30,6 @@ fun Modifier.borderRevealAnimation(
     size: Dp = 60.dp,
     shape: Shape = CircleShape,
 ): Modifier = composed {
-
     val animate = remember { Animatable(initialState) }.apply {
         RevealEffectAnimation(this)
     }
@@ -56,7 +55,7 @@ private fun RevealEffectAnimation(
     targetValue: Float = 1f,
     durationMillis: Int = 1000,
     delayMillis: Int = 250,
-    iterations: Int = 1
+    iterations: Int = 1,
 ) {
     LaunchedEffect(animateShape) {
         animateShape.animateTo(
@@ -65,11 +64,11 @@ private fun RevealEffectAnimation(
                 animation = tween(
                     durationMillis = durationMillis,
                     easing = LinearEasing,
-                    delayMillis = delayMillis
+                    delayMillis = delayMillis,
                 ),
                 repeatMode = RepeatMode.Restart,
-                iterations = iterations
-            )
+                iterations = iterations,
+            ),
         )
     }
 }

@@ -20,12 +20,12 @@ object DatabaseModule {
     @Singleton
     @JvmStatic
     fun getDatabaseInstance(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): AppDatabase {
         return Room.databaseBuilder(
             context.applicationContext,
             AppDatabase::class.java,
-            DATABASE_NAME
+            DATABASE_NAME,
         )
             .fallbackToDestructiveMigration()
             .build()

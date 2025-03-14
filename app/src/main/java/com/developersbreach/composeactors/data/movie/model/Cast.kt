@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 data class Cast(
     @SerialName("id") @Stable val personId: Int,
     @SerialName("name") val castName: String,
-    @SerialName("profile_path") private val profilePath: String?
+    @SerialName("profile_path") private val profilePath: String?,
 ) {
     val castProfilePath: String = "$LOW_RES_IMAGE$profilePath"
 }

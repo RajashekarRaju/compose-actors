@@ -27,12 +27,12 @@ import kotlinx.coroutines.launch
 fun TabsContainer(
     modifier: Modifier = Modifier,
     tabs: List<TabItem>,
-    pagerState: PagerState
+    pagerState: PagerState,
 ) {
     val coroutineScope = rememberCoroutineScope()
 
     CompositionLocalProvider(
-        LocalRippleConfiguration provides null
+        LocalRippleConfiguration provides null,
     ) {
         TabRow(
             modifier = modifier.fillMaxWidth(),
@@ -41,9 +41,9 @@ fun TabsContainer(
             divider = { },
             indicator = { tabPositions ->
                 RoundedTabIndicator(
-                    modifier = Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage])
+                    modifier = Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
                 )
-            }
+            },
         ) {
             tabs.forEachIndexed { tabIndex, currentTab ->
                 Tab(
@@ -54,9 +54,9 @@ fun TabsContainer(
                     text = {
                         CaTextSubtitle2(
                             text = currentTab.tabName,
-                            modifier = Modifier
+                            modifier = Modifier,
                         )
-                    }
+                    },
                 )
             }
         }
@@ -65,7 +65,7 @@ fun TabsContainer(
 
 @Composable
 private fun RoundedTabIndicator(
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Spacer(
         modifier
@@ -73,12 +73,12 @@ private fun RoundedTabIndicator(
             .height(2.dp)
             .background(
                 MaterialTheme.colors.primary,
-                RoundedCornerShape(percent = 100)
-            )
+                RoundedCornerShape(percent = 100),
+            ),
     )
 }
 
 @Immutable
 data class TabItem(
-    val tabName: String
+    val tabName: String,
 )

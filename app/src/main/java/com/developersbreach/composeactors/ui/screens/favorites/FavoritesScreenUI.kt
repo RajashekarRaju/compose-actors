@@ -38,10 +38,10 @@ fun FavoritesScreenUI(
 ) {
     val favoriteTabs = listOf(
         TabItem("Actors"),
-        TabItem("Movies")
+        TabItem("Movies"),
     )
     val favoritesPagerState = rememberPagerState(
-        pageCount = { favoriteTabs.size }
+        pageCount = { favoriteTabs.size },
     )
 
     CaSurface(
@@ -57,40 +57,40 @@ fun FavoritesScreenUI(
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(paddingValues = paddingValues)
+                            .padding(paddingValues = paddingValues),
                     ) {
                         TabsContainer(tabs = favoriteTabs, pagerState = favoritesPagerState)
                         CaDivider(
                             thickness = 1.dp,
                             modifier = Modifier.padding(vertical = 0.dp),
-                            colorAlpha = 0.1f
+                            colorAlpha = 0.1f,
                         )
                         HorizontalPager(
                             state = favoritesPagerState,
                             modifier = Modifier
                                 .weight(1f)
-                                .fillMaxWidth()
+                                .fillMaxWidth(),
                         ) { index ->
                             when (index) {
                                 0 -> FavoritePersonsTabContent(
                                     navigateToSelectedPerson = navigateToSelectedPerson,
                                     favoritePeople = favoritePeople,
-                                    removeFavoritePerson = removeFavoritePerson
+                                    removeFavoritePerson = removeFavoritePerson,
                                 )
 
                                 1 -> FavoriteMoviesTabContent(
                                     navigateToSelectedMovie = navigateToSelectedMovie,
                                     favoriteMovies = favoriteMovies,
-                                    removeFavoriteMovie = removeFavoriteMovie
+                                    removeFavoriteMovie = removeFavoriteMovie,
                                 )
 
                                 2 -> FeatureComingSoonTextUI()
                             }
                         }
                     }
-                }
+                },
             )
-        }
+        },
     )
 }
 
@@ -98,13 +98,13 @@ fun FavoritesScreenUI(
 private fun FeatureComingSoonTextUI() {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         CaTextH6(
             text = "Feature Coming Soon",
             color = MaterialTheme.colors.primary,
             modifier = Modifier.padding(horizontal = 24.dp, vertical = 40.dp),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -120,7 +120,7 @@ fun FavoriteScreenUIPreview() {
             navigateToSelectedPerson = {},
             favoritePeople = emptyList(),
             removeFavoritePerson = {},
-            navigateUp = {}
+            navigateUp = {},
         )
     }
 }

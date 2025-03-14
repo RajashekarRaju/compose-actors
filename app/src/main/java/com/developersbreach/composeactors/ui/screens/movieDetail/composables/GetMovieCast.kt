@@ -38,21 +38,21 @@ import kotlinx.coroutines.Job
 fun GetMovieCast(
     data: MovieDetailsData,
     openMovieDetailsBottomSheet: () -> Job,
-    selectBottomSheetCallback: (BottomSheetType) -> Unit
+    selectBottomSheetCallback: (BottomSheetType) -> Unit,
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp),
     ) {
         items(
             items = data.movieCast,
-            key = { it.personId }
+            key = { it.personId },
         ) { cast ->
             ItemCast(
                 cast = cast,
                 data = data,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
-                selectBottomSheetCallback = selectBottomSheetCallback
+                selectBottomSheetCallback = selectBottomSheetCallback,
             )
         }
     }
@@ -63,7 +63,7 @@ private fun ItemCast(
     cast: Cast,
     data: MovieDetailsData,
     openMovieDetailsBottomSheet: () -> Job,
-    selectBottomSheetCallback: (BottomSheetType) -> Unit
+    selectBottomSheetCallback: (BottomSheetType) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -71,10 +71,12 @@ private fun ItemCast(
             .width(120.dp)
             .clickable {
                 openMovieDetailsBottomSheet()
-                selectBottomSheetCallback(BottomSheetType.ActorDetailBottomSheet.apply {
-                    movieOrPersonId = cast.personId
-                })
-            }
+                selectBottomSheetCallback(
+                    BottomSheetType.ActorDetailBottomSheet.apply {
+                        movieOrPersonId = cast.personId
+                    },
+                )
+            },
     ) {
         LoadNetworkImage(
             imageUrl = cast.castProfilePath,
@@ -85,8 +87,8 @@ private fun ItemCast(
                 .border(
                     width = 1.dp,
                     color = MaterialTheme.colors.onBackground.copy(alpha = 0.5f),
-                    shape = CircleShape
-                )
+                    shape = CircleShape,
+                ),
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -99,7 +101,7 @@ private fun ItemCast(
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 4.dp)
+                .padding(horizontal = 4.dp),
         )
     }
 }
@@ -115,10 +117,10 @@ private fun GetMovieCastPreview() {
                 recommendedMovies = listOf(),
                 movieCast = listOf(),
                 isFetchingDetails = false,
-                movieProviders = listOf(Flatrate("", 1, ""))
+                movieProviders = listOf(Flatrate("", 1, "")),
             ),
             openMovieDetailsBottomSheet = { Job() },
-            selectBottomSheetCallback = { }
+            selectBottomSheetCallback = { },
         )
     }
 }

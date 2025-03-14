@@ -19,7 +19,6 @@ import com.developersbreach.composeactors.ui.screens.search.SearchScreen
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.screens.search.SearchViewModel
 
-
 /**
  * @param startDestination default screen visible when user opens app.
  * @param routes gives access to all destination routes in [AppDestinations] object.
@@ -29,7 +28,7 @@ import com.developersbreach.composeactors.ui.screens.search.SearchViewModel
 @Composable
 fun AppNavigation(
     startDestination: String = AppDestinations.HOME_ROUTE,
-    routes: AppDestinations = AppDestinations
+    routes: AppDestinations = AppDestinations,
 ) {
     // Create a NavHostController to handle navigation.
     val navController = rememberNavController()
@@ -39,16 +38,15 @@ fun AppNavigation(
 
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
     ) {
-
         /**
          * Start destination.
          * Can later navigate to [ActorDetailsScreen] and [SearchScreen]
          * Has it's own viewModel [HomeViewModel] with factory & repository instance.
          */
         composable(
-            AppDestinations.HOME_ROUTE
+            AppDestinations.HOME_ROUTE,
         ) {
             HomeScreen(
                 navigateToSelectedPerson = actions.navigateToSelectedPerson,
@@ -67,8 +65,8 @@ fun AppNavigation(
         composable(
             route = "${AppDestinations.SEARCH_ROUTE}/{${routes.SEARCH_TYPE}}",
             arguments = listOf(
-                navArgument(routes.SEARCH_TYPE) { type = NavType.EnumType(SearchType::class.java) }
-            )
+                navArgument(routes.SEARCH_TYPE) { type = NavType.EnumType(SearchType::class.java) },
+            ),
         ) {
             SearchScreen(
                 navigateUp = actions.navigateUp,
@@ -87,8 +85,8 @@ fun AppNavigation(
         composable(
             route = "${AppDestinations.ACTOR_DETAIL_ROUTE}/{${routes.ACTOR_DETAIL_ID_KEY}}",
             arguments = listOf(
-                navArgument(routes.ACTOR_DETAIL_ID_KEY) { type = NavType.IntType }
-            )
+                navArgument(routes.ACTOR_DETAIL_ID_KEY) { type = NavType.IntType },
+            ),
         ) {
             ActorDetailsScreen(
                 navigateToSelectedMovie = actions.navigateToSelectedMovie,
@@ -106,17 +104,17 @@ fun AppNavigation(
         composable(
             route = "${AppDestinations.MOVIE_DETAILS_ROUTE}/{${routes.MOVIE_DETAILS_ID_KEY}}",
             arguments = listOf(
-                navArgument(routes.MOVIE_DETAILS_ID_KEY) { type = NavType.IntType }
-            )
+                navArgument(routes.MOVIE_DETAILS_ID_KEY) { type = NavType.IntType },
+            ),
         ) {
             MovieDetailScreen(
                 navigateUp = actions.navigateUp,
-                navigateToSelectedMovie = actions.navigateToSelectedMovie
+                navigateToSelectedMovie = actions.navigateToSelectedMovie,
             )
         }
 
         composable(
-            route = AppDestinations.FAVORITES_ROUTE
+            route = AppDestinations.FAVORITES_ROUTE,
         ) {
             FavoritesScreen(
                 navigateUp = actions.navigateUp,
@@ -126,10 +124,10 @@ fun AppNavigation(
         }
 
         composable(
-            route = AppDestinations.ABOUT_ROUTE
+            route = AppDestinations.ABOUT_ROUTE,
         ) {
             AboutScreen(
-                navigateUp = actions.navigateUp
+                navigateUp = actions.navigateUp,
             )
         }
     }

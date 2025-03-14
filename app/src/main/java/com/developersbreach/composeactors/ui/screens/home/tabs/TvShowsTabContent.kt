@@ -21,25 +21,25 @@ import com.developersbreach.designsystem.components.CaTextH6
 
 @Composable
 fun TvShowsTabContent(
-    homeSheetUIState: HomeSheetUIState
+    homeSheetUIState: HomeSheetUIState,
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CaImage(
                 painter = painterResource(id = R.drawable.ic_tv_show),
                 contentDescription = "",
-                modifier = Modifier.size(240.dp)
+                modifier = Modifier.size(240.dp),
             )
             CaTextH6(
                 text = "Feature Coming Soon",
                 color = MaterialTheme.colors.primary,
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 40.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         }
     }
@@ -50,7 +50,7 @@ fun TvShowsTabContent(
 private fun HomeScreenUIPreview() {
     ComposeActorsTheme {
         TvShowsTabContent(
-            homeSheetUIState = HomeSheetUIState()
+            homeSheetUIState = HomeSheetUIState(),
         )
     }
 }

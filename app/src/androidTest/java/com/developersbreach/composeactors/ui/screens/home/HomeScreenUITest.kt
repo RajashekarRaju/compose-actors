@@ -20,7 +20,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 @RunWith(AndroidJUnit4::class)
 class HomeScreenUITest {
 
@@ -32,7 +31,7 @@ class HomeScreenUITest {
         trendingPersonList = trendingPersonLists,
         isFetchingPersons = false,
         upcomingMoviesList = upcomingMoviesList,
-        nowPlayingMoviesList = flowOf(PagingData.from(nowPlayingMoviesList))
+        nowPlayingMoviesList = flowOf(PagingData.from(nowPlayingMoviesList)),
     )
 
     @Composable
@@ -40,12 +39,12 @@ class HomeScreenUITest {
         navigateToSelectedPerson: (personId: Int) -> Unit = { },
         navigateToSelectedMovie: (movieId: Int) -> Unit = { },
         navigateToFavorite: () -> Unit = { },
-        navigateToSearch: (searchType: SearchType) -> Unit = {  },
-        updateHomeSearchType: (searchType: SearchType) -> Unit = {  },
-        navigateToAbout: () -> Unit = {  },
+        navigateToSearch: (searchType: SearchType) -> Unit = { },
+        updateHomeSearchType: (searchType: SearchType) -> Unit = { },
+        navigateToAbout: () -> Unit = { },
         navigateToSearchBySearchType: SearchType = SearchType.Persons,
         homeSheetUIState: HomeSheetUIState = HomeSheetUIState(),
-        data: HomeData = mockHomeUIState
+        data: HomeData = mockHomeUIState,
     ) {
         HomeScreenUI(
             modifier = Modifier,

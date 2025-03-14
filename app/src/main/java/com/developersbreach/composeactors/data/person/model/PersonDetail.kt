@@ -16,7 +16,7 @@ data class PersonDetail(
     @SerialName("biography") val biography: String,
     @SerialName("birthday") val dateOfBirth: String?,
     @SerialName("place_of_birth") val placeOfBirth: String?,
-    @SerialName("popularity") val popularity: Double
+    @SerialName("popularity") val popularity: Double,
 ) {
     val profileUrl: String = "$HIGH_RES_IMAGE$profilePath"
 }
@@ -25,7 +25,7 @@ fun PersonDetail.toFavoritePerson() = FavoritePerson(
     personId = this.personId,
     personName = this.personName,
     profileUrl = this.profileUrl,
-    placeOfBirth = this.placeOfBirth
+    placeOfBirth = this.placeOfBirth,
 )
 
 fun PersonDetail.toEntity(): PersonDetailEntity {
@@ -36,6 +36,6 @@ fun PersonDetail.toEntity(): PersonDetailEntity {
         biography = biography,
         dateOfBirth = dateOfBirth,
         placeOfBirth = placeOfBirth,
-        popularity = popularity
+        popularity = popularity,
     )
 }

@@ -25,12 +25,12 @@ import com.developersbreach.designsystem.components.CaTextH6
 @Composable
 internal fun ActorDetailsTopAppBar(
     navigateUp: () -> Unit,
-    title: String
+    title: String,
 ) {
     Box(
         modifier = Modifier
             .statusBarsPadding()
-            .padding(start = 4.dp)
+            .padding(start = 4.dp),
     ) {
         CaIconButton(
             onClick = navigateUp,
@@ -38,14 +38,14 @@ internal fun ActorDetailsTopAppBar(
             iconModifier = Modifier,
             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
             tint = MaterialTheme.colors.onBackground,
-            contentDescription = stringResource(id = R.string.cd_up_button)
+            contentDescription = stringResource(id = R.string.cd_up_button),
         )
         CaTextH6(
             text = title,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .align(alignment = Alignment.Center)
+                .align(alignment = Alignment.Center),
         )
     }
 }

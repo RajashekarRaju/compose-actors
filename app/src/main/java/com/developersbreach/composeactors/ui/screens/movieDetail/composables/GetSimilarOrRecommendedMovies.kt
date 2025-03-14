@@ -21,15 +21,15 @@ import kotlinx.coroutines.Job
 fun GetRelatedMovies(
     movieList: List<Movie>,
     openMovieDetailsBottomSheet: () -> Job,
-    selectBottomSheetCallback: (BottomSheetType) -> Unit
+    selectBottomSheetCallback: (BottomSheetType) -> Unit,
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(16.dp)
+        contentPadding = PaddingValues(16.dp),
     ) {
         items(
             items = movieList,
-            key = { it.movieId }
+            key = { it.movieId },
         ) { movie ->
             LoadNetworkImage(
                 imageUrl = movie.posterPathUrl,
@@ -38,11 +38,13 @@ fun GetRelatedMovies(
                 modifier = Modifier
                     .size(100.dp, 150.dp)
                     .clickable {
-                        selectBottomSheetCallback(BottomSheetType.MovieDetailBottomSheet.apply {
-                            movieOrPersonId = movie.movieId
-                        })
+                        selectBottomSheetCallback(
+                            BottomSheetType.MovieDetailBottomSheet.apply {
+                                movieOrPersonId = movie.movieId
+                            },
+                        )
                         openMovieDetailsBottomSheet()
-                    }
+                    },
             )
         }
     }

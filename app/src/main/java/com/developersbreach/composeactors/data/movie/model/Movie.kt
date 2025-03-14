@@ -14,7 +14,7 @@ data class Movie(
     @SerialName("id") @Stable val movieId: Int,
     @SerialName("original_title") val movieName: String,
     @SerialName("poster_path") private val posterPath: String?,
-    @SerialName("backdrop_path") private val backdropPath: String?
+    @SerialName("backdrop_path") private val backdropPath: String?,
 ) {
     val posterPathUrl: String = "$LOW_RES_IMAGE$posterPath"
     val bannerUrl: String = "$HIGH_RES_IMAGE$backdropPath"
@@ -30,6 +30,6 @@ fun Movie.movieAsDatabaseModel(): FavoriteMoviesEntity {
         movieId = this.movieId,
         movieName = this.movieName,
         moviePosterUrl = this.posterPathUrl,
-        movieBanner = this.bannerUrl
+        movieBanner = this.bannerUrl,
     )
 }

@@ -44,10 +44,10 @@ import kotlinx.coroutines.launch
 fun OptionsModalSheetContent(
     modalSheetSheet: ModalBottomSheetState,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    navigateToFavorite:() -> Unit,
+    navigateToFavorite: () -> Unit,
     navigateToSearch: () -> Unit,
     navigateToProfile: () -> Unit,
-    navigateToAbout: () -> Unit
+    navigateToAbout: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -55,13 +55,13 @@ fun OptionsModalSheetContent(
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(top = 28.dp, bottom = 32.dp)
-            .navigationBarsPadding()
+            .navigationBarsPadding(),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp)
+                .padding(start = 20.dp),
         ) {
             CaIconButton(
                 modifier = Modifier.size(28.dp),
@@ -73,7 +73,7 @@ fun OptionsModalSheetContent(
                 },
                 painter = painterResource(id = R.drawable.ic_arrow_down),
                 contentDescription = "",
-                tint = MaterialTheme.colors.onBackground
+                tint = MaterialTheme.colors.onBackground,
             )
 
             Spacer(modifier = Modifier.width(20.dp))
@@ -81,7 +81,7 @@ fun OptionsModalSheetContent(
             CaTextH5(
                 text = stringResource(id = R.string.app_name),
                 color = MaterialTheme.colors.onBackground,
-                modifier = Modifier
+                modifier = Modifier,
             )
         }
 
@@ -89,7 +89,7 @@ fun OptionsModalSheetContent(
 
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(2.dp),
-            contentPadding = PaddingValues(horizontal = 4.dp)
+            contentPadding = PaddingValues(horizontal = 4.dp),
         ) {
             items(HomeOptionItems.homeOptions) { option ->
                 ItemOptionRow(
@@ -97,7 +97,7 @@ fun OptionsModalSheetContent(
                     navigateToFavorite = navigateToFavorite,
                     navigateToSearch = navigateToSearch,
                     navigateToProfile = navigateToProfile,
-                    navigateToAbout = navigateToAbout
+                    navigateToAbout = navigateToAbout,
                 )
             }
         }
@@ -110,7 +110,7 @@ private fun ItemOptionRow(
     navigateToFavorite: () -> Unit,
     navigateToSearch: () -> Unit,
     navigateToProfile: () -> Unit,
-    navigateToAbout: () -> Unit
+    navigateToAbout: () -> Unit,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -125,13 +125,13 @@ private fun ItemOptionRow(
                     4 -> navigateToAbout()
                 }
             }
-            .padding(top = 8.dp, start = 20.dp, end = 20.dp, bottom = 8.dp)
+            .padding(top = 8.dp, start = 20.dp, end = 20.dp, bottom = 8.dp),
     ) {
         CaIcon(
             painter = painterResource(id = option.icon),
             contentDescription = "",
             tint = MaterialTheme.colors.onBackground.copy(alpha = 0.75f),
-            modifier = Modifier
+            modifier = Modifier,
         )
 
         Spacer(modifier = Modifier.width(24.dp))
@@ -139,7 +139,7 @@ private fun ItemOptionRow(
         CaTextH6(
             text = option.title,
             color = MaterialTheme.colors.onBackground.copy(alpha = 0.75f),
-            modifier = Modifier
+            modifier = Modifier,
         )
     }
 }
@@ -155,7 +155,7 @@ fun OptionsModalSheetContentPreview() {
             navigateToAbout = {},
             modalSheetSheet = ModalBottomSheetState(
                 initialValue = ModalBottomSheetValue.Expanded,
-                density = LocalDensity.current
+                density = LocalDensity.current,
             ),
         )
     }

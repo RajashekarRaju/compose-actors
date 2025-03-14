@@ -16,10 +16,9 @@ data class MovieDetailsData(
 )
 
 data class ActorsSheetUIState(
-    val selectedPersonDetails: PersonDetail? = null
+    val selectedPersonDetails: PersonDetail? = null,
 )
 
 data class MovieSheetUIState(
-    val selectedMovieDetails: MovieDetail? = null
+    val selectedMovieDetails: MovieDetail? = null,
 )
-

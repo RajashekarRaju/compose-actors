@@ -14,7 +14,7 @@ internal fun ActorDetailsScreen(
 ) {
     val movieId by viewModel.isFavoriteMovie.observeAsState()
     UiStateHandler(
-        uiState = viewModel.detailUIState
+        uiState = viewModel.detailUIState,
     ) { data ->
         ActorDetailsUI(
             data = data,
@@ -24,7 +24,7 @@ internal fun ActorDetailsScreen(
             navigateUp = navigateUp,
             getSelectedMovieDetails = { viewModel.getSelectedMovieDetails(it) },
             addActorToFavorites = { viewModel.addActorToFavorites(data.actorData) },
-            removeActorFromFavorites = { viewModel.removeActorFromFavorites(data.actorData) }
+            removeActorFromFavorites = { viewModel.removeActorFromFavorites(data.actorData) },
         )
     }
 }

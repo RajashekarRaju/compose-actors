@@ -17,7 +17,7 @@ class DesignSystemTest {
             excludePaths = arrayOf(
                 "design-system/src/main/java/com/developersbreach/designsystem/components/Text.kt",
                 "design-system/src/main/java/com/developersbreach/designsystem/components/TextField.kt",
-            )
+            ),
         )
     }
 
@@ -26,8 +26,8 @@ class DesignSystemTest {
         checkNoDirectUsageExceptAllowed(
             componentName = "androidx.compose.material.TextField",
             excludePaths = arrayOf(
-                "design-system/src/main/java/com/developersbreach/designsystem/components/TextField.kt"
-            )
+                "design-system/src/main/java/com/developersbreach/designsystem/components/TextField.kt",
+            ),
         )
     }
 
@@ -36,8 +36,8 @@ class DesignSystemTest {
         checkNoDirectUsageExceptAllowed(
             componentName = "androidx.compose.material.Snackbar",
             excludePaths = arrayOf(
-                "design-system/src/main/java/com/developersbreach/designsystem/components/Snackbar.kt"
-            )
+                "design-system/src/main/java/com/developersbreach/designsystem/components/Snackbar.kt",
+            ),
         )
     }
 
@@ -46,8 +46,8 @@ class DesignSystemTest {
         checkNoDirectUsageExceptAllowed(
             componentName = "androidx.compose.material.Surface",
             excludePaths = arrayOf(
-                "design-system/src/main/java/com/developersbreach/designsystem/components/Surface.kt"
-            )
+                "design-system/src/main/java/com/developersbreach/designsystem/components/Surface.kt",
+            ),
         )
     }
 
@@ -56,8 +56,8 @@ class DesignSystemTest {
         checkNoDirectUsageExceptAllowed(
             componentName = "androidx.compose.material.Card",
             excludePaths = arrayOf(
-                "design-system/src/main/java/com/developersbreach/designsystem/components/Card.kt"
-            )
+                "design-system/src/main/java/com/developersbreach/designsystem/components/Card.kt",
+            ),
         )
     }
 
@@ -66,8 +66,8 @@ class DesignSystemTest {
         checkNoDirectUsageExceptAllowed(
             componentName = "androidx.compose.foundation.Image",
             excludePaths = arrayOf(
-                "design-system/src/main/java/com/developersbreach/designsystem/components/Image.kt"
-            )
+                "design-system/src/main/java/com/developersbreach/designsystem/components/Image.kt",
+            ),
         )
     }
 
@@ -76,8 +76,8 @@ class DesignSystemTest {
         checkNoDirectUsageExceptAllowed(
             componentName = "androidx.compose.material.Icon",
             excludePaths = arrayOf(
-                "design-system/src/main/java/com/developersbreach/designsystem/components/Icon.kt"
-            )
+                "design-system/src/main/java/com/developersbreach/designsystem/components/Icon.kt",
+            ),
         )
     }
 
@@ -86,8 +86,8 @@ class DesignSystemTest {
         checkNoDirectUsageExceptAllowed(
             componentName = "androidx.compose.material.IconButton",
             excludePaths = arrayOf(
-                "design-system/src/main/java/com/developersbreach/designsystem/components/IconButton.kt"
-            )
+                "design-system/src/main/java/com/developersbreach/designsystem/components/IconButton.kt",
+            ),
         )
     }
 
@@ -96,8 +96,8 @@ class DesignSystemTest {
         checkNoDirectUsageExceptAllowed(
             componentName = "androidx.compose.material.Scaffold",
             excludePaths = arrayOf(
-                "design-system/src/main/java/com/developersbreach/designsystem/components/Scaffold.kt"
-            )
+                "design-system/src/main/java/com/developersbreach/designsystem/components/Scaffold.kt",
+            ),
         )
     }
 
@@ -106,8 +106,8 @@ class DesignSystemTest {
         checkNoDirectUsageExceptAllowed(
             componentName = "androidx.compose.material.Divider",
             excludePaths = arrayOf(
-                "design-system/src/main/java/com/developersbreach/designsystem/components/Divider.kt"
-            )
+                "design-system/src/main/java/com/developersbreach/designsystem/components/Divider.kt",
+            ),
         )
     }
 }

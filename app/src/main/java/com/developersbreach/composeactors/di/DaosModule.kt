@@ -16,7 +16,7 @@ object DaosModule {
     @Provides
     @JvmStatic
     fun providesFavoritePersonsDao(
-        database: AppDatabase
+        database: AppDatabase,
     ): FavoritePersonsDao {
         return database.favoritePersonsDao
     }
@@ -24,7 +24,7 @@ object DaosModule {
     @Provides
     @JvmStatic
     fun providesFavoriteMoviesDao(
-        database: AppDatabase
+        database: AppDatabase,
     ): FavoriteMoviesDao {
         return database.favoriteMoviesDao
     }
@@ -32,7 +32,7 @@ object DaosModule {
     @Provides
     @JvmStatic
     fun providesPersonDetailsDao(
-        database: AppDatabase
+        database: AppDatabase,
     ): PersonDetailsDao {
         return database.personDetailsDao
     }
