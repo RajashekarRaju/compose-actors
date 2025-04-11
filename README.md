@@ -11,7 +11,7 @@ Access the latest APK for Compose Actors from the link below.
 
 - [x] Move material design components and dependencies to separate design-system module
 - [x] Extend Konsist tests for all design system component usages.
-- [ ] Introduce common preview annotations for composables.
+- [x] Introduce common preview annotations for composables.
 - [ ] Add new feature seasons or series information to app.
 - [ ] Include seasons in home tabs navigation.
 - [ ] Allow adding seasons to favorites.
