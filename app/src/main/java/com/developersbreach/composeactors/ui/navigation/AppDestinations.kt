@@ -1,31 +1,32 @@
 package com.developersbreach.composeactors.ui.navigation
 
-/**
- * All routes in one place.
- */
-object AppDestinations {
-    // Default destination
-    const val HOME_ROUTE = "home"
+import com.developersbreach.composeactors.ui.screens.search.SearchType
+import kotlinx.serialization.Serializable
 
-    const val FAVORITES_ROUTE = "favorites"
+@Serializable
+sealed interface AppDestinations {
 
-    // destination for searching actors
-    const val SEARCH_ROUTE = "search"
+    @Serializable
+    data object Home : AppDestinations
 
-    // search based on type
-    const val SEARCH_TYPE = "searchType"
+    @Serializable
+    data object Favorites : AppDestinations
 
-    const val ABOUT_ROUTE = "about"
+    @Serializable
+    data class Search(
+        val searchType: SearchType,
+    ) : AppDestinations
 
-    // list to details destination
-    const val ACTOR_DETAIL_ROUTE = "actor-detail"
+    @Serializable
+    data class ActorDetail(
+        val personId: Int,
+    ) : AppDestinations
 
-    // list to selected actor detail destination
-    const val ACTOR_DETAIL_ID_KEY = "personId"
+    @Serializable
+    data class MovieDetail(
+        val movieId: Int,
+    ) : AppDestinations
 
-    // destination for searching actors
-    const val MOVIE_DETAILS_ROUTE = "movie-detail"
-
-    // list to selected actor detail destination
-    const val MOVIE_DETAILS_ID_KEY = "movieId"
+    @Serializable
+    data object About : AppDestinations
 }

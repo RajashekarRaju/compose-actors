@@ -7,13 +7,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import arrow.core.raise.either
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.data.person.model.toFavoritePerson
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.ui.components.UiState
-import com.developersbreach.composeactors.ui.navigation.AppDestinations.ACTOR_DETAIL_ID_KEY
+import com.developersbreach.composeactors.ui.navigation.AppDestinations
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -29,7 +30,7 @@ class ActorDetailsViewModel @Inject constructor(
     private val personRepository: PersonRepository,
 ) : ViewModel() {
 
-    private val personId: Int = checkNotNull(savedStateHandle[ACTOR_DETAIL_ID_KEY])
+    private val personId: Int = savedStateHandle.toRoute<AppDestinations.ActorDetail>().personId
 
     var detailUIState: UiState<ActorDetailsData> by mutableStateOf(UiState.Loading)
         private set

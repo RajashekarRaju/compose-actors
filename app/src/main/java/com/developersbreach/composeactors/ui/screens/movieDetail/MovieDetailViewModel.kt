@@ -7,13 +7,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import arrow.core.raise.either
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.movie.model.MovieDetail
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.ui.components.UiState
-import com.developersbreach.composeactors.ui.navigation.AppDestinations.MOVIE_DETAILS_ID_KEY
+import com.developersbreach.composeactors.ui.navigation.AppDestinations
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -26,7 +27,7 @@ class MovieDetailViewModel @Inject constructor(
     private val personRepository: PersonRepository,
 ) : ViewModel() {
 
-    private val movieId: Int = checkNotNull(savedStateHandle[MOVIE_DETAILS_ID_KEY])
+    private val movieId: Int = savedStateHandle.toRoute<AppDestinations.MovieDetail>().movieId
 
     var uiState: UiState<MovieDetailsData> by mutableStateOf(UiState.Loading)
         private set

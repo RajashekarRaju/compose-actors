@@ -6,9 +6,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.developersbreach.composeactors.data.search.repository.SearchRepository
 import com.developersbreach.composeactors.ui.components.UiState
-import com.developersbreach.composeactors.ui.navigation.AppDestinations.SEARCH_TYPE
+import com.developersbreach.composeactors.ui.navigation.AppDestinations
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -22,7 +23,7 @@ class SearchViewModel @Inject constructor(
     private val searchRepository: SearchRepository,
 ) : ViewModel() {
 
-    val searchType: SearchType = checkNotNull(savedStateHandle[SEARCH_TYPE])
+    val searchType: SearchType = savedStateHandle.toRoute<AppDestinations.Search>().searchType
 
     var uiState: UiState<SearchDataType> by mutableStateOf(UiState.Success(ActorSearch()))
         private set
