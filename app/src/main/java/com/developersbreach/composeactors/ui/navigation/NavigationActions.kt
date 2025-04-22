@@ -3,7 +3,7 @@ package com.developersbreach.composeactors.ui.navigation
 import androidx.navigation.NavHostController
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 
-class AppActions(
+class NavigationActions(
     private val navController: NavHostController,
 ) {
 

@@ -21,7 +21,7 @@ fun AppNavigation(
 ) {
     val navController = rememberNavController()
     val actions = remember(navController) {
-        AppActions(navController)
+        NavigationActions(navController)
     }
 
     NavHost(
