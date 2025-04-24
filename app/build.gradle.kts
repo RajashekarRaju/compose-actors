@@ -1,5 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
+import com.android.build.api.dsl.ApplicationDefaultConfig
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
@@ -33,6 +35,9 @@ android {
         // signingConfig signingConfigs.debug
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
+
+        val properties = getLocalProperties()
+        setupBuildConfigFields(properties = properties)
     }
 
     buildTypes {
@@ -47,6 +52,8 @@ android {
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -85,6 +92,7 @@ ktlint {
 }
 
 dependencies {
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(platform(libs.androidx.compose.bom))
     implementation(platform(libs.kotlin.bom))
     implementation(project(":design-system"))
@@ -108,6 +116,9 @@ dependencies {
 
     // Navigation
     implementation(libs.androidx.navigation.navigation.compose)
+
+    implementation(libs.aws.auth.cognito)
+    implementation(libs.core.kotlin)
 
     // Timber for logging
     implementation(libs.com.jakewharton.timber)
@@ -163,5 +174,31 @@ dependencies {
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).configureEach {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_1_8)
+    }
+}
+
+fun ApplicationDefaultConfig.setupBuildConfigFields(
+    properties: Properties,
+) {
+    fun secret(key: String): String = System.getenv(key) ?: properties.getProperty(key, "")
+
+    if (secret("TMDB_API_KEY").isEmpty()) {
+        error("TMDB_API_KEY not set in local.properties")
+    }
+
+    buildConfigField(type = "String", name = "COGNITO_POOL_ID", value = "\"${secret("COGNITO_POOL_ID")}\"")
+    buildConfigField(type = "String", name = "COGNITO_APP_CLIENT_ID", value = "\"${secret("COGNITO_APP_CLIENT_ID")}\"")
+    buildConfigField(type = "String", name = "COGNITO_REGION", value = "\"${secret("COGNITO_REGION")}\"")
+    buildConfigField(type = "String", name = "COGNITO_WEB_DOMAIN", value = "\"${secret("COGNITO_WEB_DOMAIN")}\"")
+
+    buildConfigField(type = "String", name = "TMDB_API_KEY", value = "\"${secret("TMDB_API_KEY")}\"")
+}
+
+fun getLocalProperties(): Properties {
+    return Properties().apply {
+        val file = rootProject.file("local.properties")
+        if (file.exists()) {
+            file.inputStream().use { load(it) }
+        }
     }
 }
