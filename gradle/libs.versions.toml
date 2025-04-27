@@ -8,9 +8,12 @@ androidx-palette = "1.0.0"
 androidx-room = "2.7.0"
 androidx-test-ext = "1.2.1"
 arrow = "2.0.0"
+aws-auth-cognito = "2.24.0"
 com-google-dagger = "2.53.1"
 com-google-gms = "4.4.2"
 com-google-firebase = "3.0.3"
+core-kotlin = "2.14.11"
+desugar_jdk_libs = "2.1.5"
 konsist = "0.17.3"
 kotlin = "2.0.21"
 kotlinx-coroutines-core = "1.9.0"
@@ -45,8 +48,11 @@ androidx-room-room-runtime = { module = "androidx.room:room-runtime", version.re
 androidx-test-ext-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "androidx-test-ext" }
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 arrow-fx-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines", version.ref = "arrow" }
+aws-auth-cognito = { module = "com.amplifyframework:aws-auth-cognito", version.ref = "aws-auth-cognito" }
 com-google-android-material = "com.google.android.material:material:1.12.0"
 com-google-dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "com-google-dagger" }
+core-kotlin = { module = "com.amplifyframework:core-kotlin", version.ref = "core-kotlin" }
+desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 hilt-androidx-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx-hilt" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "com-google-dagger" }
 com-google-dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "com-google-dagger" }
