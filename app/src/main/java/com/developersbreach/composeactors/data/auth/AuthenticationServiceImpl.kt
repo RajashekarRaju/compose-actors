@@ -8,12 +8,16 @@ import com.amplifyframework.auth.cognito.AWSCognitoAuthSession
 import com.amplifyframework.auth.cognito.result.AWSCognitoAuthSignOutResult
 import com.amplifyframework.auth.result.AuthSignInResult
 import com.amplifyframework.kotlin.core.Amplify
+import com.developersbreach.composeactors.core.database.dao.SessionsDao
+import com.developersbreach.composeactors.core.database.entity.SessionEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 import timber.log.Timber
 
 @Singleton
-class AuthenticationServiceImpl @Inject constructor() : AuthenticationService {
+class AuthenticationServiceImpl @Inject constructor(
+    private val sessionsDao: SessionsDao,
+) : AuthenticationService {
 
     override suspend fun signIn(
         email: String,
@@ -25,7 +29,10 @@ class AuthenticationServiceImpl @Inject constructor() : AuthenticationService {
                 password = password,
             )
             when (result.isSignedIn) {
-                true -> Either.Right(Unit)
+                true -> {
+                    sessionsDao.addGuest(SessionEntity(isGuest = false))
+                    Either.Right(Unit)
+                }
                 false -> {
                     // TODO - Handle all cases and send error information to UI
                     Either.Left(Exception(result.nextStep.signInStep.name))
@@ -60,22 +67,22 @@ class AuthenticationServiceImpl @Inject constructor() : AuthenticationService {
 
             is AWSCognitoAuthSignOutResult.PartialSignOut -> {
                 signOut.hostedUIError?.let {
-                    Timber.e("AuthenticationImpl", "HostedUI Error", it.exception)
+                    Timber.e("HostedUI Error", it.exception)
                     Either.Left(it.exception)
                 }
                 signOut.globalSignOutError?.let {
-                    Timber.e("AuthenticationImpl", "GlobalSignOut Error", it.exception)
+                    Timber.e("GlobalSignOut Error", it.exception)
                     Either.Left(it.exception)
                 }
                 signOut.revokeTokenError?.let {
-                    Timber.e("AuthenticationImpl", "RevokeToken Error", it.exception)
+                    Timber.e("RevokeToken Error", it.exception)
                     Either.Left(it.exception)
                 }
                 Either.Right(Unit)
             }
 
             is AWSCognitoAuthSignOutResult.FailedSignOut -> {
-                Timber.e("AuthenticationImpl", "Sign out Failed", signOut.exception)
+                Timber.e("Sign out Failed", signOut.exception)
                 Either.Left(signOut.exception)
             }
 
@@ -83,11 +90,21 @@ class AuthenticationServiceImpl @Inject constructor() : AuthenticationService {
         }
     }
 
+    override suspend fun isUserSignedIn(): Either<Throwable, Boolean> {
+        return try {
+            val isSignedIn = (Amplify.Auth.fetchAuthSession() as AWSCognitoAuthSession).isSignedIn
+            Timber.i("isSignedIn: $isSignedIn")
+            Either.Right(isSignedIn)
+        } catch (e: AuthException) {
+            Timber.e("Failed to fetch session", e)
+            Either.Left(e)
+        }
+    }
+
     override suspend fun getAccessToken(): Either<Throwable, String> {
         return try {
-            val session = Amplify.Auth.fetchAuthSession() as AWSCognitoAuthSession
-            val accessToken = session.accessToken
-            Timber.i("AuthenticationImpl", "accessToken: $accessToken")
+            val accessToken = (Amplify.Auth.fetchAuthSession() as AWSCognitoAuthSession).accessToken
+            Timber.i("accessToken: $accessToken")
             if (accessToken != null) {
                 Either.Right(accessToken)
             } else {
@@ -99,7 +116,7 @@ class AuthenticationServiceImpl @Inject constructor() : AuthenticationService {
                 )
             }
         } catch (e: AuthException) {
-            Timber.e("AuthenticationImpl", "Failed to fetch session", e)
+            Timber.e("Failed to fetch session", e)
             Either.Left(e)
         }
     }
@@ -113,6 +130,22 @@ class AuthenticationServiceImpl @Inject constructor() : AuthenticationService {
                     name = find("name"),
                 ),
             )
+        } catch (e: Exception) {
+            Either.Left(e)
+        }
+    }
+
+    override suspend fun skipLogin(): Either<Throwable, Unit> {
+        return try {
+            Either.Right(sessionsDao.addGuest(SessionEntity(isGuest = true)))
+        } catch (e: Exception) {
+            Either.Left(e)
+        }
+    }
+
+    override suspend fun isGuestUser(): Either<Throwable, Boolean> {
+        return try {
+            Either.Right(sessionsDao.isGuest())
         } catch (e: Exception) {
             Either.Left(e)
         }

@@ -15,7 +15,13 @@ interface AuthenticationService {
 
     suspend fun signOut(): Either<Throwable, Unit>
 
+    suspend fun isUserSignedIn(): Either<Throwable, Boolean>
+
     suspend fun getAccessToken(): Either<Throwable, String>
 
     suspend fun getCurrentUser(): Either<Throwable, AuthUserProfile>
+
+    suspend fun skipLogin(): Either<Throwable, Unit>
+
+    suspend fun isGuestUser(): Either<Throwable, Boolean>
 }
