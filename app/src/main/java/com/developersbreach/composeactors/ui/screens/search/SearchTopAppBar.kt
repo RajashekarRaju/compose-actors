@@ -33,7 +33,7 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.designsystem.components.CaIconButton
 import com.developersbreach.designsystem.components.CaTextField
-import com.developersbreach.designsystem.components.CaTextFieldLeadingIconConfig
+import com.developersbreach.designsystem.components.CaTextFieldIconConfig
 
 /**
  * @param navigateUp Navigates to previous screen.
@@ -97,7 +97,7 @@ fun SearchAppBar(
                     onQueryChange(newQuery)
                 }
             },
-            leadingIconInfo = CaTextFieldLeadingIconConfig(
+            leadingIconInfo = CaTextFieldIconConfig(
                 modifier = Modifier.padding(start = 4.dp),
                 iconModifier = Modifier,
                 onClick = {

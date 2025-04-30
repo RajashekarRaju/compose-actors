@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
@@ -34,6 +35,7 @@ fun CaTextH6(
     textAlign: TextAlign? = null,
     maxLines: Int = Int.MAX_VALUE,
     overflow: TextOverflow = TextOverflow.Clip,
+    fontWeight: FontWeight? = null
 ) {
     Text(
         text = text,
@@ -42,7 +44,8 @@ fun CaTextH6(
         maxLines = maxLines,
         overflow = overflow,
         textAlign = textAlign,
-        color = color
+        color = color,
+        fontWeight = fontWeight
     )
 }
 
@@ -105,6 +108,7 @@ fun CaTextSubtitle1(
     textAlign: TextAlign? = null,
     maxLines: Int = Int.MAX_VALUE,
     overflow: TextOverflow = TextOverflow.Clip,
+    fontWeight: FontWeight? = null,
 ) {
     Text(
         text = text,
@@ -114,7 +118,8 @@ fun CaTextSubtitle1(
         textAlign = textAlign,
         maxLines = maxLines,
         lineHeight = lineHeight,
-        overflow = overflow
+        overflow = overflow,
+        fontWeight = fontWeight,
     )
 }
 
