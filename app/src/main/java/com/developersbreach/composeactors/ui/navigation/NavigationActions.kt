@@ -6,13 +6,16 @@ import com.developersbreach.composeactors.ui.screens.search.SearchType
 class NavigationActions(
     private val navController: NavHostController,
 ) {
+    val navigateToHome: () -> Unit = {
+        navController.navigate(AppDestinations.Home)
+    }
 
     val navigateToSelectedPerson: (Int) -> Unit = { personId: Int ->
         navController.navigate(AppDestinations.ActorDetail(personId))
     }
 
     val navigateToSelectedMovie: (Int) -> Unit = { movieId: Int ->
-        navController.navigate(AppDestinations.ActorDetail(movieId))
+        navController.navigate(AppDestinations.MovieDetail(movieId))
     }
 
     val navigateToSearch: (SearchType) -> Unit = { searchType: SearchType ->

@@ -7,6 +7,9 @@ import kotlinx.serialization.Serializable
 sealed interface AppDestinations {
 
     @Serializable
+    data object Splash : AppDestinations
+
+    @Serializable
     data object Home : AppDestinations
 
     @Serializable

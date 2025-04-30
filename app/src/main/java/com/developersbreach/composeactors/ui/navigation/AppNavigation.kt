@@ -11,13 +11,14 @@ import com.developersbreach.composeactors.ui.screens.favorites.FavoritesScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailScreen
 import com.developersbreach.composeactors.ui.screens.search.SearchScreen
+import com.developersbreach.composeactors.ui.screens.splash.SplashScreen
 
 /**
  * This is an entry point triggered once activity starts.
  */
 @Composable
 fun AppNavigation(
-    startDestination: AppDestinations = AppDestinations.Home,
+    startDestination: AppDestinations = AppDestinations.Splash,
 ) {
     val navController = rememberNavController()
     val actions = remember(navController) {
@@ -28,6 +29,13 @@ fun AppNavigation(
         navController = navController,
         startDestination = startDestination,
     ) {
+        composable<AppDestinations.Splash> {
+            SplashScreen(
+                navigateToHome = { actions.navigateToHome() },
+                navigateToLogin = { actions.navigateToLogin() },
+            )
+        }
+
         composable<AppDestinations.Home> {
             HomeScreen(
                 navigateToSelectedPerson = actions.navigateToSelectedPerson,
