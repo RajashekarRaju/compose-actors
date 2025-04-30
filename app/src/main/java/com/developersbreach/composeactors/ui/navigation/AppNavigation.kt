@@ -9,6 +9,7 @@ import com.developersbreach.composeactors.ui.screens.about.AboutScreen
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
 import com.developersbreach.composeactors.ui.screens.favorites.FavoritesScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
+import com.developersbreach.composeactors.ui.screens.login.LoginScreen
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailScreen
 import com.developersbreach.composeactors.ui.screens.search.SearchScreen
 import com.developersbreach.composeactors.ui.screens.splash.SplashScreen
@@ -79,6 +80,15 @@ fun AppNavigation(
         composable<AppDestinations.About> {
             AboutScreen(
                 navigateUp = actions.navigateUp,
+            )
+        }
+
+        composable<AppDestinations.Login> {
+            LoginScreen(
+                navigateToHome = {
+                    navController.popBackStack()
+                    actions.navigateToHome()
+                },
             )
         }
     }

@@ -30,6 +30,10 @@ class NavigationActions(
         navController.navigate(AppDestinations.About)
     }
 
+    val navigateToLogin: () -> Unit = {
+        navController.navigate(AppDestinations.Login)
+    }
+
     val navigateUp: () -> Unit = {
         navController.navigateUp()
     }
