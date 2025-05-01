@@ -11,3 +11,14 @@ sealed class UiState<out T> {
         val throwable: Throwable,
     ) : UiState<Nothing>()
 }
+
+fun <T> UiState<T>.modifyLoadedState(
+    transform: T.() -> T,
+): UiState<T> = when (this) {
+    is UiState.Success -> UiState.Success(transform(this.data))
+    else -> this
+}
+
+fun <T> UiState<T>.getLoadedState(): T {
+    return (this as UiState.Success).data
+}

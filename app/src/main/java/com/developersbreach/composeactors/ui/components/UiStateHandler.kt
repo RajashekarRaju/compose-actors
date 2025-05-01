@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun <T> UiStateHandler(
     uiState: UiState<T>,
+    isLoading: Boolean = false,
     content: @Composable (T) -> Unit,
 ) {
     val shouldDismissErrorDialog = rememberSaveable { mutableStateOf(false) }
@@ -45,6 +46,12 @@ fun <T> UiStateHandler(
                 }
             }
             is UiState.Success -> content(uiState.data)
+        }
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center),
+                color = MaterialTheme.colors.onBackground,
+            )
         }
     }
 }
