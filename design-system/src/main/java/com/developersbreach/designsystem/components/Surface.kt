@@ -9,11 +9,11 @@ import androidx.compose.ui.graphics.Color
 @Composable
 fun CaSurface(
     modifier: Modifier,
-    content: @Composable () -> Unit,
     color: Color = MaterialTheme.colors.surface,
-    ) {
+    content: @Composable () -> Unit,
+) {
     Surface(
-        modifier =modifier,
-        content = content
+        modifier = modifier,
+        content = content,
     )
 }

@@ -42,6 +42,7 @@ class HomeScreenUITest {
         navigateToSearch: (searchType: SearchType) -> Unit = { },
         updateHomeSearchType: (searchType: SearchType) -> Unit = { },
         navigateToAbout: () -> Unit = { },
+        navigateToProfile: () -> Unit = { },
         navigateToSearchBySearchType: SearchType = SearchType.Persons,
         homeSheetUIState: HomeSheetUIState = HomeSheetUIState(),
         data: HomeData = mockHomeUIState,
@@ -57,6 +58,7 @@ class HomeScreenUITest {
             data = data,
             sheetUiState = homeSheetUIState,
             updateHomeSearchType = updateHomeSearchType,
+            navigateToProfile = navigateToProfile,
         )
     }
 
