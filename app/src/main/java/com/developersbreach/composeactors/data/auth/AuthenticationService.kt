@@ -21,6 +21,10 @@ interface AuthenticationService {
 
     suspend fun getCurrentUser(): Either<Throwable, AuthUserProfile>
 
+    suspend fun updateUserNameAttribute(
+        name: String,
+    ): Either<Throwable, Unit>
+
     suspend fun skipLogin(): Either<Throwable, Unit>
 
     suspend fun isGuestUser(): Either<Throwable, Boolean>
