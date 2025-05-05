@@ -11,6 +11,7 @@ import com.developersbreach.composeactors.ui.screens.favorites.FavoritesScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 import com.developersbreach.composeactors.ui.screens.login.LoginScreen
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailScreen
+import com.developersbreach.composeactors.ui.screens.profile.ProfileScreen
 import com.developersbreach.composeactors.ui.screens.search.SearchScreen
 import com.developersbreach.composeactors.ui.screens.splash.SplashScreen
 
@@ -44,6 +45,7 @@ fun AppNavigation(
                 navigateToFavorite = actions.navigateToFavorite,
                 navigateToSelectedMovie = actions.navigateToSelectedMovie,
                 navigateToAbout = actions.navigateToAbout,
+                navigateToProfile = actions.navigateToProfile,
             )
         }
 
@@ -88,6 +90,16 @@ fun AppNavigation(
                 navigateToHome = {
                     navController.popBackStack()
                     actions.navigateToHome()
+                },
+            )
+        }
+
+        composable<AppDestinations.Profile> {
+            ProfileScreen(
+                navigateUp = { actions.navigateUp() },
+                navigateToLogin = {
+                    navController.popBackStack()
+                    actions.navigateToLogin()
                 },
             )
         }

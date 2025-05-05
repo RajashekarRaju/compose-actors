@@ -4,6 +4,8 @@ import android.app.Activity
 import arrow.core.Either
 import com.amplifyframework.auth.AuthException
 import com.amplifyframework.auth.AuthProvider
+import com.amplifyframework.auth.AuthUserAttribute
+import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.auth.cognito.AWSCognitoAuthSession
 import com.amplifyframework.auth.cognito.result.AWSCognitoAuthSignOutResult
 import com.amplifyframework.auth.result.AuthSignInResult
@@ -30,15 +32,18 @@ class AuthenticationServiceImpl @Inject constructor(
             )
             when (result.isSignedIn) {
                 true -> {
+                    Timber.i("User SignedIn")
                     sessionsDao.addGuest(SessionEntity(isGuest = false))
                     Either.Right(Unit)
                 }
                 false -> {
+                    Timber.e("User sign in exception ${result.nextStep}")
                     // TODO - Handle all cases and send error information to UI
                     Either.Left(Exception(result.nextStep.signInStep.name))
                 }
             }
         } catch (e: Exception) {
+            Timber.e("User sign in result exception $e")
             Either.Left(e)
         }
     }
@@ -131,6 +136,33 @@ class AuthenticationServiceImpl @Inject constructor(
                 ),
             )
         } catch (e: Exception) {
+            Either.Left(e)
+        }
+    }
+
+    override suspend fun updateUserNameAttribute(
+        name: String,
+    ): Either<Throwable, Unit> {
+        return updateUserAttributes(
+            attribute = AuthUserAttribute(AuthUserAttributeKey.name(), name),
+        )
+    }
+
+    private suspend fun updateUserAttributes(
+        attribute: AuthUserAttribute,
+    ): Either<Throwable, Unit> {
+        return try {
+            val result = Amplify.Auth.updateUserAttribute(attribute)
+            when (result.isUpdated) {
+                true -> Either.Right(Unit)
+                false -> Either.Left(
+                    AuthException(
+                        message = "Failed to update user attributes $result",
+                        recoverySuggestion = result.nextStep.toString(),
+                    ),
+                )
+            }
+        } catch (e: AuthException) {
             Either.Left(e)
         }
     }

@@ -35,4 +35,7 @@ sealed interface AppDestinations {
 
     @Serializable
     data object Login : AppDestinations
+
+    @Serializable
+    data object Profile : AppDestinations
 }

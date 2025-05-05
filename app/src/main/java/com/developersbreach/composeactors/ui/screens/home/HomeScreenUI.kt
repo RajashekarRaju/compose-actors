@@ -45,6 +45,7 @@ fun HomeScreenUI(
     navigateToFavorite: () -> Unit,
     navigateToSearch: (SearchType) -> Unit,
     navigateToAbout: () -> Unit,
+    navigateToProfile: () -> Unit,
     navigateToSearchBySearchType: SearchType,
     navigateToSelectedPerson: (Int) -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
@@ -74,7 +75,7 @@ fun HomeScreenUI(
                         modalSheetSheet = modalSheetState,
                         navigateToFavorite = navigateToFavorite,
                         navigateToSearch = { navigateToSearch(SearchType.Movies) },
-                        navigateToProfile = { },
+                        navigateToProfile = navigateToProfile,
                         navigateToAbout = navigateToAbout,
                     )
                 },

@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.screens.splash
+package com.developersbreach.composeactors.domain.session
 
 enum class SessionState {
     Authenticated,

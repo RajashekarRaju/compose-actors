@@ -41,5 +41,10 @@
     <string name="skip">Skip</string>
     <string name="email">email</string>
     <string name="password">password</string>
+    <string name="profile">Profile</string>
+    <string name="welcome">Welcome %1$s!</string>
+    <string name="logged_in_as_guest">Logged in as Guest.</string>
+    <string name="please_login_to_view_account">Please login to view account.</string>
+    <string name="logout">Logout</string>
 
 </resources>
