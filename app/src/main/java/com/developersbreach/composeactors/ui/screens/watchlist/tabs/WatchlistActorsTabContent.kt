@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.screens.favorites.tabs
+package com.developersbreach.composeactors.ui.screens.watchlist.tabs
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -23,12 +23,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.annotations.PreviewLightDark
-import com.developersbreach.composeactors.data.datasource.fake.fakeFavoritePersonsList
-import com.developersbreach.composeactors.data.person.model.FavoritePerson
+import com.developersbreach.composeactors.data.datasource.fake.fakeWatchlistPersonsList
+import com.developersbreach.composeactors.data.person.model.WatchlistPerson
 import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGenerator
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.verticalGradientScrim
-import com.developersbreach.composeactors.ui.screens.favorites.NoFavoritesFoundUI
+import com.developersbreach.composeactors.ui.screens.watchlist.NoWatchlistFoundUI
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.composeactors.utils.getPlaceOfBirth
 import com.developersbreach.designsystem.components.CaIconButton
@@ -36,17 +36,17 @@ import com.developersbreach.designsystem.components.CaTextH5
 import com.developersbreach.designsystem.components.CaTextSubtitle1
 
 @Composable
-fun FavoritePersonsTabContent(
+fun WatchlistPersonsTabContent(
     navigateToSelectedPerson: (Int) -> Unit,
-    favoritePeople: List<FavoritePerson>,
-    removeFavoritePerson: (FavoritePerson) -> Unit,
+    watchlistPeople: List<WatchlistPerson>,
+    removePersonFromWatchlist: (WatchlistPerson) -> Unit,
 ) {
-    if (favoritePeople.isEmpty()) {
-        NoFavoritesFoundUI()
+    if (watchlistPeople.isEmpty()) {
+        NoWatchlistFoundUI()
     }
 
     val listState = rememberPagerState(
-        pageCount = { favoritePeople.size },
+        pageCount = { watchlistPeople.size },
     )
 
     VerticalPager(
@@ -56,19 +56,19 @@ fun FavoritePersonsTabContent(
         pageSize = PageSize.Fixed(512.dp),
         contentPadding = PaddingValues(top = 24.dp, start = 24.dp, end = 24.dp, bottom = 48.dp),
     ) { currentPage ->
-        ItemFavoritePerson(
-            item = favoritePeople[currentPage],
+        ItemWatchlistPerson(
+            item = watchlistPeople[currentPage],
             onClickPerson = navigateToSelectedPerson,
-            removeFavoritePerson = removeFavoritePerson,
+            removePersonFromWatchlist = removePersonFromWatchlist,
         )
     }
 }
 
 @Composable
-private fun ItemFavoritePerson(
-    item: FavoritePerson,
+private fun ItemWatchlistPerson(
+    item: WatchlistPerson,
     onClickPerson: (Int) -> Unit,
-    removeFavoritePerson: (FavoritePerson) -> Unit,
+    removePersonFromWatchlist: (WatchlistPerson) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -134,9 +134,9 @@ private fun ItemFavoritePerson(
 
                 CaIconButton(
                     iconModifier = Modifier,
-                    onClick = { removeFavoritePerson(item) },
+                    onClick = { removePersonFromWatchlist(item) },
                     modifier = Modifier,
-                    painter = painterResource(id = R.drawable.ic_favorite),
+                    painter = painterResource(id = R.drawable.ic_added_to_watchlist),
                     contentDescription = null,
                     tint = MaterialTheme.colors.primary,
                 )
@@ -147,24 +147,24 @@ private fun ItemFavoritePerson(
 
 @PreviewLightDark
 @Composable
-private fun FavoritePersonsTabContentPreview() {
+private fun WatchlistPersonsTabContentPreview() {
     ComposeActorsTheme {
-        FavoritePersonsTabContent(
+        WatchlistPersonsTabContent(
             navigateToSelectedPerson = {},
-            favoritePeople = fakeFavoritePersonsList(),
-            removeFavoritePerson = {},
+            watchlistPeople = fakeWatchlistPersonsList(),
+            removePersonFromWatchlist = {},
         )
     }
 }
 
 @PreviewLightDark
 @Composable
-private fun FavoritePersonsTabContentNoFavoritesPreview() {
+private fun WatchlistPersonsTabContentNoWatchlistPreview() {
     ComposeActorsTheme {
-        FavoritePersonsTabContent(
+        WatchlistPersonsTabContent(
             navigateToSelectedPerson = {},
-            favoritePeople = emptyList(),
-            removeFavoritePerson = {},
+            watchlistPeople = emptyList(),
+            removePersonFromWatchlist = {},
         )
     }
 }

@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.filled.BookmarkRemove
+import androidx.compose.material.icons.outlined.BookmarkAdd
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -22,10 +22,10 @@ import com.developersbreach.designsystem.components.CaIcon
 import com.developersbreach.designsystem.components.CaTextSubtitle2
 
 @Composable
-fun FloatingAddToFavoritesButton(
-    isFavorite: Boolean,
-    addToFavorites: () -> Unit,
-    removeFromFavorites: () -> Unit,
+fun FloatingAddToWatchlistButton(
+    isInWatchlist: Boolean,
+    addToWatchlist: () -> Unit,
+    removeFromWatchlist: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val fabState = remember {
@@ -45,21 +45,20 @@ fun FloatingAddToFavoritesButton(
             backgroundColor = MaterialTheme.colors.primary,
             modifier = Modifier.navigationBarsPadding(),
             onClick = {
-                if (!isFavorite) {
-                    addToFavorites()
+                if (!isInWatchlist) {
+                    addToWatchlist()
                 } else {
-                    removeFromFavorites()
+                    removeFromWatchlist()
                 }
             },
             icon = {
                 CaIcon(
                     modifier = Modifier,
-                    contentDescription = "",
+                    contentDescription = null,
                     tint = MaterialTheme.colors.onPrimary,
-                    imageVector = if (isFavorite) {
-                        Icons.Filled.Favorite
-                    } else {
-                        Icons.Outlined.FavoriteBorder
+                    imageVector = when {
+                        isInWatchlist -> Icons.Filled.BookmarkRemove
+                        else -> Icons.Outlined.BookmarkAdd
                     },
                 )
             },
@@ -68,23 +67,15 @@ fun FloatingAddToFavoritesButton(
                     visibleState = fabState,
                 ) {
                     CaTextSubtitle2(
-                        text = getFavoriteText(isFavorite),
                         color = MaterialTheme.colors.onPrimary,
                         modifier = Modifier,
+                        text = when {
+                            !isInWatchlist -> stringResource(R.string.add_to_watchlist_text)
+                            else -> stringResource(R.string.remove_from_watchlist_text)
+                        },
                     )
                 }
             },
         )
-    }
-}
-
-@Composable
-private fun getFavoriteText(
-    isFavoriteMovie: Boolean,
-): String {
-    return if (!isFavoriteMovie) {
-        stringResource(R.string.add_to_favorites_text)
-    } else {
-        stringResource(R.string.remove_from_favorites_text)
     }
 }

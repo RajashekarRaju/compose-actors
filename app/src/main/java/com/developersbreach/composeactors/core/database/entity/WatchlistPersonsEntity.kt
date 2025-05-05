@@ -4,10 +4,10 @@ import androidx.compose.runtime.Stable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.developersbreach.composeactors.data.person.model.FavoritePerson
+import com.developersbreach.composeactors.data.person.model.WatchlistPerson
 
 @Entity(tableName = "favorite_persons_table")
-data class FavoritePersonsEntity(
+data class WatchlistPersonsEntity(
     @Stable
     @PrimaryKey
     @ColumnInfo(name = "column_person_id")
@@ -20,9 +20,9 @@ data class FavoritePersonsEntity(
     val personPlaceOfBirth: String?,
 )
 
-fun List<FavoritePersonsEntity>.toFavoritePersons(): List<FavoritePerson> {
+fun List<WatchlistPersonsEntity>.toWatchlistPersons(): List<WatchlistPerson> {
     return map {
-        FavoritePerson(
+        WatchlistPerson(
             personId = it.personId,
             personName = it.personName,
             profileUrl = it.personProfileUrl,

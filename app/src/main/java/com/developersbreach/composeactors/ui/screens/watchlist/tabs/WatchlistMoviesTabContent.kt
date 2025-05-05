@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.screens.favorites.tabs
+package com.developersbreach.composeactors.ui.screens.watchlist.tabs
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,23 +27,19 @@ import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.screens.favorites.NoFavoritesFoundUI
+import com.developersbreach.composeactors.ui.screens.watchlist.NoWatchlistFoundUI
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaIconButton
 import com.developersbreach.designsystem.components.CaTextSubtitle1
 
-/**
- * Content shown for home tab Favorites.
- * If user did not add any movies to favorites, a message will be shown.
- */
 @Composable
-fun FavoriteMoviesTabContent(
+fun WatchlistMoviesTabContent(
     navigateToSelectedMovie: (Int) -> Unit,
-    favoriteMovies: List<Movie>,
-    removeFavoriteMovie: (Movie) -> Unit,
+    watchlistMovies: List<Movie>,
+    removeMovieFromWatchlist: (Movie) -> Unit,
 ) {
-    if (favoriteMovies.isEmpty()) {
-        NoFavoritesFoundUI()
+    if (watchlistMovies.isEmpty()) {
+        NoWatchlistFoundUI()
     }
 
     val listState = rememberLazyListState()
@@ -54,21 +50,21 @@ fun FavoriteMoviesTabContent(
         state = listState,
         modifier = Modifier.fillMaxWidth(),
     ) {
-        items(favoriteMovies) { movieItem: Movie ->
-            ItemFavoriteMovie(
+        items(watchlistMovies) { movieItem: Movie ->
+            ItemWatchlistMovie(
                 movieItem = movieItem,
                 onClickMovie = navigateToSelectedMovie,
-                removeFavoriteMovie = removeFavoriteMovie,
+                removeMovieFromWatchlist = removeMovieFromWatchlist,
             )
         }
     }
 }
 
 @Composable
-private fun ItemFavoriteMovie(
+private fun ItemWatchlistMovie(
     movieItem: Movie,
     onClickMovie: (Int) -> Unit,
-    removeFavoriteMovie: (Movie) -> Unit,
+    removeMovieFromWatchlist: (Movie) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -100,9 +96,9 @@ private fun ItemFavoriteMovie(
             )
             CaIconButton(
                 iconModifier = Modifier,
-                onClick = { removeFavoriteMovie(movieItem) },
+                onClick = { removeMovieFromWatchlist(movieItem) },
                 modifier = Modifier.weight(0.1f),
-                painter = painterResource(id = R.drawable.ic_favorite),
+                painter = painterResource(id = R.drawable.ic_added_to_watchlist),
                 contentDescription = null,
                 tint = MaterialTheme.colors.primary,
             )
@@ -112,24 +108,24 @@ private fun ItemFavoriteMovie(
 
 @PreviewLightDark
 @Composable
-private fun FavoriteMoviesTabContentPreview() {
+private fun WatchlistMoviesTabContentPreview() {
     ComposeActorsTheme {
-        FavoriteMoviesTabContent(
+        WatchlistMoviesTabContent(
             navigateToSelectedMovie = {},
-            favoriteMovies = fakeMovieList(),
-            removeFavoriteMovie = {},
+            watchlistMovies = fakeMovieList(),
+            removeMovieFromWatchlist = {},
         )
     }
 }
 
 @PreviewLightDark
 @Composable
-private fun FavoriteMoviesTabContentNoFavoritesPreview() {
+private fun WatchlistMoviesTabContentNoWatchlistPreview() {
     ComposeActorsTheme {
-        FavoriteMoviesTabContent(
+        WatchlistMoviesTabContent(
             navigateToSelectedMovie = {},
-            favoriteMovies = emptyList(),
-            removeFavoriteMovie = {},
+            watchlistMovies = emptyList(),
+            removeMovieFromWatchlist = {},
         )
     }
 }

@@ -44,7 +44,7 @@ import kotlinx.coroutines.launch
 fun OptionsModalSheetContent(
     modalSheetSheet: ModalBottomSheetState,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    navigateToFavorite: () -> Unit,
+    navigateToWatchlist: () -> Unit,
     navigateToSearch: () -> Unit,
     navigateToProfile: () -> Unit,
     navigateToAbout: () -> Unit,
@@ -94,7 +94,7 @@ fun OptionsModalSheetContent(
             items(HomeOptionItems.homeOptions) { option ->
                 ItemOptionRow(
                     option = option,
-                    navigateToFavorite = navigateToFavorite,
+                    navigateToWatchlist = navigateToWatchlist,
                     navigateToSearch = navigateToSearch,
                     navigateToProfile = navigateToProfile,
                     navigateToAbout = navigateToAbout,
@@ -107,7 +107,7 @@ fun OptionsModalSheetContent(
 @Composable
 private fun ItemOptionRow(
     option: HomeOptionItems,
-    navigateToFavorite: () -> Unit,
+    navigateToWatchlist: () -> Unit,
     navigateToSearch: () -> Unit,
     navigateToProfile: () -> Unit,
     navigateToAbout: () -> Unit,
@@ -119,7 +119,7 @@ private fun ItemOptionRow(
             .clip(RoundedCornerShape(100))
             .clickable {
                 when (option.id) {
-                    1 -> navigateToFavorite()
+                    1 -> navigateToWatchlist()
                     2 -> navigateToSearch()
                     3 -> navigateToProfile()
                     4 -> navigateToAbout()
@@ -137,7 +137,7 @@ private fun ItemOptionRow(
         Spacer(modifier = Modifier.width(24.dp))
 
         CaTextH6(
-            text = option.title,
+            text = stringResource(option.title),
             color = MaterialTheme.colors.onBackground.copy(alpha = 0.75f),
             modifier = Modifier,
         )
@@ -149,7 +149,7 @@ private fun ItemOptionRow(
 fun OptionsModalSheetContentPreview() {
     ComposeActorsTheme {
         OptionsModalSheetContent(
-            navigateToFavorite = {},
+            navigateToWatchlist = {},
             navigateToSearch = {},
             navigateToProfile = {},
             navigateToAbout = {},

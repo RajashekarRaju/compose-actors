@@ -49,7 +49,7 @@ fun AboutTopAppBar(
 
 @PreviewLightDark
 @Composable
-private fun FavoritesTopAppBarPreview() {
+private fun AboutTopAppBarPreview() {
     ComposeActorsTheme {
         AboutTopAppBar { }
     }

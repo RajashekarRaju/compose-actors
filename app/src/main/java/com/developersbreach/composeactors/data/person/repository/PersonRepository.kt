@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import arrow.core.Either
 import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.data.person.model.PersonDetail
-import com.developersbreach.composeactors.data.person.model.FavoritePerson
+import com.developersbreach.composeactors.data.person.model.WatchlistPerson
 import com.developersbreach.composeactors.data.movie.model.Movie
 
 interface PersonRepository {
@@ -16,11 +16,11 @@ interface PersonRepository {
 
     suspend fun getCastDetails(personId: Int): Either<Throwable, List<Movie>>
 
-    fun isFavoritePerson(personId: Int): LiveData<Int>
+    fun isPersonInWatchlist(personId: Int): LiveData<Int>
 
-    suspend fun addPersonToFavorite(favoritePerson: FavoritePerson)
+    suspend fun addPersonToWatchlist(watchlistPerson: WatchlistPerson)
 
-    suspend fun deleteSelectedFavoritePerson(favoritePerson: FavoritePerson)
+    suspend fun deleteSelectedPersonFromWatchlist(watchlistPerson: WatchlistPerson)
 
-    fun getAllFavoritePersons(): LiveData<List<FavoritePerson>>
+    fun getAllPersonsFromWatchlist(): LiveData<List<WatchlistPerson>>
 }

@@ -1,17 +1,17 @@
 package com.developersbreach.composeactors.data.person.model
 
 import androidx.compose.runtime.Stable
-import com.developersbreach.composeactors.core.database.entity.FavoritePersonsEntity
+import com.developersbreach.composeactors.core.database.entity.WatchlistPersonsEntity
 
-data class FavoritePerson(
+data class WatchlistPerson(
     @Stable val personId: Int,
     val personName: String,
     val profileUrl: String,
     val placeOfBirth: String?,
 )
 
-fun FavoritePerson.FavoritePersonsEntity(): FavoritePersonsEntity {
-    return FavoritePersonsEntity(
+fun WatchlistPerson.toWatchlistPersonsEntity(): WatchlistPersonsEntity {
+    return WatchlistPersonsEntity(
         personId = this.personId,
         personName = this.personName,
         personProfileUrl = this.profileUrl,

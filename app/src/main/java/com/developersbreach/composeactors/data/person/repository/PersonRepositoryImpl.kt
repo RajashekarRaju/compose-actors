@@ -8,7 +8,7 @@ import com.developersbreach.composeactors.core.database.entity.toPersonDetail
 import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
 import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.data.person.model.PersonDetail
-import com.developersbreach.composeactors.data.person.model.FavoritePerson
+import com.developersbreach.composeactors.data.person.model.WatchlistPerson
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.person.remote.PersonApi
 import javax.inject.Inject
@@ -67,19 +67,19 @@ class PersonRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun isFavoritePerson(personId: Int): LiveData<Int> {
-        return databaseDataSource.checkIfPersonIsFavorite(personId)
+    override fun isPersonInWatchlist(personId: Int): LiveData<Int> {
+        return databaseDataSource.checkIfPersonIsInWatchlist(personId)
     }
 
-    override suspend fun addPersonToFavorite(favoritePerson: FavoritePerson) {
-        databaseDataSource.addPersonToFavorites(favoritePerson)
+    override suspend fun addPersonToWatchlist(watchlistPerson: WatchlistPerson) {
+        databaseDataSource.addPersonToWatchlist(watchlistPerson)
     }
 
-    override suspend fun deleteSelectedFavoritePerson(favoritePerson: FavoritePerson) {
-        databaseDataSource.deleteSelectedFavoritePerson(favoritePerson)
+    override suspend fun deleteSelectedPersonFromWatchlist(watchlistPerson: WatchlistPerson) {
+        databaseDataSource.deleteSelectedPersonFromWatchlist(watchlistPerson)
     }
 
-    override fun getAllFavoritePersons(): LiveData<List<FavoritePerson>> {
-        return databaseDataSource.getAllFavoritePersons()
+    override fun getAllPersonsFromWatchlist(): LiveData<List<WatchlistPerson>> {
+        return databaseDataSource.getAllPersonsFromWatchlist()
     }
 }

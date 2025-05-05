@@ -50,9 +50,9 @@ fun MovieDetailsUI(
     navigateUp: () -> Unit,
     selectedBottomSheet: MutableState<BottomSheetType?>,
     selectBottomSheetCallback: (BottomSheetType) -> Unit,
-    isFavoriteMovie: Boolean,
-    addMovieToFavorites: () -> Unit,
-    removeMovieFromFavorites: () -> Unit,
+    isMovieInWatchlist: Boolean,
+    addMovieToWatchlist: () -> Unit,
+    removeMovieFromWatchlist: () -> Unit,
     navigateToSelectedMovie: (movieId: Int) -> Unit,
 ) {
     val state = remember {
@@ -107,9 +107,9 @@ fun MovieDetailsUI(
             sheetContent = {
                 SheetContentMovieProviders(
                     movieProvider = data.movieProviders,
-                    isFavoriteMovie = isFavoriteMovie,
-                    addMovieToFavorites = addMovieToFavorites,
-                    removeMovieFromFavorites = removeMovieFromFavorites,
+                    isInWatchlist = isMovieInWatchlist,
+                    addToWatchlist = addMovieToWatchlist,
+                    removeFromWatchlist = removeMovieFromWatchlist,
                 )
             },
         ) {

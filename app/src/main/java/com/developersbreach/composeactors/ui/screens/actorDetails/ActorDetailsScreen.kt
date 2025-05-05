@@ -12,7 +12,7 @@ internal fun ActorDetailsScreen(
     navigateToSelectedMovie: (Int) -> Unit,
     navigateUp: () -> Unit,
 ) {
-    val movieId by viewModel.isFavoriteMovie.observeAsState()
+    val movieId by viewModel.isPersonInWatchlist.observeAsState()
     UiStateHandler(
         uiState = viewModel.detailUIState,
     ) { data ->
@@ -20,11 +20,11 @@ internal fun ActorDetailsScreen(
             data = data,
             sheetUIState = viewModel.sheetUIState,
             navigateToSelectedMovie = navigateToSelectedMovie,
-            isFavoriteMovie = movieId != 0 && movieId != null,
+            isInWatchlist = movieId != 0 && movieId != null,
             navigateUp = navigateUp,
             getSelectedMovieDetails = { viewModel.getSelectedMovieDetails(it) },
-            addActorToFavorites = { viewModel.addActorToFavorites(data.actorData) },
-            removeActorFromFavorites = { viewModel.removeActorFromFavorites(data.actorData) },
+            addToWatchlist = { viewModel.addActorToWatchlist(data.actorData) },
+            removeFromWatchlist = { viewModel.removeActorFromWatchlist(data.actorData) },
         )
     }
 }

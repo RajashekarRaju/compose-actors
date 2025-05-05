@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.screens.favorites
+package com.developersbreach.composeactors.ui.screens.watchlist
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,7 +19,7 @@ import com.developersbreach.designsystem.components.CaImage
 import com.developersbreach.designsystem.components.CaTextH6
 
 @Composable
-fun NoFavoritesFoundUI() {
+fun NoWatchlistFoundUI() {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxSize(),
@@ -28,12 +28,12 @@ fun NoFavoritesFoundUI() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CaImage(
-                painter = painterResource(id = R.drawable.ic_no_favorites),
-                contentDescription = "",
+                painter = painterResource(id = R.drawable.ic_no_watchlist),
+                contentDescription = null,
                 modifier = Modifier.padding(horizontal = 24.dp),
             )
             CaTextH6(
-                text = stringResource(R.string.no_favorites_found_message),
+                text = stringResource(R.string.no_items_found_message),
                 color = MaterialTheme.colors.primary,
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 40.dp),
                 textAlign = TextAlign.Center,
@@ -44,8 +44,8 @@ fun NoFavoritesFoundUI() {
 
 @PreviewLightDark
 @Composable
-private fun ShowNoFavoritesFoundPreview() {
+private fun NoWatchlistFoundUIPreview() {
     ComposeActorsTheme {
-        NoFavoritesFoundUI()
+        NoWatchlistFoundUI()
     }
 }

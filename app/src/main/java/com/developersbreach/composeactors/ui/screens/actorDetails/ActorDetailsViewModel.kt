@@ -11,7 +11,7 @@ import androidx.navigation.toRoute
 import arrow.core.raise.either
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.model.PersonDetail
-import com.developersbreach.composeactors.data.person.model.toFavoritePerson
+import com.developersbreach.composeactors.data.person.model.toWatchlistPerson
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.ui.components.UiState
 import com.developersbreach.composeactors.ui.navigation.AppDestinations
@@ -38,7 +38,7 @@ class ActorDetailsViewModel @Inject constructor(
     var sheetUIState by mutableStateOf(ActorDetailsSheetUIState())
         private set
 
-    val isFavoriteMovie: LiveData<Int> = personRepository.isFavoritePerson(personId)
+    val isPersonInWatchlist: LiveData<Int> = personRepository.isPersonInWatchlist(personId)
 
     init {
         viewModelScope.launch {
@@ -77,26 +77,26 @@ class ActorDetailsViewModel @Inject constructor(
         }
     }
 
-    fun addActorToFavorites(
+    fun addActorToWatchlist(
         actor: PersonDetail?,
     ) {
         if (actor == null) {
-            Timber.e("Actor was null while adding to favorite operation.")
+            Timber.e("Actor was null while adding to watchlist operation.")
             return
         }
         viewModelScope.launch {
-            personRepository.addPersonToFavorite(actor.toFavoritePerson())
+            personRepository.addPersonToWatchlist(actor.toWatchlistPerson())
         }
     }
 
-    fun removeActorFromFavorites(actor: PersonDetail?) {
+    fun removeActorFromWatchlist(actor: PersonDetail?) {
         if (actor == null) {
             Timber.e("Actor was null while delete operation.")
             return
         }
         viewModelScope.launch {
-            personRepository.deleteSelectedFavoritePerson(
-                actor.toFavoritePerson(),
+            personRepository.deleteSelectedPersonFromWatchlist(
+                actor.toWatchlistPerson(),
             )
         }
     }

@@ -3,7 +3,7 @@ package com.developersbreach.composeactors.data.datasource.fake
 import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.data.movie.model.Cast
-import com.developersbreach.composeactors.data.person.model.FavoritePerson
+import com.developersbreach.composeactors.data.person.model.WatchlistPerson
 
 private val personsData = listOf(
     "John travolta",
@@ -30,10 +30,10 @@ fun fakePersonsList(): MutableList<Person> {
     return persons
 }
 
-fun fakeFavoritePersonsList(): MutableList<FavoritePerson> {
-    val actors = mutableListOf<FavoritePerson>()
+fun fakeWatchlistPersonsList(): MutableList<WatchlistPerson> {
+    val actors = mutableListOf<WatchlistPerson>()
     personsData.forEachIndexed { index, name ->
-        actors.add(FavoritePerson(index, name, "", "Berlin"))
+        actors.add(WatchlistPerson(index, name, "", "Berlin"))
     }
     return actors
 }

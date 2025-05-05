@@ -13,7 +13,7 @@ sealed interface AppDestinations {
     data object Home : AppDestinations
 
     @Serializable
-    data object Favorites : AppDestinations
+    data object Watchlist : AppDestinations
 
     @Serializable
     data class Search(

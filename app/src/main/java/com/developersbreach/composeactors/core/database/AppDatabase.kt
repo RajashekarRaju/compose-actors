@@ -4,19 +4,19 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.developersbreach.composeactors.core.database.dao.FavoritePersonsDao
-import com.developersbreach.composeactors.core.database.dao.FavoriteMoviesDao
+import com.developersbreach.composeactors.core.database.dao.WatchlistPersonsDao
+import com.developersbreach.composeactors.core.database.dao.WatchlistMoviesDao
 import com.developersbreach.composeactors.core.database.dao.PersonDetailsDao
 import com.developersbreach.composeactors.core.database.dao.SessionsDao
-import com.developersbreach.composeactors.core.database.entity.FavoritePersonsEntity
-import com.developersbreach.composeactors.core.database.entity.FavoriteMoviesEntity
+import com.developersbreach.composeactors.core.database.entity.WatchlistPersonsEntity
+import com.developersbreach.composeactors.core.database.entity.WatchlistMoviesEntity
 import com.developersbreach.composeactors.core.database.entity.PersonDetailEntity
 import com.developersbreach.composeactors.core.database.entity.SessionEntity
 
 @Database(
     entities = [
-        FavoritePersonsEntity::class,
-        FavoriteMoviesEntity::class,
+        WatchlistPersonsEntity::class,
+        WatchlistMoviesEntity::class,
         PersonDetailEntity::class,
         SessionEntity::class,
     ],
@@ -24,9 +24,9 @@ import com.developersbreach.composeactors.core.database.entity.SessionEntity
     exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract val favoritePersonsDao: FavoritePersonsDao
+    abstract val watchlistPersonsDao: WatchlistPersonsDao
     abstract val personDetailsDao: PersonDetailsDao
-    abstract val favoriteMoviesDao: FavoriteMoviesDao
+    abstract val watchlistMoviesDao: WatchlistMoviesDao
     abstract val sessionsDao: SessionsDao
 
     companion object {

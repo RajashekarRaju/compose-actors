@@ -29,11 +29,11 @@ interface MovieRepository {
 
     suspend fun getMovieProviders(movieId: Int): Either<Throwable, List<Flatrate>>
 
-    fun getAllFavoriteMovies(): LiveData<List<Movie>>
+    fun getAllMoviesFromWatchlist(): LiveData<List<Movie>>
 
-    fun isFavoriteMovie(movieId: Int): LiveData<Int>
+    fun isMovieInWatchlist(movieId: Int): LiveData<Int>
 
-    suspend fun addMovieToFavorites(movie: Movie)
+    suspend fun addMovieToWatchlist(movie: Movie)
 
-    suspend fun deleteSelectedFavoriteMovie(movie: Movie)
+    suspend fun deleteSelectedMovieFromWatchlist(movie: Movie)
 }

@@ -6,23 +6,23 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.developersbreach.composeactors.core.database.entity.FavoritePersonsEntity
+import com.developersbreach.composeactors.core.database.entity.WatchlistPersonsEntity
 
 @Dao
-interface FavoritePersonsDao {
+interface WatchlistPersonsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addPersonToFavorites(favoritePersonsEntity: FavoritePersonsEntity)
+    fun addPersonToWatchlist(watchlistPersonsEntity: WatchlistPersonsEntity)
 
     @Query("SELECT * FROM favorite_persons_table")
-    fun getAllFavoritePersons(): LiveData<List<FavoritePersonsEntity>>
+    fun getAllPersonsFromWatchlist(): LiveData<List<WatchlistPersonsEntity>>
 
     @Query("DELETE FROM favorite_persons_table")
-    fun deleteAllFavoritePersons()
+    fun deleteAllPersonsFromWatchlist()
 
     @Delete
-    fun deleteSelectedFavoritePerson(favoritePersonsEntity: FavoritePersonsEntity)
+    fun deleteSelectedPersonFromWatchlist(watchlistPersonsEntity: WatchlistPersonsEntity)
 
     @Query("SELECT column_person_id FROM favorite_persons_table WHERE column_person_id = :personId")
-    fun checkIfPersonIsFavorite(personId: Int): LiveData<Int>
+    fun checkIfPersonIsInWatchlist(personId: Int): LiveData<Int>
 }

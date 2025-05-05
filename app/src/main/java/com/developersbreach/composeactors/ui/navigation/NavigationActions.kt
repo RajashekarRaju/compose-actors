@@ -22,8 +22,8 @@ class NavigationActions(
         navController.navigate(AppDestinations.Search(searchType))
     }
 
-    val navigateToFavorite: () -> Unit = {
-        navController.navigate(AppDestinations.Favorites)
+    val navigateToWatchlist: () -> Unit = {
+        navController.navigate(AppDestinations.Watchlist)
     }
 
     val navigateToAbout: () -> Unit = {

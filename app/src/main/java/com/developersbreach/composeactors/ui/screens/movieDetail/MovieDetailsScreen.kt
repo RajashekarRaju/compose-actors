@@ -15,7 +15,7 @@ fun MovieDetailScreen(
     navigateToSelectedMovie: (Int) -> Unit,
     navigateUp: () -> Unit,
 ) {
-    val movieId by viewModel.isFavoriteMovie.observeAsState()
+    val movieId by viewModel.isMovieInWatchlist.observeAsState()
 
     val selectedBottomSheet = remember {
         mutableStateOf<BottomSheetType?>(BottomSheetType.MovieDetailBottomSheet)
@@ -33,9 +33,9 @@ fun MovieDetailScreen(
             navigateUp = navigateUp,
             selectedBottomSheet = selectedBottomSheet,
             selectBottomSheetCallback = selectBottomSheetCallback,
-            isFavoriteMovie = movieId != 0 && movieId != null,
-            addMovieToFavorites = { viewModel.addMovieToFavorites(data.movieData) },
-            removeMovieFromFavorites = { viewModel.removeMovieFromFavorites(data.movieData) },
+            isMovieInWatchlist = movieId != 0 && movieId != null,
+            addMovieToWatchlist = { viewModel.addMovieToWatchlist(data.movieData) },
+            removeMovieFromWatchlist = { viewModel.removeMovieFromWatchlist(data.movieData) },
             navigateToSelectedMovie = navigateToSelectedMovie,
         )
     }

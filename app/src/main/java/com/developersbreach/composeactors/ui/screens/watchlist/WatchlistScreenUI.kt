@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.screens.favorites
+package com.developersbreach.composeactors.ui.screens.watchlist
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,15 +11,17 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.annotations.PreviewLightDark
-import com.developersbreach.composeactors.data.person.model.FavoritePerson
+import com.developersbreach.composeactors.data.person.model.WatchlistPerson
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
-import com.developersbreach.composeactors.ui.screens.favorites.tabs.FavoritePersonsTabContent
-import com.developersbreach.composeactors.ui.screens.favorites.tabs.FavoriteMoviesTabContent
+import com.developersbreach.composeactors.ui.screens.watchlist.tabs.WatchlistPersonsTabContent
+import com.developersbreach.composeactors.ui.screens.watchlist.tabs.WatchlistMoviesTabContent
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.designsystem.components.CaScaffold
@@ -27,21 +29,21 @@ import com.developersbreach.designsystem.components.CaSurface
 import com.developersbreach.designsystem.components.CaTextH6
 
 @Composable
-fun FavoritesScreenUI(
+fun WatchlistScreenUI(
     navigateUp: () -> Unit,
-    favoriteMovies: List<Movie>,
+    watchlistMovies: List<Movie>,
     navigateToSelectedMovie: (Int) -> Unit,
-    removeFavoriteMovie: (Movie) -> Unit,
+    removeMovieFromWatchlist: (Movie) -> Unit,
     navigateToSelectedPerson: (Int) -> Unit,
-    favoritePeople: List<FavoritePerson>,
-    removeFavoritePerson: (FavoritePerson) -> Unit,
+    watchlistPersons: List<WatchlistPerson>,
+    removeWatchlistPerson: (WatchlistPerson) -> Unit,
 ) {
-    val favoriteTabs = listOf(
-        TabItem("Actors"),
-        TabItem("Movies"),
+    val watchlistTabs = listOf(
+        TabItem(stringResource(R.string.actors)),
+        TabItem(stringResource(R.string.movies)),
     )
-    val favoritesPagerState = rememberPagerState(
-        pageCount = { favoriteTabs.size },
+    val watchlistPagerState = rememberPagerState(
+        pageCount = { watchlistTabs.size },
     )
 
     CaSurface(
@@ -51,7 +53,7 @@ fun FavoritesScreenUI(
             CaScaffold(
                 modifier = Modifier,
                 topBar = {
-                    FavoritesTopAppBar(navigateUp = navigateUp)
+                    WatchlistTopAppBar(navigateUp = navigateUp)
                 },
                 content = { paddingValues ->
                     Column(
@@ -59,29 +61,29 @@ fun FavoritesScreenUI(
                             .fillMaxSize()
                             .padding(paddingValues = paddingValues),
                     ) {
-                        TabsContainer(tabs = favoriteTabs, pagerState = favoritesPagerState)
+                        TabsContainer(tabs = watchlistTabs, pagerState = watchlistPagerState)
                         CaDivider(
                             thickness = 1.dp,
                             modifier = Modifier.padding(vertical = 0.dp),
                             colorAlpha = 0.1f,
                         )
                         HorizontalPager(
-                            state = favoritesPagerState,
+                            state = watchlistPagerState,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxWidth(),
                         ) { index ->
                             when (index) {
-                                0 -> FavoritePersonsTabContent(
+                                0 -> WatchlistPersonsTabContent(
                                     navigateToSelectedPerson = navigateToSelectedPerson,
-                                    favoritePeople = favoritePeople,
-                                    removeFavoritePerson = removeFavoritePerson,
+                                    watchlistPeople = watchlistPersons,
+                                    removePersonFromWatchlist = removeWatchlistPerson,
                                 )
 
-                                1 -> FavoriteMoviesTabContent(
+                                1 -> WatchlistMoviesTabContent(
                                     navigateToSelectedMovie = navigateToSelectedMovie,
-                                    favoriteMovies = favoriteMovies,
-                                    removeFavoriteMovie = removeFavoriteMovie,
+                                    watchlistMovies = watchlistMovies,
+                                    removeMovieFromWatchlist = removeMovieFromWatchlist,
                                 )
 
                                 2 -> FeatureComingSoonTextUI()
@@ -111,15 +113,15 @@ private fun FeatureComingSoonTextUI() {
 
 @PreviewLightDark
 @Composable
-fun FavoriteScreenUIPreview() {
+fun WatchlistScreenUIPreview() {
     ComposeActorsTheme {
-        FavoritesScreenUI(
-            favoriteMovies = emptyList(),
+        WatchlistScreenUI(
+            watchlistMovies = emptyList(),
             navigateToSelectedMovie = {},
-            removeFavoriteMovie = {},
+            removeMovieFromWatchlist = {},
             navigateToSelectedPerson = {},
-            favoritePeople = emptyList(),
-            removeFavoritePerson = {},
+            watchlistPersons = emptyList(),
+            removeWatchlistPerson = {},
             navigateUp = {},
         )
     }

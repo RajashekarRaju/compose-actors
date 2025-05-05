@@ -77,19 +77,19 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getAllFavoriteMovies(): LiveData<List<Movie>> {
-        return databaseDataSource.getAllFavoriteMovies()
+    override fun getAllMoviesFromWatchlist(): LiveData<List<Movie>> {
+        return databaseDataSource.getAllMoviesFromWatchlist()
     }
 
-    override fun isFavoriteMovie(movieId: Int): LiveData<Int> {
-        return databaseDataSource.checkIfMovieIsFavorite(movieId)
+    override fun isMovieInWatchlist(movieId: Int): LiveData<Int> {
+        return databaseDataSource.checkIfMovieIsInWatchlist(movieId)
     }
 
-    override suspend fun addMovieToFavorites(movie: Movie) {
-        return databaseDataSource.addMovieToFavorites(movie)
+    override suspend fun addMovieToWatchlist(movie: Movie) {
+        return databaseDataSource.addMovieToWatchlist(movie)
     }
 
-    override suspend fun deleteSelectedFavoriteMovie(movie: Movie) {
-        return databaseDataSource.deleteSelectedFavoriteMovie(movie)
+    override suspend fun deleteSelectedMovieFromWatchlist(movie: Movie) {
+        return databaseDataSource.deleteSelectedMovieFromWatchlist(movie)
     }
 }
