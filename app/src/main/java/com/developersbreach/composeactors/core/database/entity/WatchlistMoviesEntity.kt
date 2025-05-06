@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.developersbreach.composeactors.data.movie.model.Movie
 
-@Entity(tableName = "favorite_movies_table")
+@Entity(tableName = "watchlist_movies_table")
 data class WatchlistMoviesEntity(
     @Stable
     @PrimaryKey

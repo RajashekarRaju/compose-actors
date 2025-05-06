@@ -14,15 +14,15 @@ interface WatchlistMoviesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addMovieToWatchlist(watchlistMoviesEntity: WatchlistMoviesEntity)
 
-    @Query("SELECT * FROM favorite_movies_table")
+    @Query("SELECT * FROM watchlist_movies_table")
     fun getAllMoviesFromWatchlist(): LiveData<List<WatchlistMoviesEntity>>
 
-    @Query("DELETE FROM favorite_movies_table")
+    @Query("DELETE FROM watchlist_movies_table")
     fun deleteAllMoviesFromWatchlist()
 
     @Delete
     fun deleteSelectedMovieFromWatchlist(watchlistMoviesEntity: WatchlistMoviesEntity)
 
-    @Query("SELECT column_movie_id FROM favorite_movies_table WHERE column_movie_id = :movieId")
+    @Query("SELECT column_movie_id FROM watchlist_movies_table WHERE column_movie_id = :movieId")
     fun checkIfMovieIsInWatchlist(movieId: Int): LiveData<Int>
 }
