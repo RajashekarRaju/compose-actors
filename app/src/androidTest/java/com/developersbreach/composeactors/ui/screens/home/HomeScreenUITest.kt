@@ -38,7 +38,7 @@ class HomeScreenUITest {
     private fun HomeScreenUIContent(
         navigateToSelectedPerson: (personId: Int) -> Unit = { },
         navigateToSelectedMovie: (movieId: Int) -> Unit = { },
-        navigateToFavorite: () -> Unit = { },
+        navigateToWatchlist: () -> Unit = { },
         navigateToSearch: (searchType: SearchType) -> Unit = { },
         updateHomeSearchType: (searchType: SearchType) -> Unit = { },
         navigateToAbout: () -> Unit = { },
@@ -51,7 +51,7 @@ class HomeScreenUITest {
             modifier = Modifier,
             navigateToSelectedPerson = navigateToSelectedPerson,
             navigateToSelectedMovie = navigateToSelectedMovie,
-            navigateToFavorite = navigateToFavorite,
+            navigateToWatchlist = navigateToWatchlist,
             navigateToSearch = navigateToSearch,
             navigateToAbout = navigateToAbout,
             navigateToSearchBySearchType = navigateToSearchBySearchType,

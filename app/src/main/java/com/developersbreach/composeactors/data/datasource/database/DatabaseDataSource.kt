@@ -6,13 +6,13 @@ import arrow.core.Either
 import com.developersbreach.composeactors.core.database.AppDatabase
 import com.developersbreach.composeactors.core.database.entity.PersonDetailEntity
 import com.developersbreach.composeactors.core.database.entity.movieAsDomainModel
-import com.developersbreach.composeactors.core.database.entity.toFavoritePersons
-import com.developersbreach.composeactors.data.person.model.FavoritePerson
+import com.developersbreach.composeactors.core.database.entity.toWatchlistPersons
+import com.developersbreach.composeactors.data.person.model.WatchlistPerson
 import com.developersbreach.composeactors.data.movie.model.Movie
-import com.developersbreach.composeactors.data.person.model.FavoritePersonsEntity
 import com.developersbreach.composeactors.data.movie.model.movieAsDatabaseModel
 import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.data.person.model.toEntity
+import com.developersbreach.composeactors.data.person.model.toWatchlistPersonsEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
@@ -23,57 +23,55 @@ class DatabaseDataSource @Inject constructor(
     private val database: AppDatabase,
 ) {
 
-    fun getAllFavoriteMovies(): LiveData<List<Movie>> {
-        val allFavoriteMovies = database.favoriteMoviesDao.getAllFavoriteMovies()
-        return allFavoriteMovies.map { favEntityList ->
-            favEntityList.movieAsDomainModel()
+    fun getAllMoviesFromWatchlist(): LiveData<List<Movie>> {
+        return database.watchlistMoviesDao.getAllMoviesFromWatchlist().map {
+            it.movieAsDomainModel()
         }
     }
 
-    fun getAllFavoritePersons(): LiveData<List<FavoritePerson>> {
-        val allFavoritePersons = database.favoritePersonsDao.getAllFavoritePersons()
-        return allFavoritePersons.map { favEntityList ->
-            favEntityList.toFavoritePersons()
+    fun getAllPersonsFromWatchlist(): LiveData<List<WatchlistPerson>> {
+        return database.watchlistPersonsDao.getAllPersonsFromWatchlist().map {
+            it.toWatchlistPersons()
         }
     }
 
-    fun checkIfMovieIsFavorite(
+    fun checkIfMovieIsInWatchlist(
         movieId: Int,
-    ) = database.favoriteMoviesDao.checkIfMovieIsFavorite(movieId)
+    ) = database.watchlistMoviesDao.checkIfMovieIsInWatchlist(movieId)
 
-    fun checkIfPersonIsFavorite(
+    fun checkIfPersonIsInWatchlist(
         personId: Int,
-    ) = database.favoritePersonsDao.checkIfPersonIsFavorite(personId)
+    ) = database.watchlistPersonsDao.checkIfPersonIsInWatchlist(personId)
 
-    suspend fun addMovieToFavorites(
+    suspend fun addMovieToWatchlist(
         movie: Movie,
     ) = withContext(Dispatchers.IO) {
         with(movie.movieAsDatabaseModel()) {
-            database.favoriteMoviesDao.addMovieToFavorites(favoriteMoviesEntity = this)
+            database.watchlistMoviesDao.addMovieToWatchlist(watchlistMoviesEntity = this)
         }
     }
 
-    suspend fun addPersonToFavorites(
-        favoritePerson: FavoritePerson,
+    suspend fun addPersonToWatchlist(
+        watchlistPerson: WatchlistPerson,
     ) = withContext(Dispatchers.IO) {
-        with(favoritePerson.FavoritePersonsEntity()) {
-            database.favoritePersonsDao.addPersonToFavorites(favoritePersonsEntity = this)
+        with(watchlistPerson.toWatchlistPersonsEntity()) {
+            database.watchlistPersonsDao.addPersonToWatchlist(watchlistPersonsEntity = this)
         }
     }
 
-    suspend fun deleteSelectedFavoriteMovie(
+    suspend fun deleteSelectedMovieFromWatchlist(
         movie: Movie,
     ) = withContext(Dispatchers.IO) {
         with(movie.movieAsDatabaseModel()) {
-            database.favoriteMoviesDao.deleteSelectedFavoriteMovie(favoriteMoviesEntity = this)
+            database.watchlistMoviesDao.deleteSelectedMovieFromWatchlist(watchlistMoviesEntity = this)
         }
     }
 
-    suspend fun deleteSelectedFavoritePerson(
-        favoritePerson: FavoritePerson,
+    suspend fun deleteSelectedPersonFromWatchlist(
+        watchlistPerson: WatchlistPerson,
     ) = withContext(Dispatchers.IO) {
-        with(favoritePerson.FavoritePersonsEntity()) {
-            database.favoritePersonsDao.deleteSelectedFavoritePerson(favoritePersonsEntity = this)
+        with(watchlistPerson.toWatchlistPersonsEntity()) {
+            database.watchlistPersonsDao.deleteSelectedPersonFromWatchlist(watchlistPersonsEntity = this)
         }
     }
 

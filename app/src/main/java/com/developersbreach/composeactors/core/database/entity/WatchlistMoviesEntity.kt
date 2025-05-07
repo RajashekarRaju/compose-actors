@@ -6,8 +6,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.developersbreach.composeactors.data.movie.model.Movie
 
-@Entity(tableName = "favorite_movies_table")
-data class FavoriteMoviesEntity(
+@Entity(tableName = "watchlist_movies_table")
+data class WatchlistMoviesEntity(
     @Stable
     @PrimaryKey
     @ColumnInfo(name = "column_movie_id")
@@ -20,7 +20,7 @@ data class FavoriteMoviesEntity(
     val movieBanner: String?,
 )
 
-fun List<FavoriteMoviesEntity>.movieAsDomainModel(): List<Movie> {
+fun List<WatchlistMoviesEntity>.movieAsDomainModel(): List<Movie> {
     return map {
         Movie(
             movieId = it.movieId,

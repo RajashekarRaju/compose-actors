@@ -20,7 +20,7 @@ import com.developersbreach.composeactors.ui.screens.actorDetails.composables.Ac
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
-import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToFavoritesButton
+import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToWatchlistButton
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
 @Composable
@@ -28,11 +28,11 @@ internal fun ActorDetailsUI(
     data: ActorDetailsData,
     sheetUIState: ActorDetailsSheetUIState,
     navigateToSelectedMovie: (Int) -> Unit,
-    isFavoriteMovie: Boolean,
+    isInWatchlist: Boolean,
     navigateUp: () -> Unit,
     getSelectedMovieDetails: (Int) -> Unit,
-    addActorToFavorites: () -> Unit,
-    removeActorFromFavorites: () -> Unit,
+    addToWatchlist: () -> Unit,
+    removeFromWatchlist: () -> Unit,
 ) {
     val showFab = rememberSaveable { mutableStateOf(true) }
     val actorProfileUrl = "${data.actorData?.profileUrl}"
@@ -82,10 +82,10 @@ internal fun ActorDetailsUI(
         }
 
         if (showFab.value) {
-            FloatingAddToFavoritesButton(
-                isFavorite = isFavoriteMovie,
-                addToFavorites = addActorToFavorites,
-                removeFromFavorites = removeActorFromFavorites,
+            FloatingAddToWatchlistButton(
+                isInWatchlist = isInWatchlist,
+                addToWatchlist = addToWatchlist,
+                removeFromWatchlist = removeFromWatchlist,
             )
         }
     }
@@ -103,11 +103,11 @@ fun ActorDetailsUIPreview() {
             ),
             sheetUIState = ActorDetailsSheetUIState(fakeMovieDetail),
             navigateToSelectedMovie = {},
-            isFavoriteMovie = true,
+            isInWatchlist = true,
             navigateUp = {},
             getSelectedMovieDetails = {},
-            addActorToFavorites = {},
-            removeActorFromFavorites = {},
+            addToWatchlist = {},
+            removeFromWatchlist = {},
         )
     }
 }

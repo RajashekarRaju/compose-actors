@@ -42,7 +42,7 @@ import kotlinx.coroutines.flow.flow
 @Composable
 fun HomeScreenUI(
     modifier: Modifier = Modifier,
-    navigateToFavorite: () -> Unit,
+    navigateToWatchlist: () -> Unit,
     navigateToSearch: (SearchType) -> Unit,
     navigateToAbout: () -> Unit,
     navigateToProfile: () -> Unit,
@@ -73,7 +73,7 @@ fun HomeScreenUI(
                 sheetContent = {
                     OptionsModalSheetContent(
                         modalSheetSheet = modalSheetState,
-                        navigateToFavorite = navigateToFavorite,
+                        navigateToWatchlist = navigateToWatchlist,
                         navigateToSearch = { navigateToSearch(SearchType.Movies) },
                         navigateToProfile = navigateToProfile,
                         navigateToAbout = navigateToAbout,

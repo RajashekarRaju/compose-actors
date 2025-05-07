@@ -2,7 +2,7 @@ package com.developersbreach.composeactors.data.movie.model
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
-import com.developersbreach.composeactors.core.database.entity.FavoriteMoviesEntity
+import com.developersbreach.composeactors.core.database.entity.WatchlistMoviesEntity
 import com.developersbreach.composeactors.core.network.HIGH_RES_IMAGE
 import com.developersbreach.composeactors.core.network.LOW_RES_IMAGE
 import kotlinx.serialization.SerialName
@@ -25,8 +25,8 @@ data class MoviesResponse(
     @SerialName("cast") val movies: List<Movie>,
 )
 
-fun Movie.movieAsDatabaseModel(): FavoriteMoviesEntity {
-    return FavoriteMoviesEntity(
+fun Movie.movieAsDatabaseModel(): WatchlistMoviesEntity {
+    return WatchlistMoviesEntity(
         movieId = this.movieId,
         movieName = this.movieName,
         moviePosterUrl = this.posterPathUrl,

@@ -1,9 +1,9 @@
-package com.developersbreach.composeactors.ui.screens.favorites
+package com.developersbreach.composeactors.ui.screens.watchlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.person.model.FavoritePerson
+import com.developersbreach.composeactors.data.person.model.WatchlistPerson
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
@@ -12,23 +12,23 @@ import javax.inject.Inject
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class FavoriteViewModel @Inject constructor(
+class WatchlistViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
     private val personRepository: PersonRepository,
 ) : ViewModel() {
 
-    val favoriteMovies: LiveData<List<Movie>> = movieRepository.getAllFavoriteMovies()
-    val favoritePersons: LiveData<List<FavoritePerson>> = personRepository.getAllFavoritePersons()
+    val watchlistMovies: LiveData<List<Movie>> = movieRepository.getAllMoviesFromWatchlist()
+    val watchlistPersons: LiveData<List<WatchlistPerson>> = personRepository.getAllPersonsFromWatchlist()
 
-    fun removeMovieFromFavorites(movie: Movie) {
+    fun removeMovieFromWatchlist(movie: Movie) {
         viewModelScope.launch {
-            movieRepository.deleteSelectedFavoriteMovie(movie)
+            movieRepository.deleteSelectedMovieFromWatchlist(movie)
         }
     }
 
-    fun removePersonFromFavorites(favoritePerson: FavoritePerson) {
+    fun removePersonFromWatchlist(watchlistPerson: WatchlistPerson) {
         viewModelScope.launch {
-            personRepository.deleteSelectedFavoritePerson(favoritePerson)
+            personRepository.deleteSelectedPersonFromWatchlist(watchlistPerson)
         }
     }
 }

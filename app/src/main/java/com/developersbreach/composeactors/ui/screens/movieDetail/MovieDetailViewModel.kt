@@ -37,7 +37,7 @@ class MovieDetailViewModel @Inject constructor(
 
     var movieSheetUiState by mutableStateOf(MovieSheetUIState(selectedMovieDetails = null))
 
-    val isFavoriteMovie: LiveData<Int> = movieRepository.isFavoriteMovie(movieId)
+    val isMovieInWatchlist: LiveData<Int> = movieRepository.isMovieInWatchlist(movieId)
 
     init {
         viewModelScope.launch {
@@ -62,15 +62,15 @@ class MovieDetailViewModel @Inject constructor(
         )
     }
 
-    fun addMovieToFavorites(
+    fun addMovieToWatchlist(
         movie: MovieDetail?,
     ) {
         if (movie == null) {
-            Timber.e("Failed to addMovieToFavorites, since movie was null")
+            Timber.e("Failed to addMovieToWatchlist, since movie was null")
             return
         }
         viewModelScope.launch {
-            movieRepository.addMovieToFavorites(
+            movieRepository.addMovieToWatchlist(
                 Movie(
                     movieId = movie.movieId,
                     movieName = movie.movieTitle,
@@ -81,15 +81,15 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
-    fun removeMovieFromFavorites(
+    fun removeMovieFromWatchlist(
         movie: MovieDetail?,
     ) {
         if (movie == null) {
-            Timber.e("Failed to removeMovieFromFavorites, since movie was null")
+            Timber.e("Failed to removeMovieFromWatchlist, since movie was null")
             return
         }
         viewModelScope.launch {
-            movieRepository.deleteSelectedFavoriteMovie(
+            movieRepository.deleteSelectedMovieFromWatchlist(
                 Movie(
                     movieId = movie.movieId,
                     movieName = movie.movieTitle,

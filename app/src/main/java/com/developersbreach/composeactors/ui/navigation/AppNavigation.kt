@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.developersbreach.composeactors.ui.screens.about.AboutScreen
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
-import com.developersbreach.composeactors.ui.screens.favorites.FavoritesScreen
+import com.developersbreach.composeactors.ui.screens.watchlist.WatchlistScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 import com.developersbreach.composeactors.ui.screens.login.LoginScreen
 import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailScreen
@@ -42,7 +42,7 @@ fun AppNavigation(
             HomeScreen(
                 navigateToSelectedPerson = actions.navigateToSelectedPerson,
                 navigateToSearch = actions.navigateToSearch,
-                navigateToFavorite = actions.navigateToFavorite,
+                navigateToWatchlist = actions.navigateToWatchlist,
                 navigateToSelectedMovie = actions.navigateToSelectedMovie,
                 navigateToAbout = actions.navigateToAbout,
                 navigateToProfile = actions.navigateToProfile,
@@ -71,8 +71,8 @@ fun AppNavigation(
             )
         }
 
-        composable<AppDestinations.Favorites> {
-            FavoritesScreen(
+        composable<AppDestinations.Watchlist> {
+            WatchlistScreen(
                 navigateUp = actions.navigateUp,
                 navigateToSelectedMovie = actions.navigateToSelectedMovie,
                 navigateToSelectedPerson = actions.navigateToSelectedPerson,

@@ -15,7 +15,7 @@ fun HomeScreen(
     navigateToSearch: (SearchType) -> Unit,
     navigateToAbout: () -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
-    navigateToFavorite: () -> Unit,
+    navigateToWatchlist: () -> Unit,
     navigateToProfile: () -> Unit,
 ) {
     val navigateToSearchBySearchType by viewModel.updateHomeSearchType.observeAsState(SearchType.Persons)
@@ -25,7 +25,7 @@ fun HomeScreen(
     ) { data ->
         HomeScreenUI(
             modifier = Modifier,
-            navigateToFavorite = navigateToFavorite,
+            navigateToWatchlist = navigateToWatchlist,
             navigateToSearch = navigateToSearch,
             navigateToAbout = navigateToAbout,
             navigateToProfile = navigateToProfile,

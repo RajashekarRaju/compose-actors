@@ -26,16 +26,16 @@ import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToFavoritesButton
+import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToWatchlistButton
 import com.developersbreach.designsystem.components.CaTextBody1
 import com.developersbreach.designsystem.components.CaTextH6
 
 @Composable
 fun SheetContentMovieProviders(
     movieProvider: List<Flatrate>,
-    isFavoriteMovie: Boolean,
-    addMovieToFavorites: () -> Unit,
-    removeMovieFromFavorites: () -> Unit,
+    isInWatchlist: Boolean,
+    addToWatchlist: () -> Unit,
+    removeFromWatchlist: () -> Unit,
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -71,10 +71,10 @@ fun SheetContentMovieProviders(
             )
         }
 
-        FloatingAddToFavoritesButton(
-            isFavorite = isFavoriteMovie,
-            addToFavorites = addMovieToFavorites,
-            removeFromFavorites = removeMovieFromFavorites,
+        FloatingAddToWatchlistButton(
+            isInWatchlist = isInWatchlist,
+            addToWatchlist = addToWatchlist,
+            removeFromWatchlist = removeFromWatchlist,
             modifier = Modifier.constrainAs(floatingButton) {
                 bottom.linkTo(parent.bottom, margin = 8.dp)
                 start.linkTo(parent.start)

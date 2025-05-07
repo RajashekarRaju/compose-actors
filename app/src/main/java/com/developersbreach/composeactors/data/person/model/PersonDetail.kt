@@ -21,7 +21,7 @@ data class PersonDetail(
     val profileUrl: String = "$HIGH_RES_IMAGE$profilePath"
 }
 
-fun PersonDetail.toFavoritePerson() = FavoritePerson(
+fun PersonDetail.toWatchlistPerson() = WatchlistPerson(
     personId = this.personId,
     personName = this.personName,
     profileUrl = this.profileUrl,

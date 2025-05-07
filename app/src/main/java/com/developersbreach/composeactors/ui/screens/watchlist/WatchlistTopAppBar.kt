@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.screens.favorites
+package com.developersbreach.composeactors.ui.screens.watchlist
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,7 +20,7 @@ import com.developersbreach.designsystem.components.CaIconButton
 import com.developersbreach.designsystem.components.CaTextH6
 
 @Composable
-fun FavoritesTopAppBar(
+fun WatchlistTopAppBar(
     navigateUp: () -> Unit,
 ) {
     Box(
@@ -39,7 +39,7 @@ fun FavoritesTopAppBar(
             contentDescription = stringResource(id = R.string.cd_up_button),
         )
         CaTextH6(
-            text = "Favorites",
+            text = stringResource(R.string.watchlist),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.align(Alignment.Center),
@@ -49,8 +49,8 @@ fun FavoritesTopAppBar(
 
 @PreviewLightDark
 @Composable
-private fun FavoritesTopAppBarPreview() {
+private fun WatchlistTopAppBarPreview() {
     ComposeActorsTheme {
-        FavoritesTopAppBar { }
+        WatchlistTopAppBar { }
     }
 }

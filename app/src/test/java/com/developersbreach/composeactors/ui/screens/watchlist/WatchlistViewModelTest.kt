@@ -1,4 +1,4 @@
-package com.developersbreach.composeactors.ui.screens.favorites
+package com.developersbreach.composeactors.ui.screens.watchlist
 
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
@@ -12,9 +12,9 @@ import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class FavoriteViewModelTest {
+class WatchlistViewModelTest {
 
-    private lateinit var viewModel: FavoriteViewModel
+    private lateinit var viewModel: WatchlistViewModel
     private val movieRepository: MovieRepository = mockk(relaxed = true)
     private val personRepository: PersonRepository = mockk(relaxed = true)
 
@@ -22,27 +22,27 @@ class FavoriteViewModelTest {
     fun setup() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
 
-        viewModel = FavoriteViewModel(
+        viewModel = WatchlistViewModel(
             movieRepository = movieRepository,
             personRepository = personRepository,
         )
     }
 
     @Test
-    fun `upon calling removeMovieFromFavorites calls deleteSelectedFavoriteMovie`() {
-        viewModel.removeMovieFromFavorites(mockk())
+    fun `upon calling removeMovieFromWatchlist calls deleteSelectedMovieFromWatchlist`() {
+        viewModel.removeMovieFromWatchlist(mockk())
 
         coVerify(exactly = 1) {
-            movieRepository.deleteSelectedFavoriteMovie(any())
+            movieRepository.deleteSelectedMovieFromWatchlist(any())
         }
     }
 
     @Test
-    fun `upon calling removePersonFromFavorites calls deleteSelectedFavoritePerson`() {
-        viewModel.removePersonFromFavorites(mockk())
+    fun `upon calling removePersonFromWatchlist calls deleteSelectedPersonFromWatchlist`() {
+        viewModel.removePersonFromWatchlist(mockk())
 
         coVerify(exactly = 1) {
-            personRepository.deleteSelectedFavoritePerson(any())
+            personRepository.deleteSelectedPersonFromWatchlist(any())
         }
     }
 }
