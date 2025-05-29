@@ -2,8 +2,8 @@ package com.developersbreach.composeactors.data.person.remote
 
 import arrow.core.Either
 import com.developersbreach.composeactors.core.cache.CacheManager
-import com.developersbreach.composeactors.core.network.BaseUrlProvider.Companion.API_KEY
-import com.developersbreach.composeactors.core.network.BaseUrlProvider.Companion.BASE_URL
+import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_API_KEY
+import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_BASE_URL
 import com.developersbreach.composeactors.core.network.HttpRequestHandler
 import com.developersbreach.composeactors.core.network.PagedResponse
 import com.developersbreach.composeactors.data.HttpClientProvider.createHttpClient
@@ -49,7 +49,7 @@ class PersonApiImplTest {
     @Test
     fun `getPopularPersons should return expected response`() = runTest {
         val client = createHttpClient(
-            expectedUrl = Url("${BASE_URL}person/popular?$API_KEY"),
+            expectedUrl = Url("${TMDB_BASE_URL}person/popular?$TMDB_API_KEY"),
             response = Json.encodeToJsonElement(pagedResponse).toString(),
         )
 
@@ -62,7 +62,7 @@ class PersonApiImplTest {
     @Test
     fun `getTrendingPersons should return expected response`() = runTest {
         val client = createHttpClient(
-            expectedUrl = Url("${BASE_URL}trending/person/week?$API_KEY"),
+            expectedUrl = Url("${TMDB_BASE_URL}trending/person/week?$TMDB_API_KEY"),
             response = Json.encodeToJsonElement(pagedResponse).toString(),
         )
 
@@ -75,7 +75,7 @@ class PersonApiImplTest {
     @Test
     fun `getPersonDetails should return expected response`() = runTest {
         val client = createHttpClient(
-            expectedUrl = Url("${BASE_URL}person/1?$API_KEY"),
+            expectedUrl = Url("${TMDB_BASE_URL}person/1?$TMDB_API_KEY"),
             response = Json.encodeToJsonElement(fakePersonDetail).toString(),
         )
 
@@ -88,7 +88,7 @@ class PersonApiImplTest {
     @Test
     fun `getCastDetails should return expected response`() = runTest {
         val client = createHttpClient(
-            expectedUrl = Url("${BASE_URL}person/1/movie_credits?$API_KEY"),
+            expectedUrl = Url("${TMDB_BASE_URL}person/1/movie_credits?$TMDB_API_KEY"),
             response = Json.encodeToJsonElement(moviesResponse).toString(),
         )
 

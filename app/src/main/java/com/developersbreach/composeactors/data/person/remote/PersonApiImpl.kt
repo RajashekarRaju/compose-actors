@@ -2,6 +2,8 @@ package com.developersbreach.composeactors.data.person.remote
 
 import arrow.core.Either
 import com.developersbreach.composeactors.core.network.BaseUrlProvider
+import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_API_KEY
+import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_BASE_URL
 import com.developersbreach.composeactors.core.network.HttpRequestHandler
 import com.developersbreach.composeactors.core.network.PagedResponse
 import com.developersbreach.composeactors.data.person.model.Person
@@ -16,35 +18,34 @@ class PersonApiImpl @Inject constructor(
     private val requestHandler: HttpRequestHandler,
 ) : PersonApi, BaseUrlProvider() {
 
-    // person/popular?api_key=API_KEY
     override suspend fun getPopularPersons(): Either<Throwable, PagedResponse<Person>> {
         return requestHandler.getPagedResponse(
-            URL("${BASE_URL}person/popular?$API_KEY"),
+            URL("${TMDB_BASE_URL}person/popular?$TMDB_API_KEY"),
         )
     }
 
-    // person/3233?api_key=API_KEY
+    // person/3233?api_key=TMDB_API_KEY
     override suspend fun getTrendingPersons(): Either<Throwable, PagedResponse<Person>> {
         return requestHandler.getPagedResponse(
-            URL("${BASE_URL}trending/person/week?$API_KEY"),
+            URL("${TMDB_BASE_URL}trending/person/week?$TMDB_API_KEY"),
         )
     }
 
-    // person/3233?api_key=API_KEY
+    // person/3233?api_key=TMDB_API_KEY
     override suspend fun getPersonDetails(
         personId: Int,
     ): Either<Throwable, PersonDetail> {
         return requestHandler.getResponse(
-            URL("${BASE_URL}person/$personId?$API_KEY"),
+            URL("${TMDB_BASE_URL}person/$personId?$TMDB_API_KEY"),
         )
     }
 
-    // person/3233/movie_credits?api_key=API_KEY
+    // person/3233/movie_credits?api_key=TMDB_API_KEY
     override suspend fun getCastDetails(
         personId: Int,
     ): Either<Throwable, MoviesResponse> {
         return requestHandler.getResponse<MoviesResponse>(
-            URL("${BASE_URL}person/$personId/movie_credits?$API_KEY"),
+            URL("${TMDB_BASE_URL}person/$personId/movie_credits?$TMDB_API_KEY"),
         )
     }
 }

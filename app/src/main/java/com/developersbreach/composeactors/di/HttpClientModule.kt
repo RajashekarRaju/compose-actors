@@ -18,7 +18,6 @@ import io.ktor.serialization.kotlinx.KotlinxSerializationConverter
 import io.ktor.serialization.kotlinx.json.json
 import javax.inject.Singleton
 import kotlinx.serialization.json.Json
-import timber.log.Timber
 
 @Module
 @InstallIn(SingletonComponent::class)

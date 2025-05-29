@@ -2,6 +2,8 @@ package com.developersbreach.composeactors.data.search.remote
 
 import arrow.core.Either
 import com.developersbreach.composeactors.core.network.BaseUrlProvider
+import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_API_KEY
+import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_BASE_URL
 import com.developersbreach.composeactors.core.network.HttpRequestHandler
 import com.developersbreach.composeactors.core.network.PagedResponse
 import com.developersbreach.composeactors.data.person.model.Person
@@ -15,21 +17,21 @@ class SearchApiImpl @Inject constructor(
     private val requestHandler: HttpRequestHandler,
 ) : SearchApi, BaseUrlProvider() {
 
-    // search/person?api_key=API_KEY&query=$pacino
+    // search/person?api_key=TMDB_API_KEY&query=$pacino
     override suspend fun getSearchableActorsData(
         query: String,
     ): Either<Throwable, PagedResponse<Person>> {
         return requestHandler.getPagedResponse<Person>(
-            URL("${BASE_URL}search/person?${API_KEY}&query=${query.toEncodedQuery()}"),
+            URL("${TMDB_BASE_URL}search/person?${TMDB_API_KEY}&query=${query.toEncodedQuery()}"),
         )
     }
 
-    // search/movie?api_key=API_KEY&query=$thor
+    // search/movie?api_key=TMDB_API_KEY&query=$thor
     override suspend fun getSearchableMoviesData(
         query: String,
     ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
-            URL("${BASE_URL}search/movie?${API_KEY}&query=${query.toEncodedQuery()}"),
+            URL("${TMDB_BASE_URL}search/movie?${TMDB_API_KEY}&query=${query.toEncodedQuery()}"),
         )
     }
 }
