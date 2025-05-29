@@ -14,8 +14,8 @@ open class BaseUrlProvider {
         }
     }
 
-    companion object {
-        const val BASE_URL = "https://api.themoviedb.org/3/"
-        const val API_KEY = "api_key=${TmdbApiKey.TMDB_API_KEY}"
+    object TmdbConfig {
+        const val TMDB_BASE_URL = "https://api.themoviedb.org/3/"
+        const val TMDB_API_KEY = "api_key=${TmdbApiKey.TMDB_API_KEY}"
     }
 }

@@ -2,12 +2,15 @@ package com.developersbreach.composeactors.data.auth
 
 import android.app.Activity
 import arrow.core.Either
+import com.amplifyframework.auth.AWSCognitoUserPoolTokens
 import com.amplifyframework.auth.AuthException
 import com.amplifyframework.auth.AuthProvider
 import com.amplifyframework.auth.AuthUserAttribute
 import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.auth.cognito.AWSCognitoAuthSession
 import com.amplifyframework.auth.cognito.result.AWSCognitoAuthSignOutResult
+import com.amplifyframework.auth.options.AuthFetchSessionOptions
+import com.amplifyframework.auth.result.AuthSessionResult
 import com.amplifyframework.auth.result.AuthSignInResult
 import com.amplifyframework.kotlin.core.Amplify
 import com.developersbreach.composeactors.core.database.dao.SessionsDao
@@ -106,12 +109,11 @@ class AuthenticationServiceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAccessToken(): Either<Throwable, String> {
+    override suspend fun getTokens(): Either<Throwable, AWSCognitoUserPoolTokens> {
         return try {
-            val accessToken = (Amplify.Auth.fetchAuthSession() as AWSCognitoAuthSession).accessToken
-            Timber.i("accessToken: $accessToken")
-            if (accessToken != null) {
-                Either.Right(accessToken)
+            val tokens = (Amplify.Auth.fetchAuthSession() as AWSCognitoAuthSession).tokensResult.value
+            if (tokens != null) {
+                Either.Right(tokens)
             } else {
                 Either.Left(
                     AuthException(
@@ -122,6 +124,40 @@ class AuthenticationServiceImpl @Inject constructor(
             }
         } catch (e: AuthException) {
             Timber.e("Failed to fetch session", e)
+            Either.Left(e)
+        }
+    }
+
+    override suspend fun refreshSession(): Either<Throwable, AWSCognitoUserPoolTokens> {
+        return try {
+            val options = AuthFetchSessionOptions.builder()
+                .forceRefresh(true)
+                .build()
+
+            val session = Amplify.Auth.fetchAuthSession(options) as AWSCognitoAuthSession
+            val tokensResult = session.userPoolTokensResult
+            when (tokensResult.type) {
+                AuthSessionResult.Type.SUCCESS -> {
+                    val tokens = tokensResult.value
+                    when {
+                        tokens != null -> Either.Right(tokens)
+                        else -> Either.Left(
+                            AuthException(
+                                "Cognito session returned no tokens",
+                                "Expected access/refresh tokens but got null",
+                            ),
+                        )
+                    }
+                }
+
+                AuthSessionResult.Type.FAILURE -> Either.Left(
+                    tokensResult.error ?: AuthException(
+                        message = "Unknown token error ${tokensResult.error}",
+                        recoverySuggestion = tokensResult.error?.recoverySuggestion ?: "Unknown recovery suggestion",
+                    ),
+                )
+            }
+        } catch (e: Exception) {
             Either.Left(e)
         }
     }
