@@ -2,6 +2,7 @@ package com.developersbreach.composeactors.data.auth
 
 import android.app.Activity
 import arrow.core.Either
+import com.amplifyframework.auth.AWSCognitoUserPoolTokens
 
 interface AuthenticationService {
     suspend fun signIn(
@@ -17,7 +18,9 @@ interface AuthenticationService {
 
     suspend fun isUserSignedIn(): Either<Throwable, Boolean>
 
-    suspend fun getAccessToken(): Either<Throwable, String>
+    suspend fun getTokens(): Either<Throwable, AWSCognitoUserPoolTokens>
+
+    suspend fun refreshSession(): Either<Throwable, AWSCognitoUserPoolTokens>
 
     suspend fun getCurrentUser(): Either<Throwable, AuthUserProfile>
 
