@@ -18,4 +18,8 @@ open class BaseUrlProvider {
         const val TMDB_BASE_URL = "https://api.themoviedb.org/3/"
         const val TMDB_API_KEY = "api_key=${TmdbApiKey.TMDB_API_KEY}"
     }
+
+    object ComposeActorsConfig {
+        const val BASE_URL = "https://compose-actors-backend.onrender.com"
+    }
 }
