@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.screens.movieDetail
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -22,7 +21,6 @@ import com.developersbreach.composeactors.ui.screens.movieDetail.composables.Mov
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.MovieGenre
 import kotlinx.coroutines.Job
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieDetailsContent(
     modifier: Modifier = Modifier,

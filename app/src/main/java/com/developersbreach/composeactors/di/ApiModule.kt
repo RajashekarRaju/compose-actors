@@ -19,6 +19,10 @@ import com.developersbreach.composeactors.data.trending.remote.TrendingApi
 import com.developersbreach.composeactors.data.trending.remote.TrendingApiImpl
 import com.developersbreach.composeactors.data.trending.repository.TrendingRepository
 import com.developersbreach.composeactors.data.trending.repository.TrendingRepositoryImpl
+import com.developersbreach.composeactors.data.watchlist.remote.WatchlistApi
+import com.developersbreach.composeactors.data.watchlist.remote.WatchlistApiImpl
+import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
+import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,6 +55,22 @@ object ApiModule {
         requestHandler: HttpRequestHandler,
     ): SearchApi {
         return SearchApiImpl(requestHandler)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWatchlistApiImpl(
+        requestHandler: HttpRequestHandler,
+    ): WatchlistApi {
+        return WatchlistApiImpl(requestHandler)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWatchlistRepository(
+        watchlistApi: WatchlistApi,
+    ): WatchlistRepository {
+        return WatchlistRepositoryImpl(watchlistApi)
     }
 
     @Provides

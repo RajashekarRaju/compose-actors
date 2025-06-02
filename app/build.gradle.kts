@@ -24,7 +24,7 @@ android {
     defaultConfig {
         applicationId = "com.developersbreach.composeactors"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 3
         versionName = "0.3.0"
 
@@ -131,6 +131,7 @@ dependencies {
 
     // Room
     implementation(libs.androidx.room.room.runtime)
+    implementation(libs.androidx.room.room.paging)
     implementation(libs.androidx.room.room.ktx)
     implementation(libs.com.google.firebase.analytics)
     implementation(libs.com.google.firebase.crashlytics)

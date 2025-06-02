@@ -50,3 +50,12 @@
 
 # @Serializable and @Polymorphic are used at runtime for polymorphic serialization.
 -keepattributes RuntimeVisibleAnnotations,AnnotationDefault
+
+# Keep the enum class structure.
+-keep,allowobfuscation enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+# No enum constants get removed at all.
+-keep enum * { *; }

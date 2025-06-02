@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.screens.modalSheets
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -39,7 +38,6 @@ import com.developersbreach.designsystem.components.CaTextH6
  * Complete modal sheet content for showing actor details instead of navigating to
  * ActorDetails screen directly.
  */
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SheetContentActorDetails(
     actor: PersonDetail?,

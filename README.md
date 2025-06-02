@@ -12,12 +12,31 @@ Access the latest APK for Compose Actors from the link below.
 - [x] Move material design components and dependencies to separate design-system module
 - [x] Extend Konsist tests for all design system component usages.
 - [x] Introduce common preview annotations for composables.
+- [x] Integrate Compose preview screenshot testing, extend tests for all screens.
+- [x] Configure Ktlint - integration for code formatting and linting automation.
+- [x] Configure ktor mock engine and client provider for API usage and tests
+- [x] Migrate app navigation graph to type‑safe DSL to simplify navigation structure
+- [x] Integrate amazon Amplify service for authentication support.
+- [ ] Allow people to create accounts and self sign-up, implement sign-up screen.
+- [x] Allow people fo user app as a Guest, skip login + guest flow.
+- [x] Allow authenticated users to mange authentication with profile screen.
+- [x] Integrate with compose actors backend to manage authenticated users data/watchlist.
+- [x] Target newest sdk version, Upgrade to kotlin 2.1.21, latest compose-bom, fix deprecations.
+- [ ] Authenticated users can create movie watchlist to compose actors backend api.
+- [ ] Authenticated users can create people watchlist to compose actors backend api.
+
+## Current Roadmap v0.5.0
+
 - [ ] Add new feature seasons or series information to app.
 - [ ] Include seasons in home tabs navigation.
 - [ ] Allow adding seasons to favorites.
 - [ ] Move favorites section from home tab to new place (Restructure all screen flows).
 - [ ] Collapsable TopBars, BottomBars, Scroll effects, new animations.
 - [ ] Write tests for app navigation for all composable destinations.
+- [ ] Migrate to Navigation3
+- [ ] Migrate from Material2 -> Material3
+- [ ] Allow users to tap movie’s streaming option & open the corresponding app (e.g - Netflix).
+- [ ] Enable in-app playback of movie trailers so users can watch previews”
 
 ## V3 Previews
 
@@ -65,6 +84,7 @@ Access the latest APK for Compose Actors from the link below.
 ## :dango: App Overview  [Compose Blog](https://developersbreach.com/compose/)
 
 Android app built with `Jetpack Compose` shows actors information fetched from Tmdb Api.
+Supports users to manage your watchlist with own [Backend](https://github.com/RajashekarRaju/compose-actors-backend).
 You may install and try to understand the code better, but make sure you provide your own Tmdb api
 key for data to show up in directory `/utils/ApiKey.kt`.
 
