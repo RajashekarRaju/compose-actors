@@ -211,11 +211,11 @@ class AuthenticationServiceImpl @Inject constructor(
         }
     }
 
-    override suspend fun isGuestUser(): Either<Throwable, Boolean> {
+    override suspend fun isGuestUser(): Boolean {
         return try {
-            Either.Right(sessionsDao.isGuest())
+            sessionsDao.isGuest()
         } catch (e: Exception) {
-            Either.Left(e)
+            true
         }
     }
 

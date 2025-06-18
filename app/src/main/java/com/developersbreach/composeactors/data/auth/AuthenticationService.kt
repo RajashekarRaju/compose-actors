@@ -30,5 +30,5 @@ interface AuthenticationService {
 
     suspend fun skipLogin(): Either<Throwable, Unit>
 
-    suspend fun isGuestUser(): Either<Throwable, Boolean>
+    suspend fun isGuestUser(): Boolean
 }

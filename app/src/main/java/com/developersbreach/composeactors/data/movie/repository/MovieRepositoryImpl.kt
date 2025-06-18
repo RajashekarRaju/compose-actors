@@ -1,9 +1,7 @@
 package com.developersbreach.composeactors.data.movie.repository
 
-import androidx.lifecycle.LiveData
 import arrow.core.Either
 import com.developersbreach.composeactors.core.network.PagedResponse
-import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
 import com.developersbreach.composeactors.data.movie.model.Cast
 import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.composeactors.data.movie.model.Movie
@@ -18,7 +16,6 @@ import kotlinx.coroutines.withContext
 @Singleton
 class MovieRepositoryImpl @Inject constructor(
     private val movieApi: MovieApi,
-    private val databaseDataSource: DatabaseDataSource,
 ) : MovieRepository {
 
     override suspend fun getNowPlayingMovies(
@@ -75,21 +72,5 @@ class MovieRepositoryImpl @Inject constructor(
             val countryCode = Locale.getDefault().country
             it.results[countryCode]?.flatrate ?: emptyList()
         }
-    }
-
-    override fun getAllMoviesFromWatchlist(): LiveData<List<Movie>> {
-        return databaseDataSource.getAllMoviesFromWatchlist()
-    }
-
-    override fun isMovieInWatchlist(movieId: Int): LiveData<Int> {
-        return databaseDataSource.checkIfMovieIsInWatchlist(movieId)
-    }
-
-    override suspend fun addMovieToWatchlist(movie: Movie) {
-        return databaseDataSource.addMovieToWatchlist(movie)
-    }
-
-    override suspend fun deleteSelectedMovieFromWatchlist(movie: Movie) {
-        return databaseDataSource.deleteSelectedMovieFromWatchlist(movie)
     }
 }

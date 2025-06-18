@@ -4,7 +4,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import com.developersbreach.composeactors.core.network.HIGH_RES_IMAGE
 import com.developersbreach.composeactors.core.network.LOW_RES_IMAGE
-import com.developersbreach.composeactors.data.movie.model.Movie
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -18,13 +17,4 @@ data class WatchlistMovie(
 ) {
     val posterPathUrl: String = "$LOW_RES_IMAGE$posterPath"
     val bannerUrl: String = "$HIGH_RES_IMAGE$backdropPath"
-}
-
-fun WatchlistMovie.toMovie(): Movie {
-    return Movie(
-        movieId = movieId,
-        movieName = movieName,
-        posterPath = posterPathUrl,
-        backdropPath = bannerUrl,
-    )
 }

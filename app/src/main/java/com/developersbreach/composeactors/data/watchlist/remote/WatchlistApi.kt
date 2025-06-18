@@ -7,6 +7,7 @@ import com.developersbreach.composeactors.data.watchlist.model.WatchlistMovie
 interface WatchlistApi {
     suspend fun getAllMovies(
         page: Int,
+        size: Int,
     ): Either<Throwable, PagedResponse<WatchlistMovie>>
 
     suspend fun addMovieToWatchlist(

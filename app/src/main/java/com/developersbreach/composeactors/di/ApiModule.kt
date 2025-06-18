@@ -1,7 +1,9 @@
 package com.developersbreach.composeactors.di
 
 import com.developersbreach.composeactors.core.cache.CacheManager
+import com.developersbreach.composeactors.core.database.AppDatabase
 import com.developersbreach.composeactors.core.network.HttpRequestHandler
+import com.developersbreach.composeactors.data.auth.AuthenticationService
 import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
 import com.developersbreach.composeactors.data.movie.remote.MovieApi
 import com.developersbreach.composeactors.data.movie.remote.MovieApiImpl
@@ -21,6 +23,7 @@ import com.developersbreach.composeactors.data.trending.repository.TrendingRepos
 import com.developersbreach.composeactors.data.trending.repository.TrendingRepositoryImpl
 import com.developersbreach.composeactors.data.watchlist.remote.WatchlistApi
 import com.developersbreach.composeactors.data.watchlist.remote.WatchlistApiImpl
+import com.developersbreach.composeactors.data.watchlist.paging.WatchlistRemoteMediator
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepositoryImpl
 import dagger.Module
@@ -69,8 +72,16 @@ object ApiModule {
     @Singleton
     fun provideWatchlistRepository(
         watchlistApi: WatchlistApi,
+        watchlistRemoteMediator: WatchlistRemoteMediator,
+        database: AppDatabase,
+        authenticationService: AuthenticationService,
     ): WatchlistRepository {
-        return WatchlistRepositoryImpl(watchlistApi)
+        return WatchlistRepositoryImpl(
+            watchlistApi = watchlistApi,
+            watchlistRemoteMediator = watchlistRemoteMediator,
+            database = database,
+            authenticationService = authenticationService,
+        )
     }
 
     @Provides
@@ -93,9 +104,8 @@ object ApiModule {
     @Singleton
     fun provideMovieRepository(
         movieApi: MovieApi,
-        databaseDataSource: DatabaseDataSource,
     ): MovieRepository {
-        return MovieRepositoryImpl(movieApi, databaseDataSource)
+        return MovieRepositoryImpl(movieApi)
     }
 
     @Provides

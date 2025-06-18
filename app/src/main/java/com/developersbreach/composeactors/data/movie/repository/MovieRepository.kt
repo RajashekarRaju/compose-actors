@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.data.movie.repository
 
-import androidx.lifecycle.LiveData
 import arrow.core.Either
 import com.developersbreach.composeactors.core.network.PagedResponse
 import com.developersbreach.composeactors.data.movie.model.Cast
@@ -28,12 +27,4 @@ interface MovieRepository {
     suspend fun getMovieCast(movieId: Int): Either<Throwable, List<Cast>>
 
     suspend fun getMovieProviders(movieId: Int): Either<Throwable, List<Flatrate>>
-
-    fun getAllMoviesFromWatchlist(): LiveData<List<Movie>>
-
-    fun isMovieInWatchlist(movieId: Int): LiveData<Int>
-
-    suspend fun addMovieToWatchlist(movie: Movie)
-
-    suspend fun deleteSelectedMovieFromWatchlist(movie: Movie)
 }
