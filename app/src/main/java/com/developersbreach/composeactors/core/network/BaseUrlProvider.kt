@@ -20,6 +20,6 @@ open class BaseUrlProvider {
     }
 
     object ComposeActorsConfig {
-        const val BASE_URL = "https://compose-actors-backend.onrender.com"
+        const val BASE_URL = "https://compose-actors-backend-180370591913.europe-west1.run.app"
     }
 }
