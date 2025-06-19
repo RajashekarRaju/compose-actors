@@ -22,3 +22,7 @@ fun <T> UiState<T>.modifyLoadedState(
 fun <T> UiState<T>.getLoadedState(): T {
     return (this as UiState.Success).data
 }
+
+sealed class UiEvent {
+    data class ShowMessage(val message: String) : UiEvent()
+}

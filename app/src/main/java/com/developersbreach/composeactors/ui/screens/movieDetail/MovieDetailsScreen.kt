@@ -2,8 +2,8 @@ package com.developersbreach.composeactors.ui.screens.movieDetail
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -15,8 +15,6 @@ fun MovieDetailScreen(
     navigateToSelectedMovie: (Int) -> Unit,
     navigateUp: () -> Unit,
 ) {
-    val movieId by viewModel.isMovieInWatchlist.observeAsState()
-
     val selectedBottomSheet = remember {
         mutableStateOf<BottomSheetType?>(BottomSheetType.MovieDetailBottomSheet)
     }
@@ -25,15 +23,18 @@ fun MovieDetailScreen(
 
     UiStateHandler(
         uiState = viewModel.uiState,
+        isLoading = viewModel.isLoading,
     ) { data ->
+        val isMovieInWatchlist by data.isMovieInWatchlist.collectAsState(false)
         MovieDetailsUI(
             data = data,
+            uiEvent = viewModel.uiEvent,
             actorsSheetUIState = viewModel.sheetUiState,
             movieSheetUIState = viewModel.movieSheetUiState,
             navigateUp = navigateUp,
             selectedBottomSheet = selectedBottomSheet,
             selectBottomSheetCallback = selectBottomSheetCallback,
-            isMovieInWatchlist = movieId != 0 && movieId != null,
+            isMovieInWatchlist = isMovieInWatchlist,
             addMovieToWatchlist = { viewModel.addMovieToWatchlist(data.movieData) },
             removeMovieFromWatchlist = { viewModel.removeMovieFromWatchlist(data.movieData) },
             navigateToSelectedMovie = navigateToSelectedMovie,

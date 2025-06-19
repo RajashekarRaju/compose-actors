@@ -16,7 +16,9 @@ import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.rememberBottomSheetScaffoldState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,13 +35,16 @@ import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.composeactors.ui.animations.LayerRevealImage
+import com.developersbreach.composeactors.ui.components.UiEvent
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentActorDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieProviders
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaScaffold
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.SharedFlow
 
 @Composable
 fun MovieDetailsUI(
@@ -54,6 +59,7 @@ fun MovieDetailsUI(
     addMovieToWatchlist: () -> Unit,
     removeMovieFromWatchlist: () -> Unit,
     navigateToSelectedMovie: (movieId: Int) -> Unit,
+    uiEvent: SharedFlow<UiEvent>,
 ) {
     val state = remember {
         MutableTransitionState(false).apply {
@@ -83,6 +89,16 @@ fun MovieDetailsUI(
         0.dp
     }
     val animatedScaffoldSheetPeekHeight = getAnimatedSheetPeekHeight(bottomSheetPeakValue)
+    val scaffoldState = rememberScaffoldState()
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
+
+    LaunchedEffect(Unit) {
+        uiEvent.collect { event ->
+            when (event) {
+                is UiEvent.ShowMessage -> scaffoldState.snackbarHostState.showSnackbar(event.message)
+            }
+        }
+    }
 
     // Sheet content contains details for the selected movie from list.
     ModalBottomSheetLayout(
@@ -99,38 +115,43 @@ fun MovieDetailsUI(
             )
         },
     ) {
-        val scaffoldState = rememberBottomSheetScaffoldState()
-        BottomSheetScaffold(
-            modifier = Modifier.systemBarsPadding(),
+        CaScaffold(
+            modifier = Modifier,
             scaffoldState = scaffoldState,
-            sheetPeekHeight = animatedScaffoldSheetPeekHeight,
-            sheetContent = {
-                SheetContentMovieProviders(
-                    movieProvider = data.movieProviders,
-                    isInWatchlist = isMovieInWatchlist,
-                    addToWatchlist = addMovieToWatchlist,
-                    removeFromWatchlist = removeMovieFromWatchlist,
-                )
+            content = {
+                BottomSheetScaffold(
+                    modifier = Modifier.systemBarsPadding(),
+                    scaffoldState = bottomSheetScaffoldState,
+                    sheetPeekHeight = animatedScaffoldSheetPeekHeight,
+                    sheetContent = {
+                        SheetContentMovieProviders(
+                            movieProvider = data.movieProviders,
+                            isInWatchlist = isMovieInWatchlist,
+                            addToWatchlist = addMovieToWatchlist,
+                            removeFromWatchlist = removeMovieFromWatchlist,
+                        )
+                    },
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .testTag("TestTag:MovieDetailScreen"),
+                    ) {
+                        MovieDetailsUiContent(
+                            data = data,
+                            isLayerRevealAnimationEnded = isLayerRevealAnimationEnded,
+                            state = state,
+                            modifier = modifier,
+                            navigateUp = navigateUp,
+                            selectBottomSheetCallback = selectBottomSheetCallback,
+                            openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
+                            showFab = showFab,
+                            showBottomSheetScaffold = showBottomSheetScaffold,
+                        )
+                    }
+                }
             },
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .testTag("TestTag:MovieDetailScreen"),
-            ) {
-                MovieDetailsUiContent(
-                    data = data,
-                    isLayerRevealAnimationEnded = isLayerRevealAnimationEnded,
-                    state = state,
-                    modifier = modifier,
-                    navigateUp = navigateUp,
-                    selectBottomSheetCallback = selectBottomSheetCallback,
-                    openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
-                    showFab = showFab,
-                    showBottomSheetScaffold = showBottomSheetScaffold,
-                )
-            }
-        }
+        )
     }
 }
 
@@ -214,7 +235,6 @@ fun MovieDetailsUIPreview() {
                 similarMovies = fakeMovieList(),
                 recommendedMovies = fakeMovieList(),
                 movieCast = fakeMovieCastList(),
-                isFetchingDetails = false,
                 movieProviders = listOf(Flatrate("", 1, "")),
             ),
             navigateUp = {},

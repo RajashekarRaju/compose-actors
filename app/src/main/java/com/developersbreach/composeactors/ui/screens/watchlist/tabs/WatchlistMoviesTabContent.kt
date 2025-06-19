@@ -3,6 +3,7 @@ package com.developersbreach.composeactors.ui.screens.watchlist.tabs
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,8 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,6 +23,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
@@ -31,14 +38,15 @@ import com.developersbreach.composeactors.ui.screens.watchlist.NoWatchlistFoundU
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaIconButton
 import com.developersbreach.designsystem.components.CaTextSubtitle1
+import kotlinx.coroutines.flow.flowOf
 
 @Composable
 fun WatchlistMoviesTabContent(
     navigateToSelectedMovie: (Int) -> Unit,
-    watchlistMovies: List<Movie>,
+    watchlistMovies: LazyPagingItems<Movie>,
     removeMovieFromWatchlist: (Movie) -> Unit,
 ) {
-    if (watchlistMovies.isEmpty()) {
+    if (watchlistMovies.itemSnapshotList.isEmpty()) {
         NoWatchlistFoundUI()
     }
 
@@ -50,12 +58,34 @@ fun WatchlistMoviesTabContent(
         state = listState,
         modifier = Modifier.fillMaxWidth(),
     ) {
-        items(watchlistMovies) { movieItem: Movie ->
-            ItemWatchlistMovie(
-                movieItem = movieItem,
-                onClickMovie = navigateToSelectedMovie,
-                removeMovieFromWatchlist = removeMovieFromWatchlist,
-            )
+        items(
+            count = watchlistMovies.itemCount,
+            key = watchlistMovies.itemKey { it.movieId },
+            contentType = watchlistMovies.itemContentType(),
+        ) { index ->
+            watchlistMovies[index]?.let {
+                ItemWatchlistMovie(
+                    movieItem = it,
+                    onClickMovie = navigateToSelectedMovie,
+                    removeMovieFromWatchlist = removeMovieFromWatchlist,
+                )
+            }
+        }
+
+        item {
+            if (watchlistMovies.loadState.append is LoadState.Loading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center),
+                        color = MaterialTheme.colors.onBackground,
+                    )
+                }
+            }
         }
     }
 }
@@ -112,7 +142,7 @@ private fun WatchlistMoviesTabContentPreview() {
     ComposeActorsTheme {
         WatchlistMoviesTabContent(
             navigateToSelectedMovie = {},
-            watchlistMovies = fakeMovieList(),
+            watchlistMovies = flowOf(PagingData.from(fakeMovieList())).collectAsLazyPagingItems(),
             removeMovieFromWatchlist = {},
         )
     }
@@ -124,7 +154,7 @@ private fun WatchlistMoviesTabContentNoWatchlistPreview() {
     ComposeActorsTheme {
         WatchlistMoviesTabContent(
             navigateToSelectedMovie = {},
-            watchlistMovies = emptyList(),
+            watchlistMovies = flowOf(PagingData.from(fakeMovieList())).collectAsLazyPagingItems(),
             removeMovieFromWatchlist = {},
         )
     }

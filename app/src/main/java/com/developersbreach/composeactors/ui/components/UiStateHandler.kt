@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import timber.log.Timber
 
 @Composable
 fun <T> UiStateHandler(
@@ -37,6 +38,7 @@ fun <T> UiStateHandler(
             is UiState.Error -> {
                 if (!shouldDismissErrorDialog.value) {
                     val errorDetails = uiState.throwable
+                    Timber.e(errorDetails)
                     ShowAlertDialog(
                         onButtonClick = { shouldDismissErrorDialog.value = true },
                         modifier = Modifier,

@@ -3,26 +3,50 @@ package com.developersbreach.composeactors.ui.screens.watchlist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.person.model.WatchlistPerson
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.developersbreach.composeactors.data.movie.model.Movie
-import com.developersbreach.composeactors.data.movie.repository.MovieRepository
+import com.developersbreach.composeactors.data.person.model.WatchlistPerson
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
+import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
+import com.developersbreach.composeactors.ui.components.UiEvent
+import com.developersbreach.composeactors.ui.components.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class WatchlistViewModel @Inject constructor(
-    private val movieRepository: MovieRepository,
     private val personRepository: PersonRepository,
+    private val watchlistRepository: WatchlistRepository,
 ) : ViewModel() {
 
-    val watchlistMovies: LiveData<List<Movie>> = movieRepository.getAllMoviesFromWatchlist()
+    val watchlistMovies: Flow<PagingData<Movie>> = flow {
+        emitAll(watchlistRepository.getAllMovies())
+    }.cachedIn(viewModelScope)
+
     val watchlistPersons: LiveData<List<WatchlistPerson>> = personRepository.getAllPersonsFromWatchlist()
 
-    fun removeMovieFromWatchlist(movie: Movie) {
+    private val _uiEvent = MutableSharedFlow<UiEvent>()
+    val uiEvent = _uiEvent.asSharedFlow()
+
+    fun removeMovieFromWatchlist(
+        movie: Movie,
+    ) {
         viewModelScope.launch {
-            movieRepository.deleteSelectedMovieFromWatchlist(movie)
+            watchlistRepository.removeMovieFromWatchlist(
+                movie = movie,
+            ).fold(
+                ifLeft = { UiState.Error(it) },
+                ifRight = {
+                    _uiEvent.emit(UiEvent.ShowMessage("Removed ${movie.movieName} from watchlist"))
+                },
+            )
         }
     }
 

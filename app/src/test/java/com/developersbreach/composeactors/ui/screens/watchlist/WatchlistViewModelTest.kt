@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.screens.watchlist
 
-import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
 import io.mockk.coVerify
@@ -16,7 +15,6 @@ import org.junit.Test
 class WatchlistViewModelTest {
 
     private lateinit var viewModel: WatchlistViewModel
-    private val movieRepository: MovieRepository = mockk(relaxed = true)
     private val personRepository: PersonRepository = mockk(relaxed = true)
     private val watchlistRepository: WatchlistRepository = mockk(relaxed = true)
 
@@ -25,7 +23,6 @@ class WatchlistViewModelTest {
         Dispatchers.setMain(UnconfinedTestDispatcher())
 
         viewModel = WatchlistViewModel(
-            movieRepository = movieRepository,
             personRepository = personRepository,
             watchlistRepository = watchlistRepository,
         )
@@ -36,7 +33,7 @@ class WatchlistViewModelTest {
         viewModel.removeMovieFromWatchlist(mockk())
 
         coVerify(exactly = 1) {
-            movieRepository.deleteSelectedMovieFromWatchlist(any())
+            watchlistRepository.removeMovieFromWatchlist(any())
         }
     }
 

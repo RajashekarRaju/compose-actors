@@ -116,7 +116,6 @@ private fun GetMovieCastPreview() {
                 similarMovies = listOf(),
                 recommendedMovies = listOf(),
                 movieCast = listOf(),
-                isFetchingDetails = false,
                 movieProviders = listOf(Flatrate("", 1, "")),
             ),
             openMovieDetailsBottomSheet = { Job() },
