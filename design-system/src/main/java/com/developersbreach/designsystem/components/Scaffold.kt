@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 fun CaScaffold(
     modifier: Modifier,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
-    topBar: @Composable () -> Unit,
+    topBar: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     snackbarHost: @Composable (SnackbarHostState) -> Unit = { SnackbarHost(it) },
     content: @Composable (PaddingValues) -> Unit

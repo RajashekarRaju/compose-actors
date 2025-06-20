@@ -5,13 +5,15 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.developersbreach.composeactors.core.database.dao.WatchlistPersonsDao
-import com.developersbreach.composeactors.core.database.dao.WatchlistMoviesDao
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesDao
 import com.developersbreach.composeactors.core.database.dao.PersonDetailsDao
 import com.developersbreach.composeactors.core.database.dao.SessionsDao
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesRemoteKeysDao
 import com.developersbreach.composeactors.core.database.entity.WatchlistPersonsEntity
-import com.developersbreach.composeactors.core.database.entity.WatchlistMoviesEntity
 import com.developersbreach.composeactors.core.database.entity.PersonDetailEntity
 import com.developersbreach.composeactors.core.database.entity.SessionEntity
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesRemoteKeysEntity
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesEntity
 
 @Database(
     entities = [
@@ -19,8 +21,9 @@ import com.developersbreach.composeactors.core.database.entity.SessionEntity
         WatchlistMoviesEntity::class,
         PersonDetailEntity::class,
         SessionEntity::class,
+        WatchlistMoviesRemoteKeysEntity::class,
     ],
-    version = 7,
+    version = 9,
     exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -28,6 +31,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val personDetailsDao: PersonDetailsDao
     abstract val watchlistMoviesDao: WatchlistMoviesDao
     abstract val sessionsDao: SessionsDao
+    abstract val watchlistMoviesRemoteKeysDao: WatchlistMoviesRemoteKeysDao
 
     companion object {
 
@@ -36,6 +40,22 @@ abstract class AppDatabase : RoomDatabase() {
 
         const val OLD_PERSONS_TABLE = "favorite_persons_table"
         const val NEW_PERSONS_TABLE = "watchlist_persons_table"
+
+        val MIGRATION_7_8 = object : Migration(7, 8) {
+            override fun migrate(
+                db: SupportSQLiteDatabase,
+            ) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS `watchlist_movie_remote_keys_table` (
+                        `movieId` INTEGER NOT NULL PRIMARY KEY,
+                        `prevKey`     INTEGER,
+                        `nextKey`     INTEGER
+                    )
+                    """.trimIndent(),
+                )
+            }
+        }
 
         val MIGRATION_6_7 = object : Migration(6, 7) {
             override fun migrate(

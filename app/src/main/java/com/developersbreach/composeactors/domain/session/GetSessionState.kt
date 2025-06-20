@@ -12,15 +12,10 @@ class GetSessionState @Inject constructor(
     private val authenticationService: AuthenticationService,
 ) {
     suspend operator fun invoke(): Either<Throwable, SessionState> {
-        return authenticationService.isGuestUser().fold(
-            ifLeft = { it.left() },
-            ifRight = { isGuest ->
-                when {
-                    isGuest -> Either.Right(SessionState.Guest)
-                    else -> getSessionState()
-                }
-            },
-        )
+        return when {
+            authenticationService.isGuestUser() -> Either.Right(SessionState.Guest)
+            else -> getSessionState()
+        }
     }
 
     private suspend fun getSessionState(): Either<Throwable, SessionState> {

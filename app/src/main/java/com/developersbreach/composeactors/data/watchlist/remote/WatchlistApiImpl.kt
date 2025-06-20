@@ -17,9 +17,10 @@ class WatchlistApiImpl @Inject constructor(
 
     override suspend fun getAllMovies(
         page: Int,
+        size: Int,
     ): Either<Throwable, PagedResponse<WatchlistMovie>> {
         return requestHandler.getPagedResponse<WatchlistMovie>(
-            URL("${BASE_URL}/watchlist/movies?page=$page"),
+            URL("${BASE_URL}/watchlist/movies?page=$page&size=$size"),
         )
     }
 
