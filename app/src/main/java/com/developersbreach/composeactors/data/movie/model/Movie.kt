@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import com.developersbreach.composeactors.core.network.HIGH_RES_IMAGE
 import com.developersbreach.composeactors.core.network.LOW_RES_IMAGE
-import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesEntity
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMovieEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -25,8 +25,8 @@ data class MoviesResponse(
     @SerialName("cast") val movies: List<Movie>,
 )
 
-fun Movie.toWatchlistMoviesEntity(): WatchlistMoviesEntity {
-    return WatchlistMoviesEntity(
+fun Movie.toWatchlistMovieEntity(): WatchlistMovieEntity {
+    return WatchlistMovieEntity(
         movieId = movieId,
         movieTitle = movieTitle,
         moviePosterUrl = posterUrl,

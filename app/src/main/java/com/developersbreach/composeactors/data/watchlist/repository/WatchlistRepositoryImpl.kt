@@ -19,9 +19,9 @@ import com.developersbreach.composeactors.data.person.model.toWatchlistPersonEnt
 import com.developersbreach.composeactors.data.watchlist.cache.toMovie
 import com.developersbreach.composeactors.data.watchlist.cache.toWatchlistPerson
 import com.developersbreach.composeactors.data.watchlist.model.WatchlistPerson
-import com.developersbreach.composeactors.data.watchlist.paging.WatchlistPeopleRemoteMediator
 import com.developersbreach.composeactors.data.watchlist.paging.WatchlistMoviesRemoteMediator
 import com.developersbreach.composeactors.data.watchlist.paging.WatchlistMoviesRemoteMediator.Companion.WATCH_LIST_PAGE_SIZE
+import com.developersbreach.composeactors.data.watchlist.paging.WatchlistPeopleRemoteMediator
 import com.developersbreach.composeactors.data.watchlist.remote.WatchlistApi
 import javax.inject.Inject
 import javax.inject.Singleton

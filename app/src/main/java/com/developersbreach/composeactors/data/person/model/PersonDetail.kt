@@ -3,7 +3,9 @@ package com.developersbreach.composeactors.data.person.model
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import com.developersbreach.composeactors.core.database.entity.PersonDetailEntity
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistPersonEntity
 import com.developersbreach.composeactors.core.network.HIGH_RES_IMAGE
+import com.developersbreach.composeactors.data.watchlist.model.WatchlistPerson
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -24,7 +26,7 @@ data class PersonDetail(
 fun PersonDetail.toWatchlistPerson() = WatchlistPerson(
     personId = this.personId,
     personName = this.personName,
-    profileUrl = this.profileUrl,
+    personProfileUrl = this.profileUrl,
     placeOfBirth = this.placeOfBirth,
 )
 
@@ -37,5 +39,14 @@ fun PersonDetail.toEntity(): PersonDetailEntity {
         dateOfBirth = dateOfBirth,
         placeOfBirth = placeOfBirth,
         popularity = popularity,
+    )
+}
+
+fun PersonDetail.toWatchlistPersonEntity(): WatchlistPersonEntity {
+    return WatchlistPersonEntity(
+        personId = personId,
+        personName = personName,
+        personProfileUrl = profileUrl,
+        personPlaceOfBirth = null,
     )
 }

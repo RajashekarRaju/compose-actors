@@ -1,7 +1,7 @@
 package com.developersbreach.composeactors.di
 
 import com.developersbreach.composeactors.core.database.AppDatabase
-import com.developersbreach.composeactors.core.database.dao.WatchlistPersonsDao
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistPersonsDao
 import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesDao
 import com.developersbreach.composeactors.core.database.dao.PersonDetailsDao
 import com.developersbreach.composeactors.core.database.dao.SessionsDao
