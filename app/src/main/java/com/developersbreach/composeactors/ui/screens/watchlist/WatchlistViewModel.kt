@@ -44,7 +44,7 @@ class WatchlistViewModel @Inject constructor(
             ).fold(
                 ifLeft = { UiState.Error(it) },
                 ifRight = {
-                    _uiEvent.emit(UiEvent.ShowMessage("Removed ${movie.movieName} from watchlist"))
+                    _uiEvent.emit(UiEvent.ShowMessage("Removed ${movie.movieTitle} from watchlist"))
                 },
             )
         }

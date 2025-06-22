@@ -104,8 +104,8 @@ private fun UpcomingMovies(
             key = { it.movieId },
         ) { movieItem ->
             LoadNetworkImage(
-                imageUrl = movieItem.posterPathUrl,
-                contentDescription = movieItem.movieName,
+                imageUrl = movieItem.posterUrl,
+                contentDescription = movieItem.movieTitle,
                 shape = MaterialTheme.shapes.large,
                 showAnimProgress = false,
                 modifier = modifier
@@ -124,7 +124,7 @@ private fun LazyGridScope.nowPlayingMovies(
 ) {
     itemsPaging(listItems) { movie ->
         LoadNetworkImage(
-            imageUrl = movie?.posterPathUrl,
+            imageUrl = movie?.posterUrl,
             contentDescription = stringResource(R.string.cd_movie_poster),
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier

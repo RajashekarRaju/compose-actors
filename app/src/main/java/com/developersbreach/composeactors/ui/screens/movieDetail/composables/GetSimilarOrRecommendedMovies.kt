@@ -32,7 +32,7 @@ fun GetRelatedMovies(
             key = { it.movieId },
         ) { movie ->
             LoadNetworkImage(
-                imageUrl = movie.posterPathUrl,
+                imageUrl = movie.posterUrl,
                 contentDescription = stringResource(R.string.cd_movie_poster),
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier

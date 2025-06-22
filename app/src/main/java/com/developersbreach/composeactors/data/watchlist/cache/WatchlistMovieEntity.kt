@@ -8,35 +8,35 @@ import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.watchlist.model.WatchlistMovie
 
 @Entity(tableName = "watchlist_movies_table")
-data class WatchlistMoviesEntity(
+data class WatchlistMovieEntity(
     @Stable
     @PrimaryKey
     @ColumnInfo(name = "movie_id")
     val movieId: Int,
     @ColumnInfo(name = "movie_name")
-    val movieName: String,
+    val movieTitle: String,
     @ColumnInfo(name = "movie_posterUrl")
     val moviePosterUrl: String?,
     @ColumnInfo(name = "movie_banner")
-    val movieBanner: String?,
+    val movieBackdropUrl: String?,
 )
 
-fun WatchlistMoviesEntity.toMovie(): Movie {
+fun WatchlistMovieEntity.toMovie(): Movie {
     return Movie(
         movieId = movieId,
-        movieName = movieName,
-        posterPath = moviePosterUrl,
-        backdropPath = movieBanner,
+        movieTitle = movieTitle,
+        posterPathUrl = moviePosterUrl,
+        backdropPathUrl = movieBackdropUrl,
     )
 }
 
-fun List<WatchlistMovie>.toWatchlistMoviesEntity(): List<WatchlistMoviesEntity> {
+fun List<WatchlistMovie>.toWatchlistMoviesEntity(): List<WatchlistMovieEntity> {
     return map {
-        WatchlistMoviesEntity(
+        WatchlistMovieEntity(
             movieId = it.movieId,
-            movieName = it.movieName,
-            moviePosterUrl = it.posterPathUrl,
-            movieBanner = it.bannerUrl,
+            movieTitle = it.movieTitle,
+            moviePosterUrl = it.posterUrl,
+            movieBackdropUrl = it.backdropUrl,
         )
     }
 }

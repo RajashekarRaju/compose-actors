@@ -165,7 +165,7 @@ private fun MoviePosterImage(
     selectedMovie: (Int) -> Unit,
 ) {
     LoadNetworkImage(
-        imageUrl = "${movie?.poster}",
+        imageUrl = "${movie?.posterUrl}",
         contentDescription = "",
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier

@@ -12,12 +12,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Movie(
     @SerialName("id") @Stable val movieId: Int,
-    @SerialName("original_title") val movieName: String,
-    @SerialName("poster_path") private val posterPath: String?,
-    @SerialName("backdrop_path") private val backdropPath: String?,
+    @SerialName("original_title") val movieTitle: String,
+    @SerialName("poster_path") private val posterPathUrl: String?,
+    @SerialName("backdrop_path") private val backdropPathUrl: String?,
 ) {
-    val posterPathUrl: String = "$LOW_RES_IMAGE$posterPath"
-    val bannerUrl: String = "$HIGH_RES_IMAGE$backdropPath"
+    val posterUrl: String = "$LOW_RES_IMAGE$posterPathUrl"
+    val backdropUrl: String = "$HIGH_RES_IMAGE$backdropPathUrl"
 }
 
 @Serializable
@@ -28,8 +28,8 @@ data class MoviesResponse(
 fun Movie.toWatchlistMoviesEntity(): WatchlistMoviesEntity {
     return WatchlistMoviesEntity(
         movieId = movieId,
-        movieName = movieName,
-        moviePosterUrl = posterPathUrl,
-        movieBanner = bannerUrl,
+        movieTitle = movieTitle,
+        moviePosterUrl = posterUrl,
+        movieBackdropUrl = backdropUrl,
     )
 }

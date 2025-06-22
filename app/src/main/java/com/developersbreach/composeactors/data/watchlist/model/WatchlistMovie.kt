@@ -11,10 +11,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class WatchlistMovie(
     @SerialName("movieId") @Stable val movieId: Int,
-    @SerialName("movieName") val movieName: String,
-    @SerialName("moviePosterUrl") private val posterPath: String?,
-    @SerialName("movieBannerUrl") private val backdropPath: String?,
+    @SerialName("movieName") val movieTitle: String,
+    @SerialName("moviePosterUrl") private val posterPathUrl: String?,
+    @SerialName("movieBannerUrl") private val backdropPathUrl: String?,
 ) {
-    val posterPathUrl: String = "$LOW_RES_IMAGE$posterPath"
-    val bannerUrl: String = "$HIGH_RES_IMAGE$backdropPath"
+    val posterUrl: String = "$LOW_RES_IMAGE$posterPathUrl"
+    val backdropUrl: String = "$HIGH_RES_IMAGE$backdropPathUrl"
 }
