@@ -1,13 +1,11 @@
 package com.developersbreach.composeactors.ui.screens.watchlist
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.developersbreach.composeactors.data.movie.model.Movie
-import com.developersbreach.composeactors.data.person.model.WatchlistPerson
-import com.developersbreach.composeactors.data.person.repository.PersonRepository
+import com.developersbreach.composeactors.data.watchlist.model.WatchlistPerson
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
 import com.developersbreach.composeactors.ui.components.UiEvent
 import com.developersbreach.composeactors.ui.components.UiState
@@ -22,7 +20,6 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class WatchlistViewModel @Inject constructor(
-    private val personRepository: PersonRepository,
     private val watchlistRepository: WatchlistRepository,
 ) : ViewModel() {
 
@@ -30,7 +27,9 @@ class WatchlistViewModel @Inject constructor(
         emitAll(watchlistRepository.getAllMovies())
     }.cachedIn(viewModelScope)
 
-    val watchlistPersons: LiveData<List<WatchlistPerson>> = personRepository.getAllPersonsFromWatchlist()
+    val watchlistPersons: Flow<PagingData<WatchlistPerson>> = flow {
+        emitAll(watchlistRepository.getPeople())
+    }.cachedIn(viewModelScope)
 
     private val _uiEvent = MutableSharedFlow<UiEvent>()
     val uiEvent = _uiEvent.asSharedFlow()
@@ -50,9 +49,18 @@ class WatchlistViewModel @Inject constructor(
         }
     }
 
-    fun removePersonFromWatchlist(watchlistPerson: WatchlistPerson) {
+    fun removePersonFromWatchlist(
+        person: WatchlistPerson,
+    ) {
         viewModelScope.launch {
-            personRepository.deleteSelectedPersonFromWatchlist(watchlistPerson)
+            watchlistRepository.removePersonFromWatchlist(
+                personId = person.personId,
+            ).fold(
+                ifLeft = { UiState.Error(it) },
+                ifRight = {
+                    _uiEvent.emit(UiEvent.ShowMessage("Removed “${person.personName}” from watchlist"))
+                },
+            )
         }
     }
 }

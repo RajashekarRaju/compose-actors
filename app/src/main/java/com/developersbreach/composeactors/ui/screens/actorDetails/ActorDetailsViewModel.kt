@@ -3,7 +3,6 @@ package com.developersbreach.composeactors.ui.screens.actorDetails
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,12 +10,15 @@ import androidx.navigation.toRoute
 import arrow.core.raise.either
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.model.PersonDetail
-import com.developersbreach.composeactors.data.person.model.toWatchlistPerson
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
+import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
+import com.developersbreach.composeactors.ui.components.UiEvent
 import com.developersbreach.composeactors.ui.components.UiState
 import com.developersbreach.composeactors.ui.navigation.AppDestinations
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -28,6 +30,7 @@ class ActorDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val movieRepository: MovieRepository,
     private val personRepository: PersonRepository,
+    private val watchlistRepository: WatchlistRepository,
 ) : ViewModel() {
 
     private val personId: Int = savedStateHandle.toRoute<AppDestinations.ActorDetail>().personId
@@ -38,7 +41,11 @@ class ActorDetailsViewModel @Inject constructor(
     var sheetUIState by mutableStateOf(ActorDetailsSheetUIState())
         private set
 
-    val isPersonInWatchlist: LiveData<Int> = personRepository.isPersonInWatchlist(personId)
+    var isLoading by mutableStateOf(false)
+        private set
+
+    private val _uiEvent = MutableSharedFlow<UiEvent>()
+    val uiEvent = _uiEvent.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -52,6 +59,7 @@ class ActorDetailsViewModel @Inject constructor(
             ActorDetailsData(
                 castList = personRepository.getCastDetails(personId).bind(),
                 actorData = personRepository.getPersonDetails(personId).bind(),
+                isPersonInWatchlist = watchlistRepository.checkIfPersonIsInWatchlist(personId).bind(),
                 isFetchingDetails = false,
             )
         }.fold(
@@ -78,26 +86,46 @@ class ActorDetailsViewModel @Inject constructor(
     }
 
     fun addActorToWatchlist(
-        actor: PersonDetail?,
+        personDetail: PersonDetail?,
     ) {
-        if (actor == null) {
-            Timber.e("Actor was null while adding to watchlist operation.")
-            return
-        }
         viewModelScope.launch {
-            personRepository.addPersonToWatchlist(actor.toWatchlistPerson())
+            if (personDetail == null) {
+                Timber.e("Person was null while adding to watchlist operation.")
+                return@launch
+            }
+
+            isLoading = true
+            watchlistRepository.addPersonToWatchlist(
+                personDetail = personDetail,
+            ).fold(
+                ifLeft = { detailUIState = UiState.Error(it) },
+                ifRight = {
+                    _uiEvent.emit(UiEvent.ShowMessage("Added ${personDetail.personName} to watchlist"))
+                },
+            )
+            isLoading = false
         }
     }
 
-    fun removeActorFromWatchlist(actor: PersonDetail?) {
-        if (actor == null) {
-            Timber.e("Actor was null while delete operation.")
-            return
-        }
+    fun removeActorFromWatchlist(
+        personDetail: PersonDetail?,
+    ) {
         viewModelScope.launch {
-            personRepository.deleteSelectedPersonFromWatchlist(
-                actor.toWatchlistPerson(),
+            if (personDetail == null) {
+                Timber.e("Failed to remove person while adding to watchlist operation.")
+                return@launch
+            }
+
+            isLoading = true
+            watchlistRepository.removePersonFromWatchlist(
+                personId = personDetail.personId,
+            ).fold(
+                ifLeft = { detailUIState = UiState.Error(it) },
+                ifRight = {
+                    _uiEvent.emit(UiEvent.ShowMessage("Removed ${personDetail.personName} to watchlist"))
+                },
             )
+            isLoading = false
         }
     }
 }
