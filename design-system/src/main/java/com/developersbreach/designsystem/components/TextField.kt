@@ -75,7 +75,7 @@ fun CaOutlinedTextField(
     modifier: Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    leadingIcon: CaTextFieldIconConfig,
+    leadingIcon: CaTextFieldIconConfig? = null,
     trailingIcon: CaTextFieldIconConfig? = null,
     placeholderText: String? = null,
     label: String? = null,
@@ -97,14 +97,16 @@ fun CaOutlinedTextField(
         value = value,
         onValueChange = onValueChange,
         leadingIcon = {
-            CaIconButton(
-                modifier = leadingIcon.modifier,
-                iconModifier = leadingIcon.iconModifier,
-                onClick = { leadingIcon.onClick() },
-                imageVector = leadingIcon.imageVector,
-                tint = leadingIcon.tint,
-                contentDescription = leadingIcon.contentDescription
-            )
+            if (leadingIcon != null) {
+                CaIconButton(
+                    modifier = leadingIcon.modifier,
+                    iconModifier = leadingIcon.iconModifier,
+                    onClick = { leadingIcon.onClick() },
+                    imageVector = leadingIcon.imageVector,
+                    tint = leadingIcon.tint,
+                    contentDescription = leadingIcon.contentDescription,
+                )
+            }
         },
         trailingIcon = {
             if (trailingIcon != null) {
@@ -119,7 +121,12 @@ fun CaOutlinedTextField(
             }
         },
         placeholder = {
-            CaTextSubtitle1(text = placeholderText ?: "", modifier = Modifier)
+            if (placeholderText != null) {
+                CaTextSubtitle1(
+                    text = placeholderText,
+                    modifier = Modifier,
+                )
+            }
         },
         textStyle = textStyle,
         singleLine = singleLine,
