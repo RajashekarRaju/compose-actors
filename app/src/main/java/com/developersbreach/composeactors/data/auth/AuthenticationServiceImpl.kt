@@ -224,4 +224,40 @@ class AuthenticationServiceImpl @Inject constructor(
             it.key.keyString == key
         }?.value
     }
+
+    override suspend fun signUp(
+        email: String,
+        password: String,
+    ): Either<Throwable, Unit> {
+        return try {
+            val result = Amplify.Auth.signUp(
+                username = email,
+                password = password,
+                options = com.amplifyframework.auth.options.AuthSignUpOptions.builder()
+                    .userAttribute(AuthUserAttributeKey.email(), email)
+                    .build(),
+            )
+            when {
+                result.isSignUpComplete -> Either.Right(Unit)
+                else -> Either.Left(Exception("Sign up not complete: ${result.nextStep.signUpStep.name}"))
+            }
+        } catch (e: Exception) {
+            Either.Left(e)
+        }
+    }
+
+    override suspend fun confirmSignUp(
+        email: String,
+        code: String,
+    ): Either<Throwable, Unit> {
+        return try {
+            val result = Amplify.Auth.confirmSignUp(email, code)
+            when {
+                result.isSignUpComplete -> Either.Right(Unit)
+                else -> Either.Left(Exception("Confirmation not complete: ${result.nextStep.signUpStep.name}"))
+            }
+        } catch (e: Exception) {
+            Either.Left(e)
+        }
+    }
 }

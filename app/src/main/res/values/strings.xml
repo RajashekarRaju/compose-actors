@@ -51,5 +51,12 @@
     <string name="movies">Movies</string>
     <string name="search">Search</string>
     <string name="about">About</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="error_password_mismatch">Passwords do not match</string>
+    <string name="error_empty_fields">Please fill all fields</string>
+    <string name="confirmation_code">Confirmation Code</string>
+    <string name="confirm">Confirm</string>
+    <string name="sign_up_success">Sign up successful!\n\nCompleting login process now.</string>
 
 </resources>

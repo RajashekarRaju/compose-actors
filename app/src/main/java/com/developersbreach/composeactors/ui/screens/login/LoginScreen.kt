@@ -9,6 +9,7 @@ import com.developersbreach.composeactors.ui.components.UiStateHandler
 fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
     navigateToHome: () -> Unit,
+    navigateToSignUp: () -> Unit,
 ) {
     UiStateHandler(
         uiState = viewModel.uiState,
@@ -26,6 +27,7 @@ fun LoginScreen(
             onEmailChange = { viewModel.onEmailChange(it) },
             onPasswordChange = { viewModel.onPasswordChange(it) },
             onPasswordToggledVisibilityChange = { viewModel.onPasswordToggledVisibilityChange() },
+            onClickSignUp = navigateToSignUp,
             data = data,
         )
     }
