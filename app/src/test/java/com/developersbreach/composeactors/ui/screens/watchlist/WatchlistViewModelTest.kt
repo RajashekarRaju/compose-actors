@@ -1,7 +1,11 @@
 package com.developersbreach.composeactors.ui.screens.watchlist
 
+import arrow.core.Either
+import com.developersbreach.composeactors.data.watchlist.model.WatchlistPerson
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
+import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -36,10 +40,17 @@ class WatchlistViewModelTest {
 
     @Test
     fun `upon calling removePersonFromWatchlist calls deleteSelectedPersonFromWatchlist`() {
-        viewModel.removePersonFromWatchlist(mockk())
+        val person = mockk<WatchlistPerson>()
+        every { person.personId } returns 1
+
+        coEvery {
+            watchlistRepository.removePersonFromWatchlist(1)
+        } returns Either.Right(Unit)
+
+        viewModel.removePersonFromWatchlist(person)
 
         coVerify(exactly = 1) {
-            watchlistRepository.removePersonFromWatchlist(any())
+            watchlistRepository.removePersonFromWatchlist(1)
         }
     }
 }
