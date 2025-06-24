@@ -103,7 +103,7 @@ private fun ItemWatchlistMovie(
             .background(MaterialTheme.colors.surface),
     ) {
         LoadNetworkImage(
-            imageUrl = movieItem.bannerUrl,
+            imageUrl = movieItem.backdropUrl,
             contentDescription = stringResource(R.string.cd_movie_poster),
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier
@@ -119,7 +119,7 @@ private fun ItemWatchlistMovie(
                 .padding(horizontal = 16.dp, vertical = 12.dp),
         ) {
             CaTextSubtitle1(
-                text = movieItem.movieName,
+                text = movieItem.movieTitle,
                 color = MaterialTheme.colors.primary,
                 lineHeight = 20.sp,
                 modifier = Modifier.weight(0.8f),

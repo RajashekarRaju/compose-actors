@@ -21,9 +21,10 @@ import com.developersbreach.composeactors.data.trending.remote.TrendingApi
 import com.developersbreach.composeactors.data.trending.remote.TrendingApiImpl
 import com.developersbreach.composeactors.data.trending.repository.TrendingRepository
 import com.developersbreach.composeactors.data.trending.repository.TrendingRepositoryImpl
+import com.developersbreach.composeactors.data.watchlist.paging.WatchlistMoviesRemoteMediator
+import com.developersbreach.composeactors.data.watchlist.paging.WatchlistPeopleRemoteMediator
 import com.developersbreach.composeactors.data.watchlist.remote.WatchlistApi
 import com.developersbreach.composeactors.data.watchlist.remote.WatchlistApiImpl
-import com.developersbreach.composeactors.data.watchlist.paging.WatchlistRemoteMediator
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepositoryImpl
 import dagger.Module
@@ -72,13 +73,15 @@ object ApiModule {
     @Singleton
     fun provideWatchlistRepository(
         watchlistApi: WatchlistApi,
-        watchlistRemoteMediator: WatchlistRemoteMediator,
+        watchlistMoviesRemoteMediator: WatchlistMoviesRemoteMediator,
+        watchlistPeopleRemoteMediator: WatchlistPeopleRemoteMediator,
         database: AppDatabase,
         authenticationService: AuthenticationService,
     ): WatchlistRepository {
         return WatchlistRepositoryImpl(
             watchlistApi = watchlistApi,
-            watchlistRemoteMediator = watchlistRemoteMediator,
+            watchlistMoviesRemoteMediator = watchlistMoviesRemoteMediator,
+            watchlistPeopleRemoteMediator = watchlistPeopleRemoteMediator,
             database = database,
             authenticationService = authenticationService,
         )

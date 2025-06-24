@@ -31,30 +31,30 @@ fun fakeMovieList(): MutableList<Movie> {
 val upcomingMoviesList = listOf(
     Movie(
         movieId = 363736,
-        movieName = "Oppenheimer",
-        posterPath = "",
-        backdropPath = "",
+        movieTitle = "Oppenheimer",
+        posterPathUrl = "",
+        backdropPathUrl = "",
     ),
     Movie(
         movieId = 123434,
-        movieName = "Dune",
-        posterPath = "",
-        backdropPath = "",
+        movieTitle = "Dune",
+        posterPathUrl = "",
+        backdropPathUrl = "",
     ),
 )
 
 val nowPlayingMoviesList = listOf(
     Movie(
         movieId = 157336,
-        movieName = "Interstellar",
-        posterPath = "",
-        backdropPath = "",
+        movieTitle = "Interstellar",
+        posterPathUrl = "",
+        backdropPathUrl = "",
     ),
     Movie(
         movieId = 244786,
-        movieName = "Whiplash",
-        posterPath = "",
-        backdropPath = "",
+        movieTitle = "Whiplash",
+        posterPathUrl = "",
+        backdropPathUrl = "",
     ),
 )
 

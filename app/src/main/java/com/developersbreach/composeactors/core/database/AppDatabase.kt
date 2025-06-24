@@ -4,26 +4,29 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.developersbreach.composeactors.core.database.dao.WatchlistPersonsDao
-import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesDao
 import com.developersbreach.composeactors.core.database.dao.PersonDetailsDao
 import com.developersbreach.composeactors.core.database.dao.SessionsDao
-import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesRemoteKeysDao
-import com.developersbreach.composeactors.core.database.entity.WatchlistPersonsEntity
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistPersonsDao
 import com.developersbreach.composeactors.core.database.entity.PersonDetailEntity
 import com.developersbreach.composeactors.core.database.entity.SessionEntity
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistPersonEntity
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMovieEntity
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesDao
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesRemoteKeysDao
 import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesRemoteKeysEntity
-import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesEntity
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistPeopleRemoteKeysDao
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistPersonRemoteKeysEntity
 
 @Database(
     entities = [
-        WatchlistPersonsEntity::class,
-        WatchlistMoviesEntity::class,
+        WatchlistPersonEntity::class,
+        WatchlistMovieEntity::class,
         PersonDetailEntity::class,
         SessionEntity::class,
         WatchlistMoviesRemoteKeysEntity::class,
+        WatchlistPersonRemoteKeysEntity::class,
     ],
-    version = 9,
+    version = 10,
     exportSchema = true,
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -32,6 +35,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val watchlistMoviesDao: WatchlistMoviesDao
     abstract val sessionsDao: SessionsDao
     abstract val watchlistMoviesRemoteKeysDao: WatchlistMoviesRemoteKeysDao
+    abstract val watchlistPeopleRemoteKeysDao: WatchlistPeopleRemoteKeysDao
 
     companion object {
 

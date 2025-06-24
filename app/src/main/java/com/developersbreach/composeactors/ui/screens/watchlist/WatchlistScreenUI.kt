@@ -22,8 +22,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
+import com.developersbreach.composeactors.data.datasource.fake.fakeWatchlistPersonsList
 import com.developersbreach.composeactors.data.movie.model.Movie
-import com.developersbreach.composeactors.data.person.model.WatchlistPerson
+import com.developersbreach.composeactors.data.watchlist.model.WatchlistPerson
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
 import com.developersbreach.composeactors.ui.components.UiEvent
@@ -45,7 +46,7 @@ fun WatchlistScreenUI(
     navigateToSelectedMovie: (Int) -> Unit,
     removeMovieFromWatchlist: (Movie) -> Unit,
     navigateToSelectedPerson: (Int) -> Unit,
-    watchlistPersons: List<WatchlistPerson>,
+    watchlistPersons: LazyPagingItems<WatchlistPerson>,
     removeWatchlistPerson: (WatchlistPerson) -> Unit,
     uiEvent: SharedFlow<UiEvent>,
 ) {
@@ -140,7 +141,7 @@ fun WatchlistScreenUIPreview() {
             navigateToSelectedMovie = {},
             removeMovieFromWatchlist = {},
             navigateToSelectedPerson = {},
-            watchlistPersons = emptyList(),
+            watchlistPersons = flowOf(PagingData.from(fakeWatchlistPersonsList())).collectAsLazyPagingItems(),
             removeWatchlistPerson = {},
             uiEvent = MutableSharedFlow(),
         )

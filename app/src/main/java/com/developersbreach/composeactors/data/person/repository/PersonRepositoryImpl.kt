@@ -1,15 +1,13 @@
 package com.developersbreach.composeactors.data.person.repository
 
-import androidx.lifecycle.LiveData
 import arrow.core.Either
 import com.developersbreach.composeactors.core.cache.CacheKey
 import com.developersbreach.composeactors.core.cache.CacheManager
 import com.developersbreach.composeactors.core.database.entity.toPersonDetail
 import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
+import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.data.person.model.PersonDetail
-import com.developersbreach.composeactors.data.person.model.WatchlistPerson
-import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.person.remote.PersonApi
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -65,21 +63,5 @@ class PersonRepositoryImpl @Inject constructor(
         personApi.getCastDetails(personId).map {
             it.movies
         }
-    }
-
-    override fun isPersonInWatchlist(personId: Int): LiveData<Int> {
-        return databaseDataSource.checkIfPersonIsInWatchlist(personId)
-    }
-
-    override suspend fun addPersonToWatchlist(watchlistPerson: WatchlistPerson) {
-        databaseDataSource.addPersonToWatchlist(watchlistPerson)
-    }
-
-    override suspend fun deleteSelectedPersonFromWatchlist(watchlistPerson: WatchlistPerson) {
-        databaseDataSource.deleteSelectedPersonFromWatchlist(watchlistPerson)
-    }
-
-    override fun getAllPersonsFromWatchlist(): LiveData<List<WatchlistPerson>> {
-        return databaseDataSource.getAllPersonsFromWatchlist()
     }
 }

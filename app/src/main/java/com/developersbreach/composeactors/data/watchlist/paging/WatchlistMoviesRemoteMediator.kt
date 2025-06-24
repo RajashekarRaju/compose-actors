@@ -8,15 +8,15 @@ import androidx.room.withTransaction
 import com.developersbreach.composeactors.core.database.AppDatabase
 import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesRemoteKeysEntity
 import com.developersbreach.composeactors.data.watchlist.cache.toWatchlistMoviesEntity
-import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesEntity
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMovieEntity
 import com.developersbreach.composeactors.data.watchlist.remote.WatchlistApi
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class WatchlistRemoteMediator @Inject constructor(
+class WatchlistMoviesRemoteMediator @Inject constructor(
     private val watchlistApi: WatchlistApi,
     private val database: AppDatabase,
-) : RemoteMediator<Int, WatchlistMoviesEntity>() {
+) : RemoteMediator<Int, WatchlistMovieEntity>() {
 
     override suspend fun initialize(): InitializeAction {
         return if (database.watchlistMoviesDao.existsAny()) {
@@ -28,7 +28,7 @@ class WatchlistRemoteMediator @Inject constructor(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, WatchlistMoviesEntity>,
+        state: PagingState<Int, WatchlistMovieEntity>,
     ): MediatorResult {
         val page = when (loadType) {
             LoadType.REFRESH -> 0

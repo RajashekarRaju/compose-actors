@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.annotations.PreviewLightDark
@@ -16,16 +19,21 @@ import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGenerator
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
+import com.developersbreach.composeactors.ui.components.UiEvent
 import com.developersbreach.composeactors.ui.screens.actorDetails.composables.ActorBackgroundWithGradientForeground
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToWatchlistButton
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaScaffold
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 
 @Composable
 internal fun ActorDetailsUI(
     data: ActorDetailsData,
+    uiEvent: SharedFlow<UiEvent>,
     sheetUIState: ActorDetailsSheetUIState,
     navigateToSelectedMovie: (Int) -> Unit,
     isInWatchlist: Boolean,
@@ -36,10 +44,19 @@ internal fun ActorDetailsUI(
 ) {
     val showFab = rememberSaveable { mutableStateOf(true) }
     val actorProfileUrl = "${data.actorData?.profileUrl}"
+    val scaffoldState = rememberScaffoldState()
     val modalSheetState = modalBottomSheetState()
     val openActorDetailsBottomSheet = manageModalBottomSheet(
         modalSheetState = modalSheetState,
     )
+
+    LaunchedEffect(Unit) {
+        uiEvent.collect { event ->
+            when (event) {
+                is UiEvent.ShowMessage -> scaffoldState.snackbarHostState.showSnackbar(event.message)
+            }
+        }
+    }
 
     ModalBottomSheetLayout(
         sheetState = modalSheetState,
@@ -53,40 +70,42 @@ internal fun ActorDetailsUI(
             )
         },
     ) {
-        ImageBackgroundThemeGenerator(
-            imageUrl = actorProfileUrl,
+        CaScaffold(
+            modifier = Modifier,
+            scaffoldState = scaffoldState,
         ) {
-            Box {
-                // Draws gradient from image and overlays on it.
-                ActorBackgroundWithGradientForeground(imageUrl = actorProfileUrl)
+            ImageBackgroundThemeGenerator(
+                imageUrl = actorProfileUrl,
+            ) {
+                Box {
+                    // Draws gradient from image and overlays on it.
+                    ActorBackgroundWithGradientForeground(imageUrl = actorProfileUrl)
 
-                Column {
-                    // Custom top app bar
-                    ActorDetailsTopAppBar(
-                        navigateUp = navigateUp,
-                        title = "${data.actorData?.personName}",
-                    )
+                    Column {
+                        ActorDetailsTopAppBar(
+                            navigateUp = navigateUp,
+                            title = "${data.actorData?.personName}",
+                        )
 
-                    // Main details content
-                    ActorDetailsContent(
-                        navigateUp = navigateUp,
-                        data = data,
-                        openActorDetailsBottomSheet = openActorDetailsBottomSheet,
-                        getSelectedMovieDetails = getSelectedMovieDetails,
-                        showFab = showFab,
-                    )
+                        ActorDetailsContent(
+                            navigateUp = navigateUp,
+                            data = data,
+                            openActorDetailsBottomSheet = openActorDetailsBottomSheet,
+                            getSelectedMovieDetails = getSelectedMovieDetails,
+                            showFab = showFab,
+                        )
+                    }
+                    ShowProgressIndicator(isLoadingData = data.isFetchingDetails)
                 }
-                // Progress bar
-                ShowProgressIndicator(isLoadingData = data.isFetchingDetails)
             }
-        }
 
-        if (showFab.value) {
-            FloatingAddToWatchlistButton(
-                isInWatchlist = isInWatchlist,
-                addToWatchlist = addToWatchlist,
-                removeFromWatchlist = removeFromWatchlist,
-            )
+            if (showFab.value) {
+                FloatingAddToWatchlistButton(
+                    isInWatchlist = isInWatchlist,
+                    addToWatchlist = addToWatchlist,
+                    removeFromWatchlist = removeFromWatchlist,
+                )
+            }
         }
     }
 }
@@ -108,6 +127,7 @@ fun ActorDetailsUIPreview() {
             getSelectedMovieDetails = {},
             addToWatchlist = {},
             removeFromWatchlist = {},
+            uiEvent = MutableSharedFlow(),
         )
     }
 }

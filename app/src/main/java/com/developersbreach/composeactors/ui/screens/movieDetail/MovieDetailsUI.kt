@@ -180,7 +180,7 @@ fun MovieDetailsUiContent(
     showBottomSheetScaffold: MutableState<Boolean>,
 ) {
     // Background poster with layer reveal effect
-    LayerRevealImage(data.movieData?.poster, isLayerRevealAnimationEnded)
+    LayerRevealImage(data.movieData?.posterUrl, isLayerRevealAnimationEnded)
     // Fade enter animation detail screen once layer reveal completes
     if (isLayerRevealAnimationEnded.value) {
         AnimatedVisibility(

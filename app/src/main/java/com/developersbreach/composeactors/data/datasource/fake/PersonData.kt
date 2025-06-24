@@ -3,7 +3,7 @@ package com.developersbreach.composeactors.data.datasource.fake
 import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.data.movie.model.Cast
-import com.developersbreach.composeactors.data.person.model.WatchlistPerson
+import com.developersbreach.composeactors.data.watchlist.model.WatchlistPerson
 
 private val personsData = listOf(
     "John travolta",
@@ -50,12 +50,12 @@ val popularPersonLists = listOf(
     Person(
         personId = 28782,
         personName = "Monica Bellucci",
-        profilePath = "z3sLuRKP7hQVrvSTsqdLjGSldwG.jpg",
+        profilePathUrl = "z3sLuRKP7hQVrvSTsqdLjGSldwG.jpg",
     ),
     Person(
         personId = 287,
         personName = "Brad Pitt",
-        profilePath = "kU3B75TyRiCgE270EyZnHjfivoq.jpg",
+        profilePathUrl = "kU3B75TyRiCgE270EyZnHjfivoq.jpg",
     ),
 )
 
@@ -63,12 +63,12 @@ val trendingPersonLists = listOf(
     Person(
         personId = 8784,
         personName = "Daniel Craig",
-        profilePath = "rFuETZeyOAfIqBahOObF7Soq5Dh.jpg",
+        profilePathUrl = "rFuETZeyOAfIqBahOObF7Soq5Dh.jpg",
     ),
     Person(
         personId = 1892,
         personName = "Matt Damon",
-        profilePath = "7wbHIn7GziFlJLPl8Zu1XVl24EG.jpg",
+        profilePathUrl = "7wbHIn7GziFlJLPl8Zu1XVl24EG.jpg",
     ),
 )
 

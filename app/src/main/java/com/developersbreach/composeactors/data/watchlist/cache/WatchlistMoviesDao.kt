@@ -12,22 +12,22 @@ import kotlinx.coroutines.flow.Flow
 interface WatchlistMoviesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addMovieToWatchlist(watchlistMoviesEntity: WatchlistMoviesEntity)
+    suspend fun addMovieToWatchlist(watchlistMovieEntity: WatchlistMovieEntity)
 
     @Query("SELECT * FROM watchlist_movies_table ORDER BY movie_id ASC")
-    fun getAllMoviesFromWatchlist(): PagingSource<Int, WatchlistMoviesEntity>
+    fun getAllMoviesFromWatchlist(): PagingSource<Int, WatchlistMovieEntity>
 
     @Query("DELETE FROM watchlist_movies_table")
     suspend fun deleteAllMoviesInWatchlist()
 
     @Delete
-    suspend fun deleteMovieFromWatchlist(watchlistMoviesEntity: WatchlistMoviesEntity)
+    suspend fun deleteMovieFromWatchlist(watchlistMovieEntity: WatchlistMovieEntity)
 
     @Query("SELECT EXISTS(SELECT 1 FROM watchlist_movies_table WHERE movie_id = :movieId)")
     fun isMovieInWatchlist(movieId: Int): Flow<Boolean>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addMoviesToWatchlist(movies: List<WatchlistMoviesEntity>)
+    suspend fun addMoviesToWatchlist(movies: List<WatchlistMovieEntity>)
 
     @Query("SELECT EXISTS(SELECT 1 FROM watchlist_movies_table)")
     suspend fun existsAny(): Boolean

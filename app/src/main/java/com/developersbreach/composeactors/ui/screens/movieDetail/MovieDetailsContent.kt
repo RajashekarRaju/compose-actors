@@ -63,7 +63,7 @@ fun MovieDetailsContent(
             Spacer(modifier = Modifier.height(12.dp))
             MovieGenre(movieData?.genres)
             Spacer(modifier = Modifier.height(16.dp))
-            MovieDetailImageBanner(movieData?.banner)
+            MovieDetailImageBanner(movieData?.backdropUrl)
             Spacer(modifier = Modifier.height(16.dp))
             MovieDetailOverviewText(movieData?.overview)
             Spacer(modifier = Modifier.height(16.dp))

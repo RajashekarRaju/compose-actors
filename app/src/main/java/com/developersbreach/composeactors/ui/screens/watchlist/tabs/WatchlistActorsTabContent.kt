@@ -21,10 +21,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakeWatchlistPersonsList
-import com.developersbreach.composeactors.data.person.model.WatchlistPerson
+import com.developersbreach.composeactors.data.watchlist.model.WatchlistPerson
 import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGenerator
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.verticalGradientScrim
@@ -34,19 +37,20 @@ import com.developersbreach.composeactors.utils.getPlaceOfBirth
 import com.developersbreach.designsystem.components.CaIconButton
 import com.developersbreach.designsystem.components.CaTextH5
 import com.developersbreach.designsystem.components.CaTextSubtitle1
+import kotlinx.coroutines.flow.flowOf
 
 @Composable
 fun WatchlistPersonsTabContent(
     navigateToSelectedPerson: (Int) -> Unit,
-    watchlistPeople: List<WatchlistPerson>,
+    watchlistPeople: LazyPagingItems<WatchlistPerson>,
     removePersonFromWatchlist: (WatchlistPerson) -> Unit,
 ) {
-    if (watchlistPeople.isEmpty()) {
+    if (watchlistPeople.itemSnapshotList.isEmpty()) {
         NoWatchlistFoundUI()
     }
 
     val listState = rememberPagerState(
-        pageCount = { watchlistPeople.size },
+        pageCount = { watchlistPeople.itemCount },
     )
 
     VerticalPager(
@@ -56,11 +60,13 @@ fun WatchlistPersonsTabContent(
         pageSize = PageSize.Fixed(512.dp),
         contentPadding = PaddingValues(top = 24.dp, start = 24.dp, end = 24.dp, bottom = 48.dp),
     ) { currentPage ->
-        ItemWatchlistPerson(
-            item = watchlistPeople[currentPage],
-            onClickPerson = navigateToSelectedPerson,
-            removePersonFromWatchlist = removePersonFromWatchlist,
-        )
+        watchlistPeople[currentPage]?.let {
+            ItemWatchlistPerson(
+                item = it,
+                onClickPerson = navigateToSelectedPerson,
+                removePersonFromWatchlist = removePersonFromWatchlist,
+            )
+        }
     }
 }
 
@@ -125,11 +131,13 @@ private fun ItemWatchlistPerson(
                         modifier = Modifier.padding(vertical = 8.dp),
                     )
 
-                    CaTextSubtitle1(
-                        text = "${getPlaceOfBirth(item.placeOfBirth)}",
-                        color = MaterialTheme.colors.onPrimary,
-                        modifier = Modifier,
-                    )
+                    getPlaceOfBirth(item.placeOfBirth)?.let {
+                        CaTextSubtitle1(
+                            text = it,
+                            color = MaterialTheme.colors.onPrimary,
+                            modifier = Modifier,
+                        )
+                    }
                 }
 
                 CaIconButton(
@@ -151,7 +159,7 @@ private fun WatchlistPersonsTabContentPreview() {
     ComposeActorsTheme {
         WatchlistPersonsTabContent(
             navigateToSelectedPerson = {},
-            watchlistPeople = fakeWatchlistPersonsList(),
+            watchlistPeople = flowOf(PagingData.from(fakeWatchlistPersonsList())).collectAsLazyPagingItems(),
             removePersonFromWatchlist = {},
         )
     }
@@ -163,7 +171,7 @@ private fun WatchlistPersonsTabContentNoWatchlistPreview() {
     ComposeActorsTheme {
         WatchlistPersonsTabContent(
             navigateToSelectedPerson = {},
-            watchlistPeople = emptyList(),
+            watchlistPeople = flowOf(PagingData.from(fakeWatchlistPersonsList())).collectAsLazyPagingItems(),
             removePersonFromWatchlist = {},
         )
     }

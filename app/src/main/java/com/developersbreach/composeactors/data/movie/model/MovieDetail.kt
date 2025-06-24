@@ -3,7 +3,7 @@ package com.developersbreach.composeactors.data.movie.model
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import com.developersbreach.composeactors.core.network.HIGH_RES_IMAGE
-import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesEntity
+import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMovieEntity
 import com.developersbreach.composeactors.data.watchlist.model.WatchlistMovie
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -28,8 +28,8 @@ data class MovieDetail(
     @SerialName("tagline") val tagline: String,
     @SerialName("vote_average") val voteAverage: Double,
 ) {
-    val banner: String = "$HIGH_RES_IMAGE$backdropPath"
-    val poster: String = "$HIGH_RES_IMAGE$posterPath"
+    val backdropUrl: String = "$HIGH_RES_IMAGE$backdropPath"
+    val posterUrl: String = "$HIGH_RES_IMAGE$posterPath"
 }
 
 @Serializable
@@ -38,32 +38,32 @@ data class ProductionCompanies(
     @SerialName("logo_path") private val logoPath: String?,
     @SerialName("name") val name: String?,
 ) {
-    val banner: String = "$HIGH_RES_IMAGE$logoPath"
+    val logoUrl: String = "$HIGH_RES_IMAGE$logoPath"
 }
 
 fun MovieDetail.toMovie(): Movie {
     return Movie(
         movieId = movieId,
-        movieName = movieTitle,
-        posterPath = poster,
-        backdropPath = banner,
+        movieTitle = movieTitle,
+        posterPathUrl = posterUrl,
+        backdropPathUrl = backdropUrl,
     )
 }
 
 fun MovieDetail.toWatchlistMovie(): WatchlistMovie {
     return WatchlistMovie(
         movieId = movieId,
-        movieName = movieTitle,
-        posterPath = poster,
-        backdropPath = banner,
+        movieTitle = movieTitle,
+        posterPathUrl = posterUrl,
+        backdropPathUrl = backdropUrl,
     )
 }
 
-fun MovieDetail.toWatchlistMoviesEntity(): WatchlistMoviesEntity {
-    return WatchlistMoviesEntity(
+fun MovieDetail.toWatchlistMovieEntity(): WatchlistMovieEntity {
+    return WatchlistMovieEntity(
         movieId = movieId,
-        movieName = movieTitle,
-        moviePosterUrl = poster,
-        movieBanner = banner,
+        movieTitle = movieTitle,
+        moviePosterUrl = posterUrl,
+        movieBackdropUrl = backdropUrl,
     )
 }

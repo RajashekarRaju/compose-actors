@@ -1,12 +1,10 @@
 package com.developersbreach.composeactors.ui.screens.watchlist
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.developersbreach.composeactors.data.movie.model.Movie
-import com.developersbreach.composeactors.data.person.model.WatchlistPerson
+import com.developersbreach.composeactors.data.watchlist.model.WatchlistPerson
 
 @Composable
 fun WatchlistScreen(
@@ -16,7 +14,7 @@ fun WatchlistScreen(
     navigateToSelectedPerson: (Int) -> Unit,
 ) {
     val watchlistMovies = watchlistViewModel.watchlistMovies.collectAsLazyPagingItems()
-    val watchlistPersons by watchlistViewModel.watchlistPersons.observeAsState(emptyList())
+    val watchlistPersons = watchlistViewModel.watchlistPersons.collectAsLazyPagingItems()
 
     val removeMovieFromWatchlist = { movie: Movie ->
         watchlistViewModel.removeMovieFromWatchlist(movie)

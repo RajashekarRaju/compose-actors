@@ -50,7 +50,7 @@ private fun ItemSearchMovie(
     closeKeyboard: () -> Unit?,
 ) {
     CaTextH6(
-        text = movie.movieName,
+        text = movie.movieTitle,
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
