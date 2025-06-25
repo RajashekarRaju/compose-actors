@@ -31,7 +31,7 @@
 
     <string name="stream">Watch providers</string>
     <string name="no_watch_options">No watch options available!</string>
-  
+
     <!--  About screen  -->
     <string name="cd_tmdb_api_attribution_logo">Logo of TMDB Api</string>
     <string name="tmdb_api_attribution">
@@ -58,5 +58,34 @@
     <string name="confirmation_code">Confirmation Code</string>
     <string name="confirm">Confirm</string>
     <string name="sign_up_success">Sign up successful!\n\nCompleting login process now.</string>
+
+    <!-- Error messages -->
+    <string name="error_invalid_credentials">Invalid email or password</string>
+    <string name="error_session_expired">Your session has expired. Please login again</string>
+    <string name="error_account_locked">Your account has been locked. Please contact support</string>
+    <string name="error_login_failed">Login failed. Please try again</string>
+
+    <string name="error_no_connection">No internet connection. Please check your network</string>
+    <string name="error_timeout">Request timed out. Please try again</string>
+    <string name="error_server_error">Server error occurred. Please try again later</string>
+    <string name="error_http_error">HTTP error %1$d occurred</string>
+
+    <string name="error_invalid_email">Please enter a valid email address</string>
+    <string name="error_invalid_password">Password must be at least 8 characters long</string>
+    <string name="error_required_field_empty">%1$s is required</string>
+    <string name="error_invalid_input">Invalid %1$s format</string>
+
+    <string name="error_unknown">An unexpected error occurred</string>
+
+    <!-- Error titles -->
+    <string name="error_title_auth">Authentication Error</string>
+    <string name="error_title_network">Network Error</string>
+    <string name="error_title_validation">Validation Error</string>
+    <string name="error_title_unknown">Error</string>
+
+    <!-- Error actions -->
+    <string name="action_retry">Retry</string>
+    <string name="action_login_again">Login Again</string>
+    <string name="action_dismiss">Dismiss</string>
 
 </resources>
