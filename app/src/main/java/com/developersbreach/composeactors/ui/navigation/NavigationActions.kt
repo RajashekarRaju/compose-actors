@@ -38,6 +38,10 @@ class NavigationActions(
         navController.navigate(AppDestinations.Profile)
     }
 
+    val navigateToSignUp: () -> Unit = {
+        navController.navigate(AppDestinations.SignUp)
+    }
+
     val navigateUp: () -> Unit = {
         navController.navigateUp()
     }

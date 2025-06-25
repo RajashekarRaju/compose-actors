@@ -63,7 +63,7 @@ fun CaButtonOutlined(
     title: String,
     onClick: () -> Unit,
     borderStroke: BorderStroke = BorderStroke(
-        width = 1.dp,
+        width = 2.dp,
         color = MaterialTheme.colors.primary
     ),
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(
@@ -76,10 +76,11 @@ fun CaButtonOutlined(
         colors = colors,
         border = borderStroke,
         content = {
-            CaTextH6(
+            CaTextSubtitle1(
                 text = title,
-                modifier = Modifier,
-                color = MaterialTheme.colors.onPrimary
+                modifier = Modifier.padding(vertical = 2.dp),
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colors.primary
             )
         }
     )

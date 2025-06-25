@@ -26,6 +26,7 @@ import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaButtonFilled
+import com.developersbreach.designsystem.components.CaButtonOutlined
 import com.developersbreach.designsystem.components.CaButtonText
 import com.developersbreach.designsystem.components.CaImage
 import com.developersbreach.designsystem.components.CaOutlinedTextField
@@ -39,6 +40,7 @@ fun LoginScreenUI(
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onPasswordToggledVisibilityChange: () -> Unit,
+    onClickSignUp: () -> Unit,
     data: LoginData,
 ) {
     Box(
@@ -117,6 +119,12 @@ fun LoginScreenUI(
                 modifier = Modifier.fillMaxWidth(),
             )
 
+            CaButtonOutlined(
+                title = stringResource(R.string.sign_up),
+                onClick = onClickSignUp,
+                modifier = Modifier.fillMaxWidth(),
+            )
+
             CaButtonText(
                 title = stringResource(R.string.skip),
                 onClick = onClickSkip,
@@ -136,6 +144,7 @@ fun LoginScreenPreview() {
             onEmailChange = {},
             onPasswordChange = {},
             onPasswordToggledVisibilityChange = {},
+            onClickSignUp = {},
             data = LoginData(
                 email = "someone@google.com",
                 password = "bad_password",

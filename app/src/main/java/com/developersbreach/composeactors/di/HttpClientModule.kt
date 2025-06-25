@@ -18,6 +18,7 @@ import io.ktor.serialization.kotlinx.KotlinxSerializationConverter
 import io.ktor.serialization.kotlinx.json.json
 import javax.inject.Singleton
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -42,6 +43,7 @@ object HttpClientModule {
                 bearer {
                     loadTokens {
                         val tokens = authenticationService.getTokens().getOrNull() ?: return@loadTokens null
+                        Timber.e(tokens.accessToken)
                         BearerTokens(
                             accessToken = tokens.accessToken ?: return@loadTokens null,
                             refreshToken = tokens.refreshToken,

@@ -31,4 +31,14 @@ interface AuthenticationService {
     suspend fun skipLogin(): Either<Throwable, Unit>
 
     suspend fun isGuestUser(): Boolean
+
+    suspend fun signUp(
+        email: String,
+        password: String,
+    ): Either<Throwable, Unit>
+
+    suspend fun confirmSignUp(
+        email: String,
+        code: String,
+    ): Either<Throwable, Unit>
 }
