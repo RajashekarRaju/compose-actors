@@ -23,6 +23,10 @@ fun <T> UiState<T>.getLoadedState(): T {
     return (this as UiState.Success).data
 }
 
+typealias UiMessage = Any
+
 sealed class UiEvent {
-    data class ShowMessage(val message: String) : UiEvent()
+    data class ShowMessage(
+        val message: UiMessage,
+    ) : UiEvent()
 }
