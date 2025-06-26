@@ -4,10 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.developersbreach.composeactors.data.search.repository.SearchRepository
+import com.developersbreach.composeactors.ui.components.BaseViewModel
+import com.developersbreach.composeactors.ui.components.UiEvent
 import com.developersbreach.composeactors.ui.components.UiState
 import com.developersbreach.composeactors.ui.components.modifyLoadedState
 import com.developersbreach.composeactors.ui.navigation.AppDestinations
@@ -22,7 +23,7 @@ import kotlinx.coroutines.launch
 class SearchViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val searchRepository: SearchRepository,
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val searchType: SearchType = savedStateHandle.toRoute<AppDestinations.Search>().searchType
 
@@ -47,6 +48,9 @@ class SearchViewModel @Inject constructor(
                     ).fold(
                         ifLeft = { UiState.Error(it) },
                         ifRight = { result ->
+                            if (result.isEmpty()) {
+                                sendUiEvent(UiEvent.ShowMessage("No actors found for your search."))
+                            }
                             uiState.modifyLoadedState {
                                 copy(
                                     isSearchingResults = false,
@@ -62,6 +66,9 @@ class SearchViewModel @Inject constructor(
                     ).fold(
                         ifLeft = { UiState.Error(it) },
                         ifRight = { result ->
+                            if (result.isEmpty()) {
+                                sendUiEvent(UiEvent.ShowMessage("No movies found for your search."))
+                            }
                             uiState.modifyLoadedState {
                                 copy(
                                     isSearchingResults = false,

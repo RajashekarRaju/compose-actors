@@ -3,6 +3,8 @@ package com.developersbreach.composeactors.ui.screens.search
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -24,6 +26,7 @@ fun SearchScreenUI(
     searchHint: String,
     onSearchQueryChange: (query: String) -> Unit,
     data: SearchData,
+    scaffoldState: ScaffoldState,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val closeKeyboard = {
@@ -35,6 +38,7 @@ fun SearchScreenUI(
     ) {
         CaScaffold(
             modifier = Modifier,
+            scaffoldState = scaffoldState,
             topBar = {
                 SearchAppBar(
                     navigateUp = navigateUp,
@@ -87,6 +91,7 @@ fun SearchScreenUIPreview() {
                 isSearchingResults = false,
                 people = fakePersonsList(),
             ),
+            scaffoldState = rememberScaffoldState(),
         )
     }
 }

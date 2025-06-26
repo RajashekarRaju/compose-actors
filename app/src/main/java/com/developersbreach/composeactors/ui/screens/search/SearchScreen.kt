@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.search
 
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -13,8 +14,11 @@ fun SearchScreen(
     navigateToSelectedPerson: (Int) -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
 ) {
+    val scaffoldState = rememberScaffoldState()
     UiStateHandler(
         uiState = viewModel.uiState,
+        scaffoldState = scaffoldState,
+        uiEvent = viewModel.uiEvent,
     ) { searchData ->
         val navigateToSearchBySearchType = when (searchData.searchType) {
             SearchType.People -> navigateToSelectedPerson
@@ -32,6 +36,7 @@ fun SearchScreen(
             searchHint = searchHint,
             onSearchQueryChange = { query -> viewModel.performQuery(query) },
             data = searchData,
+            scaffoldState = scaffoldState,
         )
     }
 }
