@@ -15,10 +15,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberBottomSheetScaffoldState
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,7 +36,6 @@ import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.composeactors.data.movie.model.MovieDetail
 import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.ui.animations.LayerRevealImage
-import com.developersbreach.composeactors.ui.components.UiEvent
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentActorDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieProviders
@@ -46,12 +44,12 @@ import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomShee
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaScaffold
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.SharedFlow
 
 @Composable
 fun MovieDetailsUI(
     modifier: Modifier = Modifier,
-    data: MovieDetailsData,
+    data: MovieDetailsUiState,
+    scaffoldState: ScaffoldState,
     navigateUp: () -> Unit,
     selectedBottomSheet: MutableState<BottomSheetType?>,
     selectBottomSheetCallback: (BottomSheetType) -> Unit,
@@ -59,7 +57,6 @@ fun MovieDetailsUI(
     addMovieToWatchlist: () -> Unit,
     removeMovieFromWatchlist: () -> Unit,
     navigateToSelectedMovie: (movieId: Int) -> Unit,
-    uiEvent: SharedFlow<UiEvent>,
 ) {
     val state = remember {
         MutableTransitionState(false).apply {
@@ -89,16 +86,7 @@ fun MovieDetailsUI(
         0.dp
     }
     val animatedScaffoldSheetPeekHeight = getAnimatedSheetPeekHeight(bottomSheetPeakValue)
-    val scaffoldState = rememberScaffoldState()
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
-
-    LaunchedEffect(Unit) {
-        uiEvent.collect { event ->
-            when (event) {
-                is UiEvent.ShowMessage -> scaffoldState.snackbarHostState.showSnackbar(event.message)
-            }
-        }
-    }
 
     // Sheet content contains details for the selected movie from list.
     ModalBottomSheetLayout(
@@ -135,7 +123,7 @@ fun MovieDetailsUI(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .testTag("TestTag:MovieDetailScreen"),
+                            .testTag("TestTag:MovieDetailsScreen"),
                     ) {
                         MovieDetailsUiContent(
                             data = data,
@@ -169,7 +157,7 @@ private fun getAnimatedSheetPeekHeight(bottomSheetPeakValue: Dp): Dp {
 
 @Composable
 fun MovieDetailsUiContent(
-    data: MovieDetailsData,
+    data: MovieDetailsUiState,
     isLayerRevealAnimationEnded: MutableState<Boolean>,
     state: MutableTransitionState<Boolean>,
     modifier: Modifier,
@@ -230,7 +218,7 @@ private fun GetBottomSheetContent(
 fun MovieDetailsUIPreview() {
     ComposeActorsTheme {
         MovieDetailsContent(
-            data = MovieDetailsData(
+            data = MovieDetailsUiState(
                 movieData = fakeMovieDetail,
                 similarMovies = fakeMovieList(),
                 recommendedMovies = fakeMovieList(),

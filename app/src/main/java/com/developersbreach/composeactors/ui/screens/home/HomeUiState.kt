@@ -8,7 +8,7 @@ import com.developersbreach.composeactors.ui.screens.search.SearchType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
-data class HomeData(
+data class HomeUiState(
     var popularPersonList: List<Person> = emptyList(),
     var trendingPersonList: List<Person> = emptyList(),
     val isFetchingPersons: Boolean = false,

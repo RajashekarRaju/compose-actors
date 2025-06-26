@@ -6,7 +6,7 @@ import com.developersbreach.composeactors.data.movie.model.MovieDetail
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-data class ActorDetailsData(
+data class ActorDetailsUiState(
     val castList: List<Movie> = listOf(),
     val actorData: PersonDetail? = null,
     val isFetchingDetails: Boolean = false,

@@ -24,7 +24,7 @@ import kotlinx.coroutines.Job
 @Composable
 fun MovieDetailsContent(
     modifier: Modifier = Modifier,
-    data: MovieDetailsData,
+    data: MovieDetailsUiState,
     navigateUp: () -> Unit,
     showFab: MutableState<Boolean>,
     openMovieDetailsBottomSheet: () -> Job,
@@ -51,8 +51,8 @@ fun MovieDetailsContent(
         modifier = modifier.navigationBarsPadding(),
     ) {
         stickyHeader {
-            MovieDetailTopAppBar(
-                modifier = modifier.testTag("TestTag:MovieDetailTopAppBar"),
+            MovieDetailsTopAppBar(
+                modifier = modifier.testTag("TestTag:MovieDetailsTopAppBar"),
                 navigateUp = navigateUp,
                 title = movieData?.movieTitle,
                 showTopBarBackground = showTopBarBackground,

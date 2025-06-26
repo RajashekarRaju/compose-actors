@@ -13,8 +13,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,10 +47,10 @@ fun HomeScreenUI(
     navigateToProfile: () -> Unit,
     navigateToSelectedPerson: (Int) -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
-    data: HomeData,
+    data: HomeUiState,
+    scaffoldState: ScaffoldState,
     updateHomeSearchType: (SearchType) -> Unit,
 ) {
-    val scaffoldState = rememberScaffoldState()
     val modalSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         animationSpec = tween(durationMillis = 500),
@@ -60,69 +60,68 @@ fun HomeScreenUI(
     CaSurface(
         color = MaterialTheme.colors.background,
         modifier = modifier,
-        content = {
-            // TODO Replace ModalSheet with BottomSheetScaffold
-            ModalBottomSheetLayout(
-                sheetState = modalSheetState,
-                scrimColor = Color.Black.copy(alpha = 0.5f),
-                sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                sheetBackgroundColor = MaterialTheme.colors.background,
-                sheetContent = {
-                    OptionsModalSheetContent(
-                        modalSheetSheet = modalSheetState,
-                        navigateToWatchlist = navigateToWatchlist,
-                        navigateToSearch = { navigateToSearch(SearchType.Movies) },
-                        navigateToProfile = navigateToProfile,
-                        navigateToAbout = navigateToAbout,
+    ) {
+        // TODO Replace ModalSheet with BottomSheetScaffold
+        ModalBottomSheetLayout(
+            sheetState = modalSheetState,
+            scrimColor = Color.Black.copy(alpha = 0.5f),
+            sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+            sheetBackgroundColor = MaterialTheme.colors.background,
+            sheetContent = {
+                OptionsModalSheetContent(
+                    modalSheetSheet = modalSheetState,
+                    navigateToWatchlist = navigateToWatchlist,
+                    navigateToSearch = { navigateToSearch(SearchType.Movies) },
+                    navigateToProfile = navigateToProfile,
+                    navigateToAbout = navigateToAbout,
+                )
+            },
+        ) {
+            CaScaffold(
+                modifier = Modifier,
+                scaffoldState = scaffoldState,
+                topBar = {
+                    HomeTopAppBar(
+                        modifier = Modifier.testTag("TestTag:HomeTopAppBar"),
+                        navigateToSearch = navigateToSearch,
+                        searchType = data.searchType,
                     )
                 },
-            ) {
-                CaScaffold(
-                    modifier = Modifier,
-                    scaffoldState = scaffoldState,
-                    topBar = {
-                        HomeTopAppBar(
-                            modifier = Modifier.testTag("TestTag:HomeTopAppBar"),
-                            navigateToSearch = navigateToSearch,
-                            searchType = data.searchType,
+                bottomBar = {
+                    HomeBottomBar(
+                        modalSheetSheet = modalSheetState,
+                    )
+                },
+                snackbarHost = { HomeSnackbar(it) },
+                content = {
+                    Box(
+                        modifier = modifier.padding(paddingValues = it),
+                    ) {
+                        // Main content for this screen
+                        HomeScreenUI(
+                            navigateToSelectedPerson = navigateToSelectedPerson,
+                            data = data,
+                            navigateToSelectedMovie = navigateToSelectedMovie,
+                            updateSearchType = updateHomeSearchType,
                         )
-                    },
-                    bottomBar = {
-                        HomeBottomBar(
-                            modalSheetSheet = modalSheetState,
-                        )
-                    },
-                    snackbarHost = { HomeSnackbar(it) },
-                    content = {
-                        Box(
-                            modifier = modifier.padding(paddingValues = it),
-                        ) {
-                            // Main content for this screen
-                            HomeScreenUI(
-                                navigateToSelectedPerson = navigateToSelectedPerson,
-                                data = data,
-                                navigateToSelectedMovie = navigateToSelectedMovie,
-                                updateSearchType = updateHomeSearchType,
-                            )
 
-                            // Perform network check and show snackbar if offline
-                            IfOfflineShowSnackbar(scaffoldState)
+                        // Perform network check and show snackbar if offline
+                        IfOfflineShowSnackbar(scaffoldState)
 
-                            // If Api key is missing, show a SnackBar.
-                            ApiKeyMissingShowSnackbar(scaffoldState)
-                        }
-                    },
-                )
-            }
-        },
-    )
+                        // If Api key is missing, show a SnackBar.
+                        ApiKeyMissingShowSnackbar(scaffoldState)
+                    }
+                },
+            )
+        }
+    }
 }
 
 @Composable
 private fun HomeScreenUI(
     navigateToSelectedPerson: (Int) -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
-    data: HomeData,
+    data: HomeUiState,
     updateSearchType: (navigateToSearchByType: SearchType) -> Unit,
 ) {
     val popularPersonsListState = rememberLazyListState()
@@ -184,7 +183,7 @@ fun HomeScreenUIPreview() {
             navigateToSelectedPerson = {},
             navigateToSelectedMovie = {},
             updateSearchType = {},
-            data = HomeData(
+            data = HomeUiState(
                 popularPersonList = fakePersonsList(),
                 trendingPersonList = fakePersonsList(),
                 isFetchingPersons = false,

@@ -27,13 +27,9 @@ class SearchViewModel @Inject constructor(
 
     private val searchType: SearchType = savedStateHandle.toRoute<AppDestinations.Search>().searchType
 
-    var uiState: UiState<SearchData> by mutableStateOf(UiState.Success(SearchData(searchType)))
+    var uiState: UiState<SearchUiState> by mutableStateOf(UiState.Success(SearchUiState(searchType)))
         private set
 
-    /**
-     * @param searchQuery user entered query in text field.
-     * This function triggers everytime user makes query change.
-     */
     fun performQuery(
         searchQuery: String,
     ) {
@@ -49,7 +45,7 @@ class SearchViewModel @Inject constructor(
                         ifLeft = { UiState.Error(it) },
                         ifRight = { result ->
                             if (result.isEmpty()) {
-                                sendUiEvent(UiEvent.ShowMessage("No actors found for your search."))
+                                sendUiEvent(UiEvent.ShowMessage("No people found for your search"))
                             }
                             uiState.modifyLoadedState {
                                 copy(
@@ -67,7 +63,7 @@ class SearchViewModel @Inject constructor(
                         ifLeft = { UiState.Error(it) },
                         ifRight = { result ->
                             if (result.isEmpty()) {
-                                sendUiEvent(UiEvent.ShowMessage("No movies found for your search."))
+                                sendUiEvent(UiEvent.ShowMessage("No movies found for your search"))
                             }
                             uiState.modifyLoadedState {
                                 copy(

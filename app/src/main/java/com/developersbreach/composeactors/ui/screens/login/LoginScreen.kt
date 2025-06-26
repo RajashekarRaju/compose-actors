@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.login
 
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -11,8 +12,11 @@ fun LoginScreen(
     navigateToHome: () -> Unit,
     navigateToSignUp: () -> Unit,
 ) {
+    val scaffoldState = rememberScaffoldState()
     UiStateHandler(
         uiState = viewModel.uiState,
+        scaffoldState = scaffoldState,
+        uiEvent = viewModel.uiEvent,
         isLoading = viewModel.isLoading,
     ) { data ->
         LaunchedEffect(data.loginCompleted) {
@@ -29,6 +33,7 @@ fun LoginScreen(
             onPasswordToggledVisibilityChange = { viewModel.onPasswordToggledVisibilityChange() },
             onClickSignUp = navigateToSignUp,
             data = data,
+            scaffoldState = scaffoldState,
         )
     }
 }

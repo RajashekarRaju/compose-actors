@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.signup
 
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.developersbreach.composeactors.ui.components.UiState
@@ -11,8 +12,11 @@ fun SignUpScreen(
     navigateUp: () -> Unit,
     navigateToHome: () -> Unit,
 ) {
+    val scaffoldState = rememberScaffoldState()
     UiStateHandler(
         uiState = viewModel.uiState,
+        scaffoldState = scaffoldState,
+        uiEvent = viewModel.uiEvent,
         isLoading = viewModel.isLoading,
     ) { data ->
         val error = when (val state = viewModel.uiState) {
@@ -37,6 +41,7 @@ fun SignUpScreen(
             onCodeChange = { viewModel.onCodeChange(it) },
             onClickConfirm = { viewModel.confirmSignUp(data.email, it) },
             data = data,
+            scaffoldState = scaffoldState,
             error = error,
         )
     }

@@ -3,9 +3,9 @@ package com.developersbreach.composeactors.ui.screens.signup
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.auth.AuthenticationService
+import com.developersbreach.composeactors.ui.components.BaseViewModel
 import com.developersbreach.composeactors.ui.components.UiState
 import com.developersbreach.composeactors.ui.components.modifyLoadedState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,12 +15,9 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val authenticationService: AuthenticationService,
-) : ViewModel() {
+) : BaseViewModel() {
 
-    var uiState: UiState<SignUpData> by mutableStateOf(UiState.Success(SignUpData()))
-        private set
-
-    var isLoading by mutableStateOf(false)
+    var uiState: UiState<SignUpUiState> by mutableStateOf(UiState.Success(SignUpUiState()))
         private set
 
     fun onEmailChange(
@@ -80,7 +77,7 @@ class SignUpViewModel @Inject constructor(
             return
         }
         viewModelScope.launch {
-            isLoading = true
+            showLoading()
             uiState = authenticationService.signUp(
                 email = email,
                 password = password,
@@ -89,7 +86,7 @@ class SignUpViewModel @Inject constructor(
                     when {
                         it.message?.contains("CONFIRM_SIGN_UP_STEP") == true -> {
                             UiState.Success(
-                                SignUpData(
+                                SignUpUiState(
                                     email = email,
                                     password = password,
                                     signUpStep = SignUpStep.AwaitingConfirmation(email, password),
@@ -102,11 +99,11 @@ class SignUpViewModel @Inject constructor(
                 },
                 ifRight = {
                     UiState.Success(
-                        SignUpData(signUpStep = SignUpStep.ConfirmationCompleted),
+                        SignUpUiState(signUpStep = SignUpStep.ConfirmationCompleted),
                     )
                 },
             )
-            isLoading = false
+            hideLoading()
         }
     }
 
@@ -119,7 +116,7 @@ class SignUpViewModel @Inject constructor(
             return
         }
         viewModelScope.launch {
-            isLoading = true
+            showLoading()
             uiState = authenticationService.confirmSignUp(
                 email = email,
                 code = code,
@@ -127,11 +124,11 @@ class SignUpViewModel @Inject constructor(
                 ifLeft = { UiState.Error(it) },
                 ifRight = {
                     UiState.Success(
-                        SignUpData(signUpStep = SignUpStep.ConfirmationCompleted),
+                        SignUpUiState(signUpStep = SignUpStep.ConfirmationCompleted),
                     )
                 },
             )
-            isLoading = false
+            hideLoading()
         }
     }
 
@@ -140,7 +137,7 @@ class SignUpViewModel @Inject constructor(
         password: String,
     ) {
         viewModelScope.launch {
-            isLoading = true
+            showLoading()
             uiState = authenticationService.signIn(
                 email = email,
                 password = password,
@@ -148,11 +145,11 @@ class SignUpViewModel @Inject constructor(
                 ifLeft = { UiState.Error(it) },
                 ifRight = {
                     UiState.Success(
-                        SignUpData(signUpStep = SignUpStep.LoginProcessCompleted),
+                        SignUpUiState(signUpStep = SignUpStep.LoginProcessCompleted),
                     )
                 },
             )
-            isLoading = false
+            hideLoading()
         }
     }
 }

@@ -19,13 +19,14 @@ fun SearchScreen(
         uiState = viewModel.uiState,
         scaffoldState = scaffoldState,
         uiEvent = viewModel.uiEvent,
-    ) { searchData ->
-        val navigateToSearchBySearchType = when (searchData.searchType) {
+        isLoading = viewModel.isLoading,
+    ) { searchUiState ->
+        val navigateToSearchBySearchType = when (searchUiState.searchType) {
             SearchType.People -> navigateToSelectedPerson
             SearchType.Movies -> navigateToSelectedMovie
         }
 
-        val searchHint = when (searchData.searchType) {
+        val searchHint = when (searchUiState.searchType) {
             SearchType.People -> stringResource(R.string.hint_search_query_actors)
             SearchType.Movies -> stringResource(R.string.hint_search_query_movies)
         }
@@ -35,7 +36,7 @@ fun SearchScreen(
             navigateToSearchBySearchType = navigateToSearchBySearchType,
             searchHint = searchHint,
             onSearchQueryChange = { query -> viewModel.performQuery(query) },
-            data = searchData,
+            data = searchUiState,
             scaffoldState = scaffoldState,
         )
     }

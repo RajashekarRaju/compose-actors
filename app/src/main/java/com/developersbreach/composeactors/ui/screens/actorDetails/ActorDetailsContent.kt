@@ -19,7 +19,7 @@ import kotlinx.coroutines.Job
 @Composable
 internal fun ActorDetailsContent(
     navigateUp: () -> Unit,
-    data: ActorDetailsData,
+    data: ActorDetailsUiState,
     openActorDetailsBottomSheet: () -> Job,
     getSelectedMovieDetails: (Int) -> Unit,
     showFab: MutableState<Boolean>,

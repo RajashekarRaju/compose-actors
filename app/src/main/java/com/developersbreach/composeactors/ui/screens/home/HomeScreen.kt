@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.home
 
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,8 +17,12 @@ fun HomeScreen(
     navigateToWatchlist: () -> Unit,
     navigateToProfile: () -> Unit,
 ) {
+    val scaffoldState = rememberScaffoldState()
     UiStateHandler(
         uiState = viewModel.uiState,
+        scaffoldState = scaffoldState,
+        uiEvent = viewModel.uiEvent,
+        isLoading = viewModel.isLoading,
     ) { data ->
         HomeScreenUI(
             modifier = Modifier,
@@ -28,6 +33,7 @@ fun HomeScreen(
             navigateToSelectedPerson = navigateToSelectedPerson,
             navigateToSelectedMovie = navigateToSelectedMovie,
             data = data,
+            scaffoldState = scaffoldState,
             updateHomeSearchType = { searchType: SearchType ->
                 viewModel.updateHomeSearchType(searchType)
             },

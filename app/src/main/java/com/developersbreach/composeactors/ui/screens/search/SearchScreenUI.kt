@@ -25,7 +25,7 @@ fun SearchScreenUI(
     navigateToSearchBySearchType: (Int) -> Unit,
     searchHint: String,
     onSearchQueryChange: (query: String) -> Unit,
-    data: SearchData,
+    data: SearchUiState,
     scaffoldState: ScaffoldState,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -86,7 +86,7 @@ fun SearchScreenUIPreview() {
             navigateToSearchBySearchType = {},
             searchHint = stringResource(R.string.hint_search_query_actors),
             onSearchQueryChange = {},
-            data = SearchData(
+            data = SearchUiState(
                 searchType = SearchType.People,
                 isSearchingResults = false,
                 people = fakePersonsList(),

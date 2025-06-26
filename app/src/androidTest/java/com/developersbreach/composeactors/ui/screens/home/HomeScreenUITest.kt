@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.home
 
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
@@ -26,7 +27,7 @@ class HomeScreenUITest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val mockHomeUIState: HomeData = HomeData(
+    private val mockHomeUIState: HomeUiState = HomeUiState(
         popularPersonList = popularPersonLists,
         trendingPersonList = trendingPersonLists,
         isFetchingPersons = false,
@@ -44,7 +45,7 @@ class HomeScreenUITest {
         navigateToAbout: () -> Unit = { },
         navigateToProfile: () -> Unit = { },
         navigateToSearchBySearchType: SearchType = SearchType.People,
-        data: HomeData = mockHomeUIState,
+        data: HomeUiState = mockHomeUIState,
     ) {
         HomeScreenUI(
             modifier = Modifier,
@@ -56,6 +57,7 @@ class HomeScreenUITest {
             data = data,
             updateHomeSearchType = updateHomeSearchType,
             navigateToProfile = navigateToProfile,
+            scaffoldState = rememberScaffoldState(),
         )
     }
 

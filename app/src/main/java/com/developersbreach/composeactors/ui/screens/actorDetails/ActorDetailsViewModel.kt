@@ -4,7 +4,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import arrow.core.raise.either
@@ -12,14 +11,13 @@ import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
+import com.developersbreach.composeactors.ui.components.BaseViewModel
 import com.developersbreach.composeactors.ui.components.UiEvent
 import com.developersbreach.composeactors.ui.components.UiState
 import com.developersbreach.composeactors.ui.components.modifyLoadedState
 import com.developersbreach.composeactors.ui.navigation.AppDestinations
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -32,18 +30,12 @@ class ActorDetailsViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
     private val personRepository: PersonRepository,
     private val watchlistRepository: WatchlistRepository,
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val personId: Int = savedStateHandle.toRoute<AppDestinations.ActorDetail>().personId
 
-    var detailUIState: UiState<ActorDetailsData> by mutableStateOf(UiState.Loading)
+    var detailUIState: UiState<ActorDetailsUiState> by mutableStateOf(UiState.Loading)
         private set
-
-    var isLoading by mutableStateOf(false)
-        private set
-
-    private val _uiEvent = MutableSharedFlow<UiEvent>()
-    val uiEvent = _uiEvent.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -52,9 +44,9 @@ class ActorDetailsViewModel @Inject constructor(
     }
 
     private suspend fun startFetchingDetails() {
-        detailUIState = UiState.Success(ActorDetailsData(isFetchingDetails = true))
+        detailUIState = UiState.Success(ActorDetailsUiState(isFetchingDetails = true))
         detailUIState = either {
-            ActorDetailsData(
+            ActorDetailsUiState(
                 castList = personRepository.getCastDetails(personId).bind(),
                 actorData = personRepository.getPersonDetails(personId).bind(),
                 isPersonInWatchlist = watchlistRepository.checkIfPersonIsInWatchlist(personId).bind(),
@@ -96,16 +88,14 @@ class ActorDetailsViewModel @Inject constructor(
                 return@launch
             }
 
-            isLoading = true
+            showLoading()
             watchlistRepository.addPersonToWatchlist(
                 personDetail = personDetail,
             ).fold(
                 ifLeft = { detailUIState = UiState.Error(it) },
-                ifRight = {
-                    _uiEvent.emit(UiEvent.ShowMessage("Added ${personDetail.personName} to watchlist"))
-                },
+                ifRight = { sendUiEvent(UiEvent.ShowMessage("Added ${personDetail.personName} to watchlist")) },
             )
-            isLoading = false
+            hideLoading()
         }
     }
 
@@ -118,16 +108,14 @@ class ActorDetailsViewModel @Inject constructor(
                 return@launch
             }
 
-            isLoading = true
+            showLoading()
             watchlistRepository.removePersonFromWatchlist(
                 personId = personDetail.personId,
             ).fold(
                 ifLeft = { detailUIState = UiState.Error(it) },
-                ifRight = {
-                    _uiEvent.emit(UiEvent.ShowMessage("Removed ${personDetail.personName} to watchlist"))
-                },
+                ifRight = { sendUiEvent(UiEvent.ShowMessage("Removed ${personDetail.personName} to watchlist")) },
             )
-            isLoading = false
+            hideLoading()
         }
     }
 }

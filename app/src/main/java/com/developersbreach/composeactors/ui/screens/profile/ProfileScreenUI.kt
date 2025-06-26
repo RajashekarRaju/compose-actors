@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +32,8 @@ fun ProfileScreenUI(
     navigateUp: () -> Unit,
     navigateToLogin: () -> Unit,
     onClickLogout: () -> Unit,
-    profileUiState: ProfileUIState,
+    profileUiState: ProfileUiState,
+    scaffoldState: ScaffoldState,
 ) {
     CaSurface(
         color = MaterialTheme.colors.background,
@@ -39,6 +42,7 @@ fun ProfileScreenUI(
         CaScaffold(
             modifier = Modifier,
             topBar = { ProfileTopAppBar(navigateUp = navigateUp) },
+            scaffoldState = scaffoldState,
         ) { paddingValues ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -54,10 +58,10 @@ fun ProfileScreenUI(
                 )
                 CaVerticalSpacer(10)
                 when (profileUiState) {
-                    ProfileUIState.NavigateToLogin -> navigateToLogin()
-                    ProfileUIState.GuestUI -> ProfileGuestUI()
-                    ProfileUIState.UnauthenticatedUI -> ProfileUnauthenticatedUI(navigateToLogin)
-                    is ProfileUIState.AuthenticatedUI -> ProfileAuthenticatedUI(profileUiState, onClickLogout)
+                    ProfileUiState.NavigateToLogin -> navigateToLogin()
+                    ProfileUiState.GuestUI -> ProfileGuestUI()
+                    ProfileUiState.UnauthenticatedUI -> ProfileUnauthenticatedUI(navigateToLogin)
+                    is ProfileUiState.AuthenticatedUI -> ProfileAuthenticatedUI(profileUiState, onClickLogout)
                 }
             }
         }
@@ -98,7 +102,7 @@ private fun ProfileUnauthenticatedUI(
 
 @Composable
 private fun ProfileAuthenticatedUI(
-    profileUiState: ProfileUIState.AuthenticatedUI,
+    profileUiState: ProfileUiState.AuthenticatedUI,
     onClickLogout: () -> Unit,
 ) {
     CaTextBody1(
@@ -125,7 +129,8 @@ fun ProfileScreenAuthenticatedPreview() {
             navigateUp = { },
             onClickLogout = { },
             navigateToLogin = { },
-            profileUiState = ProfileUIState.AuthenticatedUI("Raj"),
+            profileUiState = ProfileUiState.AuthenticatedUI("Raj"),
+            scaffoldState = rememberScaffoldState(),
         )
     }
 }
@@ -138,7 +143,8 @@ fun ProfileScreenUnauthenticatedPreview() {
             navigateUp = { },
             onClickLogout = { },
             navigateToLogin = { },
-            profileUiState = ProfileUIState.UnauthenticatedUI,
+            profileUiState = ProfileUiState.UnauthenticatedUI,
+            scaffoldState = rememberScaffoldState(),
         )
     }
 }
@@ -151,7 +157,8 @@ fun ProfileScreenGuestPreview() {
             navigateUp = { },
             onClickLogout = { },
             navigateToLogin = { },
-            profileUiState = ProfileUIState.GuestUI,
+            profileUiState = ProfileUiState.GuestUI,
+            scaffoldState = rememberScaffoldState(),
         )
     }
 }

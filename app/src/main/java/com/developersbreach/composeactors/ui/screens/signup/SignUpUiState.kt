@@ -1,6 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.signup
 
-data class SignUpData(
+data class SignUpUiState(
     val email: String = "",
     val password: String = "",
     val confirmPassword: String = "",

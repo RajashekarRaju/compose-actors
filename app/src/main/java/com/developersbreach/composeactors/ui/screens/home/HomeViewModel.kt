@@ -3,13 +3,13 @@ package com.developersbreach.composeactors.ui.screens.home
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import arrow.core.raise.either
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.domain.movie.GetPagedMovies
+import com.developersbreach.composeactors.ui.components.BaseViewModel
 import com.developersbreach.composeactors.ui.components.UiState
 import com.developersbreach.composeactors.ui.components.modifyLoadedState
 import com.developersbreach.composeactors.ui.screens.search.SearchType
@@ -27,9 +27,9 @@ class HomeViewModel @Inject constructor(
     private val personRepository: PersonRepository,
     private val movieRepository: MovieRepository,
     private val getPagedMovies: GetPagedMovies,
-) : ViewModel() {
+) : BaseViewModel() {
 
-    var uiState: UiState<HomeData> by mutableStateOf(UiState.Loading)
+    var uiState: UiState<HomeUiState> by mutableStateOf(UiState.Loading)
         private set
 
     init {
@@ -43,9 +43,9 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun startFetchingActors() {
-        uiState = UiState.Success(HomeData(isFetchingPersons = true))
+        uiState = UiState.Success(HomeUiState(isFetchingPersons = true))
         uiState = either {
-            HomeData(
+            HomeUiState(
                 popularPersonList = personRepository.getPopularPersons().bind(),
                 trendingPersonList = personRepository.getTrendingPersons().bind(),
                 isFetchingPersons = false,
