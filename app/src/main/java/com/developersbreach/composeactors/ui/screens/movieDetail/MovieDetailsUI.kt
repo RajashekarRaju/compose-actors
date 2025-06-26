@@ -34,6 +34,8 @@ import com.developersbreach.composeactors.data.datasource.fake.fakeMovieCastList
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.data.movie.model.Flatrate
+import com.developersbreach.composeactors.data.movie.model.MovieDetail
+import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.ui.animations.LayerRevealImage
 import com.developersbreach.composeactors.ui.components.UiEvent
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentActorDetails
@@ -50,8 +52,6 @@ import kotlinx.coroutines.flow.SharedFlow
 fun MovieDetailsUI(
     modifier: Modifier = Modifier,
     data: MovieDetailsData,
-    actorsSheetUIState: ActorsSheetUIState,
-    movieSheetUIState: MovieSheetUIState,
     navigateUp: () -> Unit,
     selectedBottomSheet: MutableState<BottomSheetType?>,
     selectBottomSheetCallback: (BottomSheetType) -> Unit,
@@ -109,8 +109,8 @@ fun MovieDetailsUI(
         sheetContent = {
             GetBottomSheetContent(
                 selectedBottomSheet.value,
-                actorsSheetUIState,
-                movieSheetUIState,
+                data.selectedPersonDetails,
+                data.selectedMovieDetails,
                 navigateToSelectedMovie,
             )
         },
@@ -204,21 +204,21 @@ fun MovieDetailsUiContent(
 @Composable
 private fun GetBottomSheetContent(
     bottomSheetType: BottomSheetType?,
-    sheetUiState: ActorsSheetUIState,
-    movieSheetUIState: MovieSheetUIState,
+    selectedPersonDetails: PersonDetail?,
+    selectedMovieDetails: MovieDetail?,
     navigateToSelectedMovie: (Int) -> Unit,
 ) {
     bottomSheetType?.let { type ->
         when (type) {
             BottomSheetType.MovieDetailBottomSheet -> {
                 SheetContentMovieDetails(
-                    movie = movieSheetUIState.selectedMovieDetails,
+                    movie = selectedMovieDetails,
                     navigateToSelectedMovie = navigateToSelectedMovie,
                 )
             }
             BottomSheetType.ActorDetailBottomSheet -> {
                 SheetContentActorDetails(
-                    actor = sheetUiState.selectedPersonDetails,
+                    actor = selectedPersonDetails,
                 )
             }
         }

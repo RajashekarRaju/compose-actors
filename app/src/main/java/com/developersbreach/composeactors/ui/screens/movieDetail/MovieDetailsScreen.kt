@@ -29,8 +29,6 @@ fun MovieDetailScreen(
         MovieDetailsUI(
             data = data,
             uiEvent = viewModel.uiEvent,
-            actorsSheetUIState = viewModel.sheetUiState,
-            movieSheetUIState = viewModel.movieSheetUiState,
             navigateUp = navigateUp,
             selectedBottomSheet = selectedBottomSheet,
             selectBottomSheetCallback = selectBottomSheetCallback,

@@ -11,8 +11,5 @@ data class ActorDetailsData(
     val actorData: PersonDetail? = null,
     val isFetchingDetails: Boolean = false,
     val isPersonInWatchlist: Flow<Boolean> = flow { emit(false) },
-)
-
-data class ActorDetailsSheetUIState(
     val selectedMovieDetails: MovieDetail? = null,
 )

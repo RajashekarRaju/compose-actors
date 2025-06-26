@@ -23,7 +23,7 @@ fun SearchScreenUI(
     navigateToSearchBySearchType: (Int) -> Unit,
     searchHint: String,
     onSearchQueryChange: (query: String) -> Unit,
-    data: SearchDataType,
+    data: SearchData,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val closeKeyboard = {
@@ -32,50 +32,45 @@ fun SearchScreenUI(
     CaSurface(
         color = MaterialTheme.colors.background,
         modifier = Modifier.semantics { testTag = "TestTag:SearchScreen" },
-        content = {
-            CaScaffold(
-                modifier = Modifier,
-                topBar = {
-                    SearchAppBar(
-                        navigateUp = navigateUp,
-                        onQueryChange = onSearchQueryChange,
-                        searchHint = searchHint,
-                        closeKeyboard = closeKeyboard,
-                    )
-                },
-                content = { paddingValues ->
-                    Box(
-                        modifier = Modifier.padding(paddingValues),
-                    ) {
-                        when (data) {
-                            is ActorSearch -> {
-                                // Show progress while search is happening
-                                val isLoadingData = !data.isSearchingResults && data.personList.isEmpty()
-                                ShowSearchProgress(isLoadingData)
-                                // Main content for this screen
-                                PersonSearchUI(
-                                    persons = data.personList,
-                                    navigateToSelectedPerson = navigateToSearchBySearchType,
-                                    closeKeyboard = closeKeyboard,
-                                )
-                            }
-                            is MovieSearch -> {
-                                // Show progress while search is happening
-                                val isLoadingData = !data.isSearchingResults && data.movieList.isEmpty()
-                                ShowSearchProgress(isLoadingData)
-                                // Main content for this screen
-                                MovieSearchUI(
-                                    movieList = data.movieList,
-                                    navigateToSelectedMovie = navigateToSearchBySearchType,
-                                    closeKeyboard = closeKeyboard,
-                                )
-                            }
-                        }
+    ) {
+        CaScaffold(
+            modifier = Modifier,
+            topBar = {
+                SearchAppBar(
+                    navigateUp = navigateUp,
+                    onQueryChange = onSearchQueryChange,
+                    searchHint = searchHint,
+                    closeKeyboard = closeKeyboard,
+                )
+            },
+        ) { paddingValues ->
+            Box(
+                modifier = Modifier.padding(paddingValues),
+            ) {
+                when (data.searchType) {
+                    SearchType.People -> {
+                        val isLoadingData = !data.isSearchingResults && data.people.isEmpty()
+                        ShowSearchProgress(isLoadingData)
+                        PersonSearchUI(
+                            persons = data.people,
+                            navigateToSelectedPerson = navigateToSearchBySearchType,
+                            closeKeyboard = closeKeyboard,
+                        )
                     }
-                },
-            )
-        },
-    )
+
+                    SearchType.Movies -> {
+                        val isLoadingData = !data.isSearchingResults && data.movies.isEmpty()
+                        ShowSearchProgress(isLoadingData)
+                        MovieSearchUI(
+                            movieList = data.movies,
+                            navigateToSelectedMovie = navigateToSearchBySearchType,
+                            closeKeyboard = closeKeyboard,
+                        )
+                    }
+                }
+            }
+        }
+    }
 }
 
 @PreviewLightDark
@@ -87,9 +82,10 @@ fun SearchScreenUIPreview() {
             navigateToSearchBySearchType = {},
             searchHint = stringResource(R.string.hint_search_query_actors),
             onSearchQueryChange = {},
-            data = ActorSearch(
-                personList = fakePersonsList(),
+            data = SearchData(
+                searchType = SearchType.People,
                 isSearchingResults = false,
+                people = fakePersonsList(),
             ),
         )
     }

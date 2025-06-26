@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.developersbreach.composeactors.data.search.repository.SearchRepository
 import com.developersbreach.composeactors.ui.components.UiState
+import com.developersbreach.composeactors.ui.components.modifyLoadedState
 import com.developersbreach.composeactors.ui.navigation.AppDestinations
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -23,34 +24,51 @@ class SearchViewModel @Inject constructor(
     private val searchRepository: SearchRepository,
 ) : ViewModel() {
 
-    val searchType: SearchType = savedStateHandle.toRoute<AppDestinations.Search>().searchType
+    private val searchType: SearchType = savedStateHandle.toRoute<AppDestinations.Search>().searchType
 
-    var uiState: UiState<SearchDataType> by mutableStateOf(UiState.Success(ActorSearch()))
+    var uiState: UiState<SearchData> by mutableStateOf(UiState.Success(SearchData(searchType)))
         private set
 
     /**
      * @param searchQuery user entered query in text field.
      * This function triggers everytime user makes query change.
      */
-    fun performQuery(searchQuery: String) {
+    fun performQuery(
+        searchQuery: String,
+    ) {
         viewModelScope.launch {
-            when (searchType) {
-                SearchType.Persons -> {
-                    uiState = UiState.Success(ActorSearch(isSearchingResults = true))
-                    uiState = searchRepository.getSearchableActorsData(
+            uiState = uiState.modifyLoadedState {
+                copy(isSearchingResults = true)
+            }
+            uiState = when (searchType) {
+                SearchType.People -> {
+                    searchRepository.getSearchableActorsData(
                         query = searchQuery,
                     ).fold(
                         ifLeft = { UiState.Error(it) },
-                        ifRight = { UiState.Success(ActorSearch(it, false)) },
+                        ifRight = { result ->
+                            uiState.modifyLoadedState {
+                                copy(
+                                    isSearchingResults = false,
+                                    people = result,
+                                )
+                            }
+                        },
                     )
                 }
                 SearchType.Movies -> {
-                    uiState = UiState.Success(MovieSearch(isSearchingResults = true))
-                    uiState = searchRepository.getSearchableMoviesData(
+                    searchRepository.getSearchableMoviesData(
                         query = searchQuery,
                     ).fold(
                         ifLeft = { UiState.Error(it) },
-                        ifRight = { UiState.Success(MovieSearch(it, false)) },
+                        ifRight = { result ->
+                            uiState.modifyLoadedState {
+                                copy(
+                                    isSearchingResults = false,
+                                    movies = result,
+                                )
+                            }
+                        },
                     )
                 }
             }

@@ -20,7 +20,6 @@ internal fun ActorDetailsScreen(
         ActorDetailsUI(
             data = data,
             uiEvent = viewModel.uiEvent,
-            sheetUIState = viewModel.sheetUIState,
             navigateToSelectedMovie = navigateToSelectedMovie,
             isInWatchlist = isPersonInWatchlist,
             navigateUp = navigateUp,

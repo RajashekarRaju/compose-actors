@@ -3,14 +3,9 @@ package com.developersbreach.composeactors.ui.screens.search
 import com.developersbreach.composeactors.data.person.model.Person
 import com.developersbreach.composeactors.data.movie.model.Movie
 
-sealed interface SearchDataType
-
-data class MovieSearch(
-    val movieList: List<Movie> = listOf(),
+data class SearchData(
+    val searchType: SearchType,
     val isSearchingResults: Boolean = false,
-) : SearchDataType
-
-data class ActorSearch(
-    val personList: List<Person> = listOf(),
-    val isSearchingResults: Boolean = false,
-) : SearchDataType
+    val movies: List<Movie> = listOf(),
+    val people: List<Person> = listOf(),
+)

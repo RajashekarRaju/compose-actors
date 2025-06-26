@@ -3,8 +3,6 @@ package com.developersbreach.composeactors.ui.screens.home
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
@@ -13,6 +11,7 @@ import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.domain.movie.GetPagedMovies
 import com.developersbreach.composeactors.ui.components.UiState
+import com.developersbreach.composeactors.ui.components.modifyLoadedState
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.IOException
@@ -32,12 +31,6 @@ class HomeViewModel @Inject constructor(
 
     var uiState: UiState<HomeData> by mutableStateOf(UiState.Loading)
         private set
-
-    var sheetUiState by mutableStateOf(HomeSheetUIState())
-        private set
-
-    private val _updateHomeSearchType = MutableLiveData<SearchType>()
-    val updateHomeSearchType: LiveData<SearchType> = _updateHomeSearchType
 
     init {
         viewModelScope.launch {
@@ -66,9 +59,8 @@ class HomeViewModel @Inject constructor(
     }
 
     fun updateHomeSearchType(searchType: SearchType) {
-        when (searchType) {
-            SearchType.Persons -> _updateHomeSearchType.value = SearchType.Persons
-            SearchType.Movies -> _updateHomeSearchType.value = SearchType.Movies
+        uiState = uiState.modifyLoadedState {
+            copy(searchType = searchType)
         }
     }
 }

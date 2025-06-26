@@ -15,6 +15,7 @@ import com.developersbreach.composeactors.data.person.repository.PersonRepositor
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
 import com.developersbreach.composeactors.ui.components.UiEvent
 import com.developersbreach.composeactors.ui.components.UiState
+import com.developersbreach.composeactors.ui.components.modifyLoadedState
 import com.developersbreach.composeactors.ui.navigation.AppDestinations
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -38,11 +39,6 @@ class MovieDetailViewModel @Inject constructor(
 
     var isLoading by mutableStateOf(false)
         private set
-
-    var sheetUiState by mutableStateOf(ActorsSheetUIState(selectedPersonDetails = null))
-        private set
-
-    var movieSheetUiState by mutableStateOf(MovieSheetUIState(selectedMovieDetails = null))
 
     private val _uiEvent = MutableSharedFlow<UiEvent>()
     val uiEvent = _uiEvent.asSharedFlow()
@@ -123,11 +119,15 @@ class MovieDetailViewModel @Inject constructor(
             return
         }
         viewModelScope.launch {
-            personRepository.getPersonDetails(
+            uiState = personRepository.getPersonDetails(
                 personId = personId,
             ).fold(
-                ifLeft = { uiState = UiState.Error(it) },
-                ifRight = { sheetUiState = ActorsSheetUIState(it) },
+                ifLeft = { UiState.Error(it) },
+                ifRight = {
+                    uiState.modifyLoadedState {
+                        copy(selectedPersonDetails = it)
+                    }
+                },
             )
         }
     }
@@ -140,11 +140,15 @@ class MovieDetailViewModel @Inject constructor(
             return
         }
         viewModelScope.launch {
-            movieRepository.getMovieDetails(
+            uiState = movieRepository.getMovieDetails(
                 movieId = movieId,
             ).fold(
-                ifLeft = { uiState = UiState.Error(it) },
-                ifRight = { movieSheetUiState = MovieSheetUIState(selectedMovieDetails = it) },
+                ifLeft = { UiState.Error(it) },
+                ifRight = {
+                    uiState.modifyLoadedState {
+                        copy(selectedMovieDetails = it)
+                    }
+                },
             )
         }
     }

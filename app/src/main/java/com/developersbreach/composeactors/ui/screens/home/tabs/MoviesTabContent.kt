@@ -28,7 +28,6 @@ import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.itemsPaging
 import com.developersbreach.composeactors.ui.screens.home.HomeData
-import com.developersbreach.composeactors.ui.screens.home.HomeSheetUIState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -36,7 +35,6 @@ import kotlinx.coroutines.flow.emptyFlow
 fun MoviesTabContent(
     data: HomeData,
     navigateToSelectedMovie: (Int) -> Unit,
-    homeSheetUIState: HomeSheetUIState,
 ) {
     val nowPlayingMovies = data.nowPlayingMoviesList.collectAsLazyPagingItems()
 
@@ -151,7 +149,6 @@ private fun MoviesTabContentPreview() {
                 nowPlayingMoviesList = emptyFlow(),
             ),
             navigateToSelectedMovie = {},
-            homeSheetUIState = HomeSheetUIState(),
         )
     }
 }

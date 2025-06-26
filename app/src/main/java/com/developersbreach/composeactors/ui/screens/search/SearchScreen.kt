@@ -15,14 +15,14 @@ fun SearchScreen(
 ) {
     UiStateHandler(
         uiState = viewModel.uiState,
-    ) {
-        val navigateToSearchBySearchType = when (viewModel.searchType) {
-            SearchType.Persons -> navigateToSelectedPerson
+    ) { searchData ->
+        val navigateToSearchBySearchType = when (searchData.searchType) {
+            SearchType.People -> navigateToSelectedPerson
             SearchType.Movies -> navigateToSelectedMovie
         }
 
-        val searchHint = when (viewModel.searchType) {
-            SearchType.Persons -> stringResource(R.string.hint_search_query_actors)
+        val searchHint = when (searchData.searchType) {
+            SearchType.People -> stringResource(R.string.hint_search_query_actors)
             SearchType.Movies -> stringResource(R.string.hint_search_query_movies)
         }
 
@@ -31,7 +31,7 @@ fun SearchScreen(
             navigateToSearchBySearchType = navigateToSearchBySearchType,
             searchHint = searchHint,
             onSearchQueryChange = { query -> viewModel.performQuery(query) },
-            data = it,
+            data = searchData,
         )
     }
 }

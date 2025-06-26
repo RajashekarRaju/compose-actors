@@ -22,7 +22,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
-import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
@@ -46,11 +45,9 @@ fun HomeScreenUI(
     navigateToSearch: (SearchType) -> Unit,
     navigateToAbout: () -> Unit,
     navigateToProfile: () -> Unit,
-    navigateToSearchBySearchType: SearchType,
     navigateToSelectedPerson: (Int) -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
     data: HomeData,
-    sheetUiState: HomeSheetUIState,
     updateHomeSearchType: (SearchType) -> Unit,
 ) {
     val scaffoldState = rememberScaffoldState()
@@ -87,7 +84,7 @@ fun HomeScreenUI(
                         HomeTopAppBar(
                             modifier = Modifier.testTag("TestTag:HomeTopAppBar"),
                             navigateToSearch = navigateToSearch,
-                            searchType = navigateToSearchBySearchType,
+                            searchType = data.searchType,
                         )
                     },
                     bottomBar = {
@@ -104,7 +101,6 @@ fun HomeScreenUI(
                             HomeScreenUI(
                                 navigateToSelectedPerson = navigateToSelectedPerson,
                                 data = data,
-                                homeSheetUIState = sheetUiState,
                                 navigateToSelectedMovie = navigateToSelectedMovie,
                                 updateSearchType = updateHomeSearchType,
                             )
@@ -127,7 +123,6 @@ private fun HomeScreenUI(
     navigateToSelectedPerson: (Int) -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
     data: HomeData,
-    homeSheetUIState: HomeSheetUIState,
     updateSearchType: (navigateToSearchByType: SearchType) -> Unit,
 ) {
     val popularPersonsListState = rememberLazyListState()
@@ -156,7 +151,7 @@ private fun HomeScreenUI(
         ) {
             when (it) {
                 0 -> {
-                    updateSearchType(SearchType.Persons)
+                    updateSearchType(SearchType.People)
                     PersonsTabContent(
                         data = data,
                         navigateToSelectedPerson = navigateToSelectedPerson,
@@ -169,15 +164,12 @@ private fun HomeScreenUI(
                     updateSearchType(SearchType.Movies)
                     MoviesTabContent(
                         data = data,
-                        homeSheetUIState = homeSheetUIState,
                         navigateToSelectedMovie = navigateToSelectedMovie,
                     )
                 }
 
                 2 -> {
-                    TvShowsTabContent(
-                        homeSheetUIState = homeSheetUIState,
-                    )
+                    TvShowsTabContent()
                 }
             }
         }
@@ -191,7 +183,6 @@ fun HomeScreenUIPreview() {
         HomeScreenUI(
             navigateToSelectedPerson = {},
             navigateToSelectedMovie = {},
-            homeSheetUIState = HomeSheetUIState(fakeMovieDetail),
             updateSearchType = {},
             data = HomeData(
                 popularPersonList = fakePersonsList(),

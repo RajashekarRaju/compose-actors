@@ -34,7 +34,6 @@ import kotlinx.coroutines.flow.SharedFlow
 internal fun ActorDetailsUI(
     data: ActorDetailsData,
     uiEvent: SharedFlow<UiEvent>,
-    sheetUIState: ActorDetailsSheetUIState,
     navigateToSelectedMovie: (Int) -> Unit,
     isInWatchlist: Boolean,
     navigateUp: () -> Unit,
@@ -65,7 +64,7 @@ internal fun ActorDetailsUI(
         sheetBackgroundColor = MaterialTheme.colors.background,
         sheetContent = {
             SheetContentMovieDetails(
-                movie = sheetUIState.selectedMovieDetails,
+                movie = data.selectedMovieDetails,
                 navigateToSelectedMovie = navigateToSelectedMovie,
             )
         },
@@ -119,8 +118,8 @@ fun ActorDetailsUIPreview() {
                 castList = fakeMovieList(),
                 actorData = fakePersonDetail,
                 isFetchingDetails = false,
+                selectedMovieDetails = fakeMovieDetail,
             ),
-            sheetUIState = ActorDetailsSheetUIState(fakeMovieDetail),
             navigateToSelectedMovie = {},
             isInWatchlist = true,
             navigateUp = {},

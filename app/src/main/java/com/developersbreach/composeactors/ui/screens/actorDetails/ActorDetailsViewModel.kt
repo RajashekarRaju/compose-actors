@@ -14,6 +14,7 @@ import com.developersbreach.composeactors.data.person.repository.PersonRepositor
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
 import com.developersbreach.composeactors.ui.components.UiEvent
 import com.developersbreach.composeactors.ui.components.UiState
+import com.developersbreach.composeactors.ui.components.modifyLoadedState
 import com.developersbreach.composeactors.ui.navigation.AppDestinations
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -36,9 +37,6 @@ class ActorDetailsViewModel @Inject constructor(
     private val personId: Int = savedStateHandle.toRoute<AppDestinations.ActorDetail>().personId
 
     var detailUIState: UiState<ActorDetailsData> by mutableStateOf(UiState.Loading)
-        private set
-
-    var sheetUIState by mutableStateOf(ActorDetailsSheetUIState())
         private set
 
     var isLoading by mutableStateOf(false)
@@ -76,11 +74,15 @@ class ActorDetailsViewModel @Inject constructor(
             return
         }
         viewModelScope.launch {
-            movieRepository.getMovieDetails(
+            detailUIState = movieRepository.getMovieDetails(
                 movieId = movieId,
             ).fold(
                 ifLeft = { UiState.Error(it) },
-                ifRight = { sheetUIState = ActorDetailsSheetUIState(selectedMovieDetails = it) },
+                ifRight = {
+                    detailUIState.modifyLoadedState {
+                        copy(selectedMovieDetails = it)
+                    }
+                },
             )
         }
     }

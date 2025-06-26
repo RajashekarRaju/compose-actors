@@ -43,8 +43,7 @@ class HomeScreenUITest {
         updateHomeSearchType: (searchType: SearchType) -> Unit = { },
         navigateToAbout: () -> Unit = { },
         navigateToProfile: () -> Unit = { },
-        navigateToSearchBySearchType: SearchType = SearchType.Persons,
-        homeSheetUIState: HomeSheetUIState = HomeSheetUIState(),
+        navigateToSearchBySearchType: SearchType = SearchType.People,
         data: HomeData = mockHomeUIState,
     ) {
         HomeScreenUI(
@@ -54,9 +53,7 @@ class HomeScreenUITest {
             navigateToWatchlist = navigateToWatchlist,
             navigateToSearch = navigateToSearch,
             navigateToAbout = navigateToAbout,
-            navigateToSearchBySearchType = navigateToSearchBySearchType,
             data = data,
-            sheetUiState = homeSheetUIState,
             updateHomeSearchType = updateHomeSearchType,
             navigateToProfile = navigateToProfile,
         )
@@ -146,7 +143,7 @@ class HomeScreenUITest {
     fun onClickSearchTopAppBar_shouldNavigateToSearchScreen() {
         composeTestRule.setContent {
             HomeScreenUIContent(
-                navigateToSearch = { SearchType.Persons },
+                navigateToSearch = { SearchType.People },
             )
         }
 

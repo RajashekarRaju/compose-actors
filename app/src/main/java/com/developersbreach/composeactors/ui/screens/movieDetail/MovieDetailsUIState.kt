@@ -15,12 +15,6 @@ data class MovieDetailsData(
     val movieCast: List<Cast> = emptyList(),
     val isMovieInWatchlist: Flow<Boolean> = flow { emit(false) },
     val movieProviders: List<Flatrate> = emptyList(),
-)
-
-data class ActorsSheetUIState(
     val selectedPersonDetails: PersonDetail? = null,
-)
-
-data class MovieSheetUIState(
     val selectedMovieDetails: MovieDetail? = null,
 )

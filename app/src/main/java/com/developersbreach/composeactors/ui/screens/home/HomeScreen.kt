@@ -1,8 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.home
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.developersbreach.composeactors.ui.components.UiStateHandler
@@ -18,8 +16,6 @@ fun HomeScreen(
     navigateToWatchlist: () -> Unit,
     navigateToProfile: () -> Unit,
 ) {
-    val navigateToSearchBySearchType by viewModel.updateHomeSearchType.observeAsState(SearchType.Persons)
-
     UiStateHandler(
         uiState = viewModel.uiState,
     ) { data ->
@@ -29,11 +25,9 @@ fun HomeScreen(
             navigateToSearch = navigateToSearch,
             navigateToAbout = navigateToAbout,
             navigateToProfile = navigateToProfile,
-            navigateToSearchBySearchType = navigateToSearchBySearchType,
             navigateToSelectedPerson = navigateToSelectedPerson,
             navigateToSelectedMovie = navigateToSelectedMovie,
             data = data,
-            sheetUiState = viewModel.sheetUiState,
             updateHomeSearchType = { searchType: SearchType ->
                 viewModel.updateHomeSearchType(searchType)
             },
