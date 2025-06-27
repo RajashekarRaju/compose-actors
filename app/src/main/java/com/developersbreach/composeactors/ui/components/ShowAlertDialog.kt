@@ -23,7 +23,8 @@ fun ShowAlertDialog(
     modifier: Modifier = Modifier,
     title: String,
     description: String,
-    onButtonClick: () -> Unit = {},
+    isDismissible: Boolean,
+    onDismissRequest: () -> Unit,
 ) {
     AlertDialog(
         title = {
@@ -44,7 +45,7 @@ fun ShowAlertDialog(
                 horizontalArrangement = Arrangement.End,
             ) {
                 TextButton(
-                    onClick = {},
+                    onClick = { if (isDismissible) onDismissRequest() },
                     modifier = Modifier,
                     shape = MaterialTheme.shapes.medium,
                     content = {
@@ -56,11 +57,11 @@ fun ShowAlertDialog(
                 )
             }
         },
-        onDismissRequest = onButtonClick,
+        onDismissRequest = { if (isDismissible) onDismissRequest() },
         modifier = modifier.testTag("TestTag:InfoDialog"),
         properties = DialogProperties(
-            dismissOnBackPress = true,
-            dismissOnClickOutside = true,
+            dismissOnBackPress = isDismissible,
+            dismissOnClickOutside = isDismissible,
         ),
         shape = MaterialTheme.shapes.medium,
         backgroundColor = MaterialTheme.colors.surface,
@@ -76,7 +77,8 @@ private fun ShowAlertDialogUIPreview(
         ShowAlertDialog(
             title = "Error occurred",
             description = text,
-            onButtonClick = {},
+            isDismissible = false,
+            onDismissRequest = {},
         )
     }
 }
