@@ -4,7 +4,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import arrow.core.raise.either
@@ -13,39 +12,28 @@ import com.developersbreach.composeactors.data.movie.model.toMovie
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
+import com.developersbreach.composeactors.ui.components.BaseViewModel
 import com.developersbreach.composeactors.ui.components.UiEvent
 import com.developersbreach.composeactors.ui.components.UiState
+import com.developersbreach.composeactors.ui.components.modifyLoadedState
 import com.developersbreach.composeactors.ui.navigation.AppDestinations
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @HiltViewModel
-class MovieDetailViewModel @Inject constructor(
+class MovieDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val movieRepository: MovieRepository,
     private val personRepository: PersonRepository,
     private val watchlistRepository: WatchlistRepository,
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val movieId: Int = savedStateHandle.toRoute<AppDestinations.MovieDetail>().movieId
 
-    var uiState: UiState<MovieDetailsData> by mutableStateOf(UiState.Loading)
+    var uiState: UiState<MovieDetailsUiState> by mutableStateOf(UiState.Loading)
         private set
-
-    var isLoading by mutableStateOf(false)
-        private set
-
-    var sheetUiState by mutableStateOf(ActorsSheetUIState(selectedPersonDetails = null))
-        private set
-
-    var movieSheetUiState by mutableStateOf(MovieSheetUIState(selectedMovieDetails = null))
-
-    private val _uiEvent = MutableSharedFlow<UiEvent>()
-    val uiEvent = _uiEvent.asSharedFlow()
 
     init {
         viewModelScope.launch {
@@ -54,9 +42,9 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     private suspend fun startFetchingDetails() {
-        isLoading = true
+        showLoading()
         either {
-            MovieDetailsData(
+            MovieDetailsUiState(
                 movieData = movieRepository.getMovieDetails(movieId).bind(),
                 similarMovies = movieRepository.getSimilarMovies(movieId).bind(),
                 recommendedMovies = movieRepository.getRecommendedMovies(movieId).bind(),
@@ -68,7 +56,7 @@ class MovieDetailViewModel @Inject constructor(
             ifLeft = { uiState = UiState.Error(it) },
             ifRight = { uiState = UiState.Success(it) },
         )
-        isLoading = false
+        hideLoading()
     }
 
     fun addMovieToWatchlist(
@@ -80,16 +68,14 @@ class MovieDetailViewModel @Inject constructor(
                 return@launch
             }
 
-            isLoading = true
+            showLoading()
             watchlistRepository.addMovieToWatchlist(
                 movieDetail = movieDetail,
             ).fold(
                 ifLeft = { uiState = UiState.Error(it) },
-                ifRight = {
-                    _uiEvent.emit(UiEvent.ShowMessage("Added “${movieDetail.movieTitle}” to watchlist"))
-                },
+                ifRight = { sendUiEvent(UiEvent.ShowMessage("Added “${movieDetail.movieTitle}” to watchlist")) },
             )
-            isLoading = false
+            hideLoading()
         }
     }
 
@@ -102,16 +88,14 @@ class MovieDetailViewModel @Inject constructor(
                 return@launch
             }
 
-            isLoading = true
+            showLoading()
             watchlistRepository.removeMovieFromWatchlist(
                 movie = movieDetail.toMovie(),
             ).fold(
                 ifLeft = { uiState = UiState.Error(it) },
-                ifRight = {
-                    _uiEvent.emit(UiEvent.ShowMessage("Removed ${movieDetail.movieTitle} from watchlist"))
-                },
+                ifRight = { sendUiEvent(UiEvent.ShowMessage("Removed ${movieDetail.movieTitle} from watchlist")) },
             )
-            isLoading = false
+            hideLoading()
         }
     }
 
@@ -123,11 +107,15 @@ class MovieDetailViewModel @Inject constructor(
             return
         }
         viewModelScope.launch {
-            personRepository.getPersonDetails(
+            uiState = personRepository.getPersonDetails(
                 personId = personId,
             ).fold(
-                ifLeft = { uiState = UiState.Error(it) },
-                ifRight = { sheetUiState = ActorsSheetUIState(it) },
+                ifLeft = { UiState.Error(it) },
+                ifRight = {
+                    uiState.modifyLoadedState {
+                        copy(selectedPersonDetails = it)
+                    }
+                },
             )
         }
     }
@@ -140,11 +128,15 @@ class MovieDetailViewModel @Inject constructor(
             return
         }
         viewModelScope.launch {
-            movieRepository.getMovieDetails(
+            uiState = movieRepository.getMovieDetails(
                 movieId = movieId,
             ).fold(
-                ifLeft = { uiState = UiState.Error(it) },
-                ifRight = { movieSheetUiState = MovieSheetUIState(selectedMovieDetails = it) },
+                ifLeft = { UiState.Error(it) },
+                ifRight = {
+                    uiState.modifyLoadedState {
+                        copy(selectedMovieDetails = it)
+                    }
+                },
             )
         }
     }

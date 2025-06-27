@@ -29,14 +29,14 @@ import com.developersbreach.composeactors.ui.screens.movieDetail.BottomSheetType
 import com.developersbreach.composeactors.data.movie.model.Cast
 import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailsData
+import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailsUiState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaTextSubtitle2
 import kotlinx.coroutines.Job
 
 @Composable
 fun GetMovieCast(
-    data: MovieDetailsData,
+    data: MovieDetailsUiState,
     openMovieDetailsBottomSheet: () -> Job,
     selectBottomSheetCallback: (BottomSheetType) -> Unit,
 ) {
@@ -61,7 +61,7 @@ fun GetMovieCast(
 @Composable
 private fun ItemCast(
     cast: Cast,
-    data: MovieDetailsData,
+    data: MovieDetailsUiState,
     openMovieDetailsBottomSheet: () -> Job,
     selectBottomSheetCallback: (BottomSheetType) -> Unit,
 ) {
@@ -111,7 +111,7 @@ private fun ItemCast(
 private fun GetMovieCastPreview() {
     ComposeActorsTheme {
         GetMovieCast(
-            data = MovieDetailsData(
+            data = MovieDetailsUiState(
                 movieData = fakeMovieDetail,
                 similarMovies = listOf(),
                 recommendedMovies = listOf(),

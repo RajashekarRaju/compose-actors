@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AppRegistration
 import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material.icons.rounded.Password
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,7 +49,8 @@ fun SignUpScreenUI(
     onPasswordToggledVisibilityChange: () -> Unit,
     onCodeChange: (String) -> Unit,
     onClickConfirm: (String) -> Unit,
-    data: SignUpData,
+    data: SignUpUiState,
+    scaffoldState: ScaffoldState,
     error: String?,
 ) {
     CaSurface(
@@ -56,6 +59,7 @@ fun SignUpScreenUI(
     ) {
         CaScaffold(
             modifier = Modifier,
+            scaffoldState = scaffoldState,
             topBar = { SignUpTopAppBar(navigateUp = onClickNavigateUp) },
         ) {
             Column(
@@ -119,7 +123,7 @@ fun SignUpScreenUI(
 
 @Composable
 private fun InitialStepUI(
-    data: SignUpData,
+    data: SignUpUiState,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onPasswordToggledVisibilityChange: () -> Unit,
@@ -247,7 +251,7 @@ private fun SignUpScreenPreview(
         onPasswordToggledVisibilityChange = {},
         onCodeChange = {},
         onClickConfirm = {},
-        data = SignUpData(
+        data = SignUpUiState(
             email = "",
             password = "",
             confirmPassword = "",
@@ -255,6 +259,7 @@ private fun SignUpScreenPreview(
             signUpStep = signUpStep,
         ),
         error = null,
+        scaffoldState = rememberScaffoldState(),
     )
 }
 

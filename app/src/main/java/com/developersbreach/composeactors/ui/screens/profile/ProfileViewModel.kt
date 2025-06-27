@@ -3,11 +3,11 @@ package com.developersbreach.composeactors.ui.screens.profile
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.auth.AuthenticationService
 import com.developersbreach.composeactors.domain.session.GetSessionState
 import com.developersbreach.composeactors.domain.session.SessionState
+import com.developersbreach.composeactors.ui.components.BaseViewModel
 import com.developersbreach.composeactors.ui.components.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,9 +17,9 @@ import kotlinx.coroutines.launch
 class ProfileViewModel @Inject constructor(
     private val getSessionState: GetSessionState,
     private val authenticationService: AuthenticationService,
-) : ViewModel() {
+) : BaseViewModel() {
 
-    var uiState: UiState<ProfileUIState> by mutableStateOf(UiState.Loading)
+    var uiState: UiState<ProfileUiState> by mutableStateOf(UiState.Loading)
         private set
 
     init {
@@ -32,8 +32,8 @@ class ProfileViewModel @Inject constructor(
                 ifLeft = { UiState.Error(it) },
                 ifRight = {
                     when (it) {
-                        SessionState.Unauthenticated -> UiState.Success(ProfileUIState.UnauthenticatedUI)
-                        SessionState.Guest -> UiState.Success(ProfileUIState.GuestUI)
+                        SessionState.Unauthenticated -> UiState.Success(ProfileUiState.UnauthenticatedUI)
+                        SessionState.Guest -> UiState.Success(ProfileUiState.GuestUI)
                         SessionState.Authenticated -> updateProfileData()
                     }
                 },
@@ -41,11 +41,11 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private suspend fun updateProfileData(): UiState<ProfileUIState.AuthenticatedUI> {
+    private suspend fun updateProfileData(): UiState<ProfileUiState.AuthenticatedUI> {
         return authenticationService.getCurrentUser().fold(
             ifLeft = { UiState.Error(it) },
             ifRight = {
-                UiState.Success(ProfileUIState.AuthenticatedUI(it.name ?: ""))
+                UiState.Success(ProfileUiState.AuthenticatedUI(it.name ?: ""))
             },
         )
     }
@@ -54,7 +54,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             uiState = authenticationService.signOut().fold(
                 ifLeft = { UiState.Error(it) },
-                ifRight = { UiState.Success(ProfileUIState.NavigateToLogin) },
+                ifRight = { UiState.Success(ProfileUiState.NavigateToLogin) },
             )
         }
     }

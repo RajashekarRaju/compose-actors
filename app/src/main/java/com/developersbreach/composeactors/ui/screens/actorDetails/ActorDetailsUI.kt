@@ -5,21 +5,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.annotations.PreviewLightDark
-import com.developersbreach.composeactors.data.datasource.fake.fakePersonDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
+import com.developersbreach.composeactors.data.datasource.fake.fakePersonDetail
 import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGenerator
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
-import com.developersbreach.composeactors.ui.components.UiEvent
 import com.developersbreach.composeactors.ui.screens.actorDetails.composables.ActorBackgroundWithGradientForeground
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
@@ -27,14 +26,11 @@ import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomShee
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToWatchlistButton
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaScaffold
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 
 @Composable
 internal fun ActorDetailsUI(
-    data: ActorDetailsData,
-    uiEvent: SharedFlow<UiEvent>,
-    sheetUIState: ActorDetailsSheetUIState,
+    data: ActorDetailsUiState,
+    scaffoldState: ScaffoldState,
     navigateToSelectedMovie: (Int) -> Unit,
     isInWatchlist: Boolean,
     navigateUp: () -> Unit,
@@ -44,19 +40,10 @@ internal fun ActorDetailsUI(
 ) {
     val showFab = rememberSaveable { mutableStateOf(true) }
     val actorProfileUrl = "${data.actorData?.profileUrl}"
-    val scaffoldState = rememberScaffoldState()
     val modalSheetState = modalBottomSheetState()
     val openActorDetailsBottomSheet = manageModalBottomSheet(
         modalSheetState = modalSheetState,
     )
-
-    LaunchedEffect(Unit) {
-        uiEvent.collect { event ->
-            when (event) {
-                is UiEvent.ShowMessage -> scaffoldState.snackbarHostState.showSnackbar(event.message)
-            }
-        }
-    }
 
     ModalBottomSheetLayout(
         sheetState = modalSheetState,
@@ -65,7 +52,7 @@ internal fun ActorDetailsUI(
         sheetBackgroundColor = MaterialTheme.colors.background,
         sheetContent = {
             SheetContentMovieDetails(
-                movie = sheetUIState.selectedMovieDetails,
+                movie = data.selectedMovieDetails,
                 navigateToSelectedMovie = navigateToSelectedMovie,
             )
         },
@@ -115,19 +102,19 @@ internal fun ActorDetailsUI(
 fun ActorDetailsUIPreview() {
     ComposeActorsTheme {
         ActorDetailsUI(
-            data = ActorDetailsData(
+            data = ActorDetailsUiState(
                 castList = fakeMovieList(),
                 actorData = fakePersonDetail,
                 isFetchingDetails = false,
+                selectedMovieDetails = fakeMovieDetail,
             ),
-            sheetUIState = ActorDetailsSheetUIState(fakeMovieDetail),
             navigateToSelectedMovie = {},
             isInWatchlist = true,
             navigateUp = {},
             getSelectedMovieDetails = {},
             addToWatchlist = {},
             removeFromWatchlist = {},
-            uiEvent = MutableSharedFlow(),
+            scaffoldState = rememberScaffoldState(),
         )
     }
 }

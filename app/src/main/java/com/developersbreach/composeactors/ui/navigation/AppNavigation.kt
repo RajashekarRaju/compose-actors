@@ -10,7 +10,7 @@ import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsSc
 import com.developersbreach.composeactors.ui.screens.watchlist.WatchlistScreen
 import com.developersbreach.composeactors.ui.screens.home.HomeScreen
 import com.developersbreach.composeactors.ui.screens.login.LoginScreen
-import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailScreen
+import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailsScreen
 import com.developersbreach.composeactors.ui.screens.profile.ProfileScreen
 import com.developersbreach.composeactors.ui.screens.search.SearchScreen
 import com.developersbreach.composeactors.ui.screens.splash.SplashScreen
@@ -66,7 +66,7 @@ fun AppNavigation(
         }
 
         composable<AppDestinations.MovieDetail> {
-            MovieDetailScreen(
+            MovieDetailsScreen(
                 navigateUp = actions.navigateUp,
                 navigateToSelectedMovie = actions.navigateToSelectedMovie,
             )

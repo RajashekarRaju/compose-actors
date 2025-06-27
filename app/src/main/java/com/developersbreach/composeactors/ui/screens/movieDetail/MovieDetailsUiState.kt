@@ -8,19 +8,13 @@ import com.developersbreach.composeactors.data.movie.model.MovieDetail
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-data class MovieDetailsData(
+data class MovieDetailsUiState(
     val movieData: MovieDetail? = null,
     val similarMovies: List<Movie> = emptyList(),
     val recommendedMovies: List<Movie> = emptyList(),
     val movieCast: List<Cast> = emptyList(),
     val isMovieInWatchlist: Flow<Boolean> = flow { emit(false) },
     val movieProviders: List<Flatrate> = emptyList(),
-)
-
-data class ActorsSheetUIState(
     val selectedPersonDetails: PersonDetail? = null,
-)
-
-data class MovieSheetUIState(
     val selectedMovieDetails: MovieDetail? = null,
 )

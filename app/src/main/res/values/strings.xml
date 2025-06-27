@@ -58,5 +58,6 @@
     <string name="confirmation_code">Confirmation Code</string>
     <string name="confirm">Confirm</string>
     <string name="sign_up_success">Sign up successful!\n\nCompleting login process now.</string>
-
+    <string name="no_actors_found_message">No actors found for your search.</string>
+    <string name="no_movies_found_message">No movies found for your search.</string>
 </resources>

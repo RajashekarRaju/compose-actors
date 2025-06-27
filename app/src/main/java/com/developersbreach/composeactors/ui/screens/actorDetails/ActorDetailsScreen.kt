@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.actorDetails
 
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -12,15 +13,17 @@ internal fun ActorDetailsScreen(
     navigateToSelectedMovie: (Int) -> Unit,
     navigateUp: () -> Unit,
 ) {
+    val scaffoldState = rememberScaffoldState()
     UiStateHandler(
         uiState = viewModel.detailUIState,
         isLoading = viewModel.isLoading,
+        uiEvent = viewModel.uiEvent,
+        scaffoldState = scaffoldState,
     ) { data ->
         val isPersonInWatchlist by data.isPersonInWatchlist.collectAsState(false)
         ActorDetailsUI(
             data = data,
-            uiEvent = viewModel.uiEvent,
-            sheetUIState = viewModel.sheetUIState,
+            scaffoldState = scaffoldState,
             navigateToSelectedMovie = navigateToSelectedMovie,
             isInWatchlist = isPersonInWatchlist,
             navigateUp = navigateUp,

@@ -19,13 +19,8 @@ import com.developersbreach.composeactors.R
 import com.developersbreach.designsystem.components.CaIconButton
 import com.developersbreach.designsystem.components.CaTextH6
 
-/**
- * @param navigateUp navigates back to previous screen.
- * @param title actor name in center of app bar.
- * AppBar for [MovieDetailScreen]
- */
 @Composable
-fun MovieDetailTopAppBar(
+fun MovieDetailsTopAppBar(
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit,
     title: String?,

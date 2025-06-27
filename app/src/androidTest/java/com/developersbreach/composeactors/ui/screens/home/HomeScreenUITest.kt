@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.home
 
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
@@ -26,7 +27,7 @@ class HomeScreenUITest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val mockHomeUIState: HomeData = HomeData(
+    private val mockHomeUIState: HomeUiState = HomeUiState(
         popularPersonList = popularPersonLists,
         trendingPersonList = trendingPersonLists,
         isFetchingPersons = false,
@@ -43,9 +44,8 @@ class HomeScreenUITest {
         updateHomeSearchType: (searchType: SearchType) -> Unit = { },
         navigateToAbout: () -> Unit = { },
         navigateToProfile: () -> Unit = { },
-        navigateToSearchBySearchType: SearchType = SearchType.Persons,
-        homeSheetUIState: HomeSheetUIState = HomeSheetUIState(),
-        data: HomeData = mockHomeUIState,
+        navigateToSearchBySearchType: SearchType = SearchType.People,
+        data: HomeUiState = mockHomeUIState,
     ) {
         HomeScreenUI(
             modifier = Modifier,
@@ -54,11 +54,10 @@ class HomeScreenUITest {
             navigateToWatchlist = navigateToWatchlist,
             navigateToSearch = navigateToSearch,
             navigateToAbout = navigateToAbout,
-            navigateToSearchBySearchType = navigateToSearchBySearchType,
             data = data,
-            sheetUiState = homeSheetUIState,
             updateHomeSearchType = updateHomeSearchType,
             navigateToProfile = navigateToProfile,
+            scaffoldState = rememberScaffoldState(),
         )
     }
 
@@ -146,7 +145,7 @@ class HomeScreenUITest {
     fun onClickSearchTopAppBar_shouldNavigateToSearchScreen() {
         composeTestRule.setContent {
             HomeScreenUIContent(
-                navigateToSearch = { SearchType.Persons },
+                navigateToSearch = { SearchType.People },
             )
         }
 

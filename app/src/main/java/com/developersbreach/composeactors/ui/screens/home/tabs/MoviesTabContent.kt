@@ -27,16 +27,14 @@ import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.itemsPaging
-import com.developersbreach.composeactors.ui.screens.home.HomeData
-import com.developersbreach.composeactors.ui.screens.home.HomeSheetUIState
+import com.developersbreach.composeactors.ui.screens.home.HomeUiState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import kotlinx.coroutines.flow.emptyFlow
 
 @Composable
 fun MoviesTabContent(
-    data: HomeData,
+    data: HomeUiState,
     navigateToSelectedMovie: (Int) -> Unit,
-    homeSheetUIState: HomeSheetUIState,
 ) {
     val nowPlayingMovies = data.nowPlayingMoviesList.collectAsLazyPagingItems()
 
@@ -90,7 +88,7 @@ fun MoviesTabContent(
 
 @Composable
 private fun UpcomingMovies(
-    data: HomeData,
+    data: HomeUiState,
     navigateToSelectedMovie: (Int) -> Unit,
     modifier: Modifier,
 ) {
@@ -143,7 +141,7 @@ private fun LazyGridScope.nowPlayingMovies(
 private fun MoviesTabContentPreview() {
     ComposeActorsTheme {
         MoviesTabContent(
-            data = HomeData(
+            data = HomeUiState(
                 popularPersonList = listOf(),
                 trendingPersonList = listOf(),
                 isFetchingPersons = false,
@@ -151,7 +149,6 @@ private fun MoviesTabContentPreview() {
                 nowPlayingMoviesList = emptyFlow(),
             ),
             navigateToSelectedMovie = {},
-            homeSheetUIState = HomeSheetUIState(),
         )
     }
 }

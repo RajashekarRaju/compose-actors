@@ -31,14 +31,14 @@ import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
-import com.developersbreach.composeactors.ui.screens.home.HomeData
+import com.developersbreach.composeactors.ui.screens.home.HomeUiState
 import com.developersbreach.designsystem.components.CaCard
 import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.designsystem.components.CaTextSubtitle1
 
 @Composable
 fun PersonsTabContent(
-    data: HomeData,
+    data: HomeUiState,
     navigateToSelectedPerson: (Int) -> Unit,
     popularPersonsListState: LazyListState,
     trendingPersonsListState: LazyListState,

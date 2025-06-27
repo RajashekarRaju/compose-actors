@@ -33,49 +33,45 @@ fun AboutScreen(
     CaSurface(
         color = MaterialTheme.colors.background,
         modifier = Modifier,
-        content = {
-            CaScaffold(
-                modifier = Modifier,
-                topBar = {
-                    AboutTopAppBar(navigateUp = navigateUp)
-                },
-                content = { paddingValues ->
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(paddingValues = paddingValues),
-                    ) {
-                        CaImage(
-                            painter = painterResource(id = R.drawable.ic_tmdb_logo),
-                            contentDescription = stringResource(id = R.string.cd_tmdb_api_attribution_logo),
-                            modifier = Modifier
-                                .padding(80.dp)
-                                .fillMaxWidth()
-                                .wrapContentHeight(),
-                        )
-                        CaText(
-                            text = stringResource(id = R.string.tmdb_api_attribution),
-                            modifier = Modifier.padding(horizontal = 40.dp),
-                            style = TextStyle(
-                                lineHeight = 24.sp,
-                                fontWeight = FontWeight.Normal,
-                                fontSize = 20.sp,
-                                textAlign = TextAlign.Center,
-                                brush = Brush.linearGradient(
-                                    listOf(
-                                        Color(0xFF90CEA1),
-                                        Color(0xFF3CBEC9),
-                                        Color(0xFF00B3E5),
-                                    ),
-                                ),
+    ) {
+        CaScaffold(
+            modifier = Modifier,
+            topBar = { AboutTopAppBar(navigateUp = navigateUp) },
+        ) { paddingValues ->
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues = paddingValues),
+            ) {
+                CaImage(
+                    painter = painterResource(id = R.drawable.ic_tmdb_logo),
+                    contentDescription = stringResource(id = R.string.cd_tmdb_api_attribution_logo),
+                    modifier = Modifier
+                        .padding(80.dp)
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                )
+                CaText(
+                    text = stringResource(id = R.string.tmdb_api_attribution),
+                    modifier = Modifier.padding(horizontal = 40.dp),
+                    style = TextStyle(
+                        lineHeight = 24.sp,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Center,
+                        brush = Brush.linearGradient(
+                            listOf(
+                                Color(0xFF90CEA1),
+                                Color(0xFF3CBEC9),
+                                Color(0xFF00B3E5),
                             ),
-                        )
-                    }
-                },
-            )
-        },
-    )
+                        ),
+                    ),
+                )
+            }
+        }
+    }
 }
 
 @PreviewLightDark

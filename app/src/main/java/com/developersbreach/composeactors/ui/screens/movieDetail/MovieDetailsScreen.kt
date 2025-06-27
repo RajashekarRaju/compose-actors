@@ -1,5 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.movieDetail
 
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
@@ -10,8 +11,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.developersbreach.composeactors.ui.components.UiStateHandler
 
 @Composable
-fun MovieDetailScreen(
-    viewModel: MovieDetailViewModel = hiltViewModel(),
+fun MovieDetailsScreen(
+    viewModel: MovieDetailsViewModel = hiltViewModel(),
     navigateToSelectedMovie: (Int) -> Unit,
     navigateUp: () -> Unit,
 ) {
@@ -20,17 +21,17 @@ fun MovieDetailScreen(
     }
 
     val selectBottomSheetCallback = setBottomSheetCallBack(viewModel, selectedBottomSheet)
-
+    val scaffoldState = rememberScaffoldState()
     UiStateHandler(
         uiState = viewModel.uiState,
+        scaffoldState = scaffoldState,
+        uiEvent = viewModel.uiEvent,
         isLoading = viewModel.isLoading,
     ) { data ->
         val isMovieInWatchlist by data.isMovieInWatchlist.collectAsState(false)
         MovieDetailsUI(
             data = data,
-            uiEvent = viewModel.uiEvent,
-            actorsSheetUIState = viewModel.sheetUiState,
-            movieSheetUIState = viewModel.movieSheetUiState,
+            scaffoldState = scaffoldState,
             navigateUp = navigateUp,
             selectedBottomSheet = selectedBottomSheet,
             selectBottomSheetCallback = selectBottomSheetCallback,
@@ -43,7 +44,7 @@ fun MovieDetailScreen(
 }
 
 private fun setBottomSheetCallBack(
-    viewModel: MovieDetailViewModel,
+    viewModel: MovieDetailsViewModel,
     selectedBottomSheet: MutableState<BottomSheetType?>,
 ) = { bottomSheetType: BottomSheetType ->
     when (bottomSheetType) {

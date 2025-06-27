@@ -14,15 +14,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.annotations.PreviewLightDark
-import com.developersbreach.composeactors.ui.screens.home.HomeSheetUIState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaImage
 import com.developersbreach.designsystem.components.CaTextH6
 
 @Composable
-fun TvShowsTabContent(
-    homeSheetUIState: HomeSheetUIState,
-) {
+fun TvShowsTabContent() {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxSize(),
@@ -49,8 +46,6 @@ fun TvShowsTabContent(
 @Composable
 private fun HomeScreenUIPreview() {
     ComposeActorsTheme {
-        TvShowsTabContent(
-            homeSheetUIState = HomeSheetUIState(),
-        )
+        TvShowsTabContent()
     }
 }

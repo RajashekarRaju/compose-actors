@@ -89,7 +89,7 @@ private fun SearchBarPreview() {
     ComposeActorsTheme {
         HomeTopAppBarContent(
             navigateToSearch = { },
-            searchType = SearchType.Persons,
+            searchType = SearchType.People,
         )
     }
 }
