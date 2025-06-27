@@ -12,8 +12,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.developersbreach.composeactors.ui.screens.search.SearchUiMessage
-import com.developersbreach.composeactors.ui.screens.search.toResId
 import kotlinx.coroutines.flow.SharedFlow
 import timber.log.Timber
 
@@ -36,13 +34,26 @@ fun <T> UiStateHandler(
         uiEvent.collect { event ->
             when (event) {
                 is UiEvent.ShowMessage -> {
-                    when (val message = event.message) {
+                    val messageText = when (val message = event.message) {
                         is String -> message
-                        is SearchUiMessage -> context.getString(message.toResId())
+                        is UiMessageWithResId -> {
+                            if (message.formatArgs != null) {
+                                context.getString(message.resId, message.formatArgs.toTypedArray())
+                            } else {
+                                context.getString(message.resId)
+                            }
+                        }
+                        is ErrorMessage -> {
+                            val uiMessage = message.toUiMessageWithResId()
+                            if (uiMessage.formatArgs != null) {
+                                context.getString(uiMessage.resId, uiMessage.formatArgs.toTypedArray())
+                            } else {
+                                context.getString(uiMessage.resId)
+                            }
+                        }
                         else -> message.toString()
-                    }.let {
-                        scaffoldState.snackbarHostState.showSnackbar(it)
                     }
+                    scaffoldState.snackbarHostState.showSnackbar(messageText)
                 }
             }
         }
