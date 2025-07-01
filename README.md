@@ -17,13 +17,13 @@ Access the latest APK for Compose Actors from the link below.
 - [x] Configure ktor mock engine and client provider for API usage and tests
 - [x] Migrate app navigation graph to type‑safe DSL to simplify navigation structure
 - [x] Integrate amazon Amplify service for authentication support.
-- [ ] Allow people to create accounts and self sign-up, implement sign-up screen.
+- [x] Allow people to create accounts and self sign-up, implement sign-up screen.
 - [x] Allow people fo user app as a Guest, skip login + guest flow.
 - [x] Allow authenticated users to mange authentication with profile screen.
 - [x] Integrate with compose actors backend to manage authenticated users data/watchlist.
 - [x] Target newest sdk version, Upgrade to kotlin 2.1.21, latest compose-bom, fix deprecations.
-- [ ] Authenticated users can create movie watchlist to compose actors backend api.
-- [ ] Authenticated users can create people watchlist to compose actors backend api.
+- [x] Authenticated users can create movie watchlist to compose actors backend api.
+- [x] Authenticated users can create people watchlist to compose actors backend api.
 
 ## Current Roadmap v0.5.0
 
