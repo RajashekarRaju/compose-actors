@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "Compose Actors"
 include(":app")
 include(":design-system")
+include(":ktlint-rules")
