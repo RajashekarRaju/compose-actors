@@ -39,7 +39,7 @@ fun AboutTopAppBar(
             contentDescription = stringResource(id = R.string.cd_up_button),
         )
         CaTextH6(
-            text = "About",
+            text = stringResource(R.string.about),
             modifier = Modifier.align(Alignment.Center),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
