@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Compose Actors</string>
 
-    <string name="txt_more">More</string>
     <string name="cd_search_icon">Search Icon</string>
     <string name="cd_actor_image">Actor image</string>
     <string name="cd_cast_icon">Icon for cast</string>
@@ -26,8 +25,55 @@
     <string name="offline_snackbar_message">You Are Offline!</string>
     <string name="missing_api_key_snackbar_message">Tmdb Api Key Missing</string>
 
-    <string name="no_favorites_found_message">You Have Added Nothing To Favorites.</string>
-    <string name="add_to_favorites_text">Add to favorites</string>
-    <string name="remove_from_favorites_text">Remove favorite</string>
+    <string name="no_items_found_message">You Have Added Nothing To Watchlist.</string>
+    <string name="add_to_watchlist_text">Add to watchlist</string>
+    <string name="remove_from_watchlist_text">Remove from watchlist</string>
 
+    <string name="stream">Watch providers</string>
+    <string name="no_watch_options">No watch options available!</string>
+  
+    <!--  About screen  -->
+    <string name="cd_tmdb_api_attribution_logo">Logo of TMDB Api</string>
+    <string name="tmdb_api_attribution">
+        The data and images displayed in this app are sourced from TMDB Api, a comprehensive movie and TV show database.
+    </string>
+    <string name="login">Login</string>
+    <string name="skip">Skip</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="profile">Profile</string>
+    <string name="welcome">Welcome %1$s!</string>
+    <string name="logged_in_as_guest">Logged in as Guest.</string>
+    <string name="please_login_to_view_account">Please login to view account.</string>
+    <string name="logout">Logout</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="actors">Actors</string>
+    <string name="movies">Movies</string>
+    <string name="search">Search</string>
+    <string name="about">About</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="error_password_mismatch">Passwords do not match</string>
+    <string name="error_empty_fields">Please fill all fields</string>
+    <string name="confirmation_code">Confirmation Code</string>
+    <string name="confirm">Confirm</string>
+    <string name="sign_up_success">Sign up successful!\n\nCompleting login process now.</string>
+    <string name="no_actors_found_message">No actors found for your search.</string>
+    <string name="no_movies_found_message">No movies found for your search.</string>
+
+    <!-- Error Messages -->
+    <string name="network_error">Network error occurred. Please check your connection.</string>
+    <string name="database_error">Database error: %1$s</string>
+    <string name="authentication_error">Authentication error: %1$s</string>
+    <string name="validation_error">Validation error: %1$s</string>
+    <string name="unexpected_error">Unknown error occurred</string>
+
+    <string name="home_error">An error occurred while loading home data.</string>
+    <string name="search_error">An error occurred while searching.</string>
+    <string name="watchlist_error">An error occurred while loading watchlist.</string>
+    <string name="login_error">An error occurred during login.</string>
+    <string name="signup_error">An error occurred during sign up.</string>
+    <string name="profile_error">An error occurred while loading profile.</string>
+    <string name="movie_details_error">An error occurred while loading movie details.</string>
+    <string name="actor_details_error">An error occurred while loading actor details.</string>
 </resources>

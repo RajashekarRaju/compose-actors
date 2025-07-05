@@ -1,7 +1,6 @@
 package com.developersbreach.composeactors.ui.screens.home
 
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,60 +10,56 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.data.datasource.fake.fakeActorsList
-import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
+import com.developersbreach.composeactors.annotations.PreviewLightDark
+import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
-import com.developersbreach.composeactors.ui.components.AppDivider
 import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
-import com.developersbreach.composeactors.ui.screens.home.tabs.ActorsTabContent
+import com.developersbreach.composeactors.ui.screens.home.tabs.PersonsTabContent
 import com.developersbreach.composeactors.ui.screens.home.tabs.MoviesTabContent
 import com.developersbreach.composeactors.ui.screens.home.tabs.TvShowsTabContent
 import com.developersbreach.composeactors.ui.screens.modalSheets.OptionsModalSheetContent
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaDivider
+import com.developersbreach.designsystem.components.CaScaffold
+import com.developersbreach.designsystem.components.CaSurface
 import kotlinx.coroutines.flow.flow
 
 @Composable
-@OptIn(ExperimentalMaterialApi::class)
 fun HomeScreenUI(
     modifier: Modifier = Modifier,
-    navigateToFavorite: () -> Unit,
+    navigateToWatchlist: () -> Unit,
     navigateToSearch: (SearchType) -> Unit,
-    navigateToSearchBySearchType: SearchType,
-    navigateToSelectedActor: (Int) -> Unit,
+    navigateToAbout: () -> Unit,
+    navigateToProfile: () -> Unit,
+    navigateToSelectedPerson: (Int) -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
-    uiState: HomeUIState,
-    sheetUiState: HomeSheetUIState,
-    updateHomeSearchType: (SearchType) -> Unit
+    data: HomeUiState,
+    scaffoldState: ScaffoldState,
+    updateHomeSearchType: (SearchType) -> Unit,
 ) {
-    // Remember state of scaffold to manage snackbar
-    val scaffoldState = rememberScaffoldState()
     val modalSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         animationSpec = tween(durationMillis = 500),
-        skipHalfExpanded = true
+        skipHalfExpanded = true,
     )
 
-    Surface(
+    CaSurface(
         color = MaterialTheme.colors.background,
-        modifier = modifier
+        modifier = modifier,
     ) {
         // TODO Replace ModalSheet with BottomSheetScaffold
         ModalBottomSheetLayout(
@@ -75,147 +70,125 @@ fun HomeScreenUI(
             sheetContent = {
                 OptionsModalSheetContent(
                     modalSheetSheet = modalSheetState,
-                    navigateToFavorite = navigateToFavorite,
+                    navigateToWatchlist = navigateToWatchlist,
                     navigateToSearch = { navigateToSearch(SearchType.Movies) },
-                    navigateToProfile = { }
+                    navigateToProfile = navigateToProfile,
+                    navigateToAbout = navigateToAbout,
                 )
             },
         ) {
-            Scaffold(
-                // attach snackbar host state to the scaffold
+            CaScaffold(
+                modifier = Modifier,
                 scaffoldState = scaffoldState,
-                // Custom AppBar contains fake search bar.
                 topBar = {
                     HomeTopAppBar(
                         modifier = Modifier.testTag("TestTag:HomeTopAppBar"),
                         navigateToSearch = navigateToSearch,
-                        searchType = navigateToSearchBySearchType
+                        searchType = data.searchType,
                     )
                 },
                 bottomBar = {
                     HomeBottomBar(
-                        modalSheetSheet = modalSheetState
+                        modalSheetSheet = modalSheetState,
                     )
                 },
-                // Host for custom snackbar
-                snackbarHost = { HomeSnackbar(it) }
-            ) { paddingValues ->
-                Box(
-                    modifier = modifier.padding(paddingValues = paddingValues)
-                ) {
-                    // Main content for this screen
-                    HomeScreenUI(
-                        navigateToSelectedActor = navigateToSelectedActor,
-                        homeUIState = uiState,
-                        homeSheetUIState = sheetUiState,
-                        navigateToSelectedMovie = navigateToSelectedMovie,
-                        updateSearchType = updateHomeSearchType
-                    )
+                snackbarHost = { HomeSnackbar(it) },
+                content = {
+                    Box(
+                        modifier = modifier.padding(paddingValues = it),
+                    ) {
+                        // Main content for this screen
+                        HomeScreenUI(
+                            navigateToSelectedPerson = navigateToSelectedPerson,
+                            data = data,
+                            navigateToSelectedMovie = navigateToSelectedMovie,
+                            updateSearchType = updateHomeSearchType,
+                        )
 
-                    // Perform network check and show snackbar if offline
-                    IfOfflineShowSnackbar(scaffoldState)
+                        // Perform network check and show snackbar if offline
+                        IfOfflineShowSnackbar(scaffoldState)
 
-                    // If Api key is missing, show a SnackBar.
-                    ApiKeyMissingShowSnackbar(scaffoldState)
-                }
-            }
+                        // If Api key is missing, show a SnackBar.
+                        ApiKeyMissingShowSnackbar(scaffoldState)
+                    }
+                },
+            )
         }
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HomeScreenUI(
-    navigateToSelectedActor: (Int) -> Unit,
+    navigateToSelectedPerson: (Int) -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
-    homeUIState: HomeUIState,
-    homeSheetUIState: HomeSheetUIState,
-    updateSearchType: (navigateToSearchByType: SearchType) -> Unit
+    data: HomeUiState,
+    updateSearchType: (navigateToSearchByType: SearchType) -> Unit,
 ) {
-    val popularActorsListState = rememberLazyListState()
-    val trendingActorsListState = rememberLazyListState()
-    val homePagerState = rememberPagerState()
+    val popularPersonsListState = rememberLazyListState()
+    val trendingPersonsListState = rememberLazyListState()
     val homeTabs = listOf(
         TabItem("Actors"),
         TabItem("Movies"),
-        TabItem("TV Shows")
+        TabItem("TV Shows"),
+    )
+    val homePagerState = rememberPagerState(
+        pageCount = { homeTabs.size },
     )
 
     Column(
-        Modifier.fillMaxSize()
+        Modifier.fillMaxSize(),
     ) {
         TabsContainer(tabs = homeTabs, pagerState = homePagerState)
-        AppDivider(thickness = 1.dp, verticalPadding = 0.dp)
+        CaDivider(
+            thickness = 1.dp,
+            modifier = Modifier.padding(vertical = 0.dp),
+            colorAlpha = 0.1f,
+        )
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
         HorizontalPager(
             state = homePagerState,
-            pageCount = homeTabs.size
         ) {
             when (it) {
                 0 -> {
-                    updateSearchType(SearchType.Actors)
-                    ActorsTabContent(
-                        homeUIState = homeUIState,
-                        navigateToSelectedActor = navigateToSelectedActor,
-                        popularActorsListState = popularActorsListState,
-                        trendingActorsListState = trendingActorsListState
+                    updateSearchType(SearchType.People)
+                    PersonsTabContent(
+                        data = data,
+                        navigateToSelectedPerson = navigateToSelectedPerson,
+                        popularPersonsListState = popularPersonsListState,
+                        trendingPersonsListState = trendingPersonsListState,
                     )
                 }
 
                 1 -> {
                     updateSearchType(SearchType.Movies)
                     MoviesTabContent(
-                        homeUIState = homeUIState,
-                        homeSheetUIState = homeSheetUIState,
-                        navigateToSelectedMovie = navigateToSelectedMovie
+                        data = data,
+                        navigateToSelectedMovie = navigateToSelectedMovie,
                     )
                 }
 
                 2 -> {
-                    TvShowsTabContent(
-                        homeSheetUIState = homeSheetUIState
-                    )
+                    TvShowsTabContent()
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-private fun HomeScreenUILightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
+fun HomeScreenUIPreview() {
+    ComposeActorsTheme {
         HomeScreenUI(
-            navigateToSelectedActor = {},
+            navigateToSelectedPerson = {},
             navigateToSelectedMovie = {},
-            homeSheetUIState = HomeSheetUIState(fakeMovieDetail),
             updateSearchType = {},
-            homeUIState = HomeUIState(
-                popularActorList = fakeActorsList(),
-                trendingActorList = fakeActorsList(),
-                isFetchingActors = false,
+            data = HomeUiState(
+                popularPersonList = fakePersonsList(),
+                trendingPersonList = fakePersonsList(),
+                isFetchingPersons = false,
                 upcomingMoviesList = fakeMovieList(),
-                nowPlayingMoviesList = flow { fakeMovieList() }
-            ),
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
-@Composable
-private fun HomeScreenUIDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
-        HomeScreenUI(
-            navigateToSelectedActor = {},
-            navigateToSelectedMovie = {},
-            homeSheetUIState = HomeSheetUIState(fakeMovieDetail),
-            updateSearchType = {},
-            homeUIState = HomeUIState(
-                popularActorList = fakeActorsList(),
-                trendingActorList = fakeActorsList(),
-                isFetchingActors = false,
-                upcomingMoviesList = fakeMovieList(),
-                nowPlayingMoviesList = flow { fakeMovieList() }
+                nowPlayingMoviesList = flow { fakeMovieList() },
             ),
         )
     }

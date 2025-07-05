@@ -1,13 +1,14 @@
 package com.developersbreach.composeactors.utils
 
-import java.util.*
+import android.icu.util.Calendar
+import com.developersbreach.composeactors.core.network.TmdbApiKey
 
 /**
  * @param dateOfBirth received in "dd-mm-yyyy" format. Gets rid of day and month to read year.
  * @return returns calculated age with current year instance of the person.
  */
 fun calculateAge(
-    dateOfBirth: String?
+    dateOfBirth: String?,
 ): Int {
     var age = 0
     // Since we receive the json data for data of birth with null safe as string,
@@ -29,7 +30,7 @@ fun calculateAge(
  * @return returns number approximately ignoring digits after period.
  */
 fun getPopularity(
-    popularity: Double?
+    popularity: Double?,
 ): String {
     val formatPopularity = popularity.toString().split(".")
     return formatPopularity[0]
@@ -44,7 +45,7 @@ fun getPopularity(
  * if (state != available) -> return city.
  */
 fun getPlaceOfBirth(
-    location: String?
+    location: String?,
 ): String? {
     val findKnownLocation = location?.split(",")
     val cityStateCountry = findKnownLocation?.size?.minus(1)
@@ -54,9 +55,13 @@ fun getPlaceOfBirth(
 }
 
 fun getMovieRuntimeFormatted(
-    runtime: Int?
+    runtime: Int?,
 ): String {
     val hours: Int? = runtime?.div(60)
     val minutes: Int? = runtime?.rem(60)
     return "${hours}h:${minutes}m"
+}
+
+fun isTmdbApiKeyNotValid(): Boolean {
+    return TmdbApiKey.TMDB_API_KEY.isEmpty()
 }

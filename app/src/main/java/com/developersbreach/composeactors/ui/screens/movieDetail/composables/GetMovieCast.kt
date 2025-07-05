@@ -15,43 +15,44 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
-import com.developersbreach.composeactors.data.model.BottomSheetType
-import com.developersbreach.composeactors.data.model.Cast
+import com.developersbreach.composeactors.ui.screens.movieDetail.BottomSheetType
+import com.developersbreach.composeactors.data.movie.model.Cast
+import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailsUIState
+import com.developersbreach.composeactors.ui.screens.movieDetail.MovieDetailsUiState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaTextSubtitle2
 import kotlinx.coroutines.Job
 
 @Composable
 fun GetMovieCast(
-    uiState: MovieDetailsUIState,
+    data: MovieDetailsUiState,
     openMovieDetailsBottomSheet: () -> Job,
-    selectBottomSheetCallback: (BottomSheetType) -> Unit
+    selectBottomSheetCallback: (BottomSheetType) -> Unit,
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp),
     ) {
         items(
-            items = uiState.movieCast,
-            key = { it.actorId }
+            items = data.movieCast,
+            key = { it.personId },
         ) { cast ->
             ItemCast(
                 cast = cast,
-                movieDetailsUIState = uiState,
+                data = data,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
-                selectBottomSheetCallback = selectBottomSheetCallback
+                selectBottomSheetCallback = selectBottomSheetCallback,
             )
         }
     }
@@ -60,9 +61,9 @@ fun GetMovieCast(
 @Composable
 private fun ItemCast(
     cast: Cast,
-    movieDetailsUIState: MovieDetailsUIState,
+    data: MovieDetailsUiState,
     openMovieDetailsBottomSheet: () -> Job,
-    selectBottomSheetCallback: (BottomSheetType) -> Unit
+    selectBottomSheetCallback: (BottomSheetType) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -70,10 +71,12 @@ private fun ItemCast(
             .width(120.dp)
             .clickable {
                 openMovieDetailsBottomSheet()
-                selectBottomSheetCallback(BottomSheetType.ActorDetailBottomSheet.apply {
-                    movieOrActorId = cast.actorId
-                })
-            }
+                selectBottomSheetCallback(
+                    BottomSheetType.ActorDetailBottomSheet.apply {
+                        movieOrPersonId = cast.personId
+                    },
+                )
+            },
     ) {
         LoadNetworkImage(
             imageUrl = cast.castProfilePath,
@@ -84,58 +87,39 @@ private fun ItemCast(
                 .border(
                     width = 1.dp,
                     color = MaterialTheme.colors.onBackground.copy(alpha = 0.5f),
-                    shape = CircleShape
-                )
+                    shape = CircleShape,
+                ),
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Text(
+        CaTextSubtitle2(
             text = cast.castName,
-            style = MaterialTheme.typography.subtitle2,
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             color = MaterialTheme.colors.onBackground,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 4.dp)
+                .padding(horizontal = 4.dp),
         )
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-private fun GetMovieCastLightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
+private fun GetMovieCastPreview() {
+    ComposeActorsTheme {
         GetMovieCast(
-            uiState = MovieDetailsUIState(
+            data = MovieDetailsUiState(
                 movieData = fakeMovieDetail,
                 similarMovies = listOf(),
                 recommendedMovies = listOf(),
                 movieCast = listOf(),
-                isFetchingDetails = false
+                movieProviders = listOf(Flatrate("", 1, "")),
             ),
             openMovieDetailsBottomSheet = { Job() },
-            selectBottomSheetCallback = { }
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
-@Composable
-private fun GetMovieCastDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
-        GetMovieCast(
-            uiState = MovieDetailsUIState(
-                movieData = fakeMovieDetail,
-                similarMovies = listOf(),
-                recommendedMovies = listOf(),
-                movieCast = listOf(),
-                isFetchingDetails = false
-            ),
-            openMovieDetailsBottomSheet = { Job() },
-            selectBottomSheetCallback = {}
+            selectBottomSheetCallback = { },
         )
     }
 }

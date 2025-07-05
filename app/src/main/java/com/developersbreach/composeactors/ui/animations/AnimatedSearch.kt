@@ -1,6 +1,11 @@
 package com.developersbreach.composeactors.ui.animations
 
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector1D
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -21,7 +26,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 private fun AnimateShapeInfinitely(
     animateShape: Animatable<Float, AnimationVector1D>,
     targetValue: Float = 1f,
-    durationMillis: Int = 1000
+    durationMillis: Int = 1000,
 ) {
     LaunchedEffect(animateShape) {
         animateShape.animateTo(
@@ -29,10 +34,10 @@ private fun AnimateShapeInfinitely(
             animationSpec = infiniteRepeatable(
                 animation = tween(
                     durationMillis = durationMillis,
-                    easing = LinearEasing
+                    easing = LinearEasing,
                 ),
-                repeatMode = RepeatMode.Restart
-            )
+                repeatMode = RepeatMode.Restart,
+            ),
         )
     }
 }
@@ -46,7 +51,6 @@ private fun AnimateShapeInfinitely(
  */
 @Composable
 fun AnimatedSearch() {
-
     // Simple progressive circle looking animation
     val animateCircle = remember { Animatable(0f) }.apply {
         AnimateShapeInfinitely(this)
@@ -63,7 +67,7 @@ fun AnimatedSearch() {
 
     // Arcs & Line drawn in canvas at animation final state looks like search icon.
     Canvas(
-        modifier = Modifier
+        modifier = Modifier,
     ) {
         drawArc(
             color = surfaceColor,
@@ -71,7 +75,7 @@ fun AnimatedSearch() {
             sweepAngle = 360f * animateCircle.value,
             useCenter = false,
             size = Size(80f, 80f),
-            style = Stroke(16f, cap = StrokeCap.Round)
+            style = Stroke(16f, cap = StrokeCap.Round),
         )
 
         drawLine(
@@ -80,12 +84,12 @@ fun AnimatedSearch() {
             cap = StrokeCap.Round,
             start = Offset(
                 animateLine.value * 80f,
-                animateLine.value * 80f
+                animateLine.value * 80f,
             ),
             end = Offset(
                 animateLine.value * 110f,
-                animateLine.value * 110f
-            )
+                animateLine.value * 110f,
+            ),
         )
     }
 }

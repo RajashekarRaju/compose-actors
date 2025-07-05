@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.data.model.BottomSheetType
-import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.ui.screens.movieDetail.BottomSheetType
+import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import kotlinx.coroutines.Job
 
@@ -21,28 +21,30 @@ import kotlinx.coroutines.Job
 fun GetRelatedMovies(
     movieList: List<Movie>,
     openMovieDetailsBottomSheet: () -> Job,
-    selectBottomSheetCallback: (BottomSheetType) -> Unit
+    selectBottomSheetCallback: (BottomSheetType) -> Unit,
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(16.dp)
+        contentPadding = PaddingValues(16.dp),
     ) {
         items(
             items = movieList,
-            key = { it.movieId }
+            key = { it.movieId },
         ) { movie ->
             LoadNetworkImage(
-                imageUrl = movie.posterPathUrl,
+                imageUrl = movie.posterUrl,
                 contentDescription = stringResource(R.string.cd_movie_poster),
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier
                     .size(100.dp, 150.dp)
                     .clickable {
-                        selectBottomSheetCallback(BottomSheetType.MovieDetailBottomSheet.apply {
-                            movieOrActorId = movie.movieId
-                        })
+                        selectBottomSheetCallback(
+                            BottomSheetType.MovieDetailBottomSheet.apply {
+                                movieOrPersonId = movie.movieId
+                            },
+                        )
                         openMovieDetailsBottomSheet()
-                    }
+                    },
             )
         }
     }

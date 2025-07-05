@@ -10,10 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 
@@ -24,11 +24,11 @@ import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 internal fun ActorRoundProfile(
     profileUrl: String,
     size: Dp = 120.dp,
-    profilePreview: Int = R.drawable.adele
+    profilePreview: Int = R.drawable.adele,
 ) {
     Box(
         modifier = Modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         LoadNetworkImage(
             imageUrl = profileUrl,
@@ -39,14 +39,20 @@ internal fun ActorRoundProfile(
                 .border(
                     width = 4.dp,
                     color = MaterialTheme.colors.surface,
-                    shape = CircleShape
-                )
+                    shape = CircleShape,
+                ),
         )
     }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-fun ActorRoundProfilePreview() = ComposeActorsTheme {
-    
+fun ActorRoundProfilePreview() {
+    ComposeActorsTheme {
+        ActorRoundProfile(
+            profileUrl = "",
+            size = 120.dp,
+            profilePreview = R.drawable.adele,
+        )
+    }
 }

@@ -2,7 +2,11 @@ package com.developersbreach.composeactors.ui.components
 
 import android.graphics.Rect
 import android.view.ViewTreeObserver
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalView
 
 /**
@@ -26,12 +30,12 @@ fun closeKeyboardAndNavigateUp(
 }
 
 enum class KeyboardState {
-    Opened, Closed
+    Opened,
+    Closed,
 }
 
 @Composable
 fun getCurrentKeyboardState(): State<KeyboardState> {
-
     val keyboardState = remember { mutableStateOf(KeyboardState.Closed) }
     val view = LocalView.current
 
@@ -68,17 +72,16 @@ fun getCurrentKeyboardState(): State<KeyboardState> {
  *
  * Then call focus requester to the modifier.
  * modifier = Modifier.focusRequester(focusRequester)
- */
-/*
+ *
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LaunchKeyboardOnScreenOpen(
-    focusRequester: FocusRequester,
-    keyboardController: SoftwareKeyboardController?,
+ focusRequester: FocusRequester,
+ keyboardController: SoftwareKeyboardController?,
 ) {
-    LaunchedEffect(true) {
-        focusRequester.requestFocus()
-        keyboardController?.show()
-    }
+ LaunchedEffect(true) {
+ focusRequester.requestFocus()
+ keyboardController?.show()
+ }
 }
-*/
+**/

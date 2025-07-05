@@ -17,36 +17,37 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.data.model.HomeOptionItems
+import com.developersbreach.composeactors.annotations.PreviewLightDark
+import com.developersbreach.composeactors.ui.screens.home.HomeOptionItems
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaIcon
+import com.developersbreach.designsystem.components.CaIconButton
+import com.developersbreach.designsystem.components.CaTextH5
+import com.developersbreach.designsystem.components.CaTextH6
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun OptionsModalSheetContent(
     modalSheetSheet: ModalBottomSheetState,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    navigateToFavorite:() -> Unit,
+    navigateToWatchlist: () -> Unit,
     navigateToSearch: () -> Unit,
-    navigateToProfile: () -> Unit
+    navigateToProfile: () -> Unit,
+    navigateToAbout: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -54,36 +55,33 @@ fun OptionsModalSheetContent(
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(top = 28.dp, bottom = 32.dp)
-            .navigationBarsPadding()
+            .navigationBarsPadding(),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp)
+                .padding(start = 20.dp),
         ) {
-            IconButton(
+            CaIconButton(
                 modifier = Modifier.size(28.dp),
+                iconModifier = Modifier,
                 onClick = {
                     coroutineScope.launch {
                         modalSheetSheet.hide()
                     }
-                }
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_down),
-                    contentDescription = "",
-                    tint = MaterialTheme.colors.onBackground
-                )
-            }
+                },
+                painter = painterResource(id = R.drawable.ic_arrow_down),
+                contentDescription = "",
+                tint = MaterialTheme.colors.onBackground,
+            )
 
             Spacer(modifier = Modifier.width(20.dp))
 
-            Text(
+            CaTextH5(
                 text = stringResource(id = R.string.app_name),
                 color = MaterialTheme.colors.onBackground,
-                style = MaterialTheme.typography.h5,
-                modifier = Modifier
+                modifier = Modifier,
             )
         }
 
@@ -91,14 +89,15 @@ fun OptionsModalSheetContent(
 
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(2.dp),
-            contentPadding = PaddingValues(horizontal = 4.dp)
+            contentPadding = PaddingValues(horizontal = 4.dp),
         ) {
-            items(HomeOptionItems.homeOptions) {option ->
+            items(HomeOptionItems.homeOptions) { option ->
                 ItemOptionRow(
                     option = option,
-                    navigateToFavorite = navigateToFavorite,
+                    navigateToWatchlist = navigateToWatchlist,
                     navigateToSearch = navigateToSearch,
-                    navigateToProfile = navigateToProfile
+                    navigateToProfile = navigateToProfile,
+                    navigateToAbout = navigateToAbout,
                 )
             }
         }
@@ -108,9 +107,10 @@ fun OptionsModalSheetContent(
 @Composable
 private fun ItemOptionRow(
     option: HomeOptionItems,
-    navigateToFavorite: () -> Unit,
+    navigateToWatchlist: () -> Unit,
     navigateToSearch: () -> Unit,
-    navigateToProfile: () -> Unit
+    navigateToProfile: () -> Unit,
+    navigateToAbout: () -> Unit,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -119,53 +119,44 @@ private fun ItemOptionRow(
             .clip(RoundedCornerShape(100))
             .clickable {
                 when (option.id) {
-                    1 -> navigateToFavorite()
+                    1 -> navigateToWatchlist()
                     2 -> navigateToSearch()
                     3 -> navigateToProfile()
+                    4 -> navigateToAbout()
                 }
             }
-            .padding(top = 8.dp, start = 20.dp, end = 20.dp, bottom = 8.dp)
+            .padding(top = 8.dp, start = 20.dp, end = 20.dp, bottom = 8.dp),
     ) {
-        Icon(
+        CaIcon(
             painter = painterResource(id = option.icon),
             contentDescription = "",
-            tint = MaterialTheme.colors.onBackground.copy(alpha = 0.75f)
+            tint = MaterialTheme.colors.onBackground.copy(alpha = 0.75f),
+            modifier = Modifier,
         )
 
         Spacer(modifier = Modifier.width(24.dp))
 
-        Text(
-            text = option.title,
+        CaTextH6(
+            text = stringResource(option.title),
             color = MaterialTheme.colors.onBackground.copy(alpha = 0.75f),
-            style = MaterialTheme.typography.h6,
+            modifier = Modifier,
         )
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
-@Preview
+@PreviewLightDark
 @Composable
-private fun OptionsModalSheetContentLightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
+fun OptionsModalSheetContentPreview() {
+    ComposeActorsTheme {
         OptionsModalSheetContent(
-            modalSheetSheet = ModalBottomSheetState(ModalBottomSheetValue.Expanded),
-            navigateToFavorite = {},
+            navigateToWatchlist = {},
             navigateToSearch = {},
-            navigateToProfile = {}
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Preview
-@Composable
-private fun OptionsModalSheetContentDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
-        OptionsModalSheetContent(
-            modalSheetSheet = ModalBottomSheetState(ModalBottomSheetValue.Expanded),
-            navigateToFavorite = {},
-            navigateToSearch = {},
-            navigateToProfile = {}
+            navigateToProfile = {},
+            navigateToAbout = {},
+            modalSheetSheet = ModalBottomSheetState(
+                initialValue = ModalBottomSheetValue.Expanded,
+                density = LocalDensity.current,
+            ),
         )
     }
 }

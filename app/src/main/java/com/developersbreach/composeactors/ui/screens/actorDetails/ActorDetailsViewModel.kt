@@ -3,18 +3,20 @@ package com.developersbreach.composeactors.ui.screens.actorDetails
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.model.ActorDetail
-import com.developersbreach.composeactors.data.model.toFavoriteActor
-import com.developersbreach.composeactors.data.repository.actor.ActorRepository
-import com.developersbreach.composeactors.data.repository.movie.MovieRepository
-import com.developersbreach.composeactors.domain.useCase.RemoveActorsFromFavoritesUseCase
-import com.developersbreach.composeactors.ui.navigation.AppDestinations.ACTOR_DETAIL_ID_KEY
+import androidx.navigation.toRoute
+import arrow.core.raise.either
+import com.developersbreach.composeactors.data.movie.repository.MovieRepository
+import com.developersbreach.composeactors.data.person.model.PersonDetail
+import com.developersbreach.composeactors.data.person.repository.PersonRepository
+import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
+import com.developersbreach.composeactors.domain.core.ErrorReporter
+import com.developersbreach.composeactors.ui.components.BaseViewModel
+import com.developersbreach.composeactors.ui.components.UiState
+import com.developersbreach.composeactors.ui.components.modifyLoadedState
+import com.developersbreach.composeactors.ui.navigation.AppDestinations
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -26,84 +28,98 @@ import timber.log.Timber
 class ActorDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val movieRepository: MovieRepository,
-    private val actorRepository: ActorRepository,
-    private val removeActorsFromFavoritesUseCase: RemoveActorsFromFavoritesUseCase
-) : ViewModel() {
+    private val personRepository: PersonRepository,
+    private val watchlistRepository: WatchlistRepository,
+    errorReporter: ErrorReporter,
+) : BaseViewModel(errorReporter) {
 
-    private val actorId: Int = checkNotNull(savedStateHandle[ACTOR_DETAIL_ID_KEY])
+    private val personId: Int = savedStateHandle.toRoute<AppDestinations.ActorDetail>().personId
 
-    var detailUIState by mutableStateOf(ActorDetailsUIState(actorData = null))
+    var detailUIState: UiState<ActorDetailsUiState> by mutableStateOf(UiState.Loading)
         private set
-
-    var sheetUIState by mutableStateOf(ActorDetailsSheetUIState())
-        private set
-
-    val isFavoriteMovie: LiveData<Int> = actorRepository.isFavoriteActor(actorId)
 
     init {
         viewModelScope.launch {
-            try {
-                startFetchingDetails()
-            } catch (e: IOException) {
-                Timber.e("$e")
-            }
+            startFetchingDetails()
         }
     }
 
     private suspend fun startFetchingDetails() {
-        detailUIState = ActorDetailsUIState(isFetchingDetails = true, actorData = null)
-        val actorData = actorRepository.getSelectedActorData(actorId)
-        val castData = actorRepository.getCastData(actorId)
-        detailUIState = ActorDetailsUIState(
-            castList = castData,
-            actorData = actorData,
-            isFetchingDetails = false
+        detailUIState = UiState.Success(ActorDetailsUiState(isFetchingDetails = true))
+        detailUIState = either {
+            ActorDetailsUiState(
+                castList = personRepository.getCastDetails(personId).bind(),
+                actorData = personRepository.getPersonDetails(personId).bind(),
+                isPersonInWatchlist = watchlistRepository.checkIfPersonIsInWatchlist(personId).bind(),
+                isFetchingDetails = false,
+            )
+        }.fold(
+            ifLeft = { UiState.Error(it) },
+            ifRight = { UiState.Success(it) },
         )
     }
 
-    /**
-     * @param movieId for querying selected movie details.
-     * This function will be triggered only when user clicks any movie items.
-     * Updates the data values to show in modal sheet.
-     */
     fun getSelectedMovieDetails(
-        movieId: Int?
+        movieId: Int?,
     ) {
         viewModelScope.launch {
-            try {
-                movieId?.let { id ->
-                    val movieData = movieRepository.getSelectedMovieData(id)
-                    sheetUIState = ActorDetailsSheetUIState(selectedMovieDetails = movieData)
-                }
-            } catch (e: IOException) {
-                Timber.e("$e")
+            if (movieId == null) {
+                Timber.e("Failed to getSelectedMovieDetails, since id was null")
+                showMessage("Failed to load movie details.")
+                return@launch
             }
+            detailUIState = movieRepository.getMovieDetails(
+                movieId = movieId,
+            ).fold(
+                ifLeft = { UiState.Error(it) },
+                ifRight = {
+                    detailUIState.modifyLoadedState {
+                        copy(selectedMovieDetails = it)
+                    }
+                },
+            )
         }
     }
 
-    fun addActorToFavorites() {
+    fun addActorToWatchlist(
+        personDetail: PersonDetail?,
+    ) {
         viewModelScope.launch {
-            val actor: ActorDetail? = detailUIState.actorData
-            if (actor != null) {
-                actorRepository.addActorsToFavorite(
-                    actor.toFavoriteActor()
-                )
-            } else {
-                Timber.e("Id of ${actor} was null while adding to favorite operation.")
+            if (personDetail == null) {
+                Timber.e("Person was null while adding to watchlist operation.")
+                showMessage("Failed to load person details.")
+                return@launch
             }
+
+            showLoading()
+            watchlistRepository.addPersonToWatchlist(
+                personDetail = personDetail,
+            ).fold(
+                ifLeft = { detailUIState = UiState.Error(it) },
+                ifRight = { showMessage("Added ${personDetail.personName} to watchlist") },
+            )
+            hideLoading()
         }
     }
 
-    fun removeActorFromFavorites() {
+    fun removeActorFromWatchlist(
+        personDetail: PersonDetail?,
+    ) {
         viewModelScope.launch {
-            val actor: ActorDetail? = detailUIState.actorData
-            if (actor != null) {
-                removeActorsFromFavoritesUseCase(
-                    actor.toFavoriteActor()
-                )
-            } else {
-                Timber.e("Id of ${actor} was null while delete operation.")
+            if (personDetail == null) {
+                Timber.e("Failed to remove person while adding to watchlist operation.")
+                showMessage("Failed to load person details.")
+                return@launch
             }
+
+            showLoading()
+            watchlistRepository.removePersonFromWatchlist(
+                personId = personDetail.personId,
+            ).fold(
+                ifLeft = { detailUIState = UiState.Error(it) },
+                ifRight = { showMessage("Removed ${personDetail.personName} to watchlist") },
+            )
+            hideLoading()
         }
     }
 }
