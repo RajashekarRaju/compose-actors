@@ -122,7 +122,7 @@ fun SearchAppBar(
                         iconModifier = Modifier,
                         imageVector = Icons.Rounded.Clear,
                         tint = MaterialTheme.colors.onBackground,
-                        contentDescription = stringResource(id = R.string.cd_clear_icon),
+                        contentDescription = "Bla bla",
                     )
                 } else {
                     CaIconButton(
