@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import com.developersbreach.composeactors.domain.core.ErrorReporter
 import com.developersbreach.composeactors.domain.session.GetSessionState
 import com.developersbreach.composeactors.domain.session.SessionState
 import com.developersbreach.composeactors.ui.components.BaseViewModel
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val getSessionState: GetSessionState,
-) : BaseViewModel() {
+    errorReporter: ErrorReporter,
+) : BaseViewModel(errorReporter) {
 
     var uiState: UiState<SessionState> by mutableStateOf(UiState.Loading)
         private set

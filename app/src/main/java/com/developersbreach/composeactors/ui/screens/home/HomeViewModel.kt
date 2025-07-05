@@ -8,6 +8,7 @@ import androidx.paging.cachedIn
 import arrow.core.raise.either
 import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
+import com.developersbreach.composeactors.domain.core.ErrorReporter
 import com.developersbreach.composeactors.domain.movie.GetPagedMovies
 import com.developersbreach.composeactors.ui.components.BaseViewModel
 import com.developersbreach.composeactors.ui.components.UiState
@@ -27,7 +28,8 @@ class HomeViewModel @Inject constructor(
     private val personRepository: PersonRepository,
     private val movieRepository: MovieRepository,
     private val getPagedMovies: GetPagedMovies,
-) : BaseViewModel() {
+    errorReporter: ErrorReporter,
+) : BaseViewModel(errorReporter) {
 
     var uiState: UiState<HomeUiState> by mutableStateOf(UiState.Loading)
         private set

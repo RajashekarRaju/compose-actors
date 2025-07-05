@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.auth.AuthenticationService
+import com.developersbreach.composeactors.domain.core.ErrorReporter
 import com.developersbreach.composeactors.domain.session.GetSessionState
 import com.developersbreach.composeactors.domain.session.SessionState
 import com.developersbreach.composeactors.ui.components.BaseViewModel
@@ -17,7 +18,8 @@ import kotlinx.coroutines.launch
 class ProfileViewModel @Inject constructor(
     private val getSessionState: GetSessionState,
     private val authenticationService: AuthenticationService,
-) : BaseViewModel() {
+    errorReporter: ErrorReporter,
+) : BaseViewModel(errorReporter) {
 
     var uiState: UiState<ProfileUiState> by mutableStateOf(UiState.Loading)
         private set
