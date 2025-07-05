@@ -5,9 +5,22 @@
 ## Download the APK
 Access the latest APK for Compose Actors from the link below.
 
-[![Get APK](https://img.shields.io/badge/Get%20APK-maroon?style=for-the-badge&logo=android&logoColor=white)](https://github.com/RajashekarRaju/compose-actors/releases/download/v0.3.0/app-release-v0.3.0.apk)
+[![Get APK](https://img.shields.io/badge/Get%20APK-maroon?style=for-the-badge&logo=android&logoColor=white)](https://github.com/RajashekarRaju/compose-actors/releases/download/v0.4.0/app-release.apk)
 
-## Current Roadmap v0.4.0
+## Current Roadmap v0.5.0
+
+- [x] Prepare development and production environments for initial release
+- [ ] Improve error handling and user feedback messages.
+- [ ] Complete tests for app navigation for all destinations.
+- [ ] Create/Review privacy policy, usage rights, attributions for store publishing.
+- [ ] Create publicising assets, banners for store.
+- [ ] Create production environment for existing services and integrations used in app.
+- [ ] Complete remaining screenshot tests
+- [ ] Cover offline handling, network requiring flows, edge cases.
+- [ ] Ktlint tests for validating hardcode strings and resources, enforce localization.
+
+## Roadmap v0.4.0
+<details>
 
 - [x] Move material design components and dependencies to separate design-system module
 - [x] Extend Konsist tests for all design system component usages.
@@ -25,14 +38,15 @@ Access the latest APK for Compose Actors from the link below.
 - [x] Authenticated users can create movie watchlist to compose actors backend api.
 - [x] Authenticated users can create people watchlist to compose actors backend api.
 
-## Current Roadmap v0.5.0
+</details>
+
+## Roadmap v0.6.0
 
 - [ ] Add new feature seasons or series information to app.
 - [ ] Include seasons in home tabs navigation.
 - [ ] Allow adding seasons to favorites.
 - [ ] Move favorites section from home tab to new place (Restructure all screen flows).
 - [ ] Collapsable TopBars, BottomBars, Scroll effects, new animations.
-- [ ] Write tests for app navigation for all composable destinations.
 - [ ] Migrate to Navigation3
 - [ ] Migrate from Material2 -> Material3
 - [ ] Allow users to tap movie’s streaming option & open the corresponding app (e.g - Netflix).
