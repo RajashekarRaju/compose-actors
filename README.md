@@ -51,6 +51,8 @@ Access the latest APK for Compose Actors from the link below.
 - [ ] Migrate from Material2 -> Material3
 - [ ] Allow users to tap movie’s streaming option & open the corresponding app (e.g - Netflix).
 - [ ] Enable in-app playback of movie trailers so users can watch previews”
+- [ ] Generic AppBar centered
+- [ ] CASurface
 
 ## V3 Previews
 

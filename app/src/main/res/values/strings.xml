@@ -60,4 +60,20 @@
     <string name="sign_up_success">Sign up successful!\n\nCompleting login process now.</string>
     <string name="no_actors_found_message">No actors found for your search.</string>
     <string name="no_movies_found_message">No movies found for your search.</string>
+
+    <!-- Error Messages -->
+    <string name="network_error">Network error occurred. Please check your connection.</string>
+    <string name="database_error">Database error: %1$s</string>
+    <string name="authentication_error">Authentication error: %1$s</string>
+    <string name="validation_error">Validation error: %1$s</string>
+    <string name="unexpected_error">Unknown error occurred</string>
+
+    <string name="home_error">An error occurred while loading home data.</string>
+    <string name="search_error">An error occurred while searching.</string>
+    <string name="watchlist_error">An error occurred while loading watchlist.</string>
+    <string name="login_error">An error occurred during login.</string>
+    <string name="signup_error">An error occurred during sign up.</string>
+    <string name="profile_error">An error occurred while loading profile.</string>
+    <string name="movie_details_error">An error occurred while loading movie details.</string>
+    <string name="actor_details_error">An error occurred while loading actor details.</string>
 </resources>

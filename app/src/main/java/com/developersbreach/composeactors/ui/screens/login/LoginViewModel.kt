@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.auth.AuthenticationService
+import com.developersbreach.composeactors.domain.core.ErrorReporter
 import com.developersbreach.composeactors.ui.components.BaseViewModel
 import com.developersbreach.composeactors.ui.components.UiState
 import com.developersbreach.composeactors.ui.components.modifyLoadedState
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val authenticationService: AuthenticationService,
-) : BaseViewModel() {
+    errorReporter: ErrorReporter,
+) : BaseViewModel(errorReporter) {
 
     var uiState: UiState<LoginUiState> by mutableStateOf(UiState.Success(LoginUiState()))
         private set
@@ -46,18 +48,18 @@ class LoginViewModel @Inject constructor(
         email: String,
         password: String,
     ) {
-        if (email.isEmpty() || password.isEmpty()) {
-            return
-        }
-
         viewModelScope.launch {
+            if (email.isEmpty() || password.isEmpty()) {
+                showMessage("Email or Password is invalid")
+                return@launch
+            }
             showLoading()
-            uiState = authenticationService.signIn(
+            authenticationService.signIn(
                 email = email,
                 password = password,
             ).fold(
-                ifLeft = { UiState.Error(it) },
-                ifRight = { UiState.Success(LoginUiState(loginCompleted = true)) },
+                ifLeft = { showMessage(it.localizedMessage ?: "Failed to login") },
+                ifRight = { uiState = UiState.Success(LoginUiState(loginCompleted = true)) },
             )
             hideLoading()
         }

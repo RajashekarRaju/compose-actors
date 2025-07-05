@@ -7,13 +7,16 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.developersbreach.composeactors.ui.screens.search.SearchUiMessage
-import com.developersbreach.composeactors.ui.screens.search.toResId
+import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.ui.components.UiMessage.Companion.toMessage
 import kotlinx.coroutines.flow.SharedFlow
 import timber.log.Timber
 
@@ -27,23 +30,26 @@ fun <T> UiStateHandler(
 ) {
     val shouldDismissErrorDialog = rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
+    var dialogMessage by remember { mutableStateOf<UiMessage?>(null) }
 
     LaunchedEffect(Unit) {
         shouldDismissErrorDialog.value = false
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(uiEvent) {
         uiEvent.collect { event ->
             when (event) {
-                is UiEvent.ShowMessage -> {
-                    when (val message = event.message) {
-                        is String -> message
-                        is SearchUiMessage -> context.getString(message.toResId())
-                        else -> message.toString()
-                    }.let {
-                        scaffoldState.snackbarHostState.showSnackbar(it)
-                    }
-                }
+                is UiEvent.ShowMessage -> scaffoldState.snackbarHostState.showSnackbar(
+                    message = event.uiMessage.title.toMessage(context),
+                    duration = when (event.duration) {
+                        MessageDuration.SHORT -> androidx.compose.material.SnackbarDuration.Short
+                        MessageDuration.LONG -> androidx.compose.material.SnackbarDuration.Long
+                        MessageDuration.INDEFINITE -> androidx.compose.material.SnackbarDuration.Indefinite
+                    },
+                )
+
+                is UiEvent.ShowDialog -> dialogMessage = event.message
+                UiEvent.NavigateBack -> Unit
             }
         }
     }
@@ -64,7 +70,8 @@ fun <T> UiStateHandler(
                     val errorDetails = uiState.throwable
                     Timber.e(errorDetails)
                     ShowAlertDialog(
-                        onButtonClick = { shouldDismissErrorDialog.value = true },
+                        isDismissible = false,
+                        onDismissRequest = { !shouldDismissErrorDialog.value },
                         modifier = Modifier,
                         title = "Error occurred",
                         description = errorDetails.localizedMessage ?: "Error information not available",
@@ -78,6 +85,15 @@ fun <T> UiStateHandler(
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center),
                 color = MaterialTheme.colors.onBackground,
+            )
+        }
+
+        dialogMessage?.let {
+            ShowAlertDialog(
+                title = context.getString(R.string.unexpected_error),
+                description = it.title.toMessage(context),
+                isDismissible = it.isDismissible,
+                onDismissRequest = { dialogMessage = null },
             )
         }
     }
