@@ -13,7 +13,10 @@
 .externalNativeBuild
 .cxx
 local.properties
-/misc.xml
+/.idea/misc.xml
+/.idea/compiler.xml
+/.idea/gradle.xml
 /.idea/appInsightsSettings.xml
 /.idea/deploymentTargetSelector.xml
 /.idea/runConfigurations.xml
+/ktlint-rules/build
