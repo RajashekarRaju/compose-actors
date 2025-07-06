@@ -1,6 +1,7 @@
 package com.developersbreach.composeactors.ui.components
 
 import com.developersbreach.composeactors.domain.core.ErrorSeverity
+import com.developersbreach.composeactors.domain.core.UserMessageKey
 
 sealed class UiEvent {
     data class ShowMessage(
@@ -22,7 +23,7 @@ enum class MessageDuration {
     INDEFINITE,
 }
 
-fun String.showMessage(
+fun UiText.showMessage(
     actionType: ActionType? = null,
     action: (() -> Unit)? = null,
     duration: MessageDuration = MessageDuration.SHORT,
@@ -39,7 +40,24 @@ fun String.showMessage(
     )
 }
 
-fun String.showDialog(
+fun String.showMessage(
+    actionType: ActionType? = null,
+    action: (() -> Unit)? = null,
+    duration: MessageDuration = MessageDuration.SHORT,
+    severity: ErrorSeverity = ErrorSeverity.INFO,
+): UiEvent.ShowMessage =
+    UiText.DynamicString(this).showMessage(actionType, action, duration, severity)
+
+fun UserMessageKey.showMessage(
+    vararg args: Any,
+    actionType: ActionType? = null,
+    action: (() -> Unit)? = null,
+    duration: MessageDuration = MessageDuration.SHORT,
+    severity: ErrorSeverity = ErrorSeverity.INFO,
+): UiEvent.ShowMessage =
+    UiText.Message(this, args.toList()).showMessage(actionType, action, duration, severity)
+
+fun UiText.showDialog(
     actionType: ActionType? = null,
     action: (() -> Unit)? = null,
     isDismissible: Boolean = true,
@@ -55,3 +73,20 @@ fun String.showDialog(
         isDismissible = isDismissible,
     )
 }
+
+fun String.showDialog(
+    actionType: ActionType? = null,
+    action: (() -> Unit)? = null,
+    isDismissible: Boolean = true,
+    severity: ErrorSeverity = ErrorSeverity.INFO,
+): UiEvent.ShowDialog =
+    UiText.DynamicString(this).showDialog(actionType, action, isDismissible, severity)
+
+fun UserMessageKey.showDialog(
+    vararg args: Any,
+    actionType: ActionType? = null,
+    action: (() -> Unit)? = null,
+    isDismissible: Boolean = true,
+    severity: ErrorSeverity = ErrorSeverity.INFO,
+): UiEvent.ShowDialog =
+    UiText.Message(this, args.toList()).showDialog(actionType, action, isDismissible, severity)

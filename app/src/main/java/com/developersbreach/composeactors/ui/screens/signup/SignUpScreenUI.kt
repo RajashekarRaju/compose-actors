@@ -36,6 +36,8 @@ import com.developersbreach.designsystem.components.CaTextFieldIconConfig
 import com.developersbreach.designsystem.components.CaTextH5
 import com.developersbreach.designsystem.components.CaTextH6
 import com.developersbreach.designsystem.components.CaVerticalSpacer
+import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
+import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 
 @Composable
 fun SignUpScreenUI(
@@ -69,6 +71,8 @@ fun SignUpScreenUI(
                     .fillMaxSize()
                     .padding(start = 20.dp, end = 20.dp),
             ) {
+                IfOfflineShowSnackbar(scaffoldState)
+                ApiKeyMissingShowSnackbar(scaffoldState)
                 CaTextH5(
                     text = stringResource(R.string.app_name),
                     modifier = Modifier,

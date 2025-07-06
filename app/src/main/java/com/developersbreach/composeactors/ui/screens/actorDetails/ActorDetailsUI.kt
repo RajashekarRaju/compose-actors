@@ -19,6 +19,8 @@ import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonDetail
 import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGenerator
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
+import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
+import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.screens.actorDetails.composables.ActorBackgroundWithGradientForeground
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
@@ -65,6 +67,8 @@ internal fun ActorDetailsUI(
                 imageUrl = actorProfileUrl,
             ) {
                 Box {
+                    IfOfflineShowSnackbar(scaffoldState)
+                    ApiKeyMissingShowSnackbar(scaffoldState)
                     // Draws gradient from image and overlays on it.
                     ActorBackgroundWithGradientForeground(imageUrl = actorProfileUrl)
 

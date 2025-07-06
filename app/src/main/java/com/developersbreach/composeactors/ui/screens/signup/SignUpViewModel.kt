@@ -6,6 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.auth.AuthenticationService
 import com.developersbreach.composeactors.domain.core.ErrorReporter
+import com.developersbreach.composeactors.domain.core.UserMessageKey
+import com.developersbreach.composeactors.domain.core.SignInException
+import com.developersbreach.composeactors.ui.components.UiText
 import com.developersbreach.composeactors.ui.components.BaseViewModel
 import com.developersbreach.composeactors.ui.components.UiState
 import com.developersbreach.composeactors.ui.components.modifyLoadedState
@@ -72,11 +75,11 @@ class SignUpViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                showMessage("Fields cannot be empty")
+                showMessage(UserMessageKey.FieldsEmpty)
                 return@launch
             }
             if (password != confirmPassword) {
-                showMessage("Passwords do not match")
+                showMessage(UserMessageKey.PasswordMismatch)
                 return@launch
             }
             showLoading()
@@ -115,7 +118,7 @@ class SignUpViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             if (code.isEmpty()) {
-                showMessage("Verification code is required")
+                showMessage(UserMessageKey.VerificationRequired)
                 return@launch
             }
             showLoading()
@@ -144,7 +147,13 @@ class SignUpViewModel @Inject constructor(
                 email = email,
                 password = password,
             ).fold(
-                ifLeft = { showMessage(it.localizedMessage ?: "Failed to login") },
+                ifLeft = {
+                    when (it) {
+                        is SignInException -> showMessage(it.key)
+                        else -> it.localizedMessage?.let { msg -> showMessage(UiText.DynamicString(msg)) }
+                            ?: showMessage(UserMessageKey.FailedLogin)
+                    }
+                },
                 ifRight = {
                     uiState = UiState.Success(
                         SignUpUiState(signUpStep = SignUpStep.LoginProcessCompleted),

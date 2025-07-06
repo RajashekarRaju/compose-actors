@@ -10,7 +10,7 @@ import com.developersbreach.composeactors.domain.core.ErrorMessage
 import com.developersbreach.composeactors.domain.core.ErrorReporter
 import com.developersbreach.composeactors.domain.core.ErrorSeverity
 import com.developersbreach.composeactors.domain.core.toAppError
-import com.developersbreach.composeactors.ui.components.UiMessage.Companion.toUiMessage
+import com.developersbreach.composeactors.domain.core.UserMessageKey
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -110,7 +110,7 @@ abstract class BaseViewModel(
     }
 
     protected suspend fun showMessage(
-        message: String,
+        message: UiText,
         actionType: ActionType? = null,
         action: (() -> Unit)? = null,
         duration: MessageDuration = MessageDuration.SHORT,
@@ -126,8 +126,25 @@ abstract class BaseViewModel(
         )
     }
 
+    protected suspend fun showMessage(
+        key: UserMessageKey,
+        vararg args: Any,
+        actionType: ActionType? = null,
+        action: (() -> Unit)? = null,
+        duration: MessageDuration = MessageDuration.SHORT,
+        severity: ErrorSeverity = ErrorSeverity.INFO,
+    ) {
+        showMessage(
+            message = UiText.Message(key, args.toList()),
+            actionType = actionType,
+            action = action,
+            duration = duration,
+            severity = severity,
+        )
+    }
+
     protected suspend fun showDialog(
-        message: String,
+        message: UiText,
         actionType: ActionType? = null,
         action: (() -> Unit)? = null,
         severity: ErrorSeverity = ErrorSeverity.INFO,
@@ -140,6 +157,23 @@ abstract class BaseViewModel(
                 severity = severity,
                 isDismissible = isDismissible,
             ),
+        )
+    }
+
+    protected suspend fun showDialog(
+        key: UserMessageKey,
+        vararg args: Any,
+        actionType: ActionType? = null,
+        action: (() -> Unit)? = null,
+        severity: ErrorSeverity = ErrorSeverity.INFO,
+        isDismissible: Boolean = true,
+    ) {
+        showDialog(
+            message = UiText.Message(key, args.toList()),
+            actionType = actionType,
+            action = action,
+            severity = severity,
+            isDismissible = isDismissible,
         )
     }
 }

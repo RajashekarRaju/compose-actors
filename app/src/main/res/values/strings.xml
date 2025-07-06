@@ -25,6 +25,11 @@
     <string name="offline_snackbar_message">You Are Offline!</string>
     <string name="missing_api_key_snackbar_message">Tmdb Api Key Missing</string>
 
+    <!-- Generic dialog labels -->
+    <string name="dialog_dismiss">Dismiss</string>
+    <string name="error_dialog_title">Error occurred</string>
+    <string name="error_information_not_available">Error information not available</string>
+
     <string name="no_items_found_message">You Have Added Nothing To Watchlist.</string>
     <string name="add_to_watchlist_text">Add to watchlist</string>
     <string name="remove_from_watchlist_text">Remove from watchlist</string>
@@ -55,6 +60,7 @@
     <string name="confirm_password">confirm password</string>
     <string name="error_password_mismatch">Passwords do not match</string>
     <string name="error_empty_fields">Please fill all fields</string>
+    <string name="error_verification_required">Please enter the confirmation code</string>
     <string name="confirmation_code">Confirmation Code</string>
     <string name="confirm">Confirm</string>
     <string name="sign_up_success">Sign up successful!\n\nCompleting login process now.</string>
@@ -76,4 +82,17 @@
     <string name="profile_error">An error occurred while loading profile.</string>
     <string name="movie_details_error">An error occurred while loading movie details.</string>
     <string name="actor_details_error">An error occurred while loading actor details.</string>
+
+    <!-- Misc user messages -->
+    <string name="error_invalid_email_or_password">Email or Password is invalid</string>
+    <string name="error_failed_login">Failed to login</string>
+    <string name="error_fields_empty">Fields cannot be empty</string>
+    <string name="message_no_results_found">No results found</string>
+    <string name="error_load_movie_details">Failed to load movie details.</string>
+    <string name="error_load_person_details">Failed to load person details.</string>
+    <string name="watchlist_added">Added %1$s to watchlist</string>
+    <string name="watchlist_removed">Removed %1$s from watchlist</string>
+    <string name="error_mfa_code_required">Two-factor authentication required.</string>
+    <string name="error_new_password_required">Please set a new password to continue.</string>
+    <string name="error_reset_password_required">Password reset required. Use forgot password.</string>
 </resources>

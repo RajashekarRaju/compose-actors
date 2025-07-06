@@ -35,6 +35,8 @@ import com.developersbreach.designsystem.components.CaOutlinedTextField
 import com.developersbreach.designsystem.components.CaScaffold
 import com.developersbreach.designsystem.components.CaTextFieldIconConfig
 import com.developersbreach.designsystem.components.CaVerticalSpacer
+import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
+import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 
 @Composable
 fun LoginScreenUI(
@@ -55,6 +57,8 @@ fun LoginScreenUI(
             modifier = Modifier.fillMaxSize().padding(paddingValues),
             contentAlignment = Alignment.Center,
         ) {
+            IfOfflineShowSnackbar(scaffoldState)
+            ApiKeyMissingShowSnackbar(scaffoldState)
             CaImage(
                 painter = painterResource(id = R.drawable.login_background),
                 contentDescription = null,

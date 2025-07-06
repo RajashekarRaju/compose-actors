@@ -26,6 +26,8 @@ import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.watchlist.model.WatchlistPerson
 import com.developersbreach.composeactors.ui.components.TabItem
 import com.developersbreach.composeactors.ui.components.TabsContainer
+import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
+import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.screens.watchlist.tabs.WatchlistMoviesTabContent
 import com.developersbreach.composeactors.ui.screens.watchlist.tabs.WatchlistPersonsTabContent
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
@@ -69,6 +71,8 @@ fun WatchlistScreenUI(
                     .fillMaxSize()
                     .padding(paddingValues = paddingValues),
             ) {
+                IfOfflineShowSnackbar(scaffoldState)
+                ApiKeyMissingShowSnackbar(scaffoldState)
                 TabsContainer(tabs = watchlistTabs, pagerState = watchlistPagerState)
                 CaDivider(
                     thickness = 1.dp,

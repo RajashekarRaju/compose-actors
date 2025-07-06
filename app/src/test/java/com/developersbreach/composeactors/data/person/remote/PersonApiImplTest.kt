@@ -6,6 +6,7 @@ import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfi
 import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_BASE_URL
 import com.developersbreach.composeactors.core.network.HttpRequestHandler
 import com.developersbreach.composeactors.core.network.PagedResponse
+import com.developersbreach.composeactors.domain.core.ErrorReporter
 import com.developersbreach.composeactors.data.HttpClientProvider.createHttpClient
 import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
@@ -53,7 +54,7 @@ class PersonApiImplTest {
             response = Json.encodeToJsonElement(pagedResponse).toString(),
         )
 
-        val requestHandler = HttpRequestHandler(client)
+        val requestHandler = HttpRequestHandler(client, mockk<ErrorReporter>(relaxed = true))
         val result = PersonApiImpl(requestHandler).getPopularPersons()
 
         assertEquals(Either.Right(pagedResponse), result)
@@ -66,7 +67,7 @@ class PersonApiImplTest {
             response = Json.encodeToJsonElement(pagedResponse).toString(),
         )
 
-        val requestHandler = HttpRequestHandler(client)
+        val requestHandler = HttpRequestHandler(client, mockk<ErrorReporter>(relaxed = true))
         val result = PersonApiImpl(requestHandler).getTrendingPersons()
 
         assertEquals(Either.Right(pagedResponse), result)
@@ -79,7 +80,7 @@ class PersonApiImplTest {
             response = Json.encodeToJsonElement(fakePersonDetail).toString(),
         )
 
-        val requestHandler = HttpRequestHandler(client)
+        val requestHandler = HttpRequestHandler(client, mockk<ErrorReporter>(relaxed = true))
         val result = PersonApiImpl(requestHandler).getPersonDetails(1)
 
         assertEquals(Either.Right(fakePersonDetail), result)
@@ -92,7 +93,7 @@ class PersonApiImplTest {
             response = Json.encodeToJsonElement(moviesResponse).toString(),
         )
 
-        val requestHandler = HttpRequestHandler(client)
+        val requestHandler = HttpRequestHandler(client, mockk<ErrorReporter>(relaxed = true))
         val result = PersonApiImpl(requestHandler).getCastDetails(1)
 
         assertEquals(Either.Right(moviesResponse), result)

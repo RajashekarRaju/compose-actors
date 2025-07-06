@@ -42,6 +42,8 @@ import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMov
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
+import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.designsystem.components.CaScaffold
 import kotlinx.coroutines.Job
 
@@ -125,6 +127,8 @@ fun MovieDetailsUI(
                             .fillMaxSize()
                             .testTag("TestTag:MovieDetailsScreen"),
                     ) {
+                        IfOfflineShowSnackbar(scaffoldState)
+                        ApiKeyMissingShowSnackbar(scaffoldState)
                         MovieDetailsUiContent(
                             data = data,
                             isLayerRevealAnimationEnded = isLayerRevealAnimationEnded,

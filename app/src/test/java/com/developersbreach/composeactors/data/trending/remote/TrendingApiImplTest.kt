@@ -4,11 +4,13 @@ import arrow.core.Either
 import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_API_KEY
 import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_BASE_URL
 import com.developersbreach.composeactors.core.network.HttpRequestHandler
+import com.developersbreach.composeactors.domain.core.ErrorReporter
 import com.developersbreach.composeactors.core.network.PagedResponse
 import com.developersbreach.composeactors.data.HttpClientProvider.createHttpClient
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
 import com.developersbreach.composeactors.data.person.model.Person
 import io.ktor.http.Url
+import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
@@ -31,7 +33,7 @@ class TrendingApiImplTest {
             response = Json.encodeToJsonElement(pagedResponse).toString(),
         )
 
-        val requestHandler = HttpRequestHandler(client)
+        val requestHandler = HttpRequestHandler(client, mockk<ErrorReporter>(relaxed = true))
         val result = TrendingApiImpl(requestHandler).getTrendingActors()
 
         assertEquals(Either.Right(pagedResponse), result)
@@ -44,7 +46,7 @@ class TrendingApiImplTest {
             response = Json.encodeToJsonElement("").toString(),
         )
 
-        val requestHandler = HttpRequestHandler(client)
+        val requestHandler = HttpRequestHandler(client, mockk<ErrorReporter>(relaxed = true))
         val result = TrendingApiImpl(requestHandler).getTrendingActors()
 
         assertTrue(result is Either.Left)

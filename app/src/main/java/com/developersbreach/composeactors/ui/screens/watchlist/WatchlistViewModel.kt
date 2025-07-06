@@ -9,6 +9,7 @@ import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.watchlist.model.WatchlistPerson
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
 import com.developersbreach.composeactors.domain.core.ErrorReporter
+import com.developersbreach.composeactors.domain.core.UserMessageKey
 import com.developersbreach.composeactors.ui.components.BaseViewModel
 import com.developersbreach.composeactors.ui.components.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,7 +43,7 @@ class WatchlistViewModel @Inject constructor(
                 movie = movie,
             ).fold(
                 ifLeft = { uiState = UiState.Error(it) },
-                ifRight = { showMessage("Removed ${movie.movieTitle} from watchlist") },
+                ifRight = { showMessage(UserMessageKey.WatchlistRemoved, movie.movieTitle) },
             )
             hideLoading()
         }
@@ -57,7 +58,7 @@ class WatchlistViewModel @Inject constructor(
                 personId = person.personId,
             ).fold(
                 ifLeft = { uiState = UiState.Error(it) },
-                ifRight = { showMessage("Removed “${person.personName}” from watchlist") },
+                ifRight = { showMessage(UserMessageKey.WatchlistRemoved, person.personName) },
             )
             hideLoading()
         }

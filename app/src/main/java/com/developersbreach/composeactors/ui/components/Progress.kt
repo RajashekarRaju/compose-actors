@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.ui.animations.AnimatedSearch
 import com.developersbreach.composeactors.ui.animations.InfinitelyFlowingCircles
-import com.developersbreach.composeactors.utils.isTmdbApiKeyNotValid
 
 /**
  * @param isLoadingData if true circular progress bar will show.
@@ -21,7 +20,7 @@ import com.developersbreach.composeactors.utils.isTmdbApiKeyNotValid
 fun ShowProgressIndicator(
     isLoadingData: Boolean,
 ) {
-    if (isLoadingData && isTmdbApiKeyNotValid()) {
+    if (isLoadingData) {
         Box(
             modifier = Modifier.fillMaxSize(),
         ) {

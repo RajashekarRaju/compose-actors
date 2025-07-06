@@ -1,6 +1,8 @@
 package com.developersbreach.composeactors.core.network
 
 import arrow.core.Either
+import com.developersbreach.composeactors.domain.core.ErrorReporter
+import com.developersbreach.composeactors.domain.core.toAppError
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.delete
@@ -16,12 +18,13 @@ import javax.inject.Singleton
 @Singleton
 class HttpRequestHandler @Inject constructor(
     val client: HttpClient,
+    private val errorReporter: ErrorReporter,
 ) {
     suspend inline fun <reified T> getResponse(url: URL): Either<Throwable, T> {
         return try {
             Either.Right(client.get(url).body<T>())
         } catch (e: Exception) {
-            e.printStackTrace()
+            errorReporter.reportError(e.toAppError())
             Either.Left(e)
         }
     }
@@ -30,7 +33,7 @@ class HttpRequestHandler @Inject constructor(
         return try {
             Either.Right(client.get(url).body<PagedResponse<T>>())
         } catch (e: Exception) {
-            e.printStackTrace()
+            errorReporter.reportError(e.toAppError())
             Either.Left(e)
         }
     }
@@ -46,7 +49,7 @@ class HttpRequestHandler @Inject constructor(
             }
             Either.Right(Unit)
         } catch (e: Exception) {
-            e.printStackTrace()
+            errorReporter.reportError(e.toAppError())
             Either.Left(e)
         }
     }
@@ -58,7 +61,7 @@ class HttpRequestHandler @Inject constructor(
             client.delete(url = url)
             Either.Right(Unit)
         } catch (e: Exception) {
-            e.printStackTrace()
+            errorReporter.reportError(e.toAppError())
             Either.Left(e)
         }
     }

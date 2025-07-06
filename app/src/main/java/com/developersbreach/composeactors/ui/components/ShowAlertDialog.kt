@@ -8,6 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -50,7 +51,7 @@ fun ShowAlertDialog(
                     shape = MaterialTheme.shapes.medium,
                     content = {
                         CaTextButton(
-                            text = "Dismiss",
+                            text = stringResource(R.string.dialog_dismiss),
                             modifier = Modifier,
                         )
                     },
@@ -75,7 +76,7 @@ private fun ShowAlertDialogUIPreview(
 ) {
     ComposeActorsTheme {
         ShowAlertDialog(
-            title = "Error occurred",
+            title = stringResource(R.string.error_dialog_title),
             description = text,
             isDismissible = false,
             onDismissRequest = {},

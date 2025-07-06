@@ -7,6 +7,7 @@ import com.amplifyframework.auth.AuthException
 import com.amplifyframework.auth.AuthProvider
 import com.amplifyframework.auth.AuthUserAttribute
 import com.amplifyframework.auth.AuthUserAttributeKey
+import com.amplifyframework.auth.result.step.AuthSignInStep
 import com.amplifyframework.auth.cognito.AWSCognitoAuthSession
 import com.amplifyframework.auth.cognito.result.AWSCognitoAuthSignOutResult
 import com.amplifyframework.auth.options.AuthFetchSessionOptions
@@ -15,6 +16,8 @@ import com.amplifyframework.auth.result.AuthSignInResult
 import com.amplifyframework.kotlin.core.Amplify
 import com.developersbreach.composeactors.core.database.dao.SessionsDao
 import com.developersbreach.composeactors.core.database.entity.SessionEntity
+import com.developersbreach.composeactors.domain.core.SignInException
+import com.developersbreach.composeactors.domain.core.UserMessageKey
 import javax.inject.Inject
 import javax.inject.Singleton
 import timber.log.Timber
@@ -40,9 +43,8 @@ class AuthenticationServiceImpl @Inject constructor(
                     Either.Right(Unit)
                 }
                 false -> {
-                    Timber.e("User sign in exception ${result.nextStep}")
-                    // TODO - Handle all cases and send error information to UI
-                    Either.Left(Exception(result.nextStep.signInStep.name))
+                    Timber.e("User sign in exception ${'$'}{result.nextStep}")
+                    Either.Left(result.nextStep.toSignInException())
                 }
             }
         } catch (e: Exception) {
@@ -61,10 +63,8 @@ class AuthenticationServiceImpl @Inject constructor(
         return when (result.isSignedIn) {
             true -> Either.Right(Unit)
             false -> {
-                // TODO - Handle all cases and send error information to UI
                 Timber.e(result.nextStep.toString())
-                Timber.e(result.nextStep.signInStep.name)
-                Either.Left(Exception(result.nextStep.signInStep.name))
+                Either.Left(result.nextStep.toSignInException())
             }
         }
     }
@@ -260,4 +260,18 @@ class AuthenticationServiceImpl @Inject constructor(
             Either.Left(e)
         }
     }
+}
+
+private fun AuthSignInResult.toSignInException(): SignInException {
+    val step = nextStep.signInStep
+    val key = when (step) {
+        AuthSignInStep.CONFIRM_SIGN_IN_WITH_SMS_MFA_CODE,
+        AuthSignInStep.CONFIRM_SIGN_IN_WITH_TOTP_MFA_CODE,
+        -> UserMessageKey.MfaCodeRequired
+        AuthSignInStep.CONFIRM_SIGN_IN_WITH_NEW_PASSWORD -> UserMessageKey.NewPasswordRequired
+        AuthSignInStep.RESET_PASSWORD -> UserMessageKey.ResetPasswordRequired
+        AuthSignInStep.CONFIRM_SIGN_UP -> UserMessageKey.VerificationRequired
+        else -> UserMessageKey.FailedLogin
+    }
+    return SignInException(key)
 }

@@ -73,8 +73,9 @@ fun <T> UiStateHandler(
                         isDismissible = false,
                         onDismissRequest = { !shouldDismissErrorDialog.value },
                         modifier = Modifier,
-                        title = "Error occurred",
-                        description = errorDetails.localizedMessage ?: "Error information not available",
+                        title = context.getString(R.string.error_dialog_title),
+                        description = errorDetails.localizedMessage
+                            ?: context.getString(R.string.error_information_not_available),
                     )
                 }
             }

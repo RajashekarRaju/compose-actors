@@ -15,6 +15,8 @@ import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
 import com.developersbreach.composeactors.ui.components.ShowSearchProgress
+import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
+import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaScaffold
 import com.developersbreach.designsystem.components.CaSurface
@@ -51,6 +53,8 @@ fun SearchScreenUI(
             Box(
                 modifier = Modifier.padding(paddingValues),
             ) {
+                IfOfflineShowSnackbar(scaffoldState)
+                ApiKeyMissingShowSnackbar(scaffoldState)
                 when (data.searchType) {
                     SearchType.People -> {
                         val isLoadingData = !data.isSearchingResults && data.people.isEmpty()

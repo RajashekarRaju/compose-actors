@@ -25,10 +25,15 @@ import com.developersbreach.designsystem.components.CaImage
 import com.developersbreach.designsystem.components.CaScaffold
 import com.developersbreach.designsystem.components.CaSurface
 import com.developersbreach.designsystem.components.CaText
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.rememberScaffoldState
+import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
+import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 
 @Composable
 fun AboutScreen(
     navigateUp: () -> Unit,
+    scaffoldState: androidx.compose.material.ScaffoldState = androidx.compose.material.rememberScaffoldState(),
 ) {
     CaSurface(
         color = MaterialTheme.colors.background,
@@ -36,6 +41,7 @@ fun AboutScreen(
     ) {
         CaScaffold(
             modifier = Modifier,
+            scaffoldState = scaffoldState,
             topBar = { AboutTopAppBar(navigateUp = navigateUp) },
         ) { paddingValues ->
             Column(
@@ -44,6 +50,8 @@ fun AboutScreen(
                     .fillMaxSize()
                     .padding(paddingValues = paddingValues),
             ) {
+                IfOfflineShowSnackbar(scaffoldState = scaffoldState)
+                ApiKeyMissingShowSnackbar(scaffoldState = scaffoldState)
                 CaImage(
                     painter = painterResource(id = R.drawable.ic_tmdb_logo),
                     contentDescription = stringResource(id = R.string.cd_tmdb_api_attribution_logo),

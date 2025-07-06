@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
 import com.developersbreach.composeactors.data.search.repository.SearchRepository
 import com.developersbreach.composeactors.domain.core.ErrorReporter
+import com.developersbreach.composeactors.domain.core.UserMessageKey
 import com.developersbreach.composeactors.ui.components.MessageDuration
 import com.developersbreach.composeactors.ui.components.BaseViewModel
 import com.developersbreach.composeactors.ui.components.UiState
@@ -48,7 +49,7 @@ class SearchViewModel @Inject constructor(
                         )
                     }
                     if (results.isEmpty()) {
-                        showMessage("No results found")
+                        showMessage(UserMessageKey.NoResultsFound)
                     }
                 },
             )
@@ -64,7 +65,7 @@ class SearchViewModel @Inject constructor(
                     }
                     if (results.isEmpty()) {
                         showMessage(
-                            message = "No results found",
+                            key = UserMessageKey.NoResultsFound,
                             duration = MessageDuration.LONG,
                         )
                     }

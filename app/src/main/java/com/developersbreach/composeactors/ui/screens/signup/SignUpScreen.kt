@@ -2,6 +2,7 @@ package com.developersbreach.composeactors.ui.screens.signup
 
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.developersbreach.composeactors.ui.components.UiState
 import com.developersbreach.composeactors.ui.components.UiStateHandler
@@ -21,10 +22,10 @@ fun SignUpScreen(
     ) { data ->
         val error = when (val state = viewModel.uiState) {
             is UiState.Error -> when (state.throwable.message) {
-                "PASSWORD_MISMATCH" -> "Passwords do not match"
-                "EMPTY_FIELDS" -> "Please fill all fields"
-                "EMPTY_CODE" -> "Please enter the confirmation code"
-                else -> state.throwable.localizedMessage ?: "Unknown error"
+                "PASSWORD_MISMATCH" -> stringResource(R.string.error_password_mismatch)
+                "EMPTY_FIELDS" -> stringResource(R.string.error_fields_empty)
+                "EMPTY_CODE" -> stringResource(R.string.error_verification_required)
+                else -> state.throwable.localizedMessage ?: stringResource(R.string.unexpected_error)
             }
 
             else -> null

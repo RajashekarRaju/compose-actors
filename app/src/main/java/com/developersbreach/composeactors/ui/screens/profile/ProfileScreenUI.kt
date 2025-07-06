@@ -26,6 +26,8 @@ import com.developersbreach.designsystem.components.CaScaffold
 import com.developersbreach.designsystem.components.CaSurface
 import com.developersbreach.designsystem.components.CaTextBody1
 import com.developersbreach.designsystem.components.CaVerticalSpacer
+import com.developersbreach.composeactors.ui.components.IfOfflineShowSnackbar
+import com.developersbreach.composeactors.ui.components.ApiKeyMissingShowSnackbar
 
 @Composable
 fun ProfileScreenUI(
@@ -51,6 +53,8 @@ fun ProfileScreenUI(
                     .padding(80.dp)
                     .padding(paddingValues = paddingValues),
             ) {
+                IfOfflineShowSnackbar(scaffoldState)
+                ApiKeyMissingShowSnackbar(scaffoldState)
                 CaImage(
                     painter = painterResource(id = R.drawable.ic_account),
                     contentDescription = null,
