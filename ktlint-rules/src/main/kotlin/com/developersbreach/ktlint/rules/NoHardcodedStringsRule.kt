@@ -147,8 +147,12 @@ public class NoHardcodedStringsRule :
         // Handle both simple strings and template strings with hardcoded parts
         val text = node.text
         
-        // For simple quoted strings
-        if (text.startsWith("\"") && text.endsWith("\"") && !text.contains("\${")) {
+        // Check if this is a template string (contains ${} or $variable patterns)
+        val isTemplateString = text.contains("\${") || 
+                              (text.contains("$") && text.matches(Regex(".*\\$[a-zA-Z_][a-zA-Z0-9_]*.*")))
+        
+        // For simple quoted strings (no template interpolation)
+        if (text.startsWith("\"") && text.endsWith("\"") && !isTemplateString) {
             val stringContent = extractStringContent(node)
             if (stringContent != null && isUserVisibleString(stringContent)) {
                 emit(
@@ -159,7 +163,7 @@ public class NoHardcodedStringsRule :
             }
         }
         // For template strings, check for hardcoded literal parts
-        else if (text.contains("\${")) {
+        else if (isTemplateString) {
             checkTemplateStringLiterals(node, emit)
         }
     }

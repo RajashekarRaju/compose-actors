@@ -67,4 +67,5 @@
     <string name="sign_up_success">Sign up successful!\n\nCompleting login process now.</string>
     <string name="no_actors_found_message">No actors found for your search.</string>
     <string name="no_movies_found_message">No movies found for your search.</string>
+    <string name="sample_email">haha.lulu@example.com</string>
 </resources>
