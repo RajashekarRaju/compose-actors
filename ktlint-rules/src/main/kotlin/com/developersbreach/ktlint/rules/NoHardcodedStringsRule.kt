@@ -20,16 +20,26 @@ public class NoHardcodedStringsRule :
         autoCorrect: Boolean,
         emit: (offset: Int, errorMessage: String, canBeAutoCorrected: Boolean) -> Unit
     ) {
-        if (node.elementType == ElementType.FUN) {
-            // Check if this function is annotated with @Composable
-            if (isComposableFunction(node)) {
-                // Skip preview functions as they contain test data
-                if (isPreviewFunction(node)) {
-                    return
+        when (node.elementType) {
+            ElementType.FUN -> {
+                // Check if this function is annotated with @Composable
+                if (isComposableFunction(node)) {
+                    // Skip preview functions as they contain test data
+                    if (isPreviewFunction(node)) {
+                        return
+                    }
+                    
+                    // Check for hardcoded strings in this function
+                    checkForHardcodedStrings(node, emit)
                 }
-                
-                // Check for hardcoded strings in this function
-                checkForHardcodedStrings(node, emit)
+            }
+            ElementType.PROPERTY -> {
+                // Check for hardcoded strings in top-level property declarations in UI files
+                // Skip companion object constants as they're typically not user-facing
+                // But include private const val declarations as they might end up in UI
+                if (isInUIFile(node) && !isInCompanionObject(node)) {
+                    checkPropertyForHardcodedStrings(node, emit)
+                }
             }
         }
     }
@@ -60,14 +70,11 @@ public class NoHardcodedStringsRule :
         node.children().forEach { child ->
             when (child.elementType) {
                 ElementType.STRING_TEMPLATE -> {
-                    val stringContent = extractStringContent(child)
-                    if (stringContent != null && isUserVisibleString(stringContent)) {
-                        emit(
-                            child.startOffset,
-                            "Hardcoded string \"$stringContent\" found in Composable function. Consider using string resources for localization.",
-                            false
-                        )
-                    }
+                    checkStringTemplate(child, emit)
+                }
+                ElementType.PROPERTY -> {
+                    // Check local val declarations in Composables
+                    checkPropertyForHardcodedStrings(child, emit)
                 }
                 else -> checkForHardcodedStrings(child, emit)
             }
@@ -103,6 +110,9 @@ public class NoHardcodedStringsRule :
             "CREATE TABLE", "DROP TABLE", "ALTER TABLE",
             "ktlint:", "BanParcelableUsage", "modifier =", "code =",
             "biography =", "dateOfBirth =", "placeOfBirth =",
+            // API endpoint patterns
+            "person/", "movie/", "trending/", "search/", "discover/",
+            "credits?", "popular?", "week?", "day?", "api_key=",
         )
 
         if (technicalPatterns.any { text.contains(it, ignoreCase = true) }) {
@@ -121,11 +131,122 @@ public class NoHardcodedStringsRule :
         }
 
         // Skip strings that are mostly whitespace or formatting
+        // Also allow empty strings as they're often intentional (e.g., empty contentDescription for decorative images)
         if (text.trim().isEmpty() || text.matches(Regex("^[\\s,=]+$"))) {
             return false
         }
 
         // Check if it contains letters and is likely user-visible
         return text.any { it.isLetter() } && text.length > 2
+    }
+
+    private fun checkStringTemplate(
+        node: ASTNode,
+        emit: (offset: Int, errorMessage: String, canBeAutoCorrected: Boolean) -> Unit
+    ) {
+        // Handle both simple strings and template strings with hardcoded parts
+        val text = node.text
+        
+        // For simple quoted strings
+        if (text.startsWith("\"") && text.endsWith("\"") && !text.contains("\${")) {
+            val stringContent = extractStringContent(node)
+            if (stringContent != null && isUserVisibleString(stringContent)) {
+                emit(
+                    node.startOffset,
+                    "Hardcoded string \"$stringContent\" found in Composable function. Consider using string resources for localization.",
+                    false
+                )
+            }
+        }
+        // For template strings, check for hardcoded literal parts
+        else if (text.contains("\${")) {
+            checkTemplateStringLiterals(node, emit)
+        }
+    }
+
+    private fun checkTemplateStringLiterals(
+        node: ASTNode,
+        emit: (offset: Int, errorMessage: String, canBeAutoCorrected: Boolean) -> Unit
+    ) {
+        // Extract literal parts from template strings like "$userName logged in"
+        val text = node.text
+        if (text.startsWith("\"") && text.endsWith("\"")) {
+            val content = text.substring(1, text.length - 1)
+            
+            // Split by both ${...} and $variable patterns and check literal parts
+            val parts = content.split(Regex("\\$\\{[^}]*\\}|\\$[a-zA-Z_][a-zA-Z0-9_]*"))
+            parts.forEach { part ->
+                if (part.isNotEmpty() && isUserVisibleString(part)) {
+                    emit(
+                        node.startOffset,
+                        "Hardcoded string literal \"$part\" found in template string. Consider using string resources for localization.",
+                        false
+                    )
+                }
+            }
+        }
+    }
+
+    private fun checkPropertyForHardcodedStrings(
+        node: ASTNode,
+        emit: (offset: Int, errorMessage: String, canBeAutoCorrected: Boolean) -> Unit
+    ) {
+        // Check if this property has a string initializer
+        node.children().forEach { child ->
+            if (child.elementType == ElementType.STRING_TEMPLATE) {
+                checkStringTemplate(child, emit)
+            } else {
+                checkPropertyForHardcodedStrings(child, emit)
+            }
+        }
+    }
+
+    private fun isInUIFile(node: ASTNode): Boolean {
+        // Get the root node to access the entire file content
+        var root = node
+        while (root.treeParent != null) {
+            root = root.treeParent
+        }
+        val fileText = root.text
+        
+        // Skip build scripts - they contain these patterns
+        if (fileText.contains("build.gradle") || 
+            fileText.contains("@file:Suppress(\"UnstableApiUsage\")") ||
+            (fileText.contains("dependencies {") && fileText.contains("implementation("))) {
+            return false
+        }
+        
+        // Skip settings files
+        if (fileText.contains("settings.gradle") || fileText.contains("pluginManagement")) {
+            return false
+        }
+        
+        // Skip fake data files - they contain test/mock data, not user-facing strings
+        // But allow our test file for testing the rule
+        if ((fileText.contains("package com.developersbreach.composeactors.data.datasource.fake") ||
+            fileText.contains("data/datasource/fake") ||
+            fileText.contains("AmplifyConfigProvider")) &&
+            !fileText.contains("package com.developersbreach.composeactors.test")) {
+            return false
+        }
+        
+        // For actual Kotlin source files, assume they could be UI files
+        return true
+    }
+
+    private fun isInCompanionObject(node: ASTNode): Boolean {
+        // Walk up the AST to see if this node is inside a companion object
+        var parent = node.treeParent
+        while (parent != null) {
+            if (parent.elementType == ElementType.OBJECT_DECLARATION) {
+                // Check if this object declaration is a companion object
+                val objectText = parent.text
+                if (objectText.contains("companion object")) {
+                    return true
+                }
+            }
+            parent = parent.treeParent
+        }
+        return false
     }
 }
