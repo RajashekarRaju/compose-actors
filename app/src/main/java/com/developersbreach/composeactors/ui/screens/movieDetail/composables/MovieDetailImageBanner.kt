@@ -12,7 +12,7 @@ import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 
 @Composable
 fun MovieDetailImageBanner(
-    bannerUrl: String?
+    bannerUrl: String?,
 ) {
     LoadNetworkImage(
         imageUrl = bannerUrl.toString(),

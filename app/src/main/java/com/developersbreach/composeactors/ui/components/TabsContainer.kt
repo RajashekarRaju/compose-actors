@@ -1,6 +1,5 @@
 package com.developersbreach.composeactors.ui.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,31 +7,30 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.LocalRippleConfiguration
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material.Text
-import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.developersbreach.designsystem.components.CaTextSubtitle2
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TabsContainer(
     modifier: Modifier = Modifier,
     tabs: List<TabItem>,
-    pagerState: PagerState
+    pagerState: PagerState,
 ) {
     val coroutineScope = rememberCoroutineScope()
 
     CompositionLocalProvider(
-        LocalRippleTheme provides TransparentRippleTheme
+        LocalRippleConfiguration provides null,
     ) {
         TabRow(
             modifier = modifier.fillMaxWidth(),
@@ -41,9 +39,9 @@ fun TabsContainer(
             divider = { },
             indicator = { tabPositions ->
                 RoundedTabIndicator(
-                    modifier = Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage])
+                    modifier = Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
                 )
-            }
+            },
         ) {
             tabs.forEachIndexed { tabIndex, currentTab ->
                 Tab(
@@ -52,11 +50,11 @@ fun TabsContainer(
                     unselectedContentColor = MaterialTheme.colors.primary.copy(0.50f),
                     onClick = { coroutineScope.launch { pagerState.animateScrollToPage(tabIndex) } },
                     text = {
-                        Text(
+                        CaTextSubtitle2(
                             text = currentTab.tabName,
-                            style = MaterialTheme.typography.subtitle2
+                            modifier = Modifier,
                         )
-                    }
+                    },
                 )
             }
         }
@@ -65,7 +63,7 @@ fun TabsContainer(
 
 @Composable
 private fun RoundedTabIndicator(
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Spacer(
         modifier
@@ -73,12 +71,12 @@ private fun RoundedTabIndicator(
             .height(2.dp)
             .background(
                 MaterialTheme.colors.primary,
-                RoundedCornerShape(percent = 100)
-            )
+                RoundedCornerShape(percent = 100),
+            ),
     )
 }
 
 @Immutable
 data class TabItem(
-    val tabName: String
+    val tabName: String,
 )

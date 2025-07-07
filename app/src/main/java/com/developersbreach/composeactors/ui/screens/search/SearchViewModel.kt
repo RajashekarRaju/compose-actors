@@ -4,13 +4,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.repository.search.SearchRepository
-import com.developersbreach.composeactors.ui.navigation.AppDestinations.SEARCH_TYPE
+import androidx.navigation.toRoute
+import com.developersbreach.composeactors.data.search.repository.SearchRepository
+import com.developersbreach.composeactors.domain.core.ErrorReporter
+import com.developersbreach.composeactors.ui.components.MessageDuration
+import com.developersbreach.composeactors.ui.components.BaseViewModel
+import com.developersbreach.composeactors.ui.components.UiState
+import com.developersbreach.composeactors.ui.components.modifyLoadedState
+import com.developersbreach.composeactors.ui.navigation.AppDestinations
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.launch
 
 /**
  * To manage ui state and data for screen SearchScreen.
@@ -18,38 +21,55 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val searchRepository: SearchRepository
-) : ViewModel() {
+    private val searchRepository: SearchRepository,
+    errorReporter: ErrorReporter,
+) : BaseViewModel(errorReporter) {
 
-    val searchType: SearchType = checkNotNull(savedStateHandle[SEARCH_TYPE])
+    private val searchType: SearchType = savedStateHandle.toRoute<AppDestinations.Search>().searchType
 
-    var uiState: SearchUIState by mutableStateOf(SearchUIState.ActorSearch())
+    var uiState: UiState<SearchUiState> by mutableStateOf(UiState.Success(SearchUiState(searchType)))
         private set
 
-    /**
-     * @param searchQuery user entered query in text field.
-     * This function triggers everytime user makes query change.
-     */
-    fun performQuery(searchQuery: String) {
-        viewModelScope.launch {
-            when (searchType) {
-                SearchType.Actors -> {
-                    uiState = SearchUIState.ActorSearch(isSearchingResults = true)
-                    val searchData = searchRepository.getSearchableActorsData(searchQuery)
-                    uiState = (uiState as SearchUIState.ActorSearch).copy(
-                        actorList = searchData,
-                        isSearchingResults = false
-                    )
-                }
-                SearchType.Movies -> {
-                    uiState = SearchUIState.MovieSearch(isSearchingResults = true)
-                    val searchData = searchRepository.getSearchableMoviesData(searchQuery)
-                    uiState = (uiState as SearchUIState.MovieSearch).copy(
-                        movieList = searchData,
-                        isSearchingResults = false
-                    )
-                }
-            }
+    fun performQuery(
+        searchQuery: String,
+    ) {
+        uiState = uiState.modifyLoadedState {
+            copy(isSearchingResults = true)
+        }
+
+        when (searchType) {
+            SearchType.People -> executeEither(
+                action = { searchRepository.getSearchableActorsData(searchQuery) },
+                onSuccess = { results ->
+                    uiState = uiState.modifyLoadedState {
+                        copy(
+                            isSearchingResults = false,
+                            people = results,
+                        )
+                    }
+                    if (results.isEmpty()) {
+                        showMessage("No results found")
+                    }
+                },
+            )
+
+            SearchType.Movies -> executeEither(
+                action = { searchRepository.getSearchableMoviesData(searchQuery) },
+                onSuccess = { results ->
+                    uiState = uiState.modifyLoadedState {
+                        copy(
+                            isSearchingResults = false,
+                            movies = results,
+                        )
+                    }
+                    if (results.isEmpty()) {
+                        showMessage(
+                            message = "No results found",
+                            duration = MessageDuration.LONG,
+                        )
+                    }
+                },
+            )
         }
     }
 }

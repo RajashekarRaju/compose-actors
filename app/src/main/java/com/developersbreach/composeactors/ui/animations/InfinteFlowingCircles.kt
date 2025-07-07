@@ -1,6 +1,11 @@
 package com.developersbreach.composeactors.ui.animations
 
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -17,7 +22,6 @@ import com.developersbreach.composeactors.ui.screens.search.SearchScreen
  */
 @Composable
 fun InfinitelyFlowingCircles() {
-
     // Same color with different variants for different circles.
     val primaryColor = MaterialTheme.colors.primary
     val frontCircle = primaryColor.copy(0.75f)
@@ -27,19 +31,19 @@ fun InfinitelyFlowingCircles() {
     DrawCircleOnCanvas(
         scale = scaleInfiniteTransition(targetValue = 2f, durationMillis = 600),
         color = backCircle,
-        radiusRatio = 4f
+        radiusRatio = 4f,
     )
 
     DrawCircleOnCanvas(
         scale = scaleInfiniteTransition(targetValue = 2.5f, durationMillis = 800),
         color = midCircle,
-        radiusRatio = 6f
+        radiusRatio = 6f,
     )
 
     DrawCircleOnCanvas(
         scale = scaleInfiniteTransition(targetValue = 3f, durationMillis = 1000),
         color = frontCircle,
-        radiusRatio = 12f
+        radiusRatio = 12f,
     )
 }
 
@@ -52,7 +56,7 @@ fun InfinitelyFlowingCircles() {
 private fun DrawCircleOnCanvas(
     scale: Float,
     color: Color,
-    radiusRatio: Float
+    radiusRatio: Float,
 ) {
     Canvas(
         modifier = Modifier
@@ -60,7 +64,7 @@ private fun DrawCircleOnCanvas(
             .graphicsLayer {
                 scaleX = scale
                 scaleY = scale
-            }
+            },
     ) {
         val canvasWidth = size.width
         val canvasHeight = size.height
@@ -68,7 +72,7 @@ private fun DrawCircleOnCanvas(
             color = color,
             center = Offset(
                 x = canvasWidth / 2,
-                y = canvasHeight / 2
+                y = canvasHeight / 2,
             ),
             radius = size.minDimension / radiusRatio,
         )
@@ -94,8 +98,8 @@ private fun scaleInfiniteTransition(
         targetValue = targetValue,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse
-        )
+            repeatMode = RepeatMode.Reverse,
+        ),
     )
     return scale
 }

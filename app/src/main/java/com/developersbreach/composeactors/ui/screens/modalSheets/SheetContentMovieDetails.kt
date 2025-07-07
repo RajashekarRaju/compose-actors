@@ -10,11 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,17 +18,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
-import com.developersbreach.composeactors.data.model.MovieDetail
+import com.developersbreach.composeactors.data.movie.model.MovieDetail
 import com.developersbreach.composeactors.ui.components.CircularSeparator
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.MovieGenre
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.composeactors.utils.getMovieRuntimeFormatted
+import com.developersbreach.designsystem.components.CaDivider
+import com.developersbreach.designsystem.components.CaIconButton
+import com.developersbreach.designsystem.components.CaText
+import com.developersbreach.designsystem.components.CaTextH6
+import com.developersbreach.designsystem.components.CaTextSubtitle1
 
 /**
  * Content inside modal sheet.
@@ -46,12 +47,12 @@ import com.developersbreach.composeactors.utils.getMovieRuntimeFormatted
 @Composable
 fun SheetContentMovieDetails(
     movie: MovieDetail?,
-    navigateToSelectedMovie: (Int) -> Unit
+    navigateToSelectedMovie: (Int) -> Unit,
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .navigationBarsPadding()
+            .navigationBarsPadding(),
     ) {
         Spacer(modifier = Modifier.height(4.dp))
         HeaderModalSheet(movie, navigateToSelectedMovie)
@@ -64,7 +65,7 @@ fun SheetContentMovieDetails(
         Row(
             Modifier.padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             CircularSeparator()
             MovieReleaseDateText(movie?.releaseDate)
@@ -77,7 +78,7 @@ fun SheetContentMovieDetails(
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = 20.dp),
         ) {
             MoviePosterImage(movie, navigateToSelectedMovie)
             MovieOverviewText(movie?.overview.toString())
@@ -90,26 +91,25 @@ fun SheetContentMovieDetails(
 @Composable
 private fun HeaderModalSheet(
     movie: MovieDetail?,
-    onClickMovie: (Int) -> Unit
+    onClickMovie: (Int) -> Unit,
 ) {
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp)
+            .padding(start = 20.dp),
     ) {
-        Text(
+        CaTextH6(
             text = "${movie?.movieTitle}",
             color = MaterialTheme.colors.onSurface,
-            style = MaterialTheme.typography.h6,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .weight(8f)
-                .align(alignment = Alignment.CenterVertically)
+                .align(alignment = Alignment.CenterVertically),
         )
 
         // On clicking this icon triggers detail screen navigation with movie Id.
-        IconButton(
+        CaIconButton(
             onClick = {
                 if (movie != null) {
                     onClickMovie(movie.movieId)
@@ -117,46 +117,44 @@ private fun HeaderModalSheet(
             },
             modifier = Modifier
                 .weight(2f)
-                .align(alignment = Alignment.CenterVertically)
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_chevron_right),
-                tint = MaterialTheme.colors.onSurface.copy(alpha = 0.75f),
-                contentDescription = ""
-            )
-        }
+                .align(alignment = Alignment.CenterVertically),
+            iconModifier = Modifier,
+            painter = painterResource(id = R.drawable.ic_chevron_right),
+            tint = MaterialTheme.colors.onSurface.copy(alpha = 0.75f),
+            contentDescription = "",
+        )
     }
 }
 
 @Composable
 private fun SeparatorSheetTitleHeader() {
-    Divider(
+    CaDivider(
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colors.onSurface.copy(alpha = 0.50f),
-        thickness = 0.50.dp
+        thickness = 0.50.dp,
     )
 }
 
 @Composable
 private fun MovieReleaseDateText(
-    releaseDate: String?
+    releaseDate: String?,
 ) {
-    Text(
+    CaTextSubtitle1(
         text = "${releaseDate?.take(4)}",
         color = MaterialTheme.colors.onSurface.copy(0.7f),
-        style = MaterialTheme.typography.subtitle1,
         maxLines = 1,
+        modifier = Modifier,
     )
 }
 
 @Composable
 private fun MovieDurationText(
-    runtime: Int?
+    runtime: Int?,
 ) {
-    Text(
+    CaTextSubtitle1(
         text = getMovieRuntimeFormatted(runtime),
         color = MaterialTheme.colors.onSurface.copy(0.7f),
-        style = MaterialTheme.typography.subtitle1,
+        modifier = Modifier,
         maxLines = 1,
     )
 }
@@ -164,10 +162,10 @@ private fun MovieDurationText(
 @Composable
 private fun MoviePosterImage(
     movie: MovieDetail?,
-    selectedMovie: (Int) -> Unit
+    selectedMovie: (Int) -> Unit,
 ) {
     LoadNetworkImage(
-        imageUrl = "${movie?.poster}",
+        imageUrl = "${movie?.posterUrl}",
         contentDescription = "",
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier
@@ -176,15 +174,15 @@ private fun MoviePosterImage(
                 if (movie != null) {
                     selectedMovie(movie.movieId)
                 }
-            }
+            },
     )
 }
 
 @Composable
 private fun MovieOverviewText(
-    overview: String
+    overview: String,
 ) {
-    Text(
+    CaText(
         text = overview,
         maxLines = 7,
         overflow = TextOverflow.Ellipsis,
@@ -195,29 +193,18 @@ private fun MovieOverviewText(
             lineHeight = 20.sp,
             color = MaterialTheme.colors.onSurface.copy(0.8f),
             textAlign = TextAlign.Justify,
-            fontSize = 16.sp
-        )
+            fontSize = 16.sp,
+        ),
     )
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-private fun SheetContentMovieDetailsLightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
+fun SheetContentMovieDetailsPreview() {
+    ComposeActorsTheme {
         SheetContentMovieDetails(
             movie = fakeMovieDetail,
-            navigateToSelectedMovie = {}
-        )
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
-@Composable
-private fun SheetContentMovieDetailsDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
-        SheetContentMovieDetails(
-            movie = fakeMovieDetail,
-            navigateToSelectedMovie = {}
+            navigateToSelectedMovie = {},
         )
     }
 }

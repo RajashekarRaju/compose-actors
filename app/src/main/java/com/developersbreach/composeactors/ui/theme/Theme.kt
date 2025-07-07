@@ -21,13 +21,13 @@ private val DarkColorPalette = darkColors(
     background = dark_background,
     onBackground = dark_onBackground,
     surface = dark_surface,
-    onSurface = dark_onSurface
+    onSurface = dark_onSurface,
 )
 
 @Composable
 fun ComposeActorsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val colors = if (darkTheme) {
         DarkColorPalette
@@ -39,6 +39,6 @@ fun ComposeActorsTheme(
         colors = colors,
         typography = Typography,
         shapes = Shapes,
-        content = content
+        content = content,
     )
 }

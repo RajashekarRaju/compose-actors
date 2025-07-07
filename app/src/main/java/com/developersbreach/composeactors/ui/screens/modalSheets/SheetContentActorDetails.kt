@@ -1,38 +1,46 @@
 package com.developersbreach.composeactors.ui.screens.modalSheets
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.data.datasource.fake.fakeActorDetail
-import com.developersbreach.composeactors.data.model.ActorDetail
+import com.developersbreach.composeactors.annotations.PreviewLightDark
+import com.developersbreach.composeactors.data.datasource.fake.fakePersonDetail
+import com.developersbreach.composeactors.data.person.model.PersonDetail
+import com.developersbreach.designsystem.components.CaDivider
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.components.SheetHorizontalSeparator
 import com.developersbreach.composeactors.ui.screens.actorDetails.composables.ActorInfoHeader
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaText
+import com.developersbreach.designsystem.components.CaTextH6
 
 /**
  * Complete modal sheet content for showing actor details instead of navigating to
  * ActorDetails screen directly.
  */
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SheetContentActorDetails(
-    actor: ActorDetail?,
+    actor: PersonDetail?,
 ) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,14 +55,19 @@ fun SheetContentActorDetails(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = MaterialTheme.colors.background)
+                    .background(color = MaterialTheme.colors.background),
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
-                SheetHorizontalSeparator()
+                CaDivider(
+                    thickness = 4.dp,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(percent = 100))
+                        .width(48.dp),
+                )
                 Spacer(modifier = Modifier.height(24.dp))
                 ActorProfileImage(actor?.profileUrl)
                 Spacer(modifier = Modifier.height(16.dp))
-                ActorNameText(actor?.actorName.toString())
+                ActorNameText(actor?.personName.toString())
                 Spacer(modifier = Modifier.height(16.dp))
                 ActorInfoHeader(actorData = actor)
                 Spacer(modifier = Modifier.height(8.dp))
@@ -70,7 +83,7 @@ fun SheetContentActorDetails(
 
 @Composable
 private fun ActorProfileImage(
-    profileUrl: String?
+    profileUrl: String?,
 ) {
     LoadNetworkImage(
         imageUrl = profileUrl,
@@ -81,28 +94,26 @@ private fun ActorProfileImage(
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colors.onBackground,
-                shape = CircleShape
-            )
+                shape = CircleShape,
+            ),
     )
 }
 
 @Composable
 private fun ActorNameText(
-    actorName: String
+    actorName: String,
 ) {
-    Text(
+    CaTextH6(
         text = actorName,
-        color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.h6,
-        modifier = Modifier.padding(horizontal = 24.dp)
+        modifier = Modifier.padding(horizontal = 24.dp),
     )
 }
 
 @Composable
 private fun ActorBiographyText(
-    biography: String
+    biography: String,
 ) {
-    Text(
+    CaText(
         text = biography,
         modifier = Modifier
             .fillMaxWidth()
@@ -111,27 +122,17 @@ private fun ActorBiographyText(
             lineHeight = 20.sp,
             color = MaterialTheme.colors.onBackground.copy(0.8f),
             textAlign = TextAlign.Justify,
-            fontSize = 16.sp
-        )
+            fontSize = 16.sp,
+        ),
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-private fun SheetContentActorDetailsLightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
+fun SheetContentActorDetailsPreview() {
+    ComposeActorsTheme {
         SheetContentActorDetails(
-            actor = fakeActorDetail
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun SheetContentActorDetailsDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
-        SheetContentActorDetails(
-            actor = fakeActorDetail
+            actor = fakePersonDetail,
         )
     }
 }

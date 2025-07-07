@@ -3,43 +3,46 @@ package com.developersbreach.composeactors.ui.screens.actorDetails
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.developersbreach.composeactors.data.datasource.fake.fakeActorDetail
+import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieDetail
+import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
+import com.developersbreach.composeactors.data.datasource.fake.fakePersonDetail
 import com.developersbreach.composeactors.ui.components.ImageBackgroundThemeGenerator
 import com.developersbreach.composeactors.ui.components.ShowProgressIndicator
 import com.developersbreach.composeactors.ui.screens.actorDetails.composables.ActorBackgroundWithGradientForeground
 import com.developersbreach.composeactors.ui.screens.modalSheets.SheetContentMovieDetails
 import com.developersbreach.composeactors.ui.screens.modalSheets.manageModalBottomSheet
 import com.developersbreach.composeactors.ui.screens.modalSheets.modalBottomSheetState
-import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToFavoritesButton
+import com.developersbreach.composeactors.ui.screens.movieDetail.composables.FloatingAddToWatchlistButton
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
+import com.developersbreach.designsystem.components.CaScaffold
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun ActorDetailsUI(
-    detailUIState: ActorDetailsUIState,
-    sheetUIState: ActorDetailsSheetUIState,
+    data: ActorDetailsUiState,
+    scaffoldState: ScaffoldState,
     navigateToSelectedMovie: (Int) -> Unit,
-    isFavoriteMovie: Boolean,
+    isInWatchlist: Boolean,
     navigateUp: () -> Unit,
     getSelectedMovieDetails: (Int) -> Unit,
-    addActorToFavorites: () -> Unit,
-    removeActorFromFavorites: () -> Unit
+    addToWatchlist: () -> Unit,
+    removeFromWatchlist: () -> Unit,
 ) {
     val showFab = rememberSaveable { mutableStateOf(true) }
-    val actorProfileUrl = "${detailUIState.actorData?.profileUrl}"
+    val actorProfileUrl = "${data.actorData?.profileUrl}"
     val modalSheetState = modalBottomSheetState()
     val openActorDetailsBottomSheet = manageModalBottomSheet(
-        modalSheetState = modalSheetState
+        modalSheetState = modalSheetState,
     )
 
     ModalBottomSheetLayout(
@@ -49,87 +52,69 @@ internal fun ActorDetailsUI(
         sheetBackgroundColor = MaterialTheme.colors.background,
         sheetContent = {
             SheetContentMovieDetails(
-                movie = sheetUIState.selectedMovieDetails,
-                navigateToSelectedMovie = navigateToSelectedMovie
+                movie = data.selectedMovieDetails,
+                navigateToSelectedMovie = navigateToSelectedMovie,
             )
-        }
+        },
     ) {
-        ImageBackgroundThemeGenerator(
-            imageUrl = actorProfileUrl
+        CaScaffold(
+            modifier = Modifier,
+            scaffoldState = scaffoldState,
         ) {
-            Box {
-                // Draws gradient from image and overlays on it.
-                ActorBackgroundWithGradientForeground(imageUrl = actorProfileUrl)
+            ImageBackgroundThemeGenerator(
+                imageUrl = actorProfileUrl,
+            ) {
+                Box {
+                    // Draws gradient from image and overlays on it.
+                    ActorBackgroundWithGradientForeground(imageUrl = actorProfileUrl)
 
-                Column {
-                    // Custom top app bar
-                    ActorDetailsTopAppBar(
-                        navigateUp = navigateUp,
-                        title = "${detailUIState.actorData?.actorName}"
-                    )
+                    Column {
+                        ActorDetailsTopAppBar(
+                            navigateUp = navigateUp,
+                            title = "${data.actorData?.personName}",
+                        )
 
-                    // Main details content
-                    ActorDetailsContent(
-                        navigateUp = navigateUp,
-                        detailUIState = detailUIState,
-                        openActorDetailsBottomSheet = openActorDetailsBottomSheet,
-                        getSelectedMovieDetails = getSelectedMovieDetails,
-                        showFab = showFab
-                    )
+                        ActorDetailsContent(
+                            navigateUp = navigateUp,
+                            data = data,
+                            openActorDetailsBottomSheet = openActorDetailsBottomSheet,
+                            getSelectedMovieDetails = getSelectedMovieDetails,
+                            showFab = showFab,
+                        )
+                    }
+                    ShowProgressIndicator(isLoadingData = data.isFetchingDetails)
                 }
-                // Progress bar
-                ShowProgressIndicator(isLoadingData = detailUIState.isFetchingDetails)
+            }
+
+            if (showFab.value) {
+                FloatingAddToWatchlistButton(
+                    isInWatchlist = isInWatchlist,
+                    addToWatchlist = addToWatchlist,
+                    removeFromWatchlist = removeFromWatchlist,
+                )
             }
         }
-
-        if (showFab.value) {
-            FloatingAddToFavoritesButton(
-                isFavorite = isFavoriteMovie,
-                addToFavorites = addActorToFavorites,
-                removeFromFavorites = removeActorFromFavorites
-            )
-        }
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFF211a18)
+@PreviewLightDark
 @Composable
-private fun ActorDetailsUIDarkPreview() {
-    ComposeActorsTheme(darkTheme = true) {
+fun ActorDetailsUIPreview() {
+    ComposeActorsTheme {
         ActorDetailsUI(
-            detailUIState = ActorDetailsUIState(
-                castList = listOf(),
-                actorData = fakeActorDetail,
-                isFetchingDetails = false
+            data = ActorDetailsUiState(
+                castList = fakeMovieList(),
+                actorData = fakePersonDetail,
+                isFetchingDetails = false,
+                selectedMovieDetails = fakeMovieDetail,
             ),
-            sheetUIState = ActorDetailsSheetUIState(fakeMovieDetail),
             navigateToSelectedMovie = {},
-            isFavoriteMovie = true,
+            isInWatchlist = true,
             navigateUp = {},
             getSelectedMovieDetails = {},
-            addActorToFavorites = {},
-            removeActorFromFavorites = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun ActorDetailsUILightPreview() {
-    ComposeActorsTheme(darkTheme = false) {
-        ActorDetailsUI(
-            detailUIState = ActorDetailsUIState(
-                castList = listOf(),
-                actorData = fakeActorDetail,
-                isFetchingDetails = false
-            ),
-            sheetUIState = ActorDetailsSheetUIState(fakeMovieDetail),
-            navigateToSelectedMovie = {},
-            isFavoriteMovie = true,
-            navigateUp = {},
-            getSelectedMovieDetails = {},
-            addActorToFavorites = {},
-            removeActorFromFavorites = {}
+            addToWatchlist = {},
+            removeFromWatchlist = {},
+            scaffoldState = rememberScaffoldState(),
         )
     }
 }

@@ -1,6 +1,8 @@
 package com.developersbreach.composeactors.ui.screens.home
 
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -10,8 +12,8 @@ import androidx.compose.ui.test.performClick
 import androidx.paging.PagingData
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.developersbreach.composeactors.data.datasource.fake.nowPlayingMoviesList
-import com.developersbreach.composeactors.data.datasource.fake.popularActorList
-import com.developersbreach.composeactors.data.datasource.fake.trendingActorList
+import com.developersbreach.composeactors.data.datasource.fake.popularPersonLists
+import com.developersbreach.composeactors.data.datasource.fake.trendingPersonLists
 import com.developersbreach.composeactors.data.datasource.fake.upcomingMoviesList
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import kotlinx.coroutines.flow.flowOf
@@ -19,39 +21,43 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 @RunWith(AndroidJUnit4::class)
 class HomeScreenUITest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val mockHomeUIState: HomeUIState = HomeUIState(
-        popularActorList = popularActorList,
-        trendingActorList = trendingActorList,
-        isFetchingActors = false,
+    private val mockHomeUIState: HomeUiState = HomeUiState(
+        popularPersonList = popularPersonLists,
+        trendingPersonList = trendingPersonLists,
+        isFetchingPersons = false,
         upcomingMoviesList = upcomingMoviesList,
-        nowPlayingMoviesList = flowOf(PagingData.from(nowPlayingMoviesList))
+        nowPlayingMoviesList = flowOf(PagingData.from(nowPlayingMoviesList)),
     )
 
     @Composable
     private fun HomeScreenUIContent(
-        selectedActor: (actorId: Int) -> Unit = { },
-        selectedMovie: (movieId: Int) -> Unit = { },
-        updateSearchType: (searchType: SearchType) -> Unit = {  },
-        navigateToSearchBySearchType: SearchType = SearchType.Actors,
-        homeSheetUIState: HomeSheetUIState = HomeSheetUIState(),
-        homeUIState: HomeUIState = mockHomeUIState
+        navigateToSelectedPerson: (personId: Int) -> Unit = { },
+        navigateToSelectedMovie: (movieId: Int) -> Unit = { },
+        navigateToWatchlist: () -> Unit = { },
+        navigateToSearch: (searchType: SearchType) -> Unit = { },
+        updateHomeSearchType: (searchType: SearchType) -> Unit = { },
+        navigateToAbout: () -> Unit = { },
+        navigateToProfile: () -> Unit = { },
+        navigateToSearchBySearchType: SearchType = SearchType.People,
+        data: HomeUiState = mockHomeUIState,
     ) {
         HomeScreenUI(
-            navigateToSelectedActor = selectedActor,
-            navigateToSelectedMovie = selectedMovie,
-            navigateToFavorite = {},
-            navigateToSearch = {},
-            navigateToSearchBySearchType = navigateToSearchBySearchType,
-            uiState = homeUIState,
-            sheetUiState = homeSheetUIState,
-            updateHomeSearchType = updateSearchType,
+            modifier = Modifier,
+            navigateToSelectedPerson = navigateToSelectedPerson,
+            navigateToSelectedMovie = navigateToSelectedMovie,
+            navigateToWatchlist = navigateToWatchlist,
+            navigateToSearch = navigateToSearch,
+            navigateToAbout = navigateToAbout,
+            data = data,
+            updateHomeSearchType = updateHomeSearchType,
+            navigateToProfile = navigateToProfile,
+            scaffoldState = rememberScaffoldState(),
         )
     }
 
@@ -139,7 +145,7 @@ class HomeScreenUITest {
     fun onClickSearchTopAppBar_shouldNavigateToSearchScreen() {
         composeTestRule.setContent {
             HomeScreenUIContent(
-                navigateToSearchBySearchType = SearchType.Actors
+                navigateToSearch = { SearchType.People },
             )
         }
 
@@ -151,7 +157,7 @@ class HomeScreenUITest {
 
         composeTestRule
             .onNodeWithTag(testTag = "TestTag:HomeTopAppBar")
-            .assertExists()
+            .assertIsDisplayed()
             .performClick()
     }
 }

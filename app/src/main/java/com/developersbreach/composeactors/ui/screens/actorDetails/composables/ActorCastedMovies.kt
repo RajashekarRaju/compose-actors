@@ -1,8 +1,11 @@
 package com.developersbreach.composeactors.ui.screens.actorDetails.composables
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
@@ -14,10 +17,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.data.model.Movie
+import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.components.LoadNetworkImage
-import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsUIState
+import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsUiState
+import com.developersbreach.designsystem.components.CaImage
 import kotlinx.coroutines.Job
 
 /**
@@ -25,40 +29,39 @@ import kotlinx.coroutines.Job
  */
 @Composable
 internal fun ActorCastedMovies(
-    detailUIState: ActorDetailsUIState,
+    data: ActorDetailsUiState,
     openActorDetailsBottomSheet: () -> Job,
-    getSelectedMovieDetails: (Int) -> Unit
+    getSelectedMovieDetails: (Int) -> Unit,
 ) {
-    val cast: List<Movie> = detailUIState.castList
+    val cast: List<Movie> = data.castList
 
     Row(
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Image(
+        CaImage(
             painter = painterResource(id = R.drawable.ic_movies_cast),
             contentDescription = stringResource(R.string.cd_cast_icon),
             colorFilter = ColorFilter.tint(color = MaterialTheme.colors.onSurface),
             alpha = 0.5f,
             modifier = Modifier
                 .padding(start = 12.dp)
-                .size(36.dp)
+                .size(36.dp),
         )
-
         CategoryTitle(
-            title = stringResource(R.string.cast_movie_title)
+            title = stringResource(R.string.cast_movie_title),
         )
     }
 
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(16.dp)
+        contentPadding = PaddingValues(16.dp),
     ) {
         items(
             items = cast,
-            key = { it.movieId }
+            key = { it.movieId },
         ) { movie ->
             LoadNetworkImage(
-                imageUrl = movie.posterPathUrl,
+                imageUrl = movie.posterUrl,
                 contentDescription = stringResource(R.string.cd_movie_poster),
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier
@@ -66,7 +69,7 @@ internal fun ActorCastedMovies(
                     .clickable {
                         getSelectedMovieDetails(movie.movieId)
                         openActorDetailsBottomSheet()
-                    }
+                    },
             )
         }
     }

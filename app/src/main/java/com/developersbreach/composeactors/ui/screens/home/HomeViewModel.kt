@@ -3,12 +3,16 @@ package com.developersbreach.composeactors.ui.screens.home
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.developersbreach.composeactors.data.repository.actor.ActorRepository
-import com.developersbreach.composeactors.domain.GetPagedMovies
+import androidx.paging.cachedIn
+import arrow.core.raise.either
+import com.developersbreach.composeactors.data.movie.repository.MovieRepository
+import com.developersbreach.composeactors.data.person.repository.PersonRepository
+import com.developersbreach.composeactors.domain.core.ErrorReporter
+import com.developersbreach.composeactors.domain.movie.GetPagedMovies
+import com.developersbreach.composeactors.ui.components.BaseViewModel
+import com.developersbreach.composeactors.ui.components.UiState
+import com.developersbreach.composeactors.ui.components.modifyLoadedState
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.IOException
@@ -21,18 +25,14 @@ import timber.log.Timber
  */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val actorRepository: ActorRepository,
-    private val getPagedMovies: GetPagedMovies
-) : ViewModel() {
+    private val personRepository: PersonRepository,
+    private val movieRepository: MovieRepository,
+    private val getPagedMovies: GetPagedMovies,
+    errorReporter: ErrorReporter,
+) : BaseViewModel(errorReporter) {
 
-    var uiState by mutableStateOf(HomeUIState())
+    var uiState: UiState<HomeUiState> by mutableStateOf(UiState.Loading)
         private set
-
-    var sheetUiState by mutableStateOf(HomeSheetUIState())
-        private set
-
-    private val _updateHomeSearchType = MutableLiveData<SearchType>()
-    val updateHomeSearchType: LiveData<SearchType> = _updateHomeSearchType
 
     init {
         viewModelScope.launch {
@@ -45,20 +45,24 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun startFetchingActors() {
-        uiState = HomeUIState(isFetchingActors = true)
-        uiState = HomeUIState(
-            popularActorList = actorRepository.getPopularActorsData(),
-            trendingActorList = actorRepository.getTrendingActorsData(),
-            isFetchingActors = false,
-            upcomingMoviesList = actorRepository.getUpcomingMoviesData(),
-            nowPlayingMoviesList = getPagedMovies(viewModelScope)
+        uiState = UiState.Success(HomeUiState(isFetchingPersons = true))
+        uiState = either {
+            HomeUiState(
+                popularPersonList = personRepository.getPopularPersons().bind(),
+                trendingPersonList = personRepository.getTrendingPersons().bind(),
+                isFetchingPersons = false,
+                upcomingMoviesList = movieRepository.getUpcomingMovies().bind(),
+                nowPlayingMoviesList = getPagedMovies().cachedIn(viewModelScope),
+            )
+        }.fold(
+            ifLeft = { UiState.Error(it) },
+            ifRight = { UiState.Success(it) },
         )
     }
 
     fun updateHomeSearchType(searchType: SearchType) {
-        when (searchType) {
-            SearchType.Actors -> _updateHomeSearchType.value = SearchType.Actors
-            SearchType.Movies -> _updateHomeSearchType.value = SearchType.Movies
+        uiState = uiState.modifyLoadedState {
+            copy(searchType = searchType)
         }
     }
 }

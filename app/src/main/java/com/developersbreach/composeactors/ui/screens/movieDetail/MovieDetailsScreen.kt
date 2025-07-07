@@ -1,63 +1,58 @@
 package com.developersbreach.composeactors.ui.screens.movieDetail
 
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.developersbreach.composeactors.data.model.BottomSheetType
-import com.developersbreach.composeactors.ui.screens.actorDetails.ActorDetailsScreen
-import com.developersbreach.composeactors.ui.screens.home.HomeScreen
+import com.developersbreach.composeactors.ui.components.UiStateHandler
 
-
-/**
- * Screen shows details for the selected movie.
- * This destination can be accessed from [HomeScreen] & [ActorDetailsScreen].
- */
 @Composable
-fun MovieDetailScreen(
-    viewModel: MovieDetailViewModel = hiltViewModel(),
+fun MovieDetailsScreen(
+    viewModel: MovieDetailsViewModel = hiltViewModel(),
     navigateToSelectedMovie: (Int) -> Unit,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
 ) {
-    val uiState = viewModel.uiState
-    val actorsSheetUIState = viewModel.sheetUiState
-    val movieSheetUIState = viewModel.movieSheetUiState
-
-    val movieId by viewModel.isFavoriteMovie.observeAsState()
-
     val selectedBottomSheet = remember {
         mutableStateOf<BottomSheetType?>(BottomSheetType.MovieDetailBottomSheet)
     }
 
     val selectBottomSheetCallback = setBottomSheetCallBack(viewModel, selectedBottomSheet)
-
-    MovieDetailsUI(
-        uiState = uiState,
-        actorsSheetUIState = actorsSheetUIState,
-        movieSheetUIState = movieSheetUIState,
-        navigateUp = navigateUp,
-        selectedBottomSheet = selectedBottomSheet,
-        selectBottomSheetCallback = selectBottomSheetCallback,
-        isFavoriteMovie = movieId != 0 && movieId != null,
-        addMovieToFavorites = { viewModel.addMovieToFavorites() },
-        removeMovieFromFavorites = { viewModel.removeMovieFromFavorites() },
-        navigateToSelectedMovie = navigateToSelectedMovie
-    )
+    val scaffoldState = rememberScaffoldState()
+    UiStateHandler(
+        uiState = viewModel.uiState,
+        scaffoldState = scaffoldState,
+        uiEvent = viewModel.uiEvent,
+        isLoading = viewModel.isLoading,
+    ) { data ->
+        val isMovieInWatchlist by data.isMovieInWatchlist.collectAsState(false)
+        MovieDetailsUI(
+            data = data,
+            scaffoldState = scaffoldState,
+            navigateUp = navigateUp,
+            selectedBottomSheet = selectedBottomSheet,
+            selectBottomSheetCallback = selectBottomSheetCallback,
+            isMovieInWatchlist = isMovieInWatchlist,
+            addMovieToWatchlist = { viewModel.addMovieToWatchlist(data.movieData) },
+            removeMovieFromWatchlist = { viewModel.removeMovieFromWatchlist(data.movieData) },
+            navigateToSelectedMovie = navigateToSelectedMovie,
+        )
+    }
 }
 
 private fun setBottomSheetCallBack(
-    viewModel: MovieDetailViewModel,
-    selectedBottomSheet: MutableState<BottomSheetType?>
+    viewModel: MovieDetailsViewModel,
+    selectedBottomSheet: MutableState<BottomSheetType?>,
 ) = { bottomSheetType: BottomSheetType ->
     when (bottomSheetType) {
         BottomSheetType.MovieDetailBottomSheet -> {
-            viewModel.getSelectedMovieDetails(bottomSheetType.movieOrActorId)
+            viewModel.getSelectedMovieDetails(bottomSheetType.movieOrPersonId)
         }
         BottomSheetType.ActorDetailBottomSheet -> {
-            viewModel.getSelectedActorDetails(bottomSheetType.movieOrActorId)
+            viewModel.getSelectedPersonDetails(bottomSheetType.movieOrPersonId)
         }
     }
     selectedBottomSheet.value = bottomSheetType

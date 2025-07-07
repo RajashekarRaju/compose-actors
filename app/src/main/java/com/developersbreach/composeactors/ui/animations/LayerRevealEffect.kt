@@ -1,6 +1,11 @@
 package com.developersbreach.composeactors.ui.animations
 
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector1D
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.repeatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -24,9 +29,8 @@ import com.developersbreach.composeactors.ui.components.LoadNetworkImage
 @Composable
 fun LayerRevealImage(
     poster: String?,
-    isLayerRevealAnimationEnded: MutableState<Boolean>
+    isLayerRevealAnimationEnded: MutableState<Boolean>,
 ) {
-
     // To animate the canvas which has two rectangles.
     val animateShape = remember { Animatable(1f) }.also {
         LaunchAnimation(it)
@@ -46,11 +50,11 @@ fun LayerRevealImage(
         showAnimProgress = false,
         modifier = Modifier
             .fillMaxSize()
-            .alpha(imageLayerAlpha)
+            .alpha(imageLayerAlpha),
     )
 
     Canvas(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         // Draws a rectangle in canvas filling top half of the screen
         drawRevealingRectangle(this, animateShape, drawLayerColor)
@@ -77,7 +81,7 @@ private fun DrawScope.drawRevealingRectangle(
         topLeft = Offset(0f, 0f),
         size = Size(
             width = canvasScope.size.width,
-            height = canvasScope.size.height / 2 * animateShape.value
+            height = canvasScope.size.height / 2 * animateShape.value,
         ),
         alpha = 1f,
         // Color, Luminosity, Overlay, Hue, ColorBurn (better fit)
@@ -90,7 +94,7 @@ private fun DrawScope.drawRevealingRectangle(
  */
 @Composable
 private fun LaunchAnimation(
-    animateShape: Animatable<Float, AnimationVector1D>
+    animateShape: Animatable<Float, AnimationVector1D>,
 ) {
     LaunchedEffect(animateShape) {
         animateShape.animateTo(
@@ -99,11 +103,11 @@ private fun LaunchAnimation(
                 animation = tween(
                     durationMillis = 1200,
                     easing = LinearEasing,
-                    delayMillis = 100
+                    delayMillis = 100,
                 ),
                 repeatMode = RepeatMode.Restart,
-                iterations = 1
-            )
+                iterations = 1,
+            ),
         )
     }
 }

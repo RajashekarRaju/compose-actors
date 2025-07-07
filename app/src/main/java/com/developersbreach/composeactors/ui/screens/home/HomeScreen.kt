@@ -1,44 +1,42 @@
 package com.developersbreach.composeactors.ui.screens.home
 
-import androidx.compose.material.*
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.developersbreach.composeactors.ui.components.UiStateHandler
 import com.developersbreach.composeactors.ui.screens.search.SearchType
 
-/**
- * @param navigateToSelectedActor navigates to user clicked actor from row.
- * @param navigateToSearch navigates user to search screen.
- * @param viewModel to manage ui state of [HomeScreen]
- *
- * Default destination.
- * Shows category list of actors in row.
- * Shows [HomeTopAppBar] search box looking ui in [TopAppBar]
- * If user is offline shows snackbar message.
- */
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    navigateToSelectedActor: (Int) -> Unit,
+    navigateToSelectedPerson: (Int) -> Unit,
     navigateToSearch: (SearchType) -> Unit,
+    navigateToAbout: () -> Unit,
     navigateToSelectedMovie: (Int) -> Unit,
-    navigateToFavorite: () -> Unit,
+    navigateToWatchlist: () -> Unit,
+    navigateToProfile: () -> Unit,
 ) {
-    val navigateToSearchBySearchType by viewModel.updateHomeSearchType.observeAsState(SearchType.Actors)
-
-    HomeScreenUI(
-        modifier = Modifier,
-        navigateToFavorite = navigateToFavorite,
-        navigateToSearch = navigateToSearch,
-        navigateToSearchBySearchType = navigateToSearchBySearchType,
-        navigateToSelectedActor = navigateToSelectedActor,
-        navigateToSelectedMovie = navigateToSelectedMovie,
+    val scaffoldState = rememberScaffoldState()
+    UiStateHandler(
         uiState = viewModel.uiState,
-        sheetUiState = viewModel.sheetUiState,
-        updateHomeSearchType = { searchType: SearchType ->
-            viewModel.updateHomeSearchType(searchType)
-        }
-    )
+        scaffoldState = scaffoldState,
+        uiEvent = viewModel.uiEvent,
+        isLoading = viewModel.isLoading,
+    ) { data ->
+        HomeScreenUI(
+            modifier = Modifier,
+            navigateToWatchlist = navigateToWatchlist,
+            navigateToSearch = navigateToSearch,
+            navigateToAbout = navigateToAbout,
+            navigateToProfile = navigateToProfile,
+            navigateToSelectedPerson = navigateToSelectedPerson,
+            navigateToSelectedMovie = navigateToSelectedMovie,
+            data = data,
+            scaffoldState = scaffoldState,
+            updateHomeSearchType = { searchType: SearchType ->
+                viewModel.updateHomeSearchType(searchType)
+            },
+        )
+    }
 }

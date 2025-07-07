@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "180370591913",
+    "project_id": "compose-actors",
+    "storage_bucket": "compose-actors.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180370591913:android:3a46e1093a4d7e6cf799b8",
+        "android_client_info": {
+          "package_name": "com.developersbreach.composeactors"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180370591913-22ps54pifclnr1uc2sg6fntd6rta2s58.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeDdc3Uv2h4IiQBnHLckodBWHbyZxMBR0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180370591913-22ps54pifclnr1uc2sg6fntd6rta2s58.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

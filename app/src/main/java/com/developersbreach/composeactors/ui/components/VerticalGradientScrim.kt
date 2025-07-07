@@ -2,7 +2,7 @@ package com.developersbreach.composeactors.ui.components
 
 import androidx.annotation.FloatRange
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -15,10 +15,7 @@ import kotlin.math.pow
 /**
  * This file belongs to official jetpack samples repository made by google.
  * Sample -> JetCaster.
- */
-
-
-/**
+ *
  * Draws a vertical gradient scrim in the foreground.
  *
  * @param color The color of the gradient scrim.
@@ -34,7 +31,7 @@ fun Modifier.verticalGradientScrim(
     @FloatRange(from = 0.0, to = 1.0) startYPercentage: Float = 0f,
     @FloatRange(from = 0.0, to = 1.0) endYPercentage: Float = 1f,
     decay: Float = 1.0f,
-    numStops: Int = 16
+    numStops: Int = 16,
 ): Modifier = composed {
     val colors = remember(color, numStops) {
         if (decay != 1f) {
@@ -52,12 +49,12 @@ fun Modifier.verticalGradientScrim(
         }
     }
 
-    var height by remember { mutableStateOf(0f) }
+    var height by remember { mutableFloatStateOf(0f) }
     val brush = remember(color, numStops, startYPercentage, endYPercentage, height) {
         Brush.verticalGradient(
             colors = colors,
             startY = height * startYPercentage,
-            endY = height * endYPercentage
+            endY = height * endYPercentage,
         )
     }
 
