@@ -98,10 +98,10 @@ public class NoHardcodedStringsRule :
 
         // Skip technical strings
         val technicalPatterns = listOf(
-            "http", "https", "www", "com", "org", "net",
+            "http", "https", "www", ".com", ".org", ".net", // More specific domain patterns
             "TAG", "DEBUG", "ERROR", "WARN", "INFO", "VERBOSE",
             "application/", "text/", "image/", "video/", "audio/",
-            "yyyy", "MM", "dd", "HH", "mm", "ss", "SSS",
+            "yyyy-MM-dd", "HH:mm:ss", "yyyy", "MM", "dd", "HH", "mm", "SSS", // More specific date/time patterns
             "TestTag:", "cd_", "ContentDescription",
             "Bearer ", "Authorization", "Content-Type",
             "UTF-8", "ISO-", "GMT", "UTC",

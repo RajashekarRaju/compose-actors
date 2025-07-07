@@ -31,7 +31,9 @@
 
     <string name="stream">Watch providers</string>
     <string name="no_watch_options">No watch options available!</string>
-  
+
+    <string name="dismiss">Dismiss</string>
+
     <!--  About screen  -->
     <string name="cd_tmdb_api_attribution_logo">Logo of TMDB Api</string>
     <string name="tmdb_api_attribution">

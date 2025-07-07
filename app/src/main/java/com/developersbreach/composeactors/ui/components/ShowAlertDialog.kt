@@ -49,7 +49,7 @@ fun ShowAlertDialog(
                     shape = MaterialTheme.shapes.medium,
                     content = {
                         CaTextButton(
-                            text = "Dismiss",
+                            text = R.string.dismiss,
                             modifier = Modifier,
                         )
                     },
