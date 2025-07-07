@@ -279,7 +279,7 @@ fun SignUpScreenAwaitingConfirmationStepPreview() {
     ComposeActorsTheme {
         SignUpScreenPreview(
             signUpStep = SignUpStep.AwaitingConfirmation(
-                email = stringResource(R.string.sample_email),
+                email = "lulu",
                 password = "odio",
                 code = "nobis",
             ),
