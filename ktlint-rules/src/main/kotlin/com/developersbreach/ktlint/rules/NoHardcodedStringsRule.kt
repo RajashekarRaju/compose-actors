@@ -99,14 +99,14 @@ public class NoHardcodedStringsRule :
         // Skip technical strings
         val technicalPatterns = listOf(
             "http", "https", "www", ".com", ".org", ".net", // More specific domain patterns
-            "TAG", "DEBUG", "ERROR", "WARN", "INFO", "VERBOSE",
+            "Log.TAG", "Log.DEBUG", "Log.ERROR", "Log.WARN", "Log.INFO", "Log.VERBOSE", // More specific logging patterns
             "application/", "text/", "image/", "video/", "audio/",
-            "yyyy-MM-dd", "HH:mm:ss", "yyyy", "MM", "dd", "HH", "mm", "SSS", // More specific date/time patterns
+            "yyyy-MM-dd", "HH:mm:ss", "-yyyy-", "-MM-", "-dd-", ":HH:", ":mm:", ".SSS", // More specific date/time patterns
             "TestTag:", "cd_", "ContentDescription",
             "Bearer ", "Authorization", "Content-Type",
-            "UTF-8", "ISO-", "GMT", "UTC",
+            "UTF-8", "ISO-", " GMT", " UTC", "+GMT", "+UTC", // More specific timezone patterns
             "android.", "androidx.", "kotlin.", "java.",
-            "SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE",
+            "SELECT ", "INSERT ", "UPDATE ", "DELETE ", " FROM ", " WHERE ", // More specific SQL patterns
             "CREATE TABLE", "DROP TABLE", "ALTER TABLE",
             "ktlint:", "BanParcelableUsage", "modifier =", "code =",
             "biography =", "dateOfBirth =", "placeOfBirth =",

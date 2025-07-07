@@ -64,9 +64,13 @@
     <string name="error_password_mismatch">Passwords do not match</string>
     <string name="error_empty_fields">Please fill all fields</string>
     <string name="error_empty_code">Please enter the confirmation code</string>
+    <string name="error_occurred">Error occurred</string>
+    <string name="error_information_not_available">Error information not available</string>
+    <string name="error_unknown">Unknown error</string>
     <string name="confirmation_code">Confirmation Code</string>
     <string name="confirm">Confirm</string>
     <string name="sign_up_success">Sign up successful!\n\nCompleting login process now.</string>
     <string name="no_actors_found_message">No actors found for your search.</string>
     <string name="no_movies_found_message">No movies found for your search.</string>
+    <string name="feature_coming_soon">Feature Coming Soon</string>
 </resources>

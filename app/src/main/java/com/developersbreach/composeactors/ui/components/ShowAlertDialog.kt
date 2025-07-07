@@ -9,9 +9,11 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.window.DialogProperties
+import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaTextBody1
@@ -49,7 +51,7 @@ fun ShowAlertDialog(
                     shape = MaterialTheme.shapes.medium,
                     content = {
                         CaTextButton(
-                            text = R.string.dismiss,
+                            text = stringResource(R.string.dismiss),
                             modifier = Modifier,
                         )
                     },

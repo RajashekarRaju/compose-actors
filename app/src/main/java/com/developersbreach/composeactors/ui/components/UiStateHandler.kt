@@ -12,6 +12,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.screens.search.SearchUiMessage
 import com.developersbreach.composeactors.ui.screens.search.toResId
 import kotlinx.coroutines.flow.SharedFlow
@@ -66,8 +68,8 @@ fun <T> UiStateHandler(
                     ShowAlertDialog(
                         onButtonClick = { shouldDismissErrorDialog.value = true },
                         modifier = Modifier,
-                        title = "Error occurred",
-                        description = errorDetails.localizedMessage ?: "Error information not available",
+                        title = stringResource(R.string.error_occurred),
+                        description = errorDetails.localizedMessage ?: stringResource(R.string.error_information_not_available),
                     )
                 }
             }

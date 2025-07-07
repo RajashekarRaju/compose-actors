@@ -26,7 +26,7 @@ fun SignUpScreen(
                 "PASSWORD_MISMATCH" -> stringResource(R.string.error_password_mismatch)
                 "EMPTY_FIELDS" -> stringResource(R.string.error_empty_fields)
                 "EMPTY_CODE" -> stringResource(R.string.error_empty_code)
-                else -> state.throwable.localizedMessage ?: "Unknown error"
+                else -> state.throwable.localizedMessage ?: stringResource(R.string.error_unknown)
             }
 
             else -> null

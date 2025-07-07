@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
@@ -33,7 +34,7 @@ fun TvShowsTabContent() {
                 modifier = Modifier.size(240.dp),
             )
             CaTextH6(
-                text = "Feature Coming Soon",
+                text = stringResource(R.string.feature_coming_soon),
                 color = MaterialTheme.colors.primary,
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 40.dp),
                 textAlign = TextAlign.Center,
