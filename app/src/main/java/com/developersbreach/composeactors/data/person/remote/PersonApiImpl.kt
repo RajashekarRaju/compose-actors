@@ -4,6 +4,7 @@ import arrow.core.Either
 import com.developersbreach.composeactors.core.network.BaseUrlProvider
 import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_API_KEY
 import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_BASE_URL
+import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.ADULT_FILTER_QUERY
 import com.developersbreach.composeactors.core.network.HttpRequestHandler
 import com.developersbreach.composeactors.core.network.PagedResponse
 import com.developersbreach.composeactors.data.person.model.Person
@@ -20,14 +21,14 @@ class PersonApiImpl @Inject constructor(
 
     override suspend fun getPopularPersons(): Either<Throwable, PagedResponse<Person>> {
         return requestHandler.getPagedResponse(
-            URL("${TMDB_BASE_URL}person/popular?$TMDB_API_KEY"),
+            URL("${TMDB_BASE_URL}person/popular?$TMDB_API_KEY$ADULT_FILTER_QUERY"),
         )
     }
 
     // person/3233?api_key=TMDB_API_KEY
     override suspend fun getTrendingPersons(): Either<Throwable, PagedResponse<Person>> {
         return requestHandler.getPagedResponse(
-            URL("${TMDB_BASE_URL}trending/person/week?$TMDB_API_KEY"),
+            URL("${TMDB_BASE_URL}trending/person/week?$TMDB_API_KEY$ADULT_FILTER_QUERY"),
         )
     }
 
@@ -36,7 +37,7 @@ class PersonApiImpl @Inject constructor(
         personId: Int,
     ): Either<Throwable, PersonDetail> {
         return requestHandler.getResponse(
-            URL("${TMDB_BASE_URL}person/$personId?$TMDB_API_KEY"),
+            URL("${TMDB_BASE_URL}person/$personId?$TMDB_API_KEY$ADULT_FILTER_QUERY"),
         )
     }
 
@@ -45,7 +46,7 @@ class PersonApiImpl @Inject constructor(
         personId: Int,
     ): Either<Throwable, MoviesResponse> {
         return requestHandler.getResponse<MoviesResponse>(
-            URL("${TMDB_BASE_URL}person/$personId/movie_credits?$TMDB_API_KEY"),
+            URL("${TMDB_BASE_URL}person/$personId/movie_credits?$TMDB_API_KEY$ADULT_FILTER_QUERY"),
         )
     }
 }

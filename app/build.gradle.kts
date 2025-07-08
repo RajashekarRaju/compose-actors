@@ -195,6 +195,9 @@ fun ApplicationDefaultConfig.setupBuildConfigFields(
     buildConfigField(type = "String", name = "COGNITO_WEB_DOMAIN", value = "\"${secret("COGNITO_WEB_DOMAIN")}\"")
 
     buildConfigField(type = "String", name = "TMDB_API_KEY", value = "\"${secret("TMDB_API_KEY")}\"")
+
+    val includeAdult = secret("TMDB_INCLUDE_ADULT").ifEmpty { "false" }
+    buildConfigField(type = "Boolean", name = "TMDB_INCLUDE_ADULT", value = includeAdult)
 }
 
 fun getLocalProperties(): Properties {

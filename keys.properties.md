@@ -8,6 +8,8 @@
 ```
 # API key from TMDB
 TMDB_API_KEY=
+# TMDB adult content filter
+TMDB_INCLUDE_ADULT=false
 # Apmlify configuration keys
 COGNITO_POOL_ID=
 COGNITO_APP_CLIENT_ID=
