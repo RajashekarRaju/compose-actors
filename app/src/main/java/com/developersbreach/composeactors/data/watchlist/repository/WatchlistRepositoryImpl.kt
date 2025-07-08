@@ -62,9 +62,8 @@ class WatchlistRepositoryImpl @Inject constructor(
             withContext(Dispatchers.IO) {
                 watchlistApi.addMovieToWatchlist(
                     watchlistMovie = movieDetail.toWatchlistMovie(),
-                ).map {
-                    database.watchlistMoviesDao.addMovieToWatchlist(movieDetail.toWatchlistMovieEntity())
-                }
+                ).bind()
+                database.watchlistMoviesDao.addMovieToWatchlist(movieDetail.toWatchlistMovieEntity())
             }
         }
     }
@@ -76,9 +75,8 @@ class WatchlistRepositoryImpl @Inject constructor(
             withContext(Dispatchers.IO) {
                 watchlistApi.removeMovieFromWatchlist(
                     movieId = movie.movieId,
-                ).map {
-                    database.watchlistMoviesDao.deleteMovieFromWatchlist(movie.toWatchlistMovieEntity())
-                }
+                ).bind()
+                database.watchlistMoviesDao.deleteMovieFromWatchlist(movie.toWatchlistMovieEntity())
             }
         }
     }
@@ -116,9 +114,8 @@ class WatchlistRepositoryImpl @Inject constructor(
             withContext(Dispatchers.IO) {
                 watchlistApi.addPersonToWatchlist(
                     watchlistPerson = personDetail.toWatchlistPerson(),
-                ).map {
-                    database.watchlistPersonsDao.addPersonToWatchlist(personDetail.toWatchlistPersonEntity())
-                }
+                ).bind()
+                database.watchlistPersonsDao.addPersonToWatchlist(personDetail.toWatchlistPersonEntity())
             }
         }
     }
@@ -130,9 +127,8 @@ class WatchlistRepositoryImpl @Inject constructor(
             withContext(Dispatchers.IO) {
                 watchlistApi.removeMovieFromWatchlist(
                     movieId = personId,
-                ).map {
-                    database.watchlistPersonsDao.deletePersonFromWatchlist(personId)
-                }
+                ).bind()
+                database.watchlistPersonsDao.deletePersonFromWatchlist(personId)
             }
         }
     }

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface WatchlistPersonsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addPersonToWatchlist(watchlistPersonsEntity: WatchlistPersonEntity)
+    suspend fun addPersonToWatchlist(watchlistPersonsEntity: WatchlistPersonEntity)
 
     @Query("SELECT * FROM watchlist_people_table ORDER BY person_id ASC")
     fun getPeopleFromWatchlist(): PagingSource<Int, WatchlistPersonEntity>
