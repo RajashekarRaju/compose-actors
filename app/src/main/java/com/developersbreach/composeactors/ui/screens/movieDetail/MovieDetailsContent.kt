@@ -12,7 +12,9 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.CategoryTitle
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.GetMovieCast
 import com.developersbreach.composeactors.ui.screens.movieDetail.composables.GetRelatedMovies
@@ -67,7 +69,7 @@ fun MovieDetailsContent(
             Spacer(modifier = Modifier.height(16.dp))
             MovieDetailOverviewText(movieData?.overview)
             Spacer(modifier = Modifier.height(16.dp))
-            CategoryTitle(title = "Cast", alpha = 1f)
+            CategoryTitle(title = stringResource(R.string.cast), alpha = 1f)
             Spacer(modifier = Modifier.height(16.dp))
             GetMovieCast(
                 data = data,
@@ -75,14 +77,14 @@ fun MovieDetailsContent(
                 selectBottomSheetCallback = selectBottomSheetCallback,
             )
             Spacer(modifier = Modifier.height(24.dp))
-            CategoryTitle(title = "Similar", alpha = 1f)
+            CategoryTitle(title = stringResource(R.string.similar), alpha = 1f)
             GetRelatedMovies(
                 movieList = data.similarMovies,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,
                 selectBottomSheetCallback = selectBottomSheetCallback,
             )
             Spacer(modifier = Modifier.height(12.dp))
-            CategoryTitle(title = "Recommended", alpha = 1f)
+            CategoryTitle(title = stringResource(R.string.recommended), alpha = 1f)
             GetRelatedMovies(
                 movieList = data.recommendedMovies,
                 openMovieDetailsBottomSheet = openMovieDetailsBottomSheet,

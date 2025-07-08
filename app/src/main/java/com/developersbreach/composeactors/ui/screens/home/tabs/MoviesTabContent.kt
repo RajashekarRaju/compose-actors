@@ -49,7 +49,7 @@ fun MoviesTabContent(
             span = { GridItemSpan(3) },
         ) {
             CategoryTitle(
-                title = "Upcoming",
+                title = stringResource(R.string.upcoming),
                 startPadding = 0.dp,
                 bottomPadding = 8.dp,
             )
@@ -72,7 +72,7 @@ fun MoviesTabContent(
             span = { GridItemSpan(3) },
         ) {
             CategoryTitle(
-                title = "Now Playing",
+                title = stringResource(R.string.now_playing),
                 startPadding = 0.dp,
                 topPadding = 16.dp,
                 bottomPadding = 8.dp,

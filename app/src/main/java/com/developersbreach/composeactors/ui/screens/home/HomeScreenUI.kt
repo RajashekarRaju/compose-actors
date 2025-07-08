@@ -19,7 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.datasource.fake.fakePersonsList
 import com.developersbreach.composeactors.data.datasource.fake.fakeMovieList
@@ -127,9 +129,9 @@ private fun HomeScreenUI(
     val popularPersonsListState = rememberLazyListState()
     val trendingPersonsListState = rememberLazyListState()
     val homeTabs = listOf(
-        TabItem("Actors"),
-        TabItem("Movies"),
-        TabItem("TV Shows"),
+        TabItem(stringResource(R.string.actors)),
+        TabItem(stringResource(R.string.movies)),
+        TabItem(stringResource(R.string.tv_shows)),
     )
     val homePagerState = rememberPagerState(
         pageCount = { homeTabs.size },

@@ -15,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.ui.components.UiMessage.Companion.toMessage
 import kotlinx.coroutines.flow.SharedFlow
@@ -73,8 +74,8 @@ fun <T> UiStateHandler(
                         isDismissible = false,
                         onDismissRequest = { !shouldDismissErrorDialog.value },
                         modifier = Modifier,
-                        title = "Error occurred",
-                        description = errorDetails.localizedMessage ?: "Error information not available",
+                        title = stringResource(R.string.error_occurred),
+                        description = errorDetails.localizedMessage ?: stringResource(R.string.error_information_not_available),
                     )
                 }
             }

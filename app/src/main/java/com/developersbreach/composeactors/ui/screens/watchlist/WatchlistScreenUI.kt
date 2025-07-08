@@ -109,7 +109,7 @@ private fun FeatureComingSoonTextUI() {
         modifier = Modifier.fillMaxSize(),
     ) {
         CaTextH6(
-            text = "Feature Coming Soon",
+            text = stringResource(R.string.feature_coming_soon),
             color = MaterialTheme.colors.primary,
             modifier = Modifier.padding(horizontal = 24.dp, vertical = 40.dp),
             textAlign = TextAlign.Center,

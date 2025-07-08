@@ -17,7 +17,7 @@ Access the latest APK for Compose Actors from the link below.
 - [ ] Create production environment for existing services and integrations used in app.
 - [ ] Complete remaining screenshot tests
 - [ ] Cover offline handling, network requiring flows, edge cases.
-- [ ] Ktlint tests for validating hardcode strings and resources, enforce localization.
+- [ ] Ktlint rules for validating hardcode strings and resources, enforce localization.
 
 ## Roadmap v0.4.0
 <details>

@@ -92,6 +92,7 @@ ktlint {
 }
 
 dependencies {
+    ktlintRuleset(project(":ktlint-rules"))
     coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(platform(libs.androidx.compose.bom))
     implementation(platform(libs.kotlin.bom))

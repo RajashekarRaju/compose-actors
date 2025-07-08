@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
@@ -83,7 +84,7 @@ private fun ItemWatchlistPerson(
     ) {
         LoadNetworkImage(
             imageUrl = item.profileUrl,
-            contentDescription = "Actor Image",
+            contentDescription = stringResource(R.string.cd_actor_image),
             shape = RectangleShape,
             showAnimProgress = false,
             modifier = Modifier
