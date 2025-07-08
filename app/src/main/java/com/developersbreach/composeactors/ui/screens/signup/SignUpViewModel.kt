@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.developersbreach.composeactors.data.auth.AuthenticationService
+import com.developersbreach.composeactors.domain.core.ErrorReporter
 import com.developersbreach.composeactors.ui.components.BaseViewModel
 import com.developersbreach.composeactors.ui.components.UiState
 import com.developersbreach.composeactors.ui.components.modifyLoadedState
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val authenticationService: AuthenticationService,
-) : BaseViewModel() {
+    errorReporter: ErrorReporter,
+) : BaseViewModel(errorReporter) {
 
     var uiState: UiState<SignUpUiState> by mutableStateOf(UiState.Success(SignUpUiState()))
         private set
@@ -68,15 +70,15 @@ class SignUpViewModel @Inject constructor(
         password: String,
         confirmPassword: String,
     ) {
-        if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            uiState = UiState.Error(Throwable("Fields cannot be empty"))
-            return
-        }
-        if (password != confirmPassword) {
-            uiState = UiState.Error(Throwable("Passwords do not match"))
-            return
-        }
         viewModelScope.launch {
+            if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                showMessage("Fields cannot be empty")
+                return@launch
+            }
+            if (password != confirmPassword) {
+                showMessage("Passwords do not match")
+                return@launch
+            }
             showLoading()
             uiState = authenticationService.signUp(
                 email = email,
@@ -111,11 +113,11 @@ class SignUpViewModel @Inject constructor(
         email: String,
         code: String,
     ) {
-        if (code.isEmpty()) {
-            uiState = UiState.Error(Throwable("Verification code is required"))
-            return
-        }
         viewModelScope.launch {
+            if (code.isEmpty()) {
+                showMessage("Verification code is required")
+                return@launch
+            }
             showLoading()
             uiState = authenticationService.confirmSignUp(
                 email = email,
@@ -138,13 +140,13 @@ class SignUpViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             showLoading()
-            uiState = authenticationService.signIn(
+            authenticationService.signIn(
                 email = email,
                 password = password,
             ).fold(
-                ifLeft = { UiState.Error(it) },
+                ifLeft = { showMessage(it.localizedMessage ?: "Failed to login") },
                 ifRight = {
-                    UiState.Success(
+                    uiState = UiState.Success(
                         SignUpUiState(signUpStep = SignUpStep.LoginProcessCompleted),
                     )
                 },

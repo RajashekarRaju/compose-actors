@@ -8,8 +8,8 @@ import androidx.paging.cachedIn
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.watchlist.model.WatchlistPerson
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
+import com.developersbreach.composeactors.domain.core.ErrorReporter
 import com.developersbreach.composeactors.ui.components.BaseViewModel
-import com.developersbreach.composeactors.ui.components.UiEvent
 import com.developersbreach.composeactors.ui.components.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -20,7 +20,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class WatchlistViewModel @Inject constructor(
     private val watchlistRepository: WatchlistRepository,
-) : BaseViewModel() {
+    errorReporter: ErrorReporter,
+) : BaseViewModel(errorReporter) {
 
     var uiState: UiState<WatchlistUiState> by mutableStateOf(
         UiState.Success(
@@ -36,12 +37,14 @@ class WatchlistViewModel @Inject constructor(
         movie: Movie,
     ) {
         viewModelScope.launch {
+            showLoading()
             watchlistRepository.removeMovieFromWatchlist(
                 movie = movie,
             ).fold(
-                ifLeft = { UiState.Error(it) },
-                ifRight = { sendUiEvent(UiEvent.ShowMessage("Removed ${movie.movieTitle} from watchlist")) },
+                ifLeft = { uiState = UiState.Error(it) },
+                ifRight = { showMessage("Removed ${movie.movieTitle} from watchlist") },
             )
+            hideLoading()
         }
     }
 
@@ -49,12 +52,14 @@ class WatchlistViewModel @Inject constructor(
         person: WatchlistPerson,
     ) {
         viewModelScope.launch {
+            showLoading()
             watchlistRepository.removePersonFromWatchlist(
                 personId = person.personId,
             ).fold(
-                ifLeft = { UiState.Error(it) },
-                ifRight = { sendUiEvent(UiEvent.ShowMessage("Removed “${person.personName}” from watchlist")) },
+                ifLeft = { uiState = UiState.Error(it) },
+                ifRight = { showMessage("Removed “${person.personName}” from watchlist") },
             )
+            hideLoading()
         }
     }
 }

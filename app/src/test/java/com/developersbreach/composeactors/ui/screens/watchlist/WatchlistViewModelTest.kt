@@ -3,6 +3,7 @@ package com.developersbreach.composeactors.ui.screens.watchlist
 import arrow.core.Either
 import com.developersbreach.composeactors.data.watchlist.model.WatchlistPerson
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
+import com.developersbreach.composeactors.domain.core.ErrorReporter
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -19,6 +20,7 @@ class WatchlistViewModelTest {
 
     private lateinit var viewModel: WatchlistViewModel
     private val watchlistRepository: WatchlistRepository = mockk(relaxed = true)
+    private val errorReporter: ErrorReporter = mockk(relaxed = true)
 
     @Before
     fun setup() {
@@ -26,6 +28,7 @@ class WatchlistViewModelTest {
 
         viewModel = WatchlistViewModel(
             watchlistRepository = watchlistRepository,
+            errorReporter = errorReporter,
         )
     }
 

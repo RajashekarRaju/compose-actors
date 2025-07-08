@@ -11,8 +11,8 @@ import com.developersbreach.composeactors.data.movie.repository.MovieRepository
 import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
+import com.developersbreach.composeactors.domain.core.ErrorReporter
 import com.developersbreach.composeactors.ui.components.BaseViewModel
-import com.developersbreach.composeactors.ui.components.UiEvent
 import com.developersbreach.composeactors.ui.components.UiState
 import com.developersbreach.composeactors.ui.components.modifyLoadedState
 import com.developersbreach.composeactors.ui.navigation.AppDestinations
@@ -30,7 +30,8 @@ class ActorDetailsViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
     private val personRepository: PersonRepository,
     private val watchlistRepository: WatchlistRepository,
-) : BaseViewModel() {
+    errorReporter: ErrorReporter,
+) : BaseViewModel(errorReporter) {
 
     private val personId: Int = savedStateHandle.toRoute<AppDestinations.ActorDetail>().personId
 
@@ -61,11 +62,12 @@ class ActorDetailsViewModel @Inject constructor(
     fun getSelectedMovieDetails(
         movieId: Int?,
     ) {
-        if (movieId == null) {
-            Timber.e("Failed to getSelectedMovieDetails, since id was null")
-            return
-        }
         viewModelScope.launch {
+            if (movieId == null) {
+                Timber.e("Failed to getSelectedMovieDetails, since id was null")
+                showMessage("Failed to load movie details.")
+                return@launch
+            }
             detailUIState = movieRepository.getMovieDetails(
                 movieId = movieId,
             ).fold(
@@ -85,6 +87,7 @@ class ActorDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             if (personDetail == null) {
                 Timber.e("Person was null while adding to watchlist operation.")
+                showMessage("Failed to load person details.")
                 return@launch
             }
 
@@ -93,7 +96,7 @@ class ActorDetailsViewModel @Inject constructor(
                 personDetail = personDetail,
             ).fold(
                 ifLeft = { detailUIState = UiState.Error(it) },
-                ifRight = { sendUiEvent(UiEvent.ShowMessage("Added ${personDetail.personName} to watchlist")) },
+                ifRight = { showMessage("Added ${personDetail.personName} to watchlist") },
             )
             hideLoading()
         }
@@ -105,6 +108,7 @@ class ActorDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             if (personDetail == null) {
                 Timber.e("Failed to remove person while adding to watchlist operation.")
+                showMessage("Failed to load person details.")
                 return@launch
             }
 
@@ -113,7 +117,7 @@ class ActorDetailsViewModel @Inject constructor(
                 personId = personDetail.personId,
             ).fold(
                 ifLeft = { detailUIState = UiState.Error(it) },
-                ifRight = { sendUiEvent(UiEvent.ShowMessage("Removed ${personDetail.personName} to watchlist")) },
+                ifRight = { showMessage("Removed ${personDetail.personName} to watchlist") },
             )
             hideLoading()
         }
