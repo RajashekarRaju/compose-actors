@@ -17,8 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.developersbreach.composeactors.R
-import com.developersbreach.composeactors.ui.screens.search.SearchUiMessage
-import com.developersbreach.composeactors.ui.screens.search.toResId
 import com.developersbreach.composeactors.ui.components.UiMessage.Companion.toMessage
 import kotlinx.coroutines.flow.SharedFlow
 import timber.log.Timber
