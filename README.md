@@ -10,14 +10,16 @@ Access the latest APK for Compose Actors from the link below.
 ## Current Roadmap v0.5.0
 
 - [x] Prepare development and production environments for initial release
-- [ ] Improve error handling and user feedback messages.
+- [x] Allow region configuration for deferable content based on chosen region
+- [x] Filter out adult content to avoid store publishing and policy issues.
+- [x] Improve error handling and user feedback messages.
 - [ ] Complete tests for app navigation for all destinations.
 - [ ] Create/Review privacy policy, usage rights, attributions for store publishing.
 - [ ] Create publicising assets, banners for store.
 - [ ] Create production environment for existing services and integrations used in app.
-- [ ] Complete remaining screenshot tests
+- [x] Complete remaining screenshot tests
 - [ ] Cover offline handling, network requiring flows, edge cases.
-- [ ] Ktlint rules for validating hardcode strings and resources, enforce localization.
+- [x] Ktlint rules for validating hardcode strings and resources, enforce localization.
 
 ## Roadmap v0.4.0
 <details>
