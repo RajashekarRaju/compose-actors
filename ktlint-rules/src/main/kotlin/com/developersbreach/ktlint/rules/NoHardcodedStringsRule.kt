@@ -112,7 +112,7 @@ public class NoHardcodedStringsRule :
             "biography =", "dateOfBirth =", "placeOfBirth =",
             // API endpoint patterns
             "person/", "movie/", "trending/", "search/", "discover/",
-            "credits?", "popular?", "week?", "day?", "api_key=",
+            "credits?", "popular?", "week?", "day?", "api_key=", "&include_adult="
         )
 
         if (technicalPatterns.any { text.contains(it, ignoreCase = true) }) {

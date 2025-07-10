@@ -19,3 +19,17 @@ fun CaVerticalSpacer(
 ) {
     Spacer(modifier = Modifier.padding(vertical = value.dp))
 }
+
+@Composable
+fun CaHorizontalSpacer(
+    modifier: Modifier = Modifier,
+) {
+    Spacer(modifier = modifier)
+}
+
+@Composable
+fun CaHorizontalSpacer(
+    value: Int = 8,
+) {
+    Spacer(modifier = Modifier.padding(horizontal = value.dp))
+}

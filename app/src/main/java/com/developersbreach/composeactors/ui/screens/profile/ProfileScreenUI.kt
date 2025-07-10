@@ -19,8 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.annotations.PreviewLightDark
+import com.developersbreach.composeactors.data.region.model.Region
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaButtonFilled
+import com.developersbreach.composeactors.ui.components.CaDropdown
 import com.developersbreach.designsystem.components.CaImage
 import com.developersbreach.designsystem.components.CaScaffold
 import com.developersbreach.designsystem.components.CaSurface
@@ -34,6 +36,8 @@ fun ProfileScreenUI(
     onClickLogout: () -> Unit,
     profileUiState: ProfileUiState,
     scaffoldState: ScaffoldState,
+    onRegionSelected: (Region) -> Unit,
+    onRegionDropdownToggle: () -> Unit,
 ) {
     CaSurface(
         color = MaterialTheme.colors.background,
@@ -57,19 +61,27 @@ fun ProfileScreenUI(
                     modifier = Modifier.size(96.dp),
                 )
                 CaVerticalSpacer(10)
-                when (profileUiState) {
-                    ProfileUiState.NavigateToLogin -> navigateToLogin()
-                    ProfileUiState.GuestUI -> ProfileGuestUI()
-                    ProfileUiState.UnauthenticatedUI -> ProfileUnauthenticatedUI(navigateToLogin)
-                    is ProfileUiState.AuthenticatedUI -> ProfileAuthenticatedUI(profileUiState, onClickLogout)
+                when (profileUiState.actions) {
+                    ProfileActions.NavigateToLogin -> navigateToLogin()
+                    ProfileActions.GuestUI -> ProfileGuestUI(navigateToLogin)
+                    is ProfileActions.AuthenticatedUI -> ProfileAuthenticatedUI(profileUiState.actions, onClickLogout)
+                    ProfileActions.UnauthenticatedUI, null -> ProfileUnauthenticatedUI(navigateToLogin)
                 }
+                CaVerticalSpacer(20)
+                RegionDropdown(
+                    profileUiState = profileUiState,
+                    onRegionSelected = onRegionSelected,
+                    onRegionDropdownToggle = onRegionDropdownToggle,
+                )
             }
         }
     }
 }
 
 @Composable
-private fun ProfileGuestUI() {
+private fun ProfileGuestUI(
+    navigateToLogin: () -> Unit,
+) {
     CaTextBody1(
         text = stringResource(R.string.logged_in_as_guest),
         modifier = Modifier,
@@ -78,6 +90,8 @@ private fun ProfileGuestUI() {
             textAlign = TextAlign.Center,
         ),
     )
+    CaVerticalSpacer(4)
+    ProfileUnauthenticatedUI(navigateToLogin)
 }
 
 @Composable
@@ -102,11 +116,11 @@ private fun ProfileUnauthenticatedUI(
 
 @Composable
 private fun ProfileAuthenticatedUI(
-    profileUiState: ProfileUiState.AuthenticatedUI,
+    profileActions: ProfileActions.AuthenticatedUI,
     onClickLogout: () -> Unit,
 ) {
     CaTextBody1(
-        text = stringResource(R.string.welcome, profileUiState.name),
+        text = stringResource(R.string.welcome, profileActions.name),
         modifier = Modifier,
         style = TextStyle(
             fontSize = 20.sp,
@@ -121,44 +135,55 @@ private fun ProfileAuthenticatedUI(
     )
 }
 
-@PreviewLightDark
 @Composable
-fun ProfileScreenAuthenticatedPreview() {
+private fun RegionDropdown(
+    profileUiState: ProfileUiState,
+    onRegionSelected: (Region) -> Unit,
+    onRegionDropdownToggle: () -> Unit,
+) {
+    CaDropdown(
+        modifier = Modifier,
+        items = profileUiState.regions,
+        selectedItem = profileUiState.region,
+        isDropdownExpanded = profileUiState.isDropdownExpanded,
+        onExpanded = onRegionDropdownToggle,
+        onItemClick = onRegionSelected,
+        itemText = { it.name },
+        defaultSelectionTitle = stringResource(R.string.select_region),
+    )
+}
+
+@Composable
+private fun ProfileScreenPreview(
+    profileUiState: ProfileUiState,
+) {
     ComposeActorsTheme {
         ProfileScreenUI(
             navigateUp = { },
             onClickLogout = { },
             navigateToLogin = { },
-            profileUiState = ProfileUiState.AuthenticatedUI("Raj"),
+            profileUiState = profileUiState,
             scaffoldState = rememberScaffoldState(),
+            onRegionSelected = {},
+            onRegionDropdownToggle = {},
         )
     }
+}
+
+@PreviewLightDark
+@Composable
+fun ProfileScreenAuthenticatedPreview() {
+    ProfileScreenPreview(ProfileUiState(actions = ProfileActions.AuthenticatedUI("Raj")))
 }
 
 @PreviewLightDark
 @Composable
 fun ProfileScreenUnauthenticatedPreview() {
-    ComposeActorsTheme {
-        ProfileScreenUI(
-            navigateUp = { },
-            onClickLogout = { },
-            navigateToLogin = { },
-            profileUiState = ProfileUiState.UnauthenticatedUI,
-            scaffoldState = rememberScaffoldState(),
-        )
-    }
+    ProfileScreenPreview(ProfileUiState(actions = ProfileActions.UnauthenticatedUI))
 }
 
 @PreviewLightDark
 @Composable
 fun ProfileScreenGuestPreview() {
-    ComposeActorsTheme {
-        ProfileScreenUI(
-            navigateUp = { },
-            onClickLogout = { },
-            navigateToLogin = { },
-            profileUiState = ProfileUiState.GuestUI,
-            scaffoldState = rememberScaffoldState(),
-        )
-    }
+    ProfileScreenPreview(ProfileUiState(actions = ProfileActions.GuestUI))
 }

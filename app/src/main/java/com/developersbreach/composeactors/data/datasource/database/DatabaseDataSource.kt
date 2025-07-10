@@ -3,8 +3,12 @@ package com.developersbreach.composeactors.data.datasource.database
 import arrow.core.Either
 import com.developersbreach.composeactors.core.database.AppDatabase
 import com.developersbreach.composeactors.core.database.entity.PersonDetailEntity
+import com.developersbreach.composeactors.core.database.entity.toRegion
 import com.developersbreach.composeactors.data.person.model.PersonDetail
 import com.developersbreach.composeactors.data.person.model.toEntity
+import com.developersbreach.composeactors.data.region.model.Region
+import com.developersbreach.composeactors.data.region.model.Region.Companion.defaultRegion
+import com.developersbreach.composeactors.data.region.model.toEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,5 +28,20 @@ class DatabaseDataSource @Inject constructor(
         return Either.catch {
             database.personDetailsDao.getPersonDetail(personId)
         }
+    }
+
+    suspend fun getRegion(): Region {
+        val regionEntity = database.regionDao.getRegion()
+        return when (regionEntity) {
+            null -> {
+                database.regionDao.setRegion(defaultRegion.toEntity())
+                defaultRegion
+            }
+            else -> regionEntity.toRegion()
+        }
+    }
+
+    suspend fun setRegion(region: Region) {
+        database.regionDao.setRegion(region.toEntity())
     }
 }

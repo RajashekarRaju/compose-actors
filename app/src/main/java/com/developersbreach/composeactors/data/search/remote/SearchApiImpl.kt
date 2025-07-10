@@ -4,6 +4,7 @@ import arrow.core.Either
 import com.developersbreach.composeactors.core.network.BaseUrlProvider
 import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_API_KEY
 import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_BASE_URL
+import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.ADULT_FILTER_QUERY
 import com.developersbreach.composeactors.core.network.HttpRequestHandler
 import com.developersbreach.composeactors.core.network.PagedResponse
 import com.developersbreach.composeactors.data.person.model.Person
@@ -22,7 +23,7 @@ class SearchApiImpl @Inject constructor(
         query: String,
     ): Either<Throwable, PagedResponse<Person>> {
         return requestHandler.getPagedResponse<Person>(
-            URL("${TMDB_BASE_URL}search/person?${TMDB_API_KEY}&query=${query.toEncodedQuery()}"),
+            URL("${TMDB_BASE_URL}search/person?${TMDB_API_KEY}&query=${query.toEncodedQuery()}$ADULT_FILTER_QUERY"),
         )
     }
 
@@ -31,7 +32,7 @@ class SearchApiImpl @Inject constructor(
         query: String,
     ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
-            URL("${TMDB_BASE_URL}search/movie?${TMDB_API_KEY}&query=${query.toEncodedQuery()}"),
+            URL("${TMDB_BASE_URL}search/movie?${TMDB_API_KEY}&query=${query.toEncodedQuery()}$ADULT_FILTER_QUERY"),
         )
     }
 }

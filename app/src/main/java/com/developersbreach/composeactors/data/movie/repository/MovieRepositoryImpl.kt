@@ -7,6 +7,7 @@ import com.developersbreach.composeactors.data.movie.model.Flatrate
 import com.developersbreach.composeactors.data.movie.model.Movie
 import com.developersbreach.composeactors.data.movie.model.MovieDetail
 import com.developersbreach.composeactors.data.movie.remote.MovieApi
+import com.developersbreach.composeactors.data.datasource.database.DatabaseDataSource
 import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,18 +17,25 @@ import kotlinx.coroutines.withContext
 @Singleton
 class MovieRepositoryImpl @Inject constructor(
     private val movieApi: MovieApi,
+    private val databaseDataSource: DatabaseDataSource,
 ) : MovieRepository {
 
     override suspend fun getNowPlayingMovies(
         page: Int,
     ): Either<Throwable, PagedResponse<Movie>> = withContext(Dispatchers.IO) {
-        movieApi.getNowPlayingMovies(page)
+        movieApi.getNowPlayingMovies(
+            page = page,
+            region = databaseDataSource.getRegion().code,
+        )
     }
 
     override suspend fun getUpcomingMovies(
         page: Int,
     ): Either<Throwable, List<Movie>> = withContext(Dispatchers.IO) {
-        movieApi.getUpcomingMovies(page).map {
+        movieApi.getUpcomingMovies(
+            page = page,
+            region = databaseDataSource.getRegion().code,
+        ).map {
             it.data
         }
     }
@@ -42,7 +50,11 @@ class MovieRepositoryImpl @Inject constructor(
         movieId: Int,
         page: Int,
     ): Either<Throwable, List<Movie>> = withContext(Dispatchers.IO) {
-        movieApi.getSimilarMovies(movieId, page).map {
+        movieApi.getSimilarMovies(
+            movieId = movieId,
+            page = page,
+            region = databaseDataSource.getRegion().code,
+        ).map {
             it.data
         }
     }
@@ -51,7 +63,11 @@ class MovieRepositoryImpl @Inject constructor(
         movieId: Int,
         page: Int,
     ): Either<Throwable, List<Movie>> = withContext(Dispatchers.IO) {
-        movieApi.getRecommendedMovies(movieId, page).map {
+        movieApi.getRecommendedMovies(
+            movieId = movieId,
+            page = page,
+            region = databaseDataSource.getRegion().code,
+        ).map {
             it.data
         }
     }

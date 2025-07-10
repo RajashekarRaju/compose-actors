@@ -8,20 +8,28 @@ import com.developersbreach.composeactors.data.movie.model.MovieDetail
 import com.developersbreach.composeactors.data.movie.model.MovieProvidersResponse
 
 interface MovieApi {
-    suspend fun getNowPlayingMovies(page: Int): Either<Throwable, PagedResponse<Movie>>
+    suspend fun getNowPlayingMovies(
+        page: Int,
+        region: String,
+    ): Either<Throwable, PagedResponse<Movie>>
 
-    suspend fun getUpcomingMovies(page: Int): Either<Throwable, PagedResponse<Movie>>
+    suspend fun getUpcomingMovies(
+        page: Int,
+        region: String,
+    ): Either<Throwable, PagedResponse<Movie>>
 
     suspend fun getMovieDetails(movieId: Int): Either<Throwable, MovieDetail>
 
     suspend fun getSimilarMovies(
         movieId: Int,
         page: Int = 1,
+        region: String,
     ): Either<Throwable, PagedResponse<Movie>>
 
     suspend fun getRecommendedMovies(
         movieId: Int,
         page: Int = 1,
+        region: String,
     ): Either<Throwable, PagedResponse<Movie>>
 
     suspend fun getMovieCast(movieId: Int): Either<Throwable, CastResponse>

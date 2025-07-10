@@ -4,6 +4,7 @@ import arrow.core.Either
 import com.developersbreach.composeactors.core.network.BaseUrlProvider
 import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_API_KEY
 import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.TMDB_BASE_URL
+import com.developersbreach.composeactors.core.network.BaseUrlProvider.TmdbConfig.ADULT_FILTER_QUERY
 import com.developersbreach.composeactors.core.network.HttpRequestHandler
 import com.developersbreach.composeactors.core.network.PagedResponse
 import com.developersbreach.composeactors.data.movie.model.CastResponse
@@ -22,18 +23,20 @@ class MovieApiImpl @Inject constructor(
     // movie/now_playing?api_key=TMDB_API_KEY&page=1
     override suspend fun getNowPlayingMovies(
         page: Int,
+        region: String,
     ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
-            URL("${TMDB_BASE_URL}movie/now_playing?${TMDB_API_KEY}&page=$page"),
+            URL("${TMDB_BASE_URL}movie/now_playing?${TMDB_API_KEY}&page=$page&region=$region$ADULT_FILTER_QUERY"),
         )
     }
 
     // movie/upcoming?api_key=TMDB_API_KEY&page=1
     override suspend fun getUpcomingMovies(
         page: Int,
+        region: String,
     ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
-            URL("${TMDB_BASE_URL}movie/upcoming?${TMDB_API_KEY}&page=$page"),
+            URL("${TMDB_BASE_URL}movie/upcoming?${TMDB_API_KEY}&page=$page&region=$region$ADULT_FILTER_QUERY"),
         )
     }
 
@@ -42,7 +45,7 @@ class MovieApiImpl @Inject constructor(
         movieId: Int,
     ): Either<Throwable, MovieDetail> {
         return requestHandler.getResponse<MovieDetail>(
-            URL("${TMDB_BASE_URL}movie/$movieId?${TMDB_API_KEY}"),
+            URL("${TMDB_BASE_URL}movie/$movieId?${TMDB_API_KEY}$ADULT_FILTER_QUERY"),
         )
     }
 
@@ -50,9 +53,10 @@ class MovieApiImpl @Inject constructor(
     override suspend fun getSimilarMovies(
         movieId: Int,
         page: Int,
+        region: String,
     ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
-            URL("${TMDB_BASE_URL}movie/$movieId/similar?${TMDB_API_KEY}&page=$page"),
+            URL("${TMDB_BASE_URL}movie/$movieId/similar?${TMDB_API_KEY}&page=$page&region=$region$ADULT_FILTER_QUERY"),
         )
     }
 
@@ -60,9 +64,10 @@ class MovieApiImpl @Inject constructor(
     override suspend fun getRecommendedMovies(
         movieId: Int,
         page: Int,
+        region: String,
     ): Either<Throwable, PagedResponse<Movie>> {
         return requestHandler.getPagedResponse<Movie>(
-            URL("${TMDB_BASE_URL}movie/$movieId/recommendations?${TMDB_API_KEY}&page=$page"),
+            URL("${TMDB_BASE_URL}movie/$movieId/recommendations?${TMDB_API_KEY}&page=$page&region=$region$ADULT_FILTER_QUERY"),
         )
     }
 
@@ -71,7 +76,7 @@ class MovieApiImpl @Inject constructor(
         movieId: Int,
     ): Either<Throwable, CastResponse> {
         return requestHandler.getResponse<CastResponse>(
-            URL("${TMDB_BASE_URL}movie/$movieId/credits?${TMDB_API_KEY}"),
+            URL("${TMDB_BASE_URL}movie/$movieId/credits?${TMDB_API_KEY}$ADULT_FILTER_QUERY"),
         )
     }
 
@@ -80,7 +85,7 @@ class MovieApiImpl @Inject constructor(
         movieId: Int,
     ): Either<Throwable, MovieProvidersResponse> {
         return requestHandler.getResponse<MovieProvidersResponse>(
-            URL("${TMDB_BASE_URL}movie/$movieId/watch/providers?${TMDB_API_KEY}"),
+            URL("${TMDB_BASE_URL}movie/$movieId/watch/providers?${TMDB_API_KEY}$ADULT_FILTER_QUERY"),
         )
     }
 }

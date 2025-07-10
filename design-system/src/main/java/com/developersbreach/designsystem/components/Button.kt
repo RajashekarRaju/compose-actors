@@ -1,6 +1,7 @@
 package com.developersbreach.designsystem.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonColors
@@ -83,5 +84,27 @@ fun CaButtonOutlined(
                 color = MaterialTheme.colors.primary
             )
         }
+    )
+}
+
+@Composable
+fun CaButtonOutlined(
+    modifier: Modifier,
+    onClick: () -> Unit,
+    borderStroke: BorderStroke = BorderStroke(
+        width = 2.dp,
+        color = MaterialTheme.colors.primary
+    ),
+    colors: ButtonColors = ButtonDefaults.outlinedButtonColors(
+        backgroundColor = Color.Transparent,
+    ),
+    content: @Composable RowScope.() -> Unit,
+) {
+    OutlinedButton(
+        onClick = onClick,
+        modifier = modifier,
+        colors = colors,
+        border = borderStroke,
+        content = content
     )
 }

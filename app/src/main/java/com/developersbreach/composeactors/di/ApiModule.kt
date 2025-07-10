@@ -13,6 +13,8 @@ import com.developersbreach.composeactors.data.person.remote.PersonApi
 import com.developersbreach.composeactors.data.person.remote.PersonApiImpl
 import com.developersbreach.composeactors.data.person.repository.PersonRepository
 import com.developersbreach.composeactors.data.person.repository.PersonRepositoryImpl
+import com.developersbreach.composeactors.data.region.repository.RegionRepository
+import com.developersbreach.composeactors.data.region.repository.RegionRepositoryImpl
 import com.developersbreach.composeactors.data.search.remote.SearchApi
 import com.developersbreach.composeactors.data.search.remote.SearchApiImpl
 import com.developersbreach.composeactors.data.search.repository.SearchRepository
@@ -107,8 +109,17 @@ object ApiModule {
     @Singleton
     fun provideMovieRepository(
         movieApi: MovieApi,
+        databaseDataSource: DatabaseDataSource,
     ): MovieRepository {
-        return MovieRepositoryImpl(movieApi)
+        return MovieRepositoryImpl(movieApi, databaseDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRegionRepository(
+        databaseDataSource: DatabaseDataSource,
+    ): RegionRepository {
+        return RegionRepositoryImpl(databaseDataSource)
     }
 
     @Provides

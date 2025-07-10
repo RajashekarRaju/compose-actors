@@ -110,4 +110,14 @@ class DesignSystemTest {
             ),
         )
     }
+
+    @Test
+    fun `no direct usage of androidx compose Button should be allowed except designSystem`() {
+        checkNoDirectUsageExceptAllowed(
+            componentName = "androidx.compose.material.Button",
+            excludePaths = arrayOf(
+                "design-system/src/main/java/com/developersbreach/designsystem/components/Button.kt",
+            ),
+        )
+    }
 }

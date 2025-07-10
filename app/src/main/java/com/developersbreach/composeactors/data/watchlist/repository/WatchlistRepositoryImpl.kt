@@ -6,7 +6,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import arrow.core.Either
-import arrow.core.raise.either
 import com.developersbreach.composeactors.core.database.AppDatabase
 import com.developersbreach.composeactors.data.auth.AuthenticationService
 import com.developersbreach.composeactors.data.movie.model.Movie
@@ -23,12 +22,13 @@ import com.developersbreach.composeactors.data.watchlist.paging.WatchlistMoviesR
 import com.developersbreach.composeactors.data.watchlist.paging.WatchlistMoviesRemoteMediator.Companion.WATCH_LIST_PAGE_SIZE
 import com.developersbreach.composeactors.data.watchlist.paging.WatchlistPeopleRemoteMediator
 import com.developersbreach.composeactors.data.watchlist.remote.WatchlistApi
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import timber.log.Timber
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 class WatchlistRepositoryImpl @Inject constructor(
@@ -58,13 +58,15 @@ class WatchlistRepositoryImpl @Inject constructor(
     override suspend fun addMovieToWatchlist(
         movieDetail: MovieDetail,
     ): Either<Throwable, Unit> {
-        return either {
+        return Either.catch {
             withContext(Dispatchers.IO) {
                 watchlistApi.addMovieToWatchlist(
                     watchlistMovie = movieDetail.toWatchlistMovie(),
-                ).map {
-                    database.watchlistMoviesDao.addMovieToWatchlist(movieDetail.toWatchlistMovieEntity())
-                }
+                ).fold(
+                    ifLeft = { throw it },
+                    ifRight = { Timber.d("Success addMovieToWatchlist $it") },
+                )
+                database.watchlistMoviesDao.addMovieToWatchlist(movieDetail.toWatchlistMovieEntity())
             }
         }
     }
@@ -72,13 +74,15 @@ class WatchlistRepositoryImpl @Inject constructor(
     override suspend fun removeMovieFromWatchlist(
         movie: Movie,
     ): Either<Throwable, Unit> {
-        return either {
+        return Either.catch {
             withContext(Dispatchers.IO) {
                 watchlistApi.removeMovieFromWatchlist(
                     movieId = movie.movieId,
-                ).map {
-                    database.watchlistMoviesDao.deleteMovieFromWatchlist(movie.toWatchlistMovieEntity())
-                }
+                ).fold(
+                    ifLeft = { throw it },
+                    ifRight = { Timber.d("Success removeMovieFromWatchlist $it") },
+                )
+                database.watchlistMoviesDao.deleteMovieFromWatchlist(movie.toWatchlistMovieEntity())
             }
         }
     }
@@ -86,7 +90,7 @@ class WatchlistRepositoryImpl @Inject constructor(
     override suspend fun checkIfMovieIsInWatchlist(
         movieId: Int,
     ): Either<Throwable, Flow<Boolean>> {
-        return either {
+        return Either.catch {
             withContext(Dispatchers.IO) {
                 database.watchlistMoviesDao.isMovieInWatchlist(movieId)
             }
@@ -112,13 +116,15 @@ class WatchlistRepositoryImpl @Inject constructor(
     override suspend fun addPersonToWatchlist(
         personDetail: PersonDetail,
     ): Either<Throwable, Unit> {
-        return either {
+        return Either.catch {
             withContext(Dispatchers.IO) {
                 watchlistApi.addPersonToWatchlist(
                     watchlistPerson = personDetail.toWatchlistPerson(),
-                ).map {
-                    database.watchlistPersonsDao.addPersonToWatchlist(personDetail.toWatchlistPersonEntity())
-                }
+                ).fold(
+                    ifLeft = { throw it },
+                    ifRight = { Timber.d("Success addPersonToWatchlist $it") },
+                )
+                database.watchlistPersonsDao.addPersonToWatchlist(personDetail.toWatchlistPersonEntity())
             }
         }
     }
@@ -126,13 +132,15 @@ class WatchlistRepositoryImpl @Inject constructor(
     override suspend fun removePersonFromWatchlist(
         personId: Int,
     ): Either<Throwable, Unit> {
-        return either {
+        return Either.catch {
             withContext(Dispatchers.IO) {
                 watchlistApi.removeMovieFromWatchlist(
                     movieId = personId,
-                ).map {
-                    database.watchlistPersonsDao.deletePersonFromWatchlist(personId)
-                }
+                ).fold(
+                    ifLeft = { throw it },
+                    ifRight = { Timber.d("Success removePersonFromWatchlist $it") },
+                )
+                database.watchlistPersonsDao.deletePersonFromWatchlist(personId)
             }
         }
     }
@@ -140,7 +148,7 @@ class WatchlistRepositoryImpl @Inject constructor(
     override suspend fun checkIfPersonIsInWatchlist(
         personId: Int,
     ): Either<Throwable, Flow<Boolean>> {
-        return either {
+        return Either.catch {
             withContext(Dispatchers.IO) {
                 database.watchlistPersonsDao.isPersonInWatchlist(personId)
             }
