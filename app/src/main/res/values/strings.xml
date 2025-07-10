@@ -73,6 +73,8 @@
     <string name="no_actors_found_message">No actors found for your search.</string>
     <string name="no_movies_found_message">No movies found for your search.</string>
     <string name="feature_coming_soon">Feature Coming Soon</string>
+    <string name="select_region">Select Region</string>
+    <string name="select">Select</string>
 
     <!-- Error Messages -->
     <string name="network_error">Network error occurred. Please check your connection.</string>

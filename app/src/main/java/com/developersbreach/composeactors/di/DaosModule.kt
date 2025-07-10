@@ -5,6 +5,7 @@ import com.developersbreach.composeactors.data.watchlist.cache.WatchlistPersonsD
 import com.developersbreach.composeactors.data.watchlist.cache.WatchlistMoviesDao
 import com.developersbreach.composeactors.core.database.dao.PersonDetailsDao
 import com.developersbreach.composeactors.core.database.dao.SessionsDao
+import com.developersbreach.composeactors.core.database.dao.RegionDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,5 +45,13 @@ object DaosModule {
         database: AppDatabase,
     ): SessionsDao {
         return database.sessionsDao
+    }
+
+    @Provides
+    @JvmStatic
+    fun providesRegionDao(
+        database: AppDatabase,
+    ): RegionDao {
+        return database.regionDao
     }
 }

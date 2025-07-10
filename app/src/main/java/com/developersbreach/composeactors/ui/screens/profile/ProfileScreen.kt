@@ -24,6 +24,8 @@ fun ProfileScreen(
             navigateToLogin = navigateToLogin,
             profileUiState = it,
             scaffoldState = scaffoldState,
+            onRegionSelected = { viewModel.updateRegion(it) },
+            onRegionDropdownToggle = { viewModel.onRegionDropdownToggle() },
         )
     }
 }

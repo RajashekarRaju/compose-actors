@@ -1,14 +1,23 @@
 package com.developersbreach.composeactors.ui.screens.profile
 
-sealed class ProfileUiState {
-    data object NavigateToLogin : ProfileUiState()
+import com.developersbreach.composeactors.data.region.model.Region
 
-    data object UnauthenticatedUI : ProfileUiState()
+sealed class ProfileActions {
+    data object NavigateToLogin : ProfileActions()
 
-    data object GuestUI : ProfileUiState()
+    data object UnauthenticatedUI : ProfileActions()
+
+    data object GuestUI : ProfileActions()
 
     data class AuthenticatedUI(
         val name: String,
         val profilePictureUrl: String? = null,
-    ) : ProfileUiState()
+    ) : ProfileActions()
 }
+
+data class ProfileUiState(
+    val region: Region = Region.defaultRegion,
+    val regions: List<Region> = emptyList(),
+    val isDropdownExpanded: Boolean = false,
+    val actions: ProfileActions? = null,
+)
