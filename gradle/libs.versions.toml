@@ -19,8 +19,10 @@ kotlin = "2.1.21"
 kotlinx-coroutines-core = "1.10.2"
 ktor-bom = "3.0.1"
 jetbrains-kotlin-jvm = "2.0.21"
+mockk-android = "1.14.4"
 screenshot = "0.0.1-alpha09"
 ktlint = "12.2.0"
+runner = "1.6.2"
 
 [libraries]
 androidx-activity-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
@@ -39,6 +41,7 @@ androidx-core-core-ktx = "androidx.core:core-ktx:1.16.0"
 androidx-hilt-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
 androidx-lifecycle-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-navigation-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
+androidx-navigation-navigation-testing = { module = "androidx.navigation:navigation-testing", version.ref = "androidx-navigation" }
 androidx-paging-paging-compose = "androidx.paging:paging-compose:3.3.6"
 androidx-paging-paging-runtime-ktx = "androidx.paging:paging-runtime-ktx:3.3.6"
 androidx-palette-palette-ktx = { module = "androidx.palette:palette-ktx", version.ref = "androidx-palette" }
@@ -51,6 +54,7 @@ arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 arrow-fx-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines", version.ref = "arrow" }
 aws-auth-cognito = { module = "com.amplifyframework:aws-auth-cognito", version.ref = "aws-auth-cognito" }
 com-google-android-material = "com.google.android.material:material:1.12.0"
+com-google-dagger-hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "com-google-dagger" }
 com-google-dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "com-google-dagger" }
 core-kotlin = { module = "com.amplifyframework:core-kotlin", version.ref = "core-kotlin" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
@@ -74,6 +78,8 @@ ktor-client-mock = { module = "io.ktor:ktor-client-mock" }
 ktor-client-serialization = { module = "io.ktor:ktor-client-serialization" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling"}
+androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk-android" }
 
 [plugins]
 com-android-application = "com.android.application:8.10.1"
