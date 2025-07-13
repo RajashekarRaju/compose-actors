@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import com.developersbreach.composeactors.R
 import com.developersbreach.composeactors.annotations.PreviewLightDark
@@ -17,7 +19,9 @@ import com.developersbreach.designsystem.components.CaImage
 @Composable
 fun SplashScreenUI() {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .semantics { testTag = "TestTag:SplashScreen" },
         contentAlignment = Alignment.Center,
     ) {
         CaImage(

@@ -21,6 +21,8 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -52,7 +54,10 @@ fun LoginScreenUI(
         scaffoldState = scaffoldState,
     ) { paddingValues ->
         Box(
-            modifier = Modifier.fillMaxSize().padding(paddingValues),
+            modifier = Modifier
+                .semantics { testTag = "TestTag:LoginScreen" }
+                .fillMaxSize()
+                .padding(paddingValues),
             contentAlignment = Alignment.Center,
         ) {
             CaImage(
