@@ -21,7 +21,7 @@ class WatchlistApiImpl @Inject constructor(
         size: Int,
     ): Either<Throwable, PagedResponse<WatchlistMovie>> {
         return requestHandler.getPagedResponse<WatchlistMovie>(
-            URL("${BASE_URL}/watchlist/movies?page=$page&size=$size"),
+            URL("${BASE_URL}/api/v1/watchlist/movies?page=$page&size=$size"),
         )
     }
 
@@ -29,7 +29,7 @@ class WatchlistApiImpl @Inject constructor(
         watchlistMovie: WatchlistMovie,
     ): Either<Throwable, Unit> {
         return requestHandler.postResponse<WatchlistMovie>(
-            url = URL("$BASE_URL/watchlist/movies"),
+            url = URL("$BASE_URL/api/v1/watchlist/movies"),
             body = watchlistMovie,
         )
     }
@@ -38,7 +38,7 @@ class WatchlistApiImpl @Inject constructor(
         movieId: Int,
     ): Either<Throwable, Unit> {
         return requestHandler.deleteResponse(
-            url = URL("$BASE_URL/watchlist/movies/$movieId"),
+            url = URL("$BASE_URL/api/v1/watchlist/movies/$movieId"),
         )
     }
 
@@ -47,7 +47,7 @@ class WatchlistApiImpl @Inject constructor(
         size: Int,
     ): Either<Throwable, PagedResponse<WatchlistPerson>> {
         return requestHandler.getPagedResponse<WatchlistPerson>(
-            URL("${BASE_URL}/watchlist/people?page=$page&size=$size"),
+            URL("${BASE_URL}/api/v1/watchlist/people?page=$page&size=$size"),
         )
     }
 
@@ -55,7 +55,7 @@ class WatchlistApiImpl @Inject constructor(
         watchlistPerson: WatchlistPerson,
     ): Either<Throwable, Unit> {
         return requestHandler.postResponse<WatchlistPerson>(
-            url = URL("$BASE_URL/watchlist/people"),
+            url = URL("$BASE_URL/api/v1/watchlist/people"),
             body = watchlistPerson,
         )
     }
@@ -64,7 +64,7 @@ class WatchlistApiImpl @Inject constructor(
         personId: Int,
     ): Either<Throwable, Unit> {
         return requestHandler.deleteResponse(
-            url = URL("$BASE_URL/watchlist/people/$personId"),
+            url = URL("$BASE_URL/api/v1/watchlist/people/$personId"),
         )
     }
 }
