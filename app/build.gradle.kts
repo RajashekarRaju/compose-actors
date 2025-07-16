@@ -1,6 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 import com.android.build.api.dsl.ApplicationDefaultConfig
+import org.gradle.kotlin.dsl.androidTestImplementation
 import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
@@ -33,7 +34,7 @@ android {
         }
 
         // signingConfig signingConfigs.debug
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.developersbreach.composeactors.HiltTestRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
 
         val properties = getLocalProperties()
@@ -71,7 +72,7 @@ android {
 
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/{AL2.0,LGPL2.1,LICENSE.md,LICENSE-notice.md}"
         }
     }
     namespace = "com.developersbreach.composeactors"
@@ -162,12 +163,17 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines.core)
 
+    implementation(libs.androidx.runner)
     testImplementation(libs.androidx.compose.ui.ui.test.junit4)
     testImplementation(libs.io.mockk)
     testImplementation(libs.konsist)
 
+    kspAndroidTest(libs.com.google.dagger.hilt.android.compiler)
     androidTestImplementation(libs.androidx.test.ext.junit.ktx)
     androidTestImplementation(libs.androidx.compose.ui.ui.test.junit4)
+    androidTestImplementation(libs.com.google.dagger.hilt.android.testing)
+    androidTestImplementation(libs.androidx.navigation.navigation.testing)
+    androidTestImplementation(libs.mockk.android)
 
     debugImplementation(libs.androidx.compose.ui.ui.test.manifest)
 

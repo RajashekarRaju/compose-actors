@@ -10,8 +10,8 @@ import com.developersbreach.composeactors.domain.session.SessionState
 import com.developersbreach.composeactors.ui.components.BaseViewModel
 import com.developersbreach.composeactors.ui.components.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
@@ -19,7 +19,7 @@ class SplashViewModel @Inject constructor(
     errorReporter: ErrorReporter,
 ) : BaseViewModel(errorReporter) {
 
-    var uiState: UiState<SessionState> by mutableStateOf(UiState.Loading)
+    var uiState: UiState<SplashUiState> by mutableStateOf(UiState.Success(SplashUiState.Splash))
         private set
 
     init {
@@ -30,7 +30,15 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch {
             uiState = getSessionState().fold(
                 ifLeft = { UiState.Error(it) },
-                ifRight = { UiState.Success(it) },
+                ifRight = { sessionState ->
+                    when (sessionState) {
+                        SessionState.Authenticated -> SplashUiState.NavigateToHome
+                        SessionState.Unauthenticated -> SplashUiState.NavigateToLogin
+                        SessionState.Guest -> SplashUiState.NavigateToHome
+                    }.let {
+                        UiState.Success(it)
+                    }
+                },
             )
         }
     }

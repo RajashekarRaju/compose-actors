@@ -8,10 +8,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class GetSessionState @Inject constructor(
+open class GetSessionState @Inject constructor(
     private val authenticationService: AuthenticationService,
 ) {
-    suspend operator fun invoke(): Either<Throwable, SessionState> {
+    open suspend operator fun invoke(): Either<Throwable, SessionState> {
         return when {
             authenticationService.isGuestUser() -> Either.Right(SessionState.Guest)
             else -> getSessionState()

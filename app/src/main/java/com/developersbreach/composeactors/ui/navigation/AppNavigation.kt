@@ -2,6 +2,7 @@ package com.developersbreach.composeactors.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -21,9 +22,9 @@ import com.developersbreach.composeactors.ui.screens.signup.SignUpScreen
  */
 @Composable
 fun AppNavigation(
+    navController: NavHostController = rememberNavController(),
     startDestination: AppDestinations = AppDestinations.Splash,
 ) {
-    val navController = rememberNavController()
     val actions = remember(navController) {
         NavigationActions(navController)
     }
