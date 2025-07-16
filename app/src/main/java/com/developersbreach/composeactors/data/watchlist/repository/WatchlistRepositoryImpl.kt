@@ -60,12 +60,16 @@ class WatchlistRepositoryImpl @Inject constructor(
     ): Either<Throwable, Unit> {
         return Either.catch {
             withContext(Dispatchers.IO) {
-                watchlistApi.addMovieToWatchlist(
-                    watchlistMovie = movieDetail.toWatchlistMovie(),
-                ).fold(
-                    ifLeft = { throw it },
-                    ifRight = { Timber.d("Success addMovieToWatchlist $it") },
-                )
+                // Only make API call if not a guest user
+                if (!authenticationService.isGuestUser()) {
+                    watchlistApi.addMovieToWatchlist(
+                        watchlistMovie = movieDetail.toWatchlistMovie(),
+                    ).fold(
+                        ifLeft = { throw it },
+                        ifRight = { Timber.d("Success addMovieToWatchlist $it") },
+                    )
+                }
+                // Always update local database
                 database.watchlistMoviesDao.addMovieToWatchlist(movieDetail.toWatchlistMovieEntity())
             }
         }
@@ -76,12 +80,16 @@ class WatchlistRepositoryImpl @Inject constructor(
     ): Either<Throwable, Unit> {
         return Either.catch {
             withContext(Dispatchers.IO) {
-                watchlistApi.removeMovieFromWatchlist(
-                    movieId = movie.movieId,
-                ).fold(
-                    ifLeft = { throw it },
-                    ifRight = { Timber.d("Success removeMovieFromWatchlist $it") },
-                )
+                // Only make API call if not a guest user
+                if (!authenticationService.isGuestUser()) {
+                    watchlistApi.removeMovieFromWatchlist(
+                        movieId = movie.movieId,
+                    ).fold(
+                        ifLeft = { throw it },
+                        ifRight = { Timber.d("Success removeMovieFromWatchlist $it") },
+                    )
+                }
+                // Always update local database
                 database.watchlistMoviesDao.deleteMovieFromWatchlist(movie.toWatchlistMovieEntity())
             }
         }
@@ -118,12 +126,16 @@ class WatchlistRepositoryImpl @Inject constructor(
     ): Either<Throwable, Unit> {
         return Either.catch {
             withContext(Dispatchers.IO) {
-                watchlistApi.addPersonToWatchlist(
-                    watchlistPerson = personDetail.toWatchlistPerson(),
-                ).fold(
-                    ifLeft = { throw it },
-                    ifRight = { Timber.d("Success addPersonToWatchlist $it") },
-                )
+                // Only make API call if not a guest user
+                if (!authenticationService.isGuestUser()) {
+                    watchlistApi.addPersonToWatchlist(
+                        watchlistPerson = personDetail.toWatchlistPerson(),
+                    ).fold(
+                        ifLeft = { throw it },
+                        ifRight = { Timber.d("Success addPersonToWatchlist $it") },
+                    )
+                }
+                // Always update local database
                 database.watchlistPersonsDao.addPersonToWatchlist(personDetail.toWatchlistPersonEntity())
             }
         }
@@ -134,12 +146,16 @@ class WatchlistRepositoryImpl @Inject constructor(
     ): Either<Throwable, Unit> {
         return Either.catch {
             withContext(Dispatchers.IO) {
-                watchlistApi.removeMovieFromWatchlist(
-                    movieId = personId,
-                ).fold(
-                    ifLeft = { throw it },
-                    ifRight = { Timber.d("Success removePersonFromWatchlist $it") },
-                )
+                // Only make API call if not a guest user
+                if (!authenticationService.isGuestUser()) {
+                    watchlistApi.removeMovieFromWatchlist(
+                        movieId = personId,
+                    ).fold(
+                        ifLeft = { throw it },
+                        ifRight = { Timber.d("Success removePersonFromWatchlist $it") },
+                    )
+                }
+                // Always update local database
                 database.watchlistPersonsDao.deletePersonFromWatchlist(personId)
             }
         }
@@ -152,6 +168,15 @@ class WatchlistRepositoryImpl @Inject constructor(
             withContext(Dispatchers.IO) {
                 database.watchlistPersonsDao.isPersonInWatchlist(personId)
             }
+        }
+    }
+
+    override suspend fun clearWatchlistData() {
+        withContext(Dispatchers.IO) {
+            database.watchlistMoviesDao.deleteAllMoviesInWatchlist()
+            database.watchlistPersonsDao.deletePeopleFromWatchlist()
+            database.watchlistMoviesRemoteKeysDao.clearRemoteKeys()
+            database.watchlistPeopleRemoteKeysDao.clearRemoteKeys()
         }
     }
 }

@@ -36,4 +36,6 @@ interface WatchlistRepository {
     suspend fun checkIfPersonIsInWatchlist(
         personId: Int,
     ): Either<Throwable, Flow<Boolean>>
+
+    suspend fun clearWatchlistData()
 }

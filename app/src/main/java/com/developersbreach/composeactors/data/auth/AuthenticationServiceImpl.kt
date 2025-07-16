@@ -15,13 +15,16 @@ import com.amplifyframework.auth.result.AuthSignInResult
 import com.amplifyframework.kotlin.core.Amplify
 import com.developersbreach.composeactors.core.database.dao.SessionsDao
 import com.developersbreach.composeactors.core.database.entity.SessionEntity
+import com.developersbreach.composeactors.data.watchlist.repository.WatchlistRepository
 import javax.inject.Inject
+import javax.inject.Provider
 import javax.inject.Singleton
 import timber.log.Timber
 
 @Singleton
 class AuthenticationServiceImpl @Inject constructor(
     private val sessionsDao: SessionsDao,
+    private val watchlistRepositoryProvider: Provider<WatchlistRepository>,
 ) : AuthenticationService {
 
     override suspend fun signIn(
@@ -36,6 +39,8 @@ class AuthenticationServiceImpl @Inject constructor(
             when (result.isSignedIn) {
                 true -> {
                     Timber.i("User SignedIn")
+                    // Clear previous user's watchlist data before setting new session
+                    watchlistRepositoryProvider.get().clearWatchlistData()
                     sessionsDao.addGuest(SessionEntity(isGuest = false))
                     Either.Right(Unit)
                 }
@@ -71,7 +76,11 @@ class AuthenticationServiceImpl @Inject constructor(
 
     override suspend fun signOut(): Either<Throwable, Unit> {
         return when (val signOut = Amplify.Auth.signOut()) {
-            is AWSCognitoAuthSignOutResult.CompleteSignOut -> Either.Right(Unit)
+            is AWSCognitoAuthSignOutResult.CompleteSignOut -> {
+                // Clear watchlist data when user signs out
+                watchlistRepositoryProvider.get().clearWatchlistData()
+                Either.Right(Unit)
+            }
 
             is AWSCognitoAuthSignOutResult.PartialSignOut -> {
                 signOut.hostedUIError?.let {
@@ -86,6 +95,8 @@ class AuthenticationServiceImpl @Inject constructor(
                     Timber.e("RevokeToken Error", it.exception)
                     Either.Left(it.exception)
                 }
+                // Clear watchlist data even on partial sign out
+                watchlistRepositoryProvider.get().clearWatchlistData()
                 Either.Right(Unit)
             }
 
@@ -205,6 +216,8 @@ class AuthenticationServiceImpl @Inject constructor(
 
     override suspend fun skipLogin(): Either<Throwable, Unit> {
         return try {
+            // Clear any existing watchlist data when switching to guest mode
+            watchlistRepositoryProvider.get().clearWatchlistData()
             Either.Right(sessionsDao.addGuest(SessionEntity(isGuest = true)))
         } catch (e: Exception) {
             Either.Left(e)

@@ -74,7 +74,7 @@ class MovieDetailsViewModel @Inject constructor(
             watchlistRepository.addMovieToWatchlist(
                 movieDetail = movieDetail,
             ).fold(
-                ifLeft = { uiState = UiState.Error(it) },
+                ifLeft = { showDialog("Failed to add to watchlist. Try again later?") },
                 ifRight = { showMessage("Added “${movieDetail.movieTitle}” to watchlist") },
             )
             hideLoading()

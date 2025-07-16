@@ -46,27 +46,59 @@ fun WatchlistPersonsTabContent(
     watchlistPeople: LazyPagingItems<WatchlistPerson>,
     removePersonFromWatchlist: (WatchlistPerson) -> Unit,
 ) {
-    if (watchlistPeople.itemSnapshotList.isEmpty()) {
+    // Add this block for initial loading
+    if (watchlistPeople.loadState.refresh is androidx.paging.LoadState.Loading) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center,
+        ) {
+            androidx.compose.material.CircularProgressIndicator(
+                color = MaterialTheme.colors.onBackground,
+            )
+        }
+        return
+    }
+
+    // Modify empty state check
+    if (watchlistPeople.itemSnapshotList.isEmpty() &&
+        watchlistPeople.loadState.refresh !is androidx.paging.LoadState.Loading
+    ) {
         NoWatchlistFoundUI()
+        return
     }
 
     val listState = rememberPagerState(
         pageCount = { watchlistPeople.itemCount },
     )
 
-    VerticalPager(
-        state = listState,
-        modifier = Modifier.fillMaxSize(),
-        pageSpacing = 24.dp,
-        pageSize = PageSize.Fixed(512.dp),
-        contentPadding = PaddingValues(top = 24.dp, start = 24.dp, end = 24.dp, bottom = 48.dp),
-    ) { currentPage ->
-        watchlistPeople[currentPage]?.let {
-            ItemWatchlistPerson(
-                item = it,
-                onClickPerson = navigateToSelectedPerson,
-                removePersonFromWatchlist = removePersonFromWatchlist,
-            )
+    Box(modifier = Modifier.fillMaxSize()) {
+        VerticalPager(
+            state = listState,
+            modifier = Modifier.fillMaxSize(),
+            pageSpacing = 24.dp,
+            pageSize = PageSize.Fixed(512.dp),
+            contentPadding = PaddingValues(top = 24.dp, start = 24.dp, end = 24.dp, bottom = 48.dp),
+        ) { currentPage ->
+            watchlistPeople[currentPage]?.let {
+                ItemWatchlistPerson(
+                    item = it,
+                    onClickPerson = navigateToSelectedPerson,
+                    removePersonFromWatchlist = removePersonFromWatchlist,
+                )
+            }
+        }
+
+        // Add this for append loading
+        if (watchlistPeople.loadState.append is androidx.paging.LoadState.Loading) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(16.dp),
+            ) {
+                androidx.compose.material.CircularProgressIndicator(
+                    color = MaterialTheme.colors.onBackground,
+                )
+            }
         }
     }
 }

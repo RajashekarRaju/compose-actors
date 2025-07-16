@@ -95,7 +95,7 @@ class ActorDetailsViewModel @Inject constructor(
             watchlistRepository.addPersonToWatchlist(
                 personDetail = personDetail,
             ).fold(
-                ifLeft = { detailUIState = UiState.Error(it) },
+                ifLeft = { showDialog("Failed to add to watchlist. Try again later?") },
                 ifRight = { showMessage("Added ${personDetail.personName} to watchlist") },
             )
             hideLoading()

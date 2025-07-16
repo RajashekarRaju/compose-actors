@@ -46,8 +46,25 @@ fun WatchlistMoviesTabContent(
     watchlistMovies: LazyPagingItems<Movie>,
     removeMovieFromWatchlist: (Movie) -> Unit,
 ) {
-    if (watchlistMovies.itemSnapshotList.isEmpty()) {
+    // Add this block for initial loading
+    if (watchlistMovies.loadState.refresh is LoadState.Loading) {
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center,
+        ) {
+            CircularProgressIndicator(
+                color = MaterialTheme.colors.onBackground,
+            )
+        }
+        return
+    }
+
+    // Modify empty state check
+    if (watchlistMovies.itemSnapshotList.isEmpty() &&
+        watchlistMovies.loadState.refresh !is LoadState.Loading
+    ) {
         NoWatchlistFoundUI()
+        return
     }
 
     val listState = rememberLazyListState()
