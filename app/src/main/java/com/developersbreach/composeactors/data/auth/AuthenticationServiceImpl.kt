@@ -260,4 +260,34 @@ class AuthenticationServiceImpl @Inject constructor(
             Either.Left(e)
         }
     }
+
+    override suspend fun forgotPassword(
+        email: String,
+    ): Either<Throwable, Unit> {
+        return try {
+            Amplify.Auth.resetPassword(email)
+            Either.Right(Unit)
+        } catch (e: Exception) {
+            Timber.e("Forgot password request failed", e)
+            Either.Left(e)
+        }
+    }
+
+    override suspend fun confirmForgotPassword(
+        email: String,
+        code: String,
+        newPassword: String,
+    ): Either<Throwable, Unit> {
+        return try {
+            Amplify.Auth.confirmResetPassword(
+                username = email,
+                newPassword = newPassword,
+                confirmationCode = code,
+            )
+            Either.Right(Unit)
+        } catch (e: Exception) {
+            Timber.e("Confirm forgot password failed", e)
+            Either.Left(e)
+        }
+    }
 }

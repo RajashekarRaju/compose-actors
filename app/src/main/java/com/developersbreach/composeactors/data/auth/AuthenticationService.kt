@@ -41,4 +41,14 @@ interface AuthenticationService {
         email: String,
         code: String,
     ): Either<Throwable, Unit>
+
+    suspend fun forgotPassword(
+        email: String,
+    ): Either<Throwable, Unit>
+
+    suspend fun confirmForgotPassword(
+        email: String,
+        code: String,
+        newPassword: String,
+    ): Either<Throwable, Unit>
 }

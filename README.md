@@ -15,6 +15,7 @@ Access the latest APK for Compose Actors from the link below.
 - [x] Improve error handling and user feedback messages.
 - [ ] Complete tests for app navigation for all destinations.
 - [ ] Create/Review privacy policy, usage rights, attributions for store publishing.
+- [x] Allow password reset for users.
 - [ ] Create publicising assets, banners for store.
 - [ ] Create production environment for existing services and integrations used in app.
 - [x] Complete remaining screenshot tests

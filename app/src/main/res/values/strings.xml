@@ -91,4 +91,18 @@
     <string name="profile_error">An error occurred while loading profile.</string>
     <string name="movie_details_error">An error occurred while loading movie details.</string>
     <string name="actor_details_error">An error occurred while loading actor details.</string>
+
+    <string name="forgot_password">Forgot Password</string>
+    <string name="forgot_password_message">Enter your email address and we\'ll send you a code to reset your password</string>
+    <string name="request_reset_code">Request Reset Code</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="reset_password_message">Enter the code sent to your email and your new password</string>
+    <string name="verification_code">Verification Code</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="password_reset_successful">Password Reset Successful</string>
+    <string name="password_reset_message">Your password has been reset successfully. Please login with your new password.</string>
+    <string name="go_to_login">Go to Login</string>
+    <string name="forgot_password_error">An error occurred during password reset.</string>
+    <string name="cancel">Cancel</string>
 </resources>

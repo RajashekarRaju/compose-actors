@@ -10,6 +10,7 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
     navigateUp: () -> Unit,
     navigateToLogin: () -> Unit,
+    navigateToForgotPassword: () -> Unit,
 ) {
     val scaffoldState = rememberScaffoldState()
     UiStateHandler(
@@ -22,6 +23,7 @@ fun ProfileScreen(
             navigateUp = navigateUp,
             onClickLogout = { viewModel.logout() },
             navigateToLogin = navigateToLogin,
+            onClickResetPassword = navigateToForgotPassword,
             profileUiState = it,
             scaffoldState = scaffoldState,
             onRegionSelected = { viewModel.updateRegion(it) },
