@@ -16,6 +16,7 @@ import com.developersbreach.composeactors.ui.screens.profile.ProfileScreen
 import com.developersbreach.composeactors.ui.screens.search.SearchScreen
 import com.developersbreach.composeactors.ui.screens.splash.SplashScreen
 import com.developersbreach.composeactors.ui.screens.signup.SignUpScreen
+import com.developersbreach.composeactors.ui.screens.forgotpassword.ForgotPasswordScreen
 
 /**
  * This is an entry point triggered once activity starts.
@@ -94,6 +95,7 @@ fun AppNavigation(
                     actions.navigateToHome()
                 },
                 navigateToSignUp = actions.navigateToSignUp,
+                navigateToForgotPassword = actions.navigateToForgotPassword,
             )
         }
 
@@ -104,6 +106,7 @@ fun AppNavigation(
                     navController.popBackStack()
                     actions.navigateToLogin()
                 },
+                navigateToForgotPassword = actions.navigateToForgotPassword,
             )
         }
 
@@ -113,6 +116,16 @@ fun AppNavigation(
                 navigateToHome = {
                     navController.popBackStack()
                     actions.navigateToHome()
+                },
+            )
+        }
+
+        composable<AppDestinations.ForgotPassword> {
+            ForgotPasswordScreen(
+                navigateUp = { actions.navigateUp() },
+                navigateToLogin = {
+                    navController.popBackStack()
+                    actions.navigateToLogin()
                 },
             )
         }

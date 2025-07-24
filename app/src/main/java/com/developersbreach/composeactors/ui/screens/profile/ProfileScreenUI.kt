@@ -22,6 +22,7 @@ import com.developersbreach.composeactors.annotations.PreviewLightDark
 import com.developersbreach.composeactors.data.region.model.Region
 import com.developersbreach.composeactors.ui.theme.ComposeActorsTheme
 import com.developersbreach.designsystem.components.CaButtonFilled
+import com.developersbreach.designsystem.components.CaButtonOutlined
 import com.developersbreach.composeactors.ui.components.CaDropdown
 import com.developersbreach.designsystem.components.CaImage
 import com.developersbreach.designsystem.components.CaScaffold
@@ -34,6 +35,7 @@ fun ProfileScreenUI(
     navigateUp: () -> Unit,
     navigateToLogin: () -> Unit,
     onClickLogout: () -> Unit,
+    onClickResetPassword: () -> Unit,
     profileUiState: ProfileUiState,
     scaffoldState: ScaffoldState,
     onRegionSelected: (Region) -> Unit,
@@ -64,7 +66,7 @@ fun ProfileScreenUI(
                 when (profileUiState.actions) {
                     ProfileActions.NavigateToLogin -> navigateToLogin()
                     ProfileActions.GuestUI -> ProfileGuestUI(navigateToLogin)
-                    is ProfileActions.AuthenticatedUI -> ProfileAuthenticatedUI(profileUiState.actions, onClickLogout)
+                    is ProfileActions.AuthenticatedUI -> ProfileAuthenticatedUI(profileUiState.actions, onClickLogout, onClickResetPassword)
                     ProfileActions.UnauthenticatedUI, null -> ProfileUnauthenticatedUI(navigateToLogin)
                 }
                 CaVerticalSpacer(20)
@@ -118,6 +120,7 @@ private fun ProfileUnauthenticatedUI(
 private fun ProfileAuthenticatedUI(
     profileActions: ProfileActions.AuthenticatedUI,
     onClickLogout: () -> Unit,
+    onClickResetPassword: () -> Unit,
 ) {
     CaTextBody1(
         text = stringResource(R.string.welcome, profileActions.name),
@@ -131,6 +134,14 @@ private fun ProfileAuthenticatedUI(
     CaButtonFilled(
         title = stringResource(R.string.logout),
         onClick = onClickLogout,
+        modifier = Modifier.fillMaxWidth(),
+    )
+
+    CaVerticalSpacer(10)
+
+    CaButtonOutlined(
+        title = stringResource(R.string.reset_password),
+        onClick = onClickResetPassword,
         modifier = Modifier.fillMaxWidth(),
     )
 }
@@ -162,6 +173,7 @@ private fun ProfileScreenPreview(
             navigateUp = { },
             onClickLogout = { },
             navigateToLogin = { },
+            onClickResetPassword = { },
             profileUiState = profileUiState,
             scaffoldState = rememberScaffoldState(),
             onRegionSelected = {},

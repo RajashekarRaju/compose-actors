@@ -11,6 +11,7 @@ fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
     navigateToHome: () -> Unit,
     navigateToSignUp: () -> Unit,
+    navigateToForgotPassword: () -> Unit,
 ) {
     val scaffoldState = rememberScaffoldState()
     UiStateHandler(
@@ -32,6 +33,7 @@ fun LoginScreen(
             onPasswordChange = { viewModel.onPasswordChange(it) },
             onPasswordToggledVisibilityChange = { viewModel.onPasswordToggledVisibilityChange() },
             onClickSignUp = navigateToSignUp,
+            onClickForgotPassword = navigateToForgotPassword,
             data = data,
             scaffoldState = scaffoldState,
         )

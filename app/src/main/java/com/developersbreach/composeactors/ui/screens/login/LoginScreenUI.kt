@@ -46,6 +46,7 @@ fun LoginScreenUI(
     onPasswordChange: (String) -> Unit,
     onPasswordToggledVisibilityChange: () -> Unit,
     onClickSignUp: () -> Unit,
+    onClickForgotPassword: () -> Unit,
     data: LoginUiState,
     scaffoldState: ScaffoldState,
 ) {
@@ -139,6 +140,12 @@ fun LoginScreenUI(
                 )
 
                 CaButtonText(
+                    title = stringResource(R.string.forgot_password),
+                    onClick = onClickForgotPassword,
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                )
+
+                CaButtonText(
                     title = stringResource(R.string.skip),
                     onClick = onClickSkip,
                     modifier = Modifier.padding(horizontal = 20.dp),
@@ -159,6 +166,7 @@ fun LoginScreenPreview() {
             onPasswordChange = {},
             onPasswordToggledVisibilityChange = {},
             onClickSignUp = {},
+            onClickForgotPassword = {},
             data = LoginUiState(
                 email = "someone@google.com",
                 password = "bad_password",

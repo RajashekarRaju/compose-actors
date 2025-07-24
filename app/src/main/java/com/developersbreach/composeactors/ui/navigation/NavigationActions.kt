@@ -42,6 +42,10 @@ class NavigationActions(
         navController.navigate(AppDestinations.SignUp)
     }
 
+    val navigateToForgotPassword: () -> Unit = {
+        navController.navigate(AppDestinations.ForgotPassword)
+    }
+
     val navigateUp: () -> Unit = {
         navController.navigateUp()
     }

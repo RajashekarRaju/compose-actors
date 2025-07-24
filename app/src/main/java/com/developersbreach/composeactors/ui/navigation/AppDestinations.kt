@@ -41,4 +41,7 @@ sealed interface AppDestinations {
 
     @Serializable
     data object SignUp : AppDestinations
+
+    @Serializable
+    data object ForgotPassword : AppDestinations
 }
